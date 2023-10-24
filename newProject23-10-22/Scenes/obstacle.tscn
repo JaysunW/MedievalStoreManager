@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://byv1opgstgkt3"]
+
+[ext_resource type="Script" path="res://Scripts/Obstacle.gd" id="1_46r2h"]
+[ext_resource type="Texture2D" uid="uid://c3piq7av554qx" path="res://Assets/Obstacle.png" id="1_e7bj6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8j4n3"]
+size = Vector2(24, 56)
+
+[node name="Obstacle" type="RigidBody2D" groups=["obstacle"]]
+position = Vector2(576, 32)
+collision_mask = 0
+gravity_scale = 0.0
+lock_rotation = true
+linear_velocity = Vector2(0, 1)
+linear_damp_mode = 1
+script = ExtResource("1_46r2h")
+gravity_speed = 100
+
+[node name="Skin" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_e7bj6")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+rotation = 0.0025232
+shape = SubResource("RectangleShape2D_8j4n3")

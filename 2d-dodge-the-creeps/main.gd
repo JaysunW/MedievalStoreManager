@@ -17,7 +17,7 @@ func new_game():
 	
 	await $StartTimer.timeout
 	$ScoreTimer.start()
-	#$MobTimer.start()
+	$MobTimer.start()
 	
 func game_over():
 	$ScoreTimer.stop()

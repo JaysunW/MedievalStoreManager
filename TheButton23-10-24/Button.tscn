@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://drlyjpg8u1uf2"]
+
+[ext_resource type="Script" path="res://Button.gd" id="1_jhu4h"]
+[ext_resource type="Texture2D" uid="uid://5vk5d7g0crdb" path="res://icon.svg" id="1_rehqk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7kq4a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rehqk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_soeiq"]
+size = Vector2(116, 116)
+
+[node name="Button" type="RigidBody2D"]
+position = Vector2(578, 312)
+gravity_scale = 0.0
+script = ExtResource("1_jhu4h")
+
+[node name="Skin" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7kq4a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_soeiq")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -58.0
+offset_top = -59.0
+offset_right = 58.0
+offset_bottom = 58.0
+action_mode = 0
+text = "Press Me "
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
