@@ -8,5 +8,5 @@ func _ready():
 	$Button.position = Vector2(screen_size.x/2,screen_size.y/2)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
