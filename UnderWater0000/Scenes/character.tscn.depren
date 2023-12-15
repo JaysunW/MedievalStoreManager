@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3 uid="uid://cj3qcpwgq17ov"]
+
+[ext_resource type="Script" path="res://Scripts/Character.gd" id="1_vsy1f"]
+[ext_resource type="Texture2D" uid="uid://cummguuq65x4f" path="res://Assets/Character/PlayerAquaLeft1.png" id="2_k1l0x"]
+[ext_resource type="Texture2D" uid="uid://dj7rasjvjjuxh" path="res://Assets/Character/PlayerAquaRight1.png" id="3_wyrj6"]
+[ext_resource type="Script" path="res://Scripts/Weapon.gd" id="4_1msug"]
+[ext_resource type="Texture2D" uid="uid://c5f3hi6rqeoa6" path="res://Assets/LaserGun/LaserMk1.png" id="4_ej0nd"]
+[ext_resource type="Texture2D" uid="uid://tiia6iboflml" path="res://Assets/LaserGun/LaserMk2.png" id="5_h2w30"]
+[ext_resource type="Texture2D" uid="uid://b55viagtgamfi" path="res://Assets/LaserGun/LaserMk3.png" id="6_mk116"]
+[ext_resource type="Texture2D" uid="uid://biigb8gxmwrpj" path="res://Assets/LaserGun/LaserMk4.png" id="7_cejcw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1or6f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k1l0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wyrj6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvirw"]
+size = Vector2(21, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ajxbr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ej0nd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_h2w30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_mk116")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_cejcw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(376, 176)
+script = ExtResource("1_vsy1f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_1or6f")
+frame = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_hvirw")
+
+[node name="Weapon" type="Node2D" parent="."]
+script = ExtResource("4_1msug")
+laser_length = null
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Weapon"]
+texture_filter = 1
+position = Vector2(27, 0)
+sprite_frames = SubResource("SpriteFrames_ajxbr")
+
+[node name="LaserOutpu" type="Marker2D" parent="Weapon/AnimatedSprite2D"]
+position = Vector2(1, 0)
+
+[node name="Line2D" type="Line2D" parent="Weapon/AnimatedSprite2D/LaserOutpu"]
+z_index = -1
+position = Vector2(-28, 0)
+points = PackedVector2Array(27, -0.5, 35, 0)
+width = 3.5
