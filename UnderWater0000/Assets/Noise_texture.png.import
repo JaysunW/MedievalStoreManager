@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwuqpcgud4057"
-path="res://.godot/imported/LaserSkin.png-456cdee493150ebe5ca9574125881ee9.ctex"
+uid="uid://bubk8ip2qqry1"
+path="res://.godot/imported/Noise_texture.png-9af85c9169cd4c425768a782bbb785d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/LaserSkin.png"
-dest_files=["res://.godot/imported/LaserSkin.png-456cdee493150ebe5ca9574125881ee9.ctex"]
+source_file="res://Assets/Noise_texture.png"
+dest_files=["res://.godot/imported/Noise_texture.png-9af85c9169cd4c425768a782bbb785d0.ctex"]
 
 [params]
 

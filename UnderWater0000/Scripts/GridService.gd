@@ -17,6 +17,7 @@ var water_edge_y = 5
 func _ready():
 	spawn_tiles(width, height)
 	$"../Character".position = Vector2(width * 32/2 -16,-32)
+	$"../FreeCam".position = Vector2(width * 32/2 -16,-32)
 	transform_backgrounds(width, height)
 	set_sprites()
 	

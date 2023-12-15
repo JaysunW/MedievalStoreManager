@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var free_cam_on = false
 const SPEED = 150.0
 const SLIP = 20.0
 const MAX_Y_VELOCITY = 200
@@ -13,13 +14,13 @@ var on_land = true
 var gravity_clamp = 0.2
 
 func _ready():
+	$Camera2D.enabled = free_cam_on
 	position = Vector2(0,-32 )
 	
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _physics_process(_delta):
-	print("Position: ", position)
 	# Get the input direction and handle the movement/deceleration.
 	var direction = Vector2(Input.get_axis("left", "right"),0) 
 	if on_land:

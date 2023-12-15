@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c602dxf6mby3v"]
+[gd_scene load_steps=9 format=3 uid="uid://c602dxf6mby3v"]
 
 [ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Scenes/character.tscn" id="1_klg2i"]
 [ext_resource type="Script" path="res://Scripts/GridService.gd" id="2_twuh3"]
 [ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Scenes/tile.tscn" id="2_u78vr"]
 [ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="4_07dcn"]
 [ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_g2ntc"]
+[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Scenes/free_cam.tscn" id="6_2rsyb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
 size = Vector2(32, 32)
@@ -16,6 +17,7 @@ size = Vector2(32, 24)
 
 [node name="Character" parent="." instance=ExtResource("1_klg2i")]
 position = Vector2(45, 0)
+free_cam_on = true
 
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_twuh3")
@@ -59,6 +61,8 @@ texture = ExtResource("4_g2ntc")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 texture_filter = 1
+
+[node name="FreeCam" parent="." instance=ExtResource("6_2rsyb")]
 
 [connection signal="child_exiting_tree" from="GridService" to="GridService" method="_on_child_exiting_tree"]
 [connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
