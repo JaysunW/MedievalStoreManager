@@ -33,6 +33,7 @@ func shoot_laser(length):
 	# Draw the line of the laser
 	laser_line.visible = true
 	var new_position = Vector2(min(max_laser_length,length),0)
+	ray_cast.target_position = new_position
 	if ray_cast.is_colliding():
 		new_position = Vector2(min(max_laser_length,length,ray_cast.get_collision_point().distance_to(to_global(position))- sprite.position.x),0)
 	else:
