@@ -2,6 +2,7 @@ extends StaticBody2D
 
 @export var max_health = 100
 var tile_position = Vector2(0,0)
+var tile_type = Enums.TileType.UNKNOWN
 
 var health = 0
 var hardness = 1
@@ -26,11 +27,17 @@ func mine(damage):
 	var frame_count = destruction_sprite.sprite_frames.get_frame_count("default")
 	destruction_sprite.frame = frame_count - int (float(health)/float(max_health) * frame_count)
 	
+func get_type():
+	return tile_type
+
 func get_tile_position():
 	return tile_position
 
 func set_tile_position(input):
 	tile_position = input
+	
+func set_type(input):
+	tile_type = input
 	
 # Destroy tile and remove it from the main tile dictionary
 func destroy_tile():

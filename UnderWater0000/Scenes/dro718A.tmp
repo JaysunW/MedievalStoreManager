@@ -1,0 +1,117 @@
+[gd_scene load_steps=18 format=3 uid="uid://d28qtts1580g6"]
+
+[ext_resource type="Script" path="res://Scripts/drop.gd" id="1_rulg3"]
+[ext_resource type="Texture2D" uid="uid://d3tiibgdp7c3r" path="res://Assets/Tiles/Border1/A.png" id="1_snh3a"]
+[ext_resource type="Texture2D" uid="uid://dtymb8u5ubto" path="res://Assets/Tiles/Border2/A.png" id="2_7w0q6"]
+[ext_resource type="Texture2D" uid="uid://b6jahpykjkdkc" path="res://Assets/Tiles/Border3/A.png" id="3_dlej1"]
+[ext_resource type="Texture2D" uid="uid://bndmxq1vw4tou" path="res://Assets/Tiles/Border4/A2.png" id="4_h1be5"]
+[ext_resource type="Texture2D" uid="uid://bs5a5f7h0mvi6" path="res://Assets/Tiles/Border5/A.png" id="5_yfcsg"]
+[ext_resource type="Texture2D" uid="uid://b6r67u33qf7u5" path="res://Assets/Tiles/Border/A.png" id="6_lveva"]
+[ext_resource type="Texture2D" uid="uid://byedk4rp6ybkm" path="res://Assets/Gems/Diamond.png" id="8_65wg4"]
+[ext_resource type="Texture2D" uid="uid://c8o2l315vxyff" path="res://Assets/Gems/Emerald.png" id="9_nw55w"]
+[ext_resource type="Texture2D" uid="uid://bgl6d6sow8bsf" path="res://Assets/Gems/Lapislazuli.png" id="10_ibhwu"]
+[ext_resource type="Texture2D" uid="uid://cx07mk0m0lysj" path="res://Assets/Gems/quamarin.png" id="11_0lwhk"]
+[ext_resource type="Texture2D" uid="uid://cjwbgmqkjfvhe" path="res://Assets/Gems/Quartz.png" id="12_b4yht"]
+[ext_resource type="Texture2D" uid="uid://bq1oqlwccvhkv" path="res://Assets/Gems/Rubin.png" id="13_3olu4"]
+[ext_resource type="Texture2D" uid="uid://bghpojfsjyv26" path="res://Assets/Gems/TigerEye.png" id="14_iwtly"]
+[ext_resource type="Texture2D" uid="uid://b0d8icvuy00mi" path="res://Assets/Gems/Turquoise.png" id="15_8ctxy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g8v0g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_snh3a")
+}],
+"loop": true,
+"name": &"A0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7w0q6")
+}],
+"loop": true,
+"name": &"A1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dlej1")
+}],
+"loop": true,
+"name": &"A2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_h1be5")
+}],
+"loop": true,
+"name": &"A3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_yfcsg")
+}],
+"loop": true,
+"name": &"A4",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_lveva")
+}],
+"loop": true,
+"name": &"A5",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_65wg4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_nw55w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ibhwu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0lwhk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_b4yht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_3olu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_iwtly")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_8ctxy")
+}],
+"loop": true,
+"name": &"Gems",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2awgp"]
+size = Vector2(32, 32)
+
+[node name="Drop" type="Node2D" groups=["Drop"]]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_rulg3")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_g8v0g")
+animation = &"A5"
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+gravity_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_2awgp")
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_entered"]

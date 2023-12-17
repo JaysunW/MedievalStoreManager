@@ -14,10 +14,6 @@ var on_land = true
 var gravity_clamp = 0.2
 
 func _ready():
-	if free_cam_active:
-		$Camera2D.enabled = false
-	else:
-		free_cam.emit()
 	position = Vector2(0,-32 )
 	
 # Get the gravity from the project settings to be synced with RigidBody nodes.

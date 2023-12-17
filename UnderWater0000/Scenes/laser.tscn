@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://bshu8w0haitut"]
+
+[ext_resource type="Script" path="res://Scripts/Laser.gd" id="1_o4khl"]
+[ext_resource type="Texture2D" uid="uid://c5f3hi6rqeoa6" path="res://Assets/Tools/Laser/LaserMk1.png" id="2_thvbu"]
+[ext_resource type="Texture2D" uid="uid://tiia6iboflml" path="res://Assets/Tools/Laser/LaserMk2.png" id="3_an77l"]
+[ext_resource type="Texture2D" uid="uid://b55viagtgamfi" path="res://Assets/Tools/Laser/LaserMk3.png" id="4_hs57e"]
+[ext_resource type="Texture2D" uid="uid://biigb8gxmwrpj" path="res://Assets/Tools/Laser/LaserMk4.png" id="5_rmenu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ajxbr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_thvbu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_an77l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hs57e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rmenu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve" id="Curve_0k6xh"]
+_data = [Vector2(0.0375, 0.915789), 0.0, 0.0, 0, 0, Vector2(0.55625, 0.284211), 0.0, 0.0, 0, 0, Vector2(1, 0.915789), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_25auq"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.547009, 1)
+colors = PackedColorArray(0.880605, 0.99, 0.8613, 1, 0.24, 1, 0.05, 1, 0, 0.67451, 0.0980392, 1)
+
+[node name="Laser" type="Node2D"]
+script = ExtResource("1_o4khl")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(28, 0)
+sprite_frames = SubResource("SpriteFrames_ajxbr")
+
+[node name="LaserOutput" type="Marker2D" parent="Sprite"]
+position = Vector2(0, -0.5)
+
+[node name="Line2D" type="Line2D" parent="Sprite/LaserOutput"]
+z_index = -1
+position = Vector2(0, -0.5)
+points = PackedVector2Array(0, 0, 100, 0, 200, 0)
+width = 3.5
+width_curve = SubResource("Curve_0k6xh")
+gradient = SubResource("Gradient_25auq")
+
+[node name="RayCast2D" type="RayCast2D" parent="Sprite/LaserOutput"]
+visible = false
+target_position = Vector2(200, 0)
+collision_mask = 2
+hit_from_inside = true
+
+[node name="Cooldown" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
