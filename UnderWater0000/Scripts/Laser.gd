@@ -7,7 +7,7 @@ extends Node2D
 
 var added_laser_start = false
 var laser_damage = 20
-var laser_cooldown = 0.1
+var laser_cooldown = 0.001
 var cooldown_active = false
 
 func _ready():

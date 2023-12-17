@@ -1,6 +1,11 @@
 extends CharacterBody2D
 
+@onready var sprite = $Sprite
+@onready var light = $PointLight2D
+
 @export var free_cam_active = false
+@export var light_activ_y = 50
+
 const SPEED = 150.0
 const SLIP = 20.0
 const MAX_Y_VELOCITY = 200
@@ -8,24 +13,24 @@ const JUMP_VELOCITY = -250
 
 signal free_cam
 
-@onready var sprite = $Sprite
-
 var on_land = true
 var gravity_clamp = 0.2
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	position = Vector2(0,-32 )
-	
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+func _process(_delta):
+	light.visible = position.y/32 > light_activ_y
+		
+# Get the gravity from the project settings to be synced with RigidBody nodes.
 func _physics_process(_delta):
 	var direction = Vector2(Input.get_axis("left", "right"),0) # Get the input direction and handle.
 	
 	if on_land: # On land physics 
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
-		if not is_on_floor():
+		else:
 			velocity.y += gravity * _delta * gravity_clamp
 	else: # Under water physics
 		direction.y = Input.get_axis("up", "down")
@@ -42,6 +47,9 @@ func _physics_process(_delta):
 	elif direction.y > 0:
 		velocity.y = max(direction.y * SPEED * 0.5, velocity.y)
 	move_and_slide()
+
+func get_light_active_y():
+	return light_activ_y
 
 func _on_air_area_body_entered(body):
 	if body.get_groups().has("Player"):

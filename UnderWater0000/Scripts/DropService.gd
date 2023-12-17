@@ -2,6 +2,8 @@ extends Node2D
 
 @export var drop_scene : PackedScene
 
+var rng = RandomNumberGenerator.new()
+
 var drop_list = {}
 var drop_counter = 0
 
@@ -21,6 +23,8 @@ func place_drop_at(pos, tileType):
 	drop.call("update_sprite")
 	drop_list[drop_counter] = drop
 	add_child(drop)
+	drop.rotation = rng.randi_range(0,360)
+	drop.linear_velocity = Vector2(rng.randi_range(-5,6),rng.randi_range(-5,6)) * 8
 
 # Delete child from list
 func _on_child_exiting_tree(node):
@@ -30,11 +34,8 @@ func _on_child_exiting_tree(node):
 func _on_grid_service_drop_at_pos(pos, tile_type):
 	place_drop_at(pos, tile_type)
 
-
 func _on_water_area_body_entered(body):
-	print("Dropped in Water")
 	if body.get_groups().has("Drop"):
-		print("Dropped in Water")
-		body.linear_velocity = body.linear_velocity * 0.2
-		body.gravity_scale = 0.2
-		body.linear_damp = 0.7
+		body.linear_velocity = body.linear_velocity * 0.1
+		body.gravity_scale = 0.1
+		body.linear_damp = 0.8

@@ -18,14 +18,12 @@ func _physics_process(delta):
 			var new_vec = position - to_local(drop.position)
 			drop.linear_velocity = new_vec * delta * DROP_SPEED
 			if new_vec.length() <= 24:
-				print("Collected")
 				drops_to_delete.append(drop)
 				drop.queue_free()
 					
 func _on_body_entered(body):
 	if body.get_groups().has("Drop"):
 		drops_in_range.append(body)
-
 
 func _on_body_exited(body):
 	if body.get_groups().has("Drop"):

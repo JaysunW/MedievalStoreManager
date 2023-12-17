@@ -5,12 +5,11 @@ extends Node
 @onready var water_background = $WaterBackground
 @onready var player = $"../Character"
 @export var tile : PackedScene
-@export var width : int = 16
+@export var width : int = 100
 @export var height : int = 200
 @export var chunk_width : int = 20
 @export var chunk_height : int = 20
 @export var noise_seed : int = 000000
-var current_chunk = Vector2.ZERO
 
 signal drop_at_pos(pos, tile_type)
 
@@ -27,8 +26,11 @@ var border_amount = 6
 var tiles_around_border = 2
 var tile_dict = {}
 var sprite_name_list = ["1A", "1All","2A", "2All","3A", "3All","4A", "4All","5A", "5All","6A", "6All"]
-
 var water_edge_y = 20 # How many land tiles till water comes
+
+#var saved_chunks = [] # All chunks that have already been loaded
+var loaded_chunk = Vector2.ZERO
+var chunks_around_loaded = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,8 +41,14 @@ func _ready():
 	moisture.seed = noise_seed + noise_offset * 3
 	spawn_tiles()
 	transform_backgrounds(width, height)
-	$"../Character".position = Vector2(float(width * 32)/2.0 -16,-32)
+	player.position = Vector2(float(width * 32)/2.0 -16,-32)
+	loaded_chunk = give_chunk_position(player.position)
+	set_chunks_around_loaded(loaded_chunk)
 	set_sprites_of_tiles(give_chunk_position(Vector2(float(width * 32)/2.0 -16,-32)))
+	for y in range(height/chunk_height):
+		for x in range(width/chunk_width):
+			if Vector2(x,y) != loaded_chunk and (Vector2(x,y) not in chunks_around_loaded):
+				deactivate_chunks(Vector2(x,y))
 
 # Spawns tiles depending on x and y input.
 func spawn_tiles():
@@ -66,11 +74,46 @@ func spawn_tiles():
 func give_chunk_position(pos):
 	return Vector2(floor((player.position.x + 16) / (chunk_width * 32)),floor((player.position.y + 16) / (chunk_height * 32)))
 
+func set_chunks_around_loaded(pos):
+	chunks_around_loaded.clear()
+	for i in range(-1,2):
+		for j in range(-1,2):
+			chunks_around_loaded.append(pos + Vector2(i,j))
+	
+func activate_chunks(pos):
+	for y in range(pos.y * chunk_height,(pos.y + 1) * chunk_height):
+		for x in range(pos.x * chunk_width,(pos.x + 1) * chunk_width):
+			if tile_dict.has(Vector2(x,y)):
+				var tile = tile_dict[Vector2(x,y)]
+				tile.visible = true
+				tile.set_process(true)
+
+func deactivate_chunks(pos):
+	for y in range(pos.y * chunk_height,(pos.y + 1) * chunk_height):
+		for x in range(pos.x * chunk_width,(pos.x + 1) * chunk_width):
+			if tile_dict.has(Vector2(x,y)):
+				var tile = tile_dict[Vector2(x,y)]
+				tile.visible = false
+				tile.set_process(false)
+				
 func _process(delta):
-	current_chunk = give_chunk_position(player.position)
+	var player_chunk = give_chunk_position(player.position)
+	if loaded_chunk != player_chunk:
+		loaded_chunk = player_chunk
+		var old_loaded_chunk = chunks_around_loaded + []
+		set_chunks_around_loaded(loaded_chunk)
+		for chunk in chunks_around_loaded:
+				activate_chunks(chunk)
+		for chunk in old_loaded_chunk:
+			if chunk not in chunks_around_loaded:
+				deactivate_chunks(chunk)
+		print("Unlo: ", old_loaded_chunk)
+		print("Load: ", chunks_around_loaded)
+		activate_chunks(loaded_chunk)
+		
 	if Input.is_action_just_pressed("up"):
 		print("Player Pos: " + str(player.position))
-		print("Chunk Pos: " + str(give_chunk_position(player.position)))
+		print("Chunk Pos: " + str(player_chunk))
 
 func get_tile_type_for_area(input):
 	match input:
@@ -131,16 +174,13 @@ func transform_backgrounds(_x, _y):
 
 # Sets the sprite of every tile.s
 func set_sprites_of_tiles(pos):
-	print(pos + Vector2(0,1))
-	pos = pos + Vector2(0,1)
-	for y in range(pos.y * chunk_height,(pos.y + 1) * chunk_height):
-		for x in range(pos.x * chunk_width,(pos.x + 1) * chunk_width):
+	for y in range(height):
+		for x in range(width):
 			if tile_dict.has(Vector2(x,y)):
 				var neighbours = check_where_neighbours(Vector2(x,y))
 				set_tile_frame(neighbours, tile_dict[Vector2(x,y)].get_node("Sprite"), tile_dict[Vector2(x,y)].get_type())
 				if y < water_edge_y + 1:
 					set_tile_greenery(neighbours, tile_dict[Vector2(x,y)].get_node("Greenery"))
-					pass
 
 # Given a string of neighbours and the sprite of a tile set its greenery.
 func set_tile_greenery(neighbours, sprite):
@@ -243,7 +283,6 @@ func update_neighbour_sprite(pos):
 func _on_child_exiting_tree(node):
 	if node.get_groups().has("Tiles"):
 		var destroyed_tile_position = node.get_tile_position()
-		print("Destroyed: ", destroyed_tile_position)
 		drop_at_pos.emit(destroyed_tile_position, node.get_type())
 		tile_dict.erase(destroyed_tile_position)
 		update_neighbour_sprite(destroyed_tile_position)
