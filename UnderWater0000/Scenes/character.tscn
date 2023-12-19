@@ -31,6 +31,7 @@ radius = 11.5
 radius = 128.0
 
 [node name="Character" type="CharacterBody2D" groups=["Player"]]
+texture_filter = 1
 script = ExtResource("1_nhfmq")
 free_cam_active = true
 light_activ_y = 30

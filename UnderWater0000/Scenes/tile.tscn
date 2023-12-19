@@ -728,7 +728,7 @@ animation = &"Greenery"
 z_index = -3
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fdck3")
-animation = &"1A"
+animation = &"6A"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_wceys")

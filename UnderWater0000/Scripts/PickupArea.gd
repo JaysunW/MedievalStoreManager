@@ -4,7 +4,7 @@ var drops_in_range = []
 var drops_to_delete = []
 var pickup_range = 3.0 * 32
 
-const DROP_SPEED = 50
+const DROP_SPEED = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +16,7 @@ func _physics_process(delta):
 	for drop in drops_in_range:
 		if is_instance_valid(drop):
 			var new_vec = position - to_local(drop.position)
-			drop.linear_velocity = new_vec * delta * DROP_SPEED
+			drop.linear_velocity += Vector2(new_vec.x ,new_vec.y * 0.2)* delta * DROP_SPEED
 			if new_vec.length() <= 24:
 				drops_to_delete.append(drop)
 				drop.queue_free()
