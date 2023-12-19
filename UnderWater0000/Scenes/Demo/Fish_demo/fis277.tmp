@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cjlmgr412v34e"]
+[gd_scene load_steps=8 format=3 uid="uid://cjlmgr412v34e"]
 
-[ext_resource type="Script" path="res://Scripts/Demo/FishDemo/fish_demo.gd" id="1_emn7a"]
+[ext_resource type="Script" path="res://Scripts/fish_demo.gd" id="1_3slu8"]
 [ext_resource type="PackedScene" uid="uid://driuhkca6sbfh" path="res://Scenes/Demo/Fish_demo/fish_wall.tscn" id="2_1x7by"]
-[ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Scenes/Demo/Fish_demo/fish.tscn" id="3_8mtid"]
-[ext_resource type="PackedScene" uid="uid://g1y668ftpdlu" path="res://Scenes/Demo/Fish_demo/predator_fish.tscn" id="4_4jbfq"]
-[ext_resource type="PackedScene" uid="uid://cklmbyoti6x07" path="res://Scenes/Demo/Fish_demo/special_fish.tscn" id="4_wsujh"]
+[ext_resource type="PackedScene" uid="uid://d05piednn1a83" path="res://Scenes/Demo/Fish_demo/fish.tscn" id="3_8mtid"]
+[ext_resource type="PackedScene" uid="uid://buv04q324dya1" path="res://Scenes/Demo/Fish_demo/special_fish.tscn" id="4_wsujh"]
 [ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="5_cohvw"]
 
 [sub_resource type="Curve2D" id="Curve2D_nfbjn"]
@@ -13,19 +12,15 @@
 size = Vector2(32, 32)
 
 [node name="FishDemo" type="Node2D"]
-script = ExtResource("1_emn7a")
+script = ExtResource("1_3slu8")
 tile_scene = ExtResource("2_1x7by")
 fish_scene = ExtResource("3_8mtid")
-predator_scene = ExtResource("4_4jbfq")
 special_fish_scene = ExtResource("4_wsujh")
-height = 30
-width = 40
-normal_fish_count = 20
-predator_fish_count = 20
-special_fish_count = 1
+normal_fish = 150
+special_fish = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.8, 0.8)
+zoom = Vector2(0.7, 0.7)
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_nfbjn")

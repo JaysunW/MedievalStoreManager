@@ -5,13 +5,19 @@ extends Node2D
 @onready var collision = $Area2D/CollisionShape2D
 
 @export var tile_scene : PackedScene
+@export var coral_scene : PackedScene
 @export var fish_scene : PackedScene
+@export var predator_scene : PackedScene
 @export var special_fish_scene : PackedScene
+@export var with_structure = true
 @export var height = 50
 @export var width = 80
-@export var normal_fish = 30
-@export var special_fish = 2
+@export var normal_fish_count = 30
+@export var predator_fish_count = 30
+@export var special_fish_count = 2
 @export var noise_seed : int = 000000
+
+var fish_list = []
 
 var noise_one= FastNoiseLite.new()
 var noise_two = FastNoiseLite.new()
@@ -30,18 +36,32 @@ func _ready():
 	spawn_walls()
 	add_points_to_path()
 	$Camera2D.position = Vector2(width* 32/2, height* 32/2)
-	spawn_at_random_position()
-	spawn_test_fish()
+	spawn_fish(fish_scene,normal_fish_count)
+	spawn_fish(predator_scene,predator_fish_count)
+	spawn_special_fish()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if Input.is_action_just_pressed("left_mouse_button"):
+	if Input.is_action_just_pressed("left_mouse_button"): # Spawn coral at mouse position
+#		var mouse_pos = get_global_mouse_position()
+#		var new_tile = coral_scene.instantiate()
+#		new_tile.position = mouse_pos
+#		add_child(new_tile)
+		pass
+	if Input.is_action_just_pressed("right_mouse_button"): # Spawn obstacle at mouse position
 		var mouse_pos = get_global_mouse_position()
 		var new_tile = tile_scene.instantiate()
 		new_tile.position = mouse_pos
 		add_child(new_tile)
-		print(new_tile.position)
+
+func add_points_to_path():
+	var offset = 8
+	path.curve.add_point(Vector2(32 * offset,32 * offset))
+	path.curve.add_point(Vector2(32 * (width - 1) - 32 * offset, 32 * offset))
+	path.curve.add_point(Vector2(32 * (width - 1) - 32 * offset, 32 * (height - 1) - 32 * offset))
+	path.curve.add_point(Vector2(32 * offset, 32 * (height - 1) - 32 * offset))
+	path.curve.add_point(Vector2(32 * offset, 32 * offset))
 
 func spawn_walls():
 	for y in range(height):
@@ -54,44 +74,37 @@ func spawn_walls():
 				var new_tile = tile_scene.instantiate()
 				new_tile.position = Vector2(x * 32,y * 32)
 				add_child(new_tile)
-	var jumper = 5
-	var ground_jumper = 2
-	var ground_start = 5
-	for x in range(width):
-		var ground = (noise_one.get_noise_2d(x * ground_jumper, 0) + 1) * 0.5 * ground_start
-		for y in range(ground, height):
-			var noise_value_1 = (noise_one.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
-			var noise_value_2 = (noise_two.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
-			#var higherY = float(_y - y) / _y * 0.05
-			var y_offset = 5
-			var noise_around_zero = noise_value_1 * y_offset - y_offset
-			if (noise_value_1 > 0.6 and noise_value_2 > 0.2):
-				var new_tile = tile_scene.instantiate()
-				new_tile.position = Vector2(x * 32,y * 32)
-				add_child(new_tile)
-				
-func add_points_to_path():
-	var offset = 8
-	path.curve.add_point(Vector2(32 * offset,32 * offset))
-	path.curve.add_point(Vector2(32 * (width - 1) - 32 * offset, 32 * offset))
-	path.curve.add_point(Vector2(32 * (width - 1) - 32 * offset, 32 * (height - 1) - 32 * offset))
-	path.curve.add_point(Vector2(32 * offset, 32 * (height - 1) - 32 * offset))
-	path.curve.add_point(Vector2(32 * offset, 32 * offset))
+	if with_structure:
+		var jumper = 5
+		var ground_jumper = 2
+		var ground_start = 5
+		for x in range(width):
+			var ground = (noise_one.get_noise_2d(x * ground_jumper, 0) + 1) * 0.5 * ground_start
+			for y in range(ground, height):
+				var noise_value_1 = (noise_one.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
+				var noise_value_2 = (noise_two.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
+				#var higherY = float(_y - y) / _y * 0.05
+				var y_offset = 5
+				var noise_around_zero = noise_value_1 * y_offset - y_offset
+				if (noise_value_1 > 0.6 and noise_value_2 > 0.2):
+					var new_tile = tile_scene.instantiate()
+					new_tile.position = Vector2(x * 32,y * 32)
+					add_child(new_tile)
 
-func spawn_test_fish():
-	for i in range(special_fish):
+func spawn_special_fish():
+	for i in range(special_fish_count):
 		var fish = special_fish_scene.instantiate()
-		var direction = path_follow.rotation + PI /2
-		direction += randf_range(-PI / 4, PI / 4)
+		var direction = path_follow.rotation + PI /2 * 1
+		direction += randf_range(-PI / 4, PI / 4) * 0
 		fish.rotation =  direction
-		fish.position = Vector2(width* 32/2 + rng.randi_range( -4, 5)* 32, height* 32/2 + rng.randi_range( -4, 5)* 32)
+		fish.position = Vector2( 0*32+ width* 32/2 + rng.randi_range( -4, 5)* 32, height* 32/2 + rng.randi_range( -4, 5)* 32)
 		add_child(fish)
 
-func spawn_at_random_position():
-	for i in range(normal_fish):
+func spawn_fish(input, size):
+	for i in range(size):
 		var random_float = rng.randf_range(0,1)
 		path_follow.progress_ratio = random_float
-		var fish = fish_scene.instantiate()
+		var fish = input.instantiate()
 		var direction = path_follow.rotation + PI /2
 		direction += randf_range(-PI / 4, PI / 4)
 		fish.rotation =  direction
@@ -99,11 +112,9 @@ func spawn_at_random_position():
 		add_child(fish)
 
 func _on_fish_spawner_timeout():
-	spawn_at_random_position()
 	pass # Replace with function body.
 
 func _on_special_fish_spawner_timeout():
-	spawn_test_fish()
 	pass # Replace with function body.
 
 func _on_area_2d_area_exited(area):

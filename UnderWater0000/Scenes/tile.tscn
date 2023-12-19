@@ -711,9 +711,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Tile" type="StaticBody2D" groups=["Tiles"]]
+[node name="Tile" type="RigidBody2D" groups=["Tiles"]]
 collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_u2fqo")
+lock_rotation = true
+freeze = true
 script = ExtResource("1_80sbk")
 
 [node name="Greenery" type="AnimatedSprite2D" parent="."]

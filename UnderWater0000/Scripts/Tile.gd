@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends RigidBody2D
 
 @export var max_health = 100
 var grid_service = null
