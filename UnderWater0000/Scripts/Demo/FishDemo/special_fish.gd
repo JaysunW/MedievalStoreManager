@@ -1,4 +1,4 @@
-extends Predator_fish
+extends Fish
 
 @onready var line = $LineToNearFish
 @onready var line2 = $CenterOfFish
@@ -40,7 +40,6 @@ func special_behaviour():
 	line5.add_point(to_local(position + obstacle_avoidance_vector.normalized() * 32 * 1.6))
 	line6.add_point(to_local(position))
 	line6.add_point(to_local(position + linear_velocity / speed * 32 * 1.8))
-	var fish_avoidance_vector = get_fish_avoidance()
 
 func line_around_point(line_node,pos): 
 	var size = 6
@@ -49,3 +48,21 @@ func line_around_point(line_node,pos):
 	line_node.add_point(pos + Vector2(-size,0))
 	line_node.add_point(pos + Vector2(0,-size))
 	line_node.add_point(pos + Vector2(size,0))
+
+func _on_detect_fish_body_entered(body):
+	var groups = body.get_groups() 
+	if body != $"." and groups.has(type):
+		near_fish.append(body)
+	elif groups.has("FISH"):
+		other_fish.append(body)
+	elif groups.has("Obstacle"):
+		obstacles.append(body)
+
+func _on_detect_fish_body_exited(body):
+	var groups = body.get_groups() 
+	if groups.has(type):
+		near_fish.erase(body)
+	elif groups.has("FISH"):
+		other_fish.erase(body)
+	elif groups.has("Obstacle"):
+		obstacles.erase(body)

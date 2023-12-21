@@ -9,7 +9,7 @@ extends Node2D
 @export var fish_scene : PackedScene
 @export var predator_scene : PackedScene
 @export var special_fish_scene : PackedScene
-@export var special_predator_fish_scene : PackedScene
+@export var special_predator_scene : PackedScene
 @export var with_structure = true
 @export var height = 50
 @export var width = 80
@@ -44,12 +44,12 @@ func _ready():
 	spawn_walls()
 	add_points_to_path()
 	$Camera2D.position = Vector2(width* 32/2, height* 32/2)
-	spawn_fish(fish_scene, "NORMAL", blue_fish_count, blue_sprite)
+	spawn_fish(fish_scene, "BLUE", blue_fish_count, blue_sprite)
 	spawn_fish(fish_scene, "CLOWN", clown_fish_count, clown_sprite)
 	spawn_fish(fish_scene,"ORANGE", orange_fish_count,orange_sprite)
-	spawn_fish(special_fish_scene,"NORMAL", special_fish_count,blue_sprite)
-	spawn_fish(predator_scene,"PREDATOR", predator_fish_count, piranha_sprite)
-	spawn_fish(special_predator_fish_scene,"PREDATOR", special_predator_fish_count, piranha_sprite)
+	spawn_fish(special_fish_scene,"BLUE", special_fish_count,blue_sprite)
+	spawn_fish(predator_scene,"PIRANHA", predator_fish_count, piranha_sprite)
+	spawn_fish(special_predator_scene,"PIRANHA", special_predator_fish_count, piranha_sprite)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

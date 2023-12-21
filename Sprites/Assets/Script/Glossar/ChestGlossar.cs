@@ -1,0 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class ChestGlossar
+{
+    public ChestEnum enumName;
+    public Sprite sprite;
+    public int index;
+    public string name;
+    public string description;
+    public bool found;
+}

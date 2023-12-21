@@ -5,9 +5,8 @@ class_name Fish
 @onready var detect_fish_shape = $DetectFish/CollisionShape2D
 @onready var sprite = $Sprite
 
-@export var speed = 150
-@export var max_speed = 150
-@export var min_speed = 75
+var max_speed = 100
+var speed = max_speed
 
 var rng = RandomNumberGenerator.new()
 var type = ""
@@ -18,9 +17,12 @@ var alignment_force = 0.1
 var cohesion_force = 0.1
 var obstacle_avoidance_force = 0.14
 var fish_avoidance_force = 0.003
+var stress_max = 100
+var stress = stress_max
 
 var near_fish = []
 var other_fish = []
+var predator_fish = []
 var obstacles = []
 var field_of_vision = -0.2 # Between -1 and 1, 1 directly infront
 var vision_radius = 64
@@ -32,7 +34,7 @@ func _ready():
 	detect_fish_shape.shape.radius = vision_radius
 	linear_velocity = Vector2(max_speed,0).rotated(rotation)
 	pass
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	sprite.look_at(position + linear_velocity)
@@ -48,6 +50,12 @@ func _physics_process(delta):
 	velocity_direction += fish_avoidance_vector * fish_avoidance_force + linear_velocity.normalized() + separation_vector.normalized() * separation_force
 	linear_velocity = (velocity_direction  + obstacle_avoidance_vector.normalized() * obstacle_avoidance_force).normalized() * speed
 	special_behaviour()
+
+func calculate_stress():
+	var min_dis = vision_radius
+	for predator in predator_fish:
+		var connection_vec = (predator.position) - (position) 
+		if min_dis > connection_vec.normalized():
 
 func special_behaviour():
 	pass
@@ -124,11 +132,12 @@ func _on_detect_fish_body_entered(body):
 	var groups = body.get_groups() 
 	if body != $"." and groups.has(type):
 		near_fish.append(body)
+	elif groups.has("PREDATOR"):
+		
 	elif groups.has("FISH"):
 		other_fish.append(body)
 	elif groups.has("Obstacle"):
 		obstacles.append(body)
-		print("Obstacle: " + str(obstacles.size()))
 
 func _on_detect_fish_body_exited(body):
 	var groups = body.get_groups() 
@@ -137,6 +146,4 @@ func _on_detect_fish_body_exited(body):
 	elif groups.has("FISH"):
 		other_fish.erase(body)
 	elif groups.has("Obstacle"):
-		counter += 1
-		print("obstacle_delete: " + str(counter))
 		obstacles.erase(body)
