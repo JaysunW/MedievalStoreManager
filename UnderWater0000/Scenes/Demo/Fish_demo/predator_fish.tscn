@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://g1y668ftpdlu"]
 
 [ext_resource type="Script" path="res://Scripts/Demo/FishDemo/predator_fish.gd" id="1_vjev5"]
-[ext_resource type="Texture2D" uid="uid://c2qwck0hhma7g" path="res://Assets/Fish/OrangeFish.png" id="2_l0tq5"]
+[ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/Piranha.png" id="2_2cj47"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
 radius = 8.0
@@ -28,16 +28,9 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectFish"]
 shape = SubResource("CircleShape2D_65ytg")
 
-[node name="Area2D" type="Area2D" parent="." groups=["FISH", "PREDATOR"]]
-rotation = 1.5708
-scale = Vector2(0.4, 0.4)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CapsuleShape2D_mtnho")
-
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_l0tq5")
+texture = ExtResource("2_2cj47")
 
 [connection signal="area_entered" from="DetectFish" to="." method="_on_detect_fish_area_entered"]
 [connection signal="area_exited" from="DetectFish" to="." method="_on_detect_fish_area_exited"]

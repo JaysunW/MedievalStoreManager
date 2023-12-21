@@ -49,7 +49,7 @@ shape = SubResource("CapsuleShape2D_mki74")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(1, 1)
-color = Color(0.270588, 0.270588, 0.270588, 1)
+color = Color(0.239216, 0.239216, 0.239216, 1)
 energy = 1.15
 texture = ExtResource("5_lxa1y")
 

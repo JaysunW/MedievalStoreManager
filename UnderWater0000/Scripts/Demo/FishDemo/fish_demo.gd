@@ -9,14 +9,18 @@ extends Node2D
 @export var fish_scene : PackedScene
 @export var predator_scene : PackedScene
 @export var special_fish_scene : PackedScene
+@export var special_predator_fish_scene : PackedScene
 @export var with_structure = true
 @export var height = 50
 @export var width = 80
-@export var normal_fish_count = 30
-@export var predator_fish_count = 30
-@export var special_fish_count = 2
-@export var noise_seed : int = 000000
+@export var blue_fish_count = 10
+@export var clown_fish_count = 10
+@export var orange_fish_count = 10
+@export var predator_fish_count = 10
+@export var special_fish_count = 1
+@export var special_predator_fish_count = 1
 
+var noise_seed = 0
 var fish_list = []
 
 var noise_one= FastNoiseLite.new()
@@ -27,6 +31,10 @@ var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var blue_sprite = preload("res://Assets/Fish/BlueFish.png")
+	var clown_sprite = preload("res://Assets/Fish/clownfish.png")
+	var piranha_sprite = preload("res://Assets/Fish/Piranha.png")
+	var orange_sprite = preload("res://Assets/Fish/OrangeFish.png")
 	noise_one.seed = noise_seed
 	noise_two.seed = noise_seed + noise_offset
 	collision.position = Vector2(width* 32/2, height* 32/2)
@@ -36,9 +44,12 @@ func _ready():
 	spawn_walls()
 	add_points_to_path()
 	$Camera2D.position = Vector2(width* 32/2, height* 32/2)
-	spawn_fish(fish_scene,normal_fish_count)
-	spawn_fish(predator_scene,predator_fish_count)
-	spawn_special_fish()
+	spawn_fish(fish_scene, "NORMAL", blue_fish_count, blue_sprite)
+	spawn_fish(fish_scene, "CLOWN", clown_fish_count, clown_sprite)
+	spawn_fish(fish_scene,"ORANGE", orange_fish_count,orange_sprite)
+	spawn_fish(special_fish_scene,"NORMAL", special_fish_count,blue_sprite)
+	spawn_fish(predator_scene,"PREDATOR", predator_fish_count, piranha_sprite)
+	spawn_fish(special_predator_fish_scene,"PREDATOR", special_predator_fish_count, piranha_sprite)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -85,26 +96,19 @@ func spawn_walls():
 				var noise_value_2 = (noise_two.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
 				#var higherY = float(_y - y) / _y * 0.05
 				var y_offset = 5
-				var noise_around_zero = noise_value_1 * y_offset - y_offset
-				if (noise_value_1 > 0.6 and noise_value_2 > 0.2):
+				if (noise_value_1 > 0.5 and noise_value_2 > 0.2):
 					var new_tile = tile_scene.instantiate()
 					new_tile.position = Vector2(x * 32,y * 32)
 					add_child(new_tile)
 
-func spawn_special_fish():
-	for i in range(special_fish_count):
-		var fish = special_fish_scene.instantiate()
-		var direction = path_follow.rotation + PI /2 * 1
-		direction += randf_range(-PI / 4, PI / 4) * 0
-		fish.rotation =  direction
-		fish.position = Vector2( 0*32+ width* 32/2 + rng.randi_range( -4, 5)* 32, height* 32/2 + rng.randi_range( -4, 5)* 32)
-		add_child(fish)
-
-func spawn_fish(input, size):
+func spawn_fish(input, type, size, other_sprite = null):
 	for i in range(size):
 		var random_float = rng.randf_range(0,1)
 		path_follow.progress_ratio = random_float
 		var fish = input.instantiate()
+		fish.initialize_fish(type)
+		if other_sprite != null:
+			fish.set_sprite(other_sprite)
 		var direction = path_follow.rotation + PI /2
 		direction += randf_range(-PI / 4, PI / 4)
 		fish.rotation =  direction

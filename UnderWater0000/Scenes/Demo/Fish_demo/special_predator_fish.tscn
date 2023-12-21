@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cklmbyoti6x07"]
+[gd_scene load_steps=5 format=3 uid="uid://c7t5mt6daw45k"]
 
-[ext_resource type="Script" path="res://Scripts/Demo/FishDemo/special_fish.gd" id="1_286su"]
-[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/BlueFish.png" id="2_3c3bq"]
+[ext_resource type="Script" path="res://Scripts/Demo/FishDemo/special_fish.gd" id="1_fio5v"]
+[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/BlueFish.png" id="2_ygvsu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
 radius = 8.0
@@ -15,7 +15,7 @@ texture_filter = 1
 position = Vector2(64, 64)
 gravity_scale = 0.0
 can_sleep = false
-script = ExtResource("1_286su")
+script = ExtResource("1_fio5v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -30,7 +30,7 @@ shape = SubResource("CircleShape2D_65ytg")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_3c3bq")
+texture = ExtResource("2_ygvsu")
 
 [node name="LineToNearFish" type="Line2D" parent="."]
 width = 2.0

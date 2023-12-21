@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cklmbyoti6x07"]
+[gd_scene load_steps=5 format=3 uid="uid://g1y668ftpdlu"]
 
-[ext_resource type="Script" path="res://Scripts/Demo/FishDemo/special_fish.gd" id="1_286su"]
-[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/BlueFish.png" id="2_3c3bq"]
+[ext_resource type="Script" path="res://Scripts/Demo/FishDemo/predator_fish.gd" id="1_vjev5"]
+[ext_resource type="Texture2D" uid="uid://c2qwck0hhma7g" path="res://Assets/Fish/OrangeFish.png" id="2_l0tq5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
 radius = 8.0
@@ -15,7 +15,10 @@ texture_filter = 1
 position = Vector2(64, 64)
 gravity_scale = 0.0
 can_sleep = false
-script = ExtResource("1_286su")
+script = ExtResource("1_vjev5")
+speed = null
+max_speed = null
+min_speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -28,32 +31,16 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectFish"]
 shape = SubResource("CircleShape2D_65ytg")
 
+[node name="Area2D" type="Area2D" parent="." groups=["FISH"]]
+rotation = 1.5708
+scale = Vector2(0.4, 0.4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_mtnho")
+
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_3c3bq")
-
-[node name="LineToNearFish" type="Line2D" parent="."]
-width = 2.0
-
-[node name="CenterOfFish" type="Line2D" parent="."]
-width = 2.0
-default_color = Color(0, 1, 1, 1)
-
-[node name="Separation" type="Line2D" parent="."]
-width = 2.0
-default_color = Color(1, 0, 0.0156863, 1)
-
-[node name="Aligment" type="Line2D" parent="."]
-width = 2.0
-default_color = Color(0.0627451, 0, 0.960784, 1)
-
-[node name="Direction" type="Line2D" parent="."]
-width = 2.0
-default_color = Color(0.0823529, 1, 0.427451, 1)
-
-[node name="Obstacle" type="Line2D" parent="."]
-width = 1.0
-default_color = Color(0.447059, 0, 0.960784, 1)
+texture = ExtResource("2_l0tq5")
 
 [connection signal="area_entered" from="DetectFish" to="." method="_on_detect_fish_area_entered"]
 [connection signal="area_exited" from="DetectFish" to="." method="_on_detect_fish_area_exited"]
