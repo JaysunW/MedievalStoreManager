@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://g1y668ftpdlu"]
+[gd_scene load_steps=5 format=3 uid="uid://g1y668ftpdlu"]
 
 [ext_resource type="Script" path="res://Scripts/Demo/FishDemo/predator_fish.gd" id="1_vjev5"]
 [ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/Piranha.png" id="2_2cj47"]
@@ -10,14 +10,10 @@ height = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_65ytg"]
 radius = 64.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_axrsa"]
-radius = 4.0
-
 [node name="Fish" type="RigidBody2D"]
 texture_filter = 1
 position = Vector2(64, 64)
 gravity_scale = 0.0
-contact_monitor = true
 can_sleep = false
 script = ExtResource("1_vjev5")
 
@@ -40,18 +36,10 @@ texture = ExtResource("2_2cj47")
 one_shot = true
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 2.0
 one_shot = true
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
-wait_time = 4.0
 one_shot = true
-
-[node name="BiteArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BiteArea"]
-position = Vector2(6, 0)
-shape = SubResource("CircleShape2D_axrsa")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="area_entered" from="DetectFish" to="." method="_on_detect_fish_area_entered"]

@@ -25,6 +25,7 @@ height = 40
 width = 40
 predator_fish_count = 0
 special_fish_count = 0
+special_predator_fish_count = 5
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.9, 0.9)

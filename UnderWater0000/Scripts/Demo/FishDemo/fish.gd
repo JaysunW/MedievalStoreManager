@@ -1,12 +1,13 @@
-extends RigidBody2D
-
 class_name Fish
+extends RigidBody2D
 
 @onready var detect_fish_shape = $DetectFish/CollisionShape2D
 @onready var sprite = $Sprite
 
-var max_speed = 100
-var speed = max_speed
+var health = 100
+
+var normal_speed = 100
+var speed = normal_speed
 
 var rng = RandomNumberGenerator.new()
 var type = ""
@@ -20,6 +21,8 @@ var fish_avoidance_force = 0.003
 var stress_max = 100
 var stress = stress_max
 
+var current_state = Enums.FishState.SWIMMING
+
 var near_fish = []
 var other_fish = []
 var predator_fish = []
@@ -32,7 +35,7 @@ func _ready():
 	$".".add_to_group("FISH")
 	speed += rng.randi_range(-10,10)
 	detect_fish_shape.shape.radius = vision_radius
-	linear_velocity = Vector2(max_speed,0).rotated(rotation)
+	linear_velocity = Vector2(normal_speed,0).rotated(rotation)
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -40,11 +43,11 @@ func _physics_process(delta):
 	sprite.look_at(position + linear_velocity)
 	sprite.flip_v = abs(sprite.global_rotation) > 1.5
 
-	var cohesion_vector = get_cohesion()
-	var separation_vector = get_separation()
-	var alignment_vector = get_alignment()
-	var obstacle_avoidance_vector = get_obstacle_avoidance()
-	var fish_avoidance_vector = get_fish_avoidance()
+	var cohesion_vector = calc_cohesion()
+	var separation_vector = calc_separation()
+	var alignment_vector = calc_alignment()
+	var obstacle_avoidance_vector = calc_obstacle_avoidance()
+	var fish_avoidance_vector = calc_fish_avoidance()
 	
 	var velocity_direction =  alignment_vector.normalized() * alignment_force + cohesion_vector.normalized() * cohesion_force
 	velocity_direction += fish_avoidance_vector * fish_avoidance_force + linear_velocity.normalized() + separation_vector.normalized() * separation_force
@@ -56,22 +59,31 @@ func calculate_stress():
 	for predator in predator_fish:
 		var connection_vec = (predator.position) - (position) 
 		if min_dis > connection_vec.normalized():
+			pass
 
 func special_behaviour():
 	pass
-	
-func set_type(new_type):
-	type = new_type
+
+func take_damage(damage):
+	health -= damage
+	print("Health: " , health)
+	if health < 0:
+		print("Dead")
 
 func initialize_fish(input):
 	set_type(input)
 	self.add_to_group(type)
+	
+func set_type(new_type):
+	type = new_type
 
 func set_sprite(new_sprite):
 	$Sprite.texture = new_sprite
-
+	
+func set_state(new_state):
+	current_state = new_state
 # Gives the separation vector to fish of same species
-func get_separation():
+func calc_separation():
 	var separation = Vector2.ZERO
 	for fish in near_fish:
 		var connection_vec = (fish.position) - (position) 
@@ -83,7 +95,7 @@ func get_separation():
 	return separation
 
 # Gives the alignment vector to fish of same species
-func get_alignment():
+func calc_alignment():
 	var alignment = Vector2.ZERO
 	for fish in near_fish:
 		var connection_vec = (fish.position) - (position) 
@@ -94,7 +106,7 @@ func get_alignment():
 	return alignment
 
 # Gives the cohesion vector to fish of same species
-func get_cohesion():
+func calc_cohesion():
 	var cohesion = Vector2.ZERO
 	var cohesion_count = 0
 	for fish in near_fish:
@@ -108,7 +120,7 @@ func get_cohesion():
 	return cohesion 
 
 # Gives the avoidance vector to obstacle in the way
-func get_obstacle_avoidance():
+func calc_obstacle_avoidance():
 	var obstacle_avoidance = Vector2.ZERO
 	for obstacle in obstacles:
 		var connection_vec = (obstacle.position) - (position) 
@@ -118,7 +130,7 @@ func get_obstacle_avoidance():
 	return obstacle_avoidance
 
 # Gives the avoidance vector to other fish of different species
-func get_fish_avoidance():
+func calc_fish_avoidance():
 	var avoidance = Vector2.ZERO
 	for fish in other_fish:
 		var connection_vec = (fish.position) - (position) 
@@ -133,7 +145,7 @@ func _on_detect_fish_body_entered(body):
 	if body != $"." and groups.has(type):
 		near_fish.append(body)
 	elif groups.has("PREDATOR"):
-		
+		calculate_stress()
 	elif groups.has("FISH"):
 		other_fish.append(body)
 	elif groups.has("Obstacle"):

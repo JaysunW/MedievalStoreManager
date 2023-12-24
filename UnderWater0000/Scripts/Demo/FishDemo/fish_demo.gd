@@ -37,9 +37,7 @@ func _ready():
 	var orange_sprite = preload("res://Assets/Fish/OrangeFish.png")
 	noise_one.seed = noise_seed
 	noise_two.seed = noise_seed + noise_offset
-	collision.position = Vector2(width* 32/2, height* 32/2)
 	$Area2D/Sprite2D.position = Vector2(width* 32/2, height* 32/2)
-	collision.scale = Vector2((width), (height))
 	$Area2D/Sprite2D.scale = Vector2((width), (height))
 	spawn_walls()
 	add_points_to_path()
@@ -120,11 +118,3 @@ func _on_fish_spawner_timeout():
 
 func _on_special_fish_spawner_timeout():
 	pass # Replace with function body.
-
-func _on_area_2d_area_exited(area):
-	if area.get_groups().has("Fish"):
-		var fish_pos = area.get_parent().global_position
-		if fish_pos.y > height * 30 or fish_pos.y < 32 * 2:
-			area.get_parent().global_position = Vector2(clamp(fish_pos.x,32, (width * 31)), abs((height * 31) - fish_pos.y))
-		if fish_pos.x > width * 30 or fish_pos.x < 32 * 2:
-			area.get_parent().global_position = Vector2(abs((width * 31) - fish_pos.x), clamp(fish_pos.y,32, (height * 31)))

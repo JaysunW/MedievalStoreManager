@@ -23,3 +23,9 @@ enum DropType {
 	RUBY,
 	UNKNOWN
 }
+
+enum FishState{
+	SWIMMING,
+	CHASING,
+	IDLE
+}
