@@ -63,4 +63,8 @@ hit_from_inside = true
 [node name="Cooldown" type="Timer" parent="."]
 one_shot = true
 
+[node name="Overheat" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
+[connection signal="timeout" from="Overheat" to="." method="_on_overheat_timeout"]

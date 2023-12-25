@@ -8,6 +8,7 @@ extends PredatorFish
 @onready var line6 = $Direction
 
 @onready var line7 = $Target
+@onready var line8 = $Bite
 
 func special_behaviour():
 	line.clear_points()
@@ -17,6 +18,7 @@ func special_behaviour():
 	line5.clear_points()
 	line6.clear_points()
 	line7.clear_points()
+	line8.clear_points()
 	
 	for fish in near_fish:
 		var connection_vec = (fish.position) - (position) 
@@ -47,6 +49,12 @@ func special_behaviour():
 		var connection_vec = (target.position) - (position) 
 		line7.add_point(to_local(position))
 		line7.add_point(to_local(position + connection_vec.normalized() * 32 * 2))
+		connection_vec = (target.position) - ($BitePosition.position) 
+		if connection_vec.length() < 10:
+			line8.add_point(to_local($BitePosition.position))
+			line8.add_point(to_local(target.position))
+		
+	
 
 func line_around_point(line_node,pos): 
 	var size = 6

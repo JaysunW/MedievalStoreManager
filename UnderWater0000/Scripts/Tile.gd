@@ -28,11 +28,15 @@ func mine(damage):
 	var frame_count = destruction_sprite.sprite_frames.get_frame_count("default")
 	destruction_sprite.frame = frame_count - int (float(health)/float(max_health) * frame_count)
 	
-	
+func get_hardness():
+	return hardness
 func get_type():
 	return tile_type
 func get_tile_position():
 	return tile_position
+
+func set_hardness(input):
+	hardness = input
 func set_grid_service(input):
 	grid_service = input
 func set_tile_position(input):

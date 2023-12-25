@@ -4,6 +4,7 @@ extends Node
 @onready var upper_water_background = $UpperWaterBackground
 @onready var water_background = $WaterBackground
 @onready var player = $"../Character"
+@onready var chunk_border_show = $ChunkPerimeter
 @export var tile : PackedScene
 @export var width : int = 100
 @export var height : int = 200
@@ -42,7 +43,7 @@ func _ready():
 	spawn_tiles()
 	set_sprites_of_tiles()
 	transform_backgrounds(width, height)
-	player.position = Vector2(float(width * 32)/2.0 -16,-32)
+	#player.position = Vector2(float(width * 32)/2.0 -16,-32)
 
 func _process(delta):
 	var player_chunk = give_chunk_position(player.position)
@@ -78,7 +79,9 @@ func spawn_tiles():
 				tile_dict[Vector2(x,y)] = newTile
 				newTile.set_grid_service($".")
 				newTile.call("set_tile_position", Vector2(x,y))
-				newTile.call("set_type", get_tile_type_for_area(get_border_area(x,y, true)))
+				var border_idx = get_border_area(x,y, true)
+				newTile.call("set_type", get_tile_type_for_area(border_idx))
+				newTile.call("set_hardness", border_idx)
 				add_child(newTile)
 				newTile.visible = false
 				newTile.set_process(false)
@@ -87,10 +90,19 @@ func give_chunk_position(pos):
 	return Vector2(floor((player.position.x + 16) / (chunk_width * 32)),floor((player.position.y + 16) / (chunk_height * 32)))
 
 func set_chunks_around_loaded_chunk():
+	chunk_border_show.clear_points()
 	chunks_around_loaded.clear()
+	var loaded_chunk_pos = Vector2((loaded_chunk.x) * chunk_width,(loaded_chunk.y) * chunk_height)
 	for i in range(-1,2):
 		for j in range(-1,2):
+			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
+			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j) * chunk_height)) * 32)
+			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j + 1) * chunk_height)) * 32)
+			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j + 1) * chunk_height)) * 32)
+			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
 			chunks_around_loaded.append(loaded_chunk + Vector2(i,j))
+		chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(-1) * chunk_height)) * 32)
+	
 
 func activate_chunks(pos):
 	for y in range(pos.y * chunk_height,(pos.y + 1) * chunk_height):

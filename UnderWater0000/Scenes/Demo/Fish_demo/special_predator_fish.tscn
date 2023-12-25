@@ -1,80 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7t5mt6daw45k"]
+[gd_scene load_steps=3 format=3 uid="uid://bohfgh7o00pg6"]
 
 [ext_resource type="Script" path="res://Scripts/Demo/FishDemo/special_predator_fish.gd" id="1_qfeag"]
-[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/BlueFish.png" id="2_ygvsu"]
+[ext_resource type="PackedScene" uid="uid://g1y668ftpdlu" path="res://Scenes/Demo/Fish_demo/predator_fish.tscn" id="1_tip6p"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
-radius = 8.0
-height = 32.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_65ytg"]
-radius = 64.0
-
-[node name="Fish" type="RigidBody2D"]
-texture_filter = 1
-position = Vector2(64, 64)
-gravity_scale = 0.0
-contact_monitor = true
-can_sleep = false
+[node name="Fish" instance=ExtResource("1_tip6p")]
 script = ExtResource("1_qfeag")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-scale = Vector2(0.4, 0.4)
-shape = SubResource("CapsuleShape2D_mtnho")
-
-[node name="DetectFish" type="Area2D" parent="."]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectFish"]
-shape = SubResource("CircleShape2D_65ytg")
-
-[node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_ygvsu")
-
-[node name="LineToNearFish" type="Line2D" parent="."]
+[node name="LineToNearFish" type="Line2D" parent="." index="7"]
 width = 2.0
 
-[node name="CenterOfFish" type="Line2D" parent="."]
+[node name="CenterOfFish" type="Line2D" parent="." index="8"]
 width = 2.0
 default_color = Color(0, 1, 1, 1)
 
-[node name="Separation" type="Line2D" parent="."]
+[node name="Separation" type="Line2D" parent="." index="9"]
 width = 2.0
 default_color = Color(1, 0, 0.0156863, 1)
 
-[node name="Aligment" type="Line2D" parent="."]
+[node name="Aligment" type="Line2D" parent="." index="10"]
 width = 2.0
 default_color = Color(0.0627451, 0, 0.960784, 1)
 
-[node name="Direction" type="Line2D" parent="."]
+[node name="Direction" type="Line2D" parent="." index="11"]
 width = 2.0
 default_color = Color(0.0823529, 1, 0.427451, 1)
 
-[node name="Obstacle" type="Line2D" parent="."]
+[node name="Obstacle" type="Line2D" parent="." index="12"]
 width = 1.0
 default_color = Color(0.447059, 0, 0.960784, 1)
 
-[node name="Target" type="Line2D" parent="."]
+[node name="Target" type="Line2D" parent="." index="13"]
 width = 1.0
 default_color = Color(1, 0, 0.960784, 1)
 
-[node name="OutOfRangeTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
-[node name="AttackCooldownTimer" type="Timer" parent="."]
-wait_time = 4.0
-one_shot = true
-
-[connection signal="area_entered" from="DetectFish" to="." method="_on_detect_fish_area_entered"]
-[connection signal="area_exited" from="DetectFish" to="." method="_on_detect_fish_area_exited"]
-[connection signal="body_entered" from="DetectFish" to="." method="_on_detect_fish_body_entered"]
-[connection signal="body_exited" from="DetectFish" to="." method="_on_detect_fish_body_exited"]
-[connection signal="timeout" from="OutOfRangeTimer" to="." method="_on_out_of_range_timer_timeout"]
-[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]
+[node name="Bite" type="Line2D" parent="." index="14"]
+width = 1.0
+default_color = Color(0.788235, 0.576471, 0.00784314, 1)

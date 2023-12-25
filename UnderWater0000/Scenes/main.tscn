@@ -59,7 +59,11 @@ texture_filter = 1
 position = Vector2(0, 32)
 texture = ExtResource("4_g2ntc")
 
+[node name="ChunkPerimeter" type="Line2D" parent="GridService"]
+width = 5.0
+
 [node name="DarknesService" type="CanvasModulate" parent="."]
+visible = false
 texture_filter = 1
 script = ExtResource("6_rdp0a")
 light_offset = 4

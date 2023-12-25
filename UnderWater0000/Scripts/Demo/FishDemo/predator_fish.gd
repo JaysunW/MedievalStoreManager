@@ -4,40 +4,55 @@ extends Fish
 @onready var out_of_range_timer = $OutOfRangeTimer
 @onready var attack_timer = $AttackTimer
 @onready var attack_cooldown_timer = $AttackCooldownTimer
+# Stats
+var damage = 10
+var attack_speed_up = 10
+var cooldown_speed_down = 10
 
 var target = null
-var damage = 10
 var out_of_range_time = 5
+var attack_time = 3 
+var attack_cooldown_time = 2 
 
 var chase_factor = 0.5
 
 func _ready():
-	normal_speed = 90
 	out_of_range_timer.wait_time = out_of_range_time
+	attack_timer.wait_time = attack_time
+	attack_cooldown_timer.wait_time = attack_cooldown_time
 	$".".add_to_group("PREDATOR")
 	super()
 
 func _physics_process(_delta):
 	super(_delta)
-	if current_state == Enums.FishState.SWIMMING:
-		speed = normal_speed
-		attack_cooldown_timer.stop()
-		attack_timer.stop()
-		target_in_vision()
-	elif current_state == Enums.FishState.CHASING:
-		var connection_vec = target.position - position
-		if connection_vec.length() > vision_radius:
-			if out_of_range_timer.is_stopped():
-				out_of_range_timer.start()
-		else:
-			if not out_of_range_timer.is_stopped():
-				out_of_range_timer.stop()
-			if attack_timer.is_stopped() and attack_cooldown_timer.is_stopped():
-				
-				attack_timer.start()
-				speed += rng.randi_range(30,40)
-				print("Attacking: ", speed)
-		linear_velocity = (linear_velocity.normalized() + connection_vec.normalized() * chase_factor).normalized() * speed
+	match current_state:
+		Enums.FishState.SWIMMING:
+			speed = normal_speed
+			attack_timer.stop()
+			attack_cooldown_timer.stop()
+			target_in_vision()
+		Enums.FishState.CHASING:
+			if target == null:
+				current_state = Enums.FishState.SWIMMING
+			var connection_vec = target.position - position
+			if connection_vec.length() > vision_radius:
+				if out_of_range_timer.is_stopped():
+					out_of_range_timer.start()
+			else:
+				if not out_of_range_timer.is_stopped():
+					out_of_range_timer.stop()
+				if attack_cooldown_timer.is_stopped():
+					if attack_timer.is_stopped():
+						attack_timer.start()
+						speed = normal_speed + attack_speed_up
+						print("Attacking: ", speed)
+					elif connection_vec.length() < 10:
+						attack_fish()
+						attack_timer.stop()
+						attack_cooldown_timer.start()
+						speed = normal_speed - cooldown_speed_down
+						print("Start Cooldown")
+			linear_velocity = (linear_velocity.normalized() + connection_vec.normalized() * chase_factor).normalized() * speed
 	special_behaviour()
 	
 func target_in_vision():
@@ -58,7 +73,7 @@ func target_in_vision():
 		set_state(Enums.FishState.CHASING)
 		
 func attack_fish():
-	target.get_node("Fish").call("take_damage", 10)
+	target.call("take_damage", damage)
 		
 func get_fish_avoidance():
 	return Vector2.ZERO
@@ -89,11 +104,11 @@ func _on_out_of_range_timeout():
 
 
 func _on_attack_timer_timeout():
-	print("Stop attacking: " + str(speed) + " norm: " + str(normal_speed))
-	speed = normal_speed
 	attack_cooldown_timer.start()
+	speed = normal_speed - cooldown_speed_down
 	pass # Replace with function body.
 
 
 func _on_attack_cooldown_timer_timeout():
+	speed = normal_speed
 	pass

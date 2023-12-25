@@ -1,61 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://cklmbyoti6x07"]
+[gd_scene load_steps=3 format=3 uid="uid://ix330rakblo1"]
 
+[ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Scenes/Demo/Fish_demo/fish.tscn" id="1_8tqqr"]
 [ext_resource type="Script" path="res://Scripts/Demo/FishDemo/special_fish.gd" id="1_286su"]
-[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/BlueFish.png" id="2_3c3bq"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
-radius = 8.0
-height = 32.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_65ytg"]
-radius = 64.0
-
-[node name="Fish" type="RigidBody2D"]
-texture_filter = 1
-position = Vector2(64, 64)
-gravity_scale = 0.0
-can_sleep = false
+[node name="Fish" instance=ExtResource("1_8tqqr")]
 script = ExtResource("1_286su")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-scale = Vector2(0.4, 0.4)
-shape = SubResource("CapsuleShape2D_mtnho")
-
-[node name="DetectFish" type="Area2D" parent="."]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectFish"]
-shape = SubResource("CircleShape2D_65ytg")
-
-[node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_3c3bq")
-
-[node name="LineToNearFish" type="Line2D" parent="."]
+[node name="LineToNearFish" type="Line2D" parent="." index="3"]
 width = 2.0
 
-[node name="CenterOfFish" type="Line2D" parent="."]
+[node name="CenterOfFish" type="Line2D" parent="." index="4"]
 width = 2.0
 default_color = Color(0, 1, 1, 1)
 
-[node name="Separation" type="Line2D" parent="."]
+[node name="Separation" type="Line2D" parent="." index="5"]
 width = 2.0
 default_color = Color(1, 0, 0.0156863, 1)
 
-[node name="Aligment" type="Line2D" parent="."]
+[node name="Aligment" type="Line2D" parent="." index="6"]
 width = 2.0
 default_color = Color(0.0627451, 0, 0.960784, 1)
 
-[node name="Direction" type="Line2D" parent="."]
+[node name="Direction" type="Line2D" parent="." index="7"]
 width = 2.0
 default_color = Color(0.0823529, 1, 0.427451, 1)
 
-[node name="Obstacle" type="Line2D" parent="."]
+[node name="Obstacle" type="Line2D" parent="." index="8"]
 width = 1.0
 default_color = Color(0.447059, 0, 0.960784, 1)
-
-[connection signal="area_entered" from="DetectFish" to="." method="_on_detect_fish_area_entered"]
-[connection signal="area_exited" from="DetectFish" to="." method="_on_detect_fish_area_exited"]
-[connection signal="body_entered" from="DetectFish" to="." method="_on_detect_fish_body_entered"]
-[connection signal="body_exited" from="DetectFish" to="." method="_on_detect_fish_body_exited"]

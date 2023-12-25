@@ -3,11 +3,15 @@ extends RigidBody2D
 
 @onready var detect_fish_shape = $DetectFish/CollisionShape2D
 @onready var sprite = $Sprite
+@onready var stress_timer = $StressTimer
 
+# Stats
 var health = 100
 
 var normal_speed = 100
 var speed = normal_speed
+var stress_speed_up = 20
+var stress_time = 3
 
 var rng = RandomNumberGenerator.new()
 var type = ""
@@ -17,9 +21,8 @@ var separation_force = 0.11
 var alignment_force = 0.1
 var cohesion_force = 0.1
 var obstacle_avoidance_force = 0.14
-var fish_avoidance_force = 0.003
-var stress_max = 100
-var stress = stress_max
+var fish_avoidance_force = 0.1
+var predator_avoidance_force = 0.14
 
 var current_state = Enums.FishState.SWIMMING
 
@@ -33,13 +36,14 @@ var vision_radius = 64
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$".".add_to_group("FISH")
+	stress_timer.wait_time = stress_time
 	speed += rng.randi_range(-10,10)
 	detect_fish_shape.shape.radius = vision_radius
 	linear_velocity = Vector2(normal_speed,0).rotated(rotation)
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(_delta):
 	sprite.look_at(position + linear_velocity)
 	sprite.flip_v = abs(sprite.global_rotation) > 1.5
 
@@ -48,19 +52,14 @@ func _physics_process(delta):
 	var alignment_vector = calc_alignment()
 	var obstacle_avoidance_vector = calc_obstacle_avoidance()
 	var fish_avoidance_vector = calc_fish_avoidance()
+	var predator_avoidance_vector = calc_predator_avoidance()
 	
 	var velocity_direction =  alignment_vector.normalized() * alignment_force + cohesion_vector.normalized() * cohesion_force
-	velocity_direction += fish_avoidance_vector * fish_avoidance_force + linear_velocity.normalized() + separation_vector.normalized() * separation_force
-	linear_velocity = (velocity_direction  + obstacle_avoidance_vector.normalized() * obstacle_avoidance_force).normalized() * speed
+	velocity_direction += fish_avoidance_vector.normalized() * fish_avoidance_force + linear_velocity.normalized() + separation_vector.normalized() * separation_force
+	velocity_direction = (velocity_direction  + obstacle_avoidance_vector.normalized() * obstacle_avoidance_force).normalized()
+	linear_velocity = (velocity_direction + predator_avoidance_vector.normalized() * obstacle_avoidance_force).normalized() * speed
 	special_behaviour()
-
-func calculate_stress():
-	var min_dis = vision_radius
-	for predator in predator_fish:
-		var connection_vec = (predator.position) - (position) 
-		if min_dis > connection_vec.normalized():
-			pass
-
+	
 func special_behaviour():
 	pass
 
@@ -69,6 +68,10 @@ func take_damage(damage):
 	print("Health: " , health)
 	if health < 0:
 		print("Dead")
+	stress_timer.start()
+	speed += stress_speed_up
+	print(linear_velocity.length())
+	print(speed)
 
 func initialize_fish(input):
 	set_type(input)
@@ -140,12 +143,19 @@ func calc_fish_avoidance():
 			avoidance -= avoidance_ratio * connection_vec
 	return avoidance
 
+func calc_predator_avoidance():
+	var avoidance_vec = Vector2.ZERO
+	for predator in predator_fish:
+		var connection_vec = (predator.position) - (position) 
+		avoidance_vec -= connection_vec
+	return avoidance_vec
+
 func _on_detect_fish_body_entered(body):
 	var groups = body.get_groups() 
 	if body != $"." and groups.has(type):
 		near_fish.append(body)
 	elif groups.has("PREDATOR"):
-		calculate_stress()
+		predator_fish.append(body)
 	elif groups.has("FISH"):
 		other_fish.append(body)
 	elif groups.has("Obstacle"):
@@ -155,7 +165,14 @@ func _on_detect_fish_body_exited(body):
 	var groups = body.get_groups() 
 	if groups.has(type):
 		near_fish.erase(body)
+	elif groups.has("PREDATOR"):
+		predator_fish.erase(body)
 	elif groups.has("FISH"):
 		other_fish.erase(body)
 	elif groups.has("Obstacle"):
 		obstacles.erase(body)
+
+
+func _on_stress_timer_timeout():
+	speed = normal_speed
+	pass # Replace with function body.

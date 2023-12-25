@@ -16,7 +16,7 @@ func _physics_process(delta):
 	for drop in drops_in_range:
 		if is_instance_valid(drop):
 			var new_vec = position - to_local(drop.position)
-			drop.linear_velocity = Vector2(new_vec.x ,new_vec.y * 0.2).normalized()* delta * DROP_SPEED
+			drop.linear_velocity += Vector2(new_vec.x, 0).normalized() * DROP_SPEED
 			if new_vec.length() <= 24:
 				drops_to_delete.append(drop)
 				drop.queue_free()
