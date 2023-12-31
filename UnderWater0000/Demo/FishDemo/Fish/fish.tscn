@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cy1hmipt4g5ar"]
+
+[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/BlueFish.png" id="1_54exa"]
+[ext_resource type="Script" path="res://Demo/FishDemo/Fish/fish.gd" id="1_b6k7i"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
+radius = 12.0
+height = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_65ytg"]
+radius = 64.0
+
+[node name="Fish" type="RigidBody2D"]
+texture_filter = 1
+position = Vector2(64, 64)
+gravity_scale = 0.0
+can_sleep = false
+script = ExtResource("1_b6k7i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.4, 0.4)
+shape = SubResource("CapsuleShape2D_mtnho")
+
+[node name="DetectFish" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectFish"]
+shape = SubResource("CircleShape2D_65ytg")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_54exa")
+
+[node name="StressTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="DetectFish" to="." method="_on_detect_fish_body_entered"]
+[connection signal="body_exited" from="DetectFish" to="." method="_on_detect_fish_body_exited"]
+[connection signal="timeout" from="StressTimer" to="." method="_on_stress_timer_timeout"]
