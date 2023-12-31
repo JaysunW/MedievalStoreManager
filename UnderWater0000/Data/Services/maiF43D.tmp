@@ -1,16 +1,16 @@
 [gd_scene load_steps=14 format=3 uid="uid://c602dxf6mby3v"]
 
-[ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Player/character.tscn" id="1_klg2i"]
-[ext_resource type="Script" path="res://Services/GridService.gd" id="2_twuh3"]
-[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Tile/tile.tscn" id="2_u78vr"]
+[ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Data/Player/character.tscn" id="1_klg2i"]
+[ext_resource type="Script" path="res://Data/Services/GridService.gd" id="2_twuh3"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tile/tile.tscn" id="2_u78vr"]
 [ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="4_07dcn"]
-[ext_resource type="PackedScene" uid="uid://dy6r26f4dtep5" path="res://TileObjects/tile_object.tscn" id="4_8nqv3"]
+[ext_resource type="PackedScene" uid="uid://dy6r26f4dtep5" path="res://Data/TileObjects/coral_object.tscn" id="4_cy2t2"]
 [ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_g2ntc"]
-[ext_resource type="Script" path="res://Services/DropService/DropService.gd" id="6_ngjs8"]
-[ext_resource type="Script" path="res://Services/DarknesService.gd" id="6_rdp0a"]
-[ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Services/DropService/drop.tscn" id="7_6kn8i"]
-[ext_resource type="Script" path="res://QualityOfLife/enums.gd" id="8_n5caj"]
-[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://QualityOfLife/free_cam.tscn" id="10_bpfgd"]
+[ext_resource type="Script" path="res://Data/Services/DropService/DropService.gd" id="6_ngjs8"]
+[ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="6_rdp0a"]
+[ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Data/Services/DropService/drop.tscn" id="7_6kn8i"]
+[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Data/QualityOfLife/free_cam.tscn" id="10_bpfgd"]
+[ext_resource type="Script" path="res://Global/enums.gd" id="10_tj3ap"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
 size = Vector2(32, 32)
@@ -26,7 +26,7 @@ position = Vector2(32, 0)
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_twuh3")
 tile = ExtResource("2_u78vr")
-coral_scene = ExtResource("4_8nqv3")
+coral_scene = ExtResource("4_cy2t2")
 
 [node name="AirBackground" type="Sprite2D" parent="GridService"]
 self_modulate = Color(1, 1, 1, 0.498039)
@@ -74,7 +74,7 @@ script = ExtResource("6_ngjs8")
 drop_scene = ExtResource("7_6kn8i")
 
 [node name="Enums" type="Node2D" parent="."]
-script = ExtResource("8_n5caj")
+script = ExtResource("10_tj3ap")
 
 [node name="FreeCam" parent="." instance=ExtResource("10_bpfgd")]
 zoom = Vector2(0.3, 0.3)

@@ -15,7 +15,8 @@ var all_counter = 0
 @export var chunk_width : int = 20
 @export var chunk_height : int = 20
 
-signal drop_at_pos(pos, tile_type)
+signal place_tile_drop_at(pos, tile_type, under_water)
+signal place_coral_drop_at(pos, tile_type)
 
 var noise_one= FastNoiseLite.new()
 var noise_two = FastNoiseLite.new()
@@ -79,7 +80,7 @@ func spawn_tiles():
 			#var higherY = float(_y - y) / _y * 0.05
 			var y_offset = 5
 			var noise_around_zero = noise_value_1 * y_offset - y_offset
-			if fill_every_tile or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.5 and noise_value_2 > 0.2):
+			if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.5 and noise_value_2 > 0.2):
 				var newTile = tile.instantiate()
 				var border_idx = get_border_area(x,y, true)
 				newTile.position = Vector2(x * 32,y * 32)
@@ -111,22 +112,20 @@ func spawn_foliage():
 				var current_tile = tile_dict[pos]
 				var neighbours = check_where_neighbours(pos)
 				if neighbours != "LRUD" and noise_value_1 > 0.4 and noise_value_2 > 0.6:
+					var type = current_tile.get_type()
+					var dir_list = []
 					if not neighbours.contains("L"):
-						var object_in_dir = current_tile.get_spawn_from_dir(Enums.Dir.West)
-						var coral = coral_scene.instantiate()
-						object_in_dir.add_child(coral)
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.West))
 					if not neighbours.contains("R"):
-						var object_in_dir = current_tile.get_spawn_from_dir(Enums.Dir.East)
-						var coral = coral_scene.instantiate()
-						object_in_dir.add_child(coral)
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.East))
 					if not neighbours.contains("U"):
-						var object_in_dir = current_tile.get_spawn_from_dir(Enums.Dir.North)
-						var coral = coral_scene.instantiate()
-						object_in_dir.add_child(coral)
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.North))
 					if not neighbours.contains("D"):
-						var object_in_dir = current_tile.get_spawn_from_dir(Enums.Dir.South)
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.South))
+					for dir in dir_list:
 						var coral = coral_scene.instantiate()
-						object_in_dir.add_child(coral)
+						coral.call("set_type", type)
+						dir.add_child(coral)
 			
 	
 func give_chunk_position(pos):
@@ -330,9 +329,13 @@ func update_neighbour_sprite(pos):
 			set_tile_frame(check_where_neighbours(direction), tile_dict[direction].get_node("Sprite"), tile_dict[direction].get_type())
 
 func destroyed_tile(pos, type):
-	drop_at_pos.emit(pos, type)
+	drop_at_pos.emit(pos, type, pos.y >= water_edge_y)
 	tile_dict.erase(pos)
 	update_neighbour_sprite(pos)
+
+func destroyed_coral(pos, type):
+	drop_at_pos.emit(pos, type)
+
 
 func get_size():
 	return Vector2(width, height)

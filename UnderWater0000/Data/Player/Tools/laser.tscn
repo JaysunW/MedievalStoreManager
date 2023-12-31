@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bshu8w0haitut"]
 
-[ext_resource type="Script" path="res://Player/Laser.gd" id="1_o4khl"]
+[ext_resource type="Script" path="res://Data/Player/Tools/Laser.gd" id="1_o4khl"]
 [ext_resource type="Texture2D" uid="uid://c5f3hi6rqeoa6" path="res://Assets/Tools/Laser/LaserMk1.png" id="2_thvbu"]
 [ext_resource type="Texture2D" uid="uid://tiia6iboflml" path="res://Assets/Tools/Laser/LaserMk2.png" id="3_an77l"]
 [ext_resource type="Texture2D" uid="uid://b55viagtgamfi" path="res://Assets/Tools/Laser/LaserMk3.png" id="4_hs57e"]

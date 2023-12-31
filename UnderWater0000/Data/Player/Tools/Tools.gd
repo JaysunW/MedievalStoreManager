@@ -27,8 +27,8 @@ func change_tool(change):
 	current_tool_id = current_tool_id + change
 	if current_tool_id < 0: current_tool_id = tool_list.size() - 1
 	elif current_tool_id > tool_list.size() - 1: current_tool_id = 0
-	
 	for i in tool_list.size():
+		tool_list[i].disable(i == current_tool_id)
 		tool_list[i].set_process(i == current_tool_id)
 		tool_list[i].visible = i == current_tool_id
 		

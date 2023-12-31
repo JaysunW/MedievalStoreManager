@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx81y5g8yt450"]
+
+[ext_resource type="PackedScene" uid="uid://dy6r26f4dtep5" path="res://Framework/tile_object_prefab.tscn" id="1_q1wun"]
+[ext_resource type="Script" path="res://Data/TileObjects/CoralObject.gd" id="2_w6okl"]
+
+[node name="TileObject" instance=ExtResource("1_q1wun")]
+script = ExtResource("2_w6okl")
+
+[node name="Sprite" parent="." index="0"]
+animation = &"Tree"

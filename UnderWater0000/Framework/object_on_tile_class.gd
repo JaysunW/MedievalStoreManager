@@ -1,11 +1,16 @@
+class_name ObjectOnTile
 extends Node2D
 
 @onready var sprite = $Sprite
 
-var health = 100
+var rng = RandomNumberGenerator.new()
+var grid_service = null
+var max_health = 100
+var health = max_health
 
 var animation_frames = 0
-var type = ""
+
+var type = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,15 +24,11 @@ func take_damage(dmg):
 func get_type():
 	return type
 	
+func set_grid_service(input):
+	grid_service = input
 func set_type(new_type):
 	type = new_type
 
 func destroyed():
-	print("Destroyed")
+	grid_service.call("destroyed_coral", position, type)
 	queue_free()
-	pass
-	# destroy object and drop whatever
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

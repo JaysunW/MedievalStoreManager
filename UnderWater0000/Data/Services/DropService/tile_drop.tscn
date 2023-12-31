@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cff8hjlnr0tw3"]
+
+[ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Framework/drop_prefab.tscn" id="1_dfx4n"]
+[ext_resource type="Script" path="res://Data/Services/DropService/tile_drop.gd" id="2_mkh38"]
+
+[node name="Drop" instance=ExtResource("1_dfx4n")]
+script = ExtResource("2_mkh38")

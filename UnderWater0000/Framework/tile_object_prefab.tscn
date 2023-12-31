@@ -1,0 +1,129 @@
+[gd_scene load_steps=23 format=3 uid="uid://dy6r26f4dtep5"]
+
+[ext_resource type="Texture2D" uid="uid://b130d4443u6wd" path="res://Assets/Coral/ACoral1.png" id="2_7pc2b"]
+[ext_resource type="Texture2D" uid="uid://d1u8n8oriuy8v" path="res://Assets/Coral/ACoral2.png" id="3_kpxgc"]
+[ext_resource type="Texture2D" uid="uid://bepl5k0s7yqwq" path="res://Assets/Coral/ACoral3.png" id="4_lt5ry"]
+[ext_resource type="Texture2D" uid="uid://7n7lfjywd2or" path="res://Assets/Coral/ACoral4.png" id="5_rfasf"]
+[ext_resource type="Texture2D" uid="uid://djlufoks4ajyg" path="res://Assets/Coral/ECoral1.png" id="6_05ydw"]
+[ext_resource type="Texture2D" uid="uid://dhypf8q1tgwis" path="res://Assets/Coral/ECoral2.png" id="7_hcp0r"]
+[ext_resource type="Texture2D" uid="uid://cbr0dems4lgu4" path="res://Assets/Coral/ECoral3.png" id="8_7p6wn"]
+[ext_resource type="Texture2D" uid="uid://ddkmt1nn888um" path="res://Assets/Coral/ECoral4.png" id="9_mlqu3"]
+[ext_resource type="Texture2D" uid="uid://cuwqnuht8fq00" path="res://Assets/Coral/CCoral1.png" id="10_pdyhv"]
+[ext_resource type="Texture2D" uid="uid://bcdkh8clp0g3h" path="res://Assets/Coral/CCoral2.png" id="11_043s6"]
+[ext_resource type="Texture2D" uid="uid://cw4ebholv6rag" path="res://Assets/Coral/CCoral3.png" id="12_dwcr5"]
+[ext_resource type="Texture2D" uid="uid://c3xxxg51kcmss" path="res://Assets/Coral/CCoral4.png" id="13_o2qor"]
+[ext_resource type="Texture2D" uid="uid://dkxetwx7w7iyc" path="res://Assets/Coral/CCoral5.png" id="14_83ye6"]
+[ext_resource type="Texture2D" uid="uid://b8ai1c6nvrhhm" path="res://Assets/Coral/DCoral1.png" id="15_fxp6e"]
+[ext_resource type="Texture2D" uid="uid://bmjhw2tw7wgey" path="res://Assets/Coral/DCoral2.png" id="16_ufigt"]
+[ext_resource type="Texture2D" uid="uid://b1pyd0xce1was" path="res://Assets/Coral/DCoral3.png" id="17_iqy57"]
+[ext_resource type="Texture2D" uid="uid://dgsbcljlx1ylp" path="res://Assets/Coral/BCoral1.png" id="18_ps81x"]
+[ext_resource type="Texture2D" uid="uid://ddu682twnphw8" path="res://Assets/Coral/BCoral2.png" id="19_fujwn"]
+[ext_resource type="Texture2D" uid="uid://b7rjbgtpdk6ha" path="res://Assets/Coral/BCoral3.png" id="20_lxyt2"]
+[ext_resource type="Texture2D" uid="uid://lhnaxncs3ktd" path="res://Assets/Coral/BCoral4.png" id="21_ya5wy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ed46o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7pc2b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_kpxgc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_lt5ry")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rfasf")
+}],
+"loop": true,
+"name": &"Basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_05ydw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hcp0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7p6wn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_mlqu3")
+}],
+"loop": true,
+"name": &"Bowl",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_pdyhv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_043s6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_dwcr5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_o2qor")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_83ye6")
+}],
+"loop": true,
+"name": &"Brain",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_fxp6e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ufigt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_iqy57")
+}],
+"loop": true,
+"name": &"Rock",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_ps81x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_fujwn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_lxyt2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ya5wy")
+}],
+"loop": true,
+"name": &"Tree",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtmtc"]
+size = Vector2(18, 15)
+
+[node name="TileObject" type="Node2D"]
+texture_filter = 1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_ed46o")
+animation = &"Basic"
+
+[node name="Area2D" type="Area2D" parent="." groups=["CORAL"]]
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_dtmtc")
