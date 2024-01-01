@@ -4,7 +4,7 @@ extends Node2D
 var flip_counter = 1
 var rotation_degree_list = [0,90]
 
-var damage = 20
+var damage = 50
 var cooldown = 1
 var cooldown_active = false
 var interactable_groups = ["FISH","CORAL"]

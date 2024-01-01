@@ -7,7 +7,7 @@ var all_counter = 0
 @onready var water_background = $WaterBackground
 @onready var player = $"../Character"
 @onready var chunk_border_show = $ChunkPerimeter
-@export var tile : PackedScene
+@export var tile_scene : PackedScene
 @export var coral_scene : PackedScene
 @export var shell_scene : PackedScene
 @export var width : int = 100
@@ -16,7 +16,7 @@ var all_counter = 0
 @export var chunk_height : int = 20
 
 signal place_tile_drop_at(pos, tile_type, under_water)
-signal place_coral_drop_at(pos, tile_type)
+signal place_coral_drop_at(pos, animation_str, frame)
 
 var noise_one= FastNoiseLite.new()
 var noise_two = FastNoiseLite.new()
@@ -81,7 +81,7 @@ func spawn_tiles():
 			var y_offset = 5
 			var noise_around_zero = noise_value_1 * y_offset - y_offset
 			if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.5 and noise_value_2 > 0.2):
-				var newTile = tile.instantiate()
+				var newTile = tile_scene.instantiate()
 				var border_idx = get_border_area(x,y, true)
 				newTile.position = Vector2(x * 32,y * 32)
 				if (noise_value_1 > 0.8 and noise_value_2 > 0.6): border_idx += 2
@@ -112,7 +112,6 @@ func spawn_foliage():
 				var current_tile = tile_dict[pos]
 				var neighbours = check_where_neighbours(pos)
 				if neighbours != "LRUD" and noise_value_1 > 0.4 and noise_value_2 > 0.6:
-					var type = current_tile.get_type()
 					var dir_list = []
 					if not neighbours.contains("L"):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.West))
@@ -124,8 +123,11 @@ func spawn_foliage():
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.South))
 					for dir in dir_list:
 						var coral = coral_scene.instantiate()
-						coral.call("set_type", type)
 						dir.add_child(coral)
+						coral.call("set_type", current_tile.get_type())
+						coral.call("set_grid_service", self)
+						coral.call("update_sprite")
+						
 			
 	
 func give_chunk_position(pos):
@@ -329,13 +331,12 @@ func update_neighbour_sprite(pos):
 			set_tile_frame(check_where_neighbours(direction), tile_dict[direction].get_node("Sprite"), tile_dict[direction].get_type())
 
 func destroyed_tile(pos, type):
-	drop_at_pos.emit(pos, type, pos.y >= water_edge_y)
+	place_tile_drop_at.emit(pos, type, pos.y >= water_edge_y)
 	tile_dict.erase(pos)
 	update_neighbour_sprite(pos)
 
-func destroyed_coral(pos, type):
-	drop_at_pos.emit(pos, type)
-
+func destroyed_coral(pos, animation_str, frame):
+	place_coral_drop_at.emit(pos, animation_str, frame)
 
 func get_size():
 	return Vector2(width, height)

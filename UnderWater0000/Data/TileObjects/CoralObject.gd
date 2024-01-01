@@ -2,20 +2,26 @@ extends ObjectOnTile
 
 func update_sprite():
 	match type:
-		Enums.TileType.A0:
-			sprite.animation = "Basic"
-		Enums.TileType.A1:
-			sprite.animation = "Bowl"
-		Enums.TileType.A2:
-			sprite.animation = "Brain"
-		Enums.TileType.A2:
-			sprite.animation = "Rock"
-		Enums.TileType.A3:
-			sprite.animation = "Tree"
-		Enums.TileType.A4:
-			sprite.animation = "Brain"
-		Enums.TileType.A5:
-			sprite.animation = "Brain"
+		0:
+			animation = "Basic"
+		1:
+			animation = "Bowl"
+		2:
+			animation = "Brain"
+		3:
+			animation = "Rock"
+		4:
+			animation = "Tree"
+		5:
+			animation = "Brain"
+		6:
+			animation = "Brain"
 		Enums.TileType.UNKNOWN:
 			print("Something went wrong with the coral sprite update.")
-	sprite.frame = rng.randi_range(0, sprite.get_frame_count())
+	sprite.animation = animation
+	frame = rng.randi_range(0, sprite.sprite_frames.get_frame_count(animation))
+	sprite.frame = frame
+
+func destroyed():
+	grid_service.call("destroyed_coral", to_global(position), animation, frame)
+	super()

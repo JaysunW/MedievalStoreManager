@@ -1,16 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://c602dxf6mby3v"]
+[gd_scene load_steps=15 format=3 uid="uid://c602dxf6mby3v"]
 
 [ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Data/Player/character.tscn" id="1_klg2i"]
 [ext_resource type="Script" path="res://Data/Services/GridService.gd" id="2_twuh3"]
 [ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tile/tile.tscn" id="2_u78vr"]
 [ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="4_07dcn"]
-[ext_resource type="PackedScene" uid="uid://dy6r26f4dtep5" path="res://Framework/tile_object_prefab.tscn" id="4_cy2t2"]
 [ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_g2ntc"]
-[ext_resource type="Script" path="res://Data/Services/DropService/DropService.gd" id="6_ngjs8"]
+[ext_resource type="PackedScene" uid="uid://bpn6b7t822f3q" path="res://Data/TileObjects/CoralObject.tscn" id="4_ith2g"]
 [ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="6_rdp0a"]
 [ext_resource type="Script" path="res://Global/enums.gd" id="8_n5caj"]
-[ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Framework/drop_prefab.tscn" id="9_x3srt"]
+[ext_resource type="Script" path="res://Global/DropService.gd" id="8_ywvrw"]
+[ext_resource type="PackedScene" uid="uid://if6c8hclwknq" path="res://Data/Services/DropService/TileDrop.tscn" id="9_dl8h1"]
 [ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="10_bpfgd"]
+[ext_resource type="PackedScene" uid="uid://chm3q1pgnsq5f" path="res://Data/Services/DropService/CoralDrop.tscn" id="10_f203i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
 size = Vector2(32, 32)
@@ -25,8 +26,8 @@ position = Vector2(32, 0)
 
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_twuh3")
-tile = ExtResource("2_u78vr")
-coral_scene = ExtResource("4_cy2t2")
+tile_scene = ExtResource("2_u78vr")
+coral_scene = ExtResource("4_ith2g")
 
 [node name="AirBackground" type="Sprite2D" parent="GridService"]
 self_modulate = Color(1, 1, 1, 0.498039)
@@ -70,8 +71,9 @@ script = ExtResource("6_rdp0a")
 light_offset = 4
 
 [node name="DropService" type="Node2D" parent="."]
-script = ExtResource("6_ngjs8")
-drop_scene = ExtResource("9_x3srt")
+script = ExtResource("8_ywvrw")
+tile_drop_scene = ExtResource("9_dl8h1")
+coral_drop_scene = ExtResource("10_f203i")
 
 [node name="Enums" type="Node2D" parent="."]
 script = ExtResource("8_n5caj")
@@ -79,7 +81,8 @@ script = ExtResource("8_n5caj")
 [node name="FreeCam" parent="." instance=ExtResource("10_bpfgd")]
 zoom = Vector2(0.3, 0.3)
 
-[connection signal="drop_at_pos" from="GridService" to="DropService" method="_on_grid_service_drop_at_pos"]
+[connection signal="place_coral_drop_at" from="GridService" to="DropService" method="_on_grid_service_place_coral_drop_at"]
+[connection signal="place_tile_drop_at" from="GridService" to="DropService" method="_on_grid_service_place_tile_drop_at"]
 [connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
 [connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]
 [connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="DropService" method="_on_water_area_body_entered"]

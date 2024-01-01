@@ -19,5 +19,6 @@ func _on_lifetime_timeout():
 
 func set_drop_type(input):
 	type = input
+	
 func set_drop_service(input):
 	drop_service = input

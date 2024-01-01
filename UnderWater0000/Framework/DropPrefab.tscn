@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://d28qtts1580g6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8mpe"]
+size = Vector2(32, 32)
+
+[node name="Drop" type="RigidBody2D" groups=["Drop"]]
+can_sleep = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_k8mpe")
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 20.0
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
