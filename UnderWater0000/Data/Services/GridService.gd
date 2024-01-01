@@ -16,7 +16,6 @@ var all_counter = 0
 @export var chunk_height : int = 20
 
 signal place_tile_drop_at(pos, tile_type, under_water)
-signal place_coral_drop_at(pos, animation_str, frame)
 
 var noise_one= FastNoiseLite.new()
 var noise_two = FastNoiseLite.new()
@@ -24,6 +23,8 @@ var temperature = FastNoiseLite.new()
 var moisture = FastNoiseLite.new()
 var noise_seed : int = 000000
 var noise_offset = 10000
+var noise_jump = 6
+var noise_ground_jump = 2
 var rng = RandomNumberGenerator.new()
 
 var border_amount = 6
@@ -69,14 +70,12 @@ func _process(_delta):
 
 # Spawns tiles depending on x and y input.
 func spawn_tiles():
-	var jumper = 6
-	var ground_jumper = 2
 	var ground_start = water_edge_y + 10
 	for x in range(width):
-		var ground = (noise_one.get_noise_2d(x * ground_jumper, 0) + 1) * 0.5 * ground_start
+		var ground = (noise_one.get_noise_2d(x * noise_ground_jump, 0) + 1) * 0.5 * ground_start
 		for y in range(ground, height):
-			var noise_value_1 = (noise_one.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
-			var noise_value_2 = (noise_two.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
+			var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
+			var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
 			#var higherY = float(_y - y) / _y * 0.05
 			var y_offset = 5
 			var noise_around_zero = noise_value_1 * y_offset - y_offset
@@ -84,11 +83,12 @@ func spawn_tiles():
 				var newTile = tile_scene.instantiate()
 				var border_idx = get_border_area(x,y, true)
 				newTile.position = Vector2(x * 32,y * 32)
+				# Puts harder tiles in the middle of a chunk
 				if (noise_value_1 > 0.8 and noise_value_2 > 0.6): border_idx += 2
 				elif (noise_value_1 > 0.7 and noise_value_2 > 0.4): border_idx += 1
-				
 				if border_idx >= border_amount: border_idx = 0
-				newTile.set_grid_service($".")
+				# Sets stats of the tile
+				newTile.call("set_grid_service", $".")
 				newTile.call("set_tile_position", Vector2(x,y))
 				newTile.call("set_type", get_tile_type_for_area(border_idx))
 				newTile.call("set_hardness", border_idx)
@@ -98,28 +98,29 @@ func spawn_tiles():
 					newTile.visible = false
 					newTile.set_process(false)
 
+func rand_chance(chance):
+	return rng.randf_range(0,100) < chance
+
 func spawn_foliage():
-	var jumper = 6
-	var ground_jumper = 2
 	var ground_start = water_edge_y + 10
 	for x in range(width):
-		var ground = (noise_one.get_noise_2d(x * ground_jumper, 0) + 1) * 0.5 * ground_start
+		var ground = (noise_one.get_noise_2d(x * noise_ground_jump, 0) + 1) * 0.5 * ground_start
 		for y in range(ground, height):
-			var noise_value_1 = (noise_one.get_noise_2d(x * jumper, y * jumper) + 1) * 0.5
-			var noise_value_2 = (noise_two.get_noise_2d(x * jumper , y * jumper) + 1) * 0.5
+			var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
+			var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump , y * noise_jump) + 1) * 0.5
 			var pos = Vector2(x,y)
 			if tile_dict.has(pos) and y > water_edge_y:
 				var current_tile = tile_dict[pos]
 				var neighbours = check_where_neighbours(pos)
 				if neighbours != "LRUD" and noise_value_1 > 0.4 and noise_value_2 > 0.6:
 					var dir_list = []
-					if not neighbours.contains("L"):
+					if not neighbours.contains("L") and rand_chance(60):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.West))
-					if not neighbours.contains("R"):
+					if not neighbours.contains("R") and rand_chance(60):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.East))
-					if not neighbours.contains("U"):
+					if not neighbours.contains("U") and rand_chance(40):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.North))
-					if not neighbours.contains("D"):
+					if not neighbours.contains("D") and rand_chance(40):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.South))
 					for dir in dir_list:
 						var coral = coral_scene.instantiate()
@@ -139,12 +140,12 @@ func set_chunks_around_loaded_chunk():
 	var loaded_chunk_pos = Vector2((loaded_chunk.x) * chunk_width,(loaded_chunk.y) * chunk_height)
 	for i in range(-1,2):
 		for j in range(-1,2):
+			chunks_around_loaded.append(loaded_chunk + Vector2(i,j))
 			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
 			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j) * chunk_height)) * 32)
 			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j + 1) * chunk_height)) * 32)
 			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j + 1) * chunk_height)) * 32)
 			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
-			chunks_around_loaded.append(loaded_chunk + Vector2(i,j))
 		chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(-1) * chunk_height)) * 32)
 
 # Activates the chunk at pos
@@ -334,9 +335,6 @@ func destroyed_tile(pos, type):
 	place_tile_drop_at.emit(pos, type, pos.y >= water_edge_y)
 	tile_dict.erase(pos)
 	update_neighbour_sprite(pos)
-
-func destroyed_coral(pos, animation_str, frame):
-	place_coral_drop_at.emit(pos, animation_str, frame)
 
 func get_size():
 	return Vector2(width, height)

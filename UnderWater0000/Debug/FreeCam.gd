@@ -1,7 +1,7 @@
 extends Camera2D
 
 var speed = 300
-var zoom_update = Vector2(0.5,0.5)
+@export var zoom_update = Vector2(0.1,0.1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

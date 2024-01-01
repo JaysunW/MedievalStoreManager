@@ -8,6 +8,9 @@ var rng = RandomNumberGenerator.new()
 var drop_list = {}
 var drop_counter = 0
 	
+func _ready():
+	coral_drop_scene = preload("res://Data/Services/DropService/CoralDrop.tscn")
+	
 func place_tile_drop_at(pos, tileType, under_water):
 	var drop = tile_drop_scene.instantiate()
 	drop.position = pos * 32
@@ -23,7 +26,6 @@ func place_tile_drop_at(pos, tileType, under_water):
 	drop.linear_velocity = Vector2(rng.randi_range(-5,6),rng.randi_range(-5,6)) * 8
 
 func place_coral_drop_at(pos, animation_str, frame):
-	print(str(pos)+ animation_str + " : " + str(frame))
 	var drop = coral_drop_scene.instantiate()
 	drop.position = pos
 	drop.gravity_scale = 0.1

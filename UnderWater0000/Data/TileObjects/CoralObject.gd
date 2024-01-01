@@ -23,5 +23,5 @@ func update_sprite():
 	sprite.frame = frame
 
 func destroyed():
-	grid_service.call("destroyed_coral", to_global(position), animation, frame)
+	DropService.call("place_coral_drop_at", to_global(position), animation, frame)
 	super()

@@ -14,8 +14,7 @@ size = Vector2(32, 24)
 [node name="ChunkDemo" type="Node2D"]
 script = ExtResource("1_w0gxg")
 tile = ExtResource("2_nhtja")
-width = 600
-height = 400
+width = 200
 
 [node name="AirBackground" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.498039)

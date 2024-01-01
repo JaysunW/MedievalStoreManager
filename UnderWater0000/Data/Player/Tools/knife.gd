@@ -25,7 +25,6 @@ func _on_area_2d_area_entered(area):
 	for group in interactable_groups:
 		if area.get_groups().has(group) and area.get_parent() not in objects_in_range:
 			objects_in_range.append(area.get_parent())
-			print("Knife: " + str(objects_in_range))
 			break
 
 func _on_area_2d_area_exited(area):
