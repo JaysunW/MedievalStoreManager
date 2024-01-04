@@ -6,7 +6,6 @@ var animation = null
 var frame = null
 
 var rng = RandomNumberGenerator.new()
-var grid_service = null
 var max_health = 100
 var health = max_health
 
@@ -25,8 +24,6 @@ func take_damage(dmg):
 func get_type():
 	return type
 	
-func set_grid_service(input):
-	grid_service = input
 func set_type(new_type):
 	type = new_type
 

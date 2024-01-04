@@ -4,6 +4,7 @@
 size = Vector2(32, 32)
 
 [node name="Drop" type="RigidBody2D" groups=["Drop"]]
+texture_filter = 1
 can_sleep = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

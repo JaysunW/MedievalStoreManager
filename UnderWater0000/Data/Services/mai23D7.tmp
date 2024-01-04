@@ -1,0 +1,219 @@
+[gd_scene load_steps=41 format=3 uid="uid://c602dxf6mby3v"]
+
+[ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Data/Player/character.tscn" id="1_klg2i"]
+[ext_resource type="Script" path="res://Data/Services/GridService.gd" id="2_twuh3"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="3_51v31"]
+[ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="4_07dcn"]
+[ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_g2ntc"]
+[ext_resource type="PackedScene" uid="uid://bpn6b7t822f3q" path="res://Data/TileObjects/CoralObject.tscn" id="4_ith2g"]
+[ext_resource type="PackedScene" uid="uid://dy6r26f4dtep5" path="res://Framework/TileObjectPrefab.tscn" id="5_wfqy1"]
+[ext_resource type="Script" path="res://Data/TileObjects/ShellObject.gd" id="6_4wts8"]
+[ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="6_rdp0a"]
+[ext_resource type="Texture2D" uid="uid://dwi2br4xuovgg" path="res://Assets/Shell/Shell5.png" id="7_fgims"]
+[ext_resource type="Texture2D" uid="uid://62juum30espi" path="res://Assets/Shell/Shell6.png" id="8_dhc1h"]
+[ext_resource type="Script" path="res://Global/enums.gd" id="8_n5caj"]
+[ext_resource type="Texture2D" uid="uid://bemr2l12087g8" path="res://Assets/Shell/Shell7.png" id="9_berwt"]
+[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="10_bpfgd"]
+[ext_resource type="Texture2D" uid="uid://4pv00hg2xwve" path="res://Assets/Shell/Shell8.png" id="10_wslib"]
+[ext_resource type="Texture2D" uid="uid://cuvktfivln4i2" path="res://Assets/Shell/Shell9.png" id="11_mj1b4"]
+[ext_resource type="Texture2D" uid="uid://dm4vn8bfkmokv" path="res://Assets/Shell/Shell10.png" id="12_5dlbv"]
+[ext_resource type="Texture2D" uid="uid://mn4sekdru06s" path="res://Assets/Shell/Shell11.png" id="13_wte6g"]
+[ext_resource type="Texture2D" uid="uid://c1h4j0hpps1op" path="res://Assets/Shell/Shell12.png" id="14_w5unc"]
+[ext_resource type="Texture2D" uid="uid://b2766xs5thbkf" path="res://Assets/Shell/Shell13.png" id="15_n30s1"]
+[ext_resource type="Texture2D" uid="uid://dcpmgok12ukde" path="res://Assets/Shell/Shell14.png" id="16_6drah"]
+[ext_resource type="Texture2D" uid="uid://bmyji1aou8vxb" path="res://Assets/Shell/Shell15.png" id="17_hwaso"]
+[ext_resource type="Texture2D" uid="uid://cq8lugqneysux" path="res://Assets/Shell/Shell16.png" id="18_as7as"]
+[ext_resource type="Texture2D" uid="uid://uexvooaxf03l" path="res://Assets/Shell/Shell17.png" id="19_cee14"]
+[ext_resource type="Texture2D" uid="uid://cyujlwk34tqjp" path="res://Assets/Shell/Shell18.png" id="20_ldhf0"]
+[ext_resource type="Texture2D" uid="uid://ybk1en1oiyph" path="res://Assets/Shell/Shell19.png" id="21_rfoux"]
+[ext_resource type="Texture2D" uid="uid://db1ok8bsyjnus" path="res://Assets/Shell/Shell20.png" id="22_01i0f"]
+[ext_resource type="Texture2D" uid="uid://cu4r2un8tgcif" path="res://Assets/Shell/Shell21.png" id="23_ynk02"]
+[ext_resource type="Texture2D" uid="uid://doiot2supep04" path="res://Assets/Shell/Shell22.png" id="24_18vv4"]
+[ext_resource type="Texture2D" uid="uid://dxugd54p3kb76" path="res://Assets/Shell/Shell23.png" id="25_xqn1i"]
+[ext_resource type="Texture2D" uid="uid://dkqgmsv26o6et" path="res://Assets/Shell/Shell24.png" id="26_turag"]
+[ext_resource type="Texture2D" uid="uid://cuyu2um03g14d" path="res://Assets/Shell/Shell0.png" id="27_o4uil"]
+[ext_resource type="Texture2D" uid="uid://bol5of6lqrnsa" path="res://Assets/Shell/Shell1.png" id="28_2ekrn"]
+[ext_resource type="Texture2D" uid="uid://bdhc8j3stkyeq" path="res://Assets/Shell/Shell2.png" id="29_qns6n"]
+[ext_resource type="Texture2D" uid="uid://2bu2tkwql3b0" path="res://Assets/Shell/Shell3.png" id="30_q4lhk"]
+[ext_resource type="Texture2D" uid="uid://cornce2umi4pp" path="res://Assets/Shell/Shell4.png" id="31_gmxo6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j8ort"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_fgims")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dhc1h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_berwt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wslib")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_mj1b4")
+}],
+"loop": true,
+"name": &"Basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_5dlbv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_wte6g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_w5unc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_n30s1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_6drah")
+}],
+"loop": true,
+"name": &"Clean",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_hwaso")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_as7as")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_cee14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ldhf0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_rfoux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_01i0f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ynk02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_18vv4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_xqn1i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_turag")
+}],
+"loop": true,
+"name": &"Open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("27_o4uil")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_2ekrn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_qns6n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_q4lhk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_gmxo6")
+}],
+"loop": true,
+"name": &"Roll",
+"speed": 5.0
+}]
+
+[sub_resource type="PackedScene" id="PackedScene_tpmi8"]
+_bundled = {
+"base_scene": 0,
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("TileObject", "script", "Sprite", "AnimatedSprite2D", "scale", "sprite_frames", "animation"),
+"node_count": 2,
+"node_paths": [NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 2147483647, 0, -1, 1, 1, 1, 0, 1073741824, 0, 3, 262146, -1, 3, 4, 2, 5, 3, 6, 4, 0),
+"variants": [ExtResource("5_wfqy1"), ExtResource("6_4wts8"), Vector2(0.75, 0.75), SubResource("SpriteFrames_j8ort"), &"Open"],
+"version": 3
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewxhn"]
+size = Vector2(32, 24)
+
+[node name="Main" type="Node2D"]
+
+[node name="Character" parent="." instance=ExtResource("1_klg2i")]
+position = Vector2(32, 0)
+
+[node name="GridService" type="Node2D" parent="."]
+script = ExtResource("2_twuh3")
+tile_scene = ExtResource("3_51v31")
+coral_scene = ExtResource("4_ith2g")
+shell_scene = SubResource("PackedScene_tpmi8")
+width = 20
+height = 40
+
+[node name="AirBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -4
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("4_07dcn")
+
+[node name="AirArea" type="Area2D" parent="GridService/AirBackground"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridService/AirBackground/AirArea"]
+shape = SubResource("RectangleShape2D_28h5b")
+
+[node name="UpperWaterBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+texture = ExtResource("4_g2ntc")
+
+[node name="WaterArea" type="Area2D" parent="GridService/UpperWaterBackground"]
+monitorable = false
+
+[node name="collision" type="CollisionShape2D" parent="GridService/UpperWaterBackground/WaterArea"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ewxhn")
+
+[node name="WaterBackground" type="Sprite2D" parent="GridService"]
+z_index = -4
+texture_filter = 1
+position = Vector2(0, 32)
+texture = ExtResource("4_g2ntc")
+
+[node name="ChunkPerimeter" type="Line2D" parent="GridService"]
+width = 5.0
+
+[node name="DarknesService" type="CanvasModulate" parent="."]
+visible = false
+texture_filter = 1
+script = ExtResource("6_rdp0a")
+light_offset = 4
+
+[node name="Enums" type="Node2D" parent="."]
+script = ExtResource("8_n5caj")
+
+[node name="FreeCam" parent="." instance=ExtResource("10_bpfgd")]
+zoom = Vector2(0.2, 0.2)
+
+[connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
+[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]

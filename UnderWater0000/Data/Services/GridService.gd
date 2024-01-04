@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var all_counter = 0
 
@@ -10,19 +10,18 @@ var all_counter = 0
 @export var tile_scene : PackedScene
 @export var coral_scene : PackedScene
 @export var shell_scene : PackedScene
+@export var test_scene : PackedScene
 @export var width : int = 100
 @export var height : int = 200
 @export var chunk_width : int = 20
 @export var chunk_height : int = 20
 
-signal place_tile_drop_at(pos, tile_type, under_water)
-
 var noise_one= FastNoiseLite.new()
 var noise_two = FastNoiseLite.new()
 var temperature = FastNoiseLite.new()
 var moisture = FastNoiseLite.new()
-var noise_seed : int = 000000
-var noise_offset = 10000
+var noise_seed : int = 0
+var noise_offset = 100000
 var noise_jump = 6
 var noise_ground_jump = 2
 var rng = RandomNumberGenerator.new()
@@ -50,7 +49,7 @@ func _ready():
 	spawn_foliage()
 	set_sprites_of_tiles()
 	transform_backgrounds(width, height)
-	player.position = Vector2(float(width * 32)/2.0 -16,-32)
+	player.position = Vector2(float(width * 32)/2.0,-32)
 
 func _process(_delta):
 	if not show_every_tile:
@@ -81,6 +80,7 @@ func spawn_tiles():
 			var noise_around_zero = noise_value_1 * y_offset - y_offset
 			if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.5 and noise_value_2 > 0.2):
 				var newTile = tile_scene.instantiate()
+				add_child(newTile)
 				var border_idx = get_border_area(x,y, true)
 				newTile.position = Vector2(x * 32,y * 32)
 				# Puts harder tiles in the middle of a chunk
@@ -93,7 +93,6 @@ func spawn_tiles():
 				newTile.call("set_type", get_tile_type_for_area(border_idx))
 				newTile.call("set_hardness", border_idx)
 				tile_dict[Vector2(x,y)] = newTile
-				add_child(newTile)
 				if not show_every_tile:
 					newTile.visible = false
 					newTile.set_process(false)
@@ -102,32 +101,62 @@ func rand_chance(chance):
 	return rng.randf_range(0,100) < chance
 
 func spawn_foliage():
+	var foliage_noise_jump = 10
 	var ground_start = water_edge_y + 10
+	var shell_noise_offset = 1000
 	for x in range(width):
 		var ground = (noise_one.get_noise_2d(x * noise_ground_jump, 0) + 1) * 0.5 * ground_start
 		for y in range(ground, height):
-			var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
-			var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump , y * noise_jump) + 1) * 0.5
+			var noise_value_1 = (noise_one.get_noise_2d(x * foliage_noise_jump, y * foliage_noise_jump) + 1) * 0.5
+			var noise_value_2 = (noise_two.get_noise_2d(x * foliage_noise_jump , y * foliage_noise_jump) + 1) * 0.5
 			var pos = Vector2(x,y)
 			if tile_dict.has(pos) and y > water_edge_y:
 				var current_tile = tile_dict[pos]
 				var neighbours = check_where_neighbours(pos)
 				if neighbours != "LRUD" and noise_value_1 > 0.4 and noise_value_2 > 0.6:
 					var dir_list = []
-					if not neighbours.contains("L") and rand_chance(60):
+					if not neighbours.contains("L") and rand_chance(80):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.West))
-					if not neighbours.contains("R") and rand_chance(60):
+					if not neighbours.contains("R") and rand_chance(80):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.East))
-					if not neighbours.contains("U") and rand_chance(40):
+					if not neighbours.contains("U") and rand_chance(60):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.North))
-					if not neighbours.contains("D") and rand_chance(40):
+					if not neighbours.contains("D") and rand_chance(60):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.South))
 					for dir in dir_list:
 						var coral = coral_scene.instantiate()
 						dir.add_child(coral)
 						coral.call("set_type", current_tile.get_type())
-						coral.call("set_grid_service", self)
 						coral.call("update_sprite")
+			noise_value_1 = (noise_one.get_noise_2d((x + shell_noise_offset) * foliage_noise_jump, (y + shell_noise_offset) * foliage_noise_jump) + 1) * 0.5
+			noise_value_2 = (noise_two.get_noise_2d((x + shell_noise_offset) * foliage_noise_jump , (y + shell_noise_offset) * foliage_noise_jump) + 1) * 0.5
+			pos = Vector2(x,y)
+			if tile_dict.has(pos) and y > water_edge_y:
+				var current_tile = tile_dict[pos]
+				var neighbours = check_where_neighbours(pos)
+				if neighbours != "LRUD" and noise_value_1 > 0.4 and noise_value_2 > 0.6:
+					var dir_list = []
+					if not neighbours.contains("L") and rand_chance(30):
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.West))
+					if not neighbours.contains("R") and rand_chance(30):
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.East))
+					if not neighbours.contains("U") and rand_chance(50):
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.North))
+					if not neighbours.contains("D") and rand_chance(50):
+						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.South))
+#					if not neighbours.contains("L") and rand_chance(30):
+#						dir_list.append(Enums.Dir.West)
+#					if not neighbours.contains("R") and rand_chance(30):
+#						dir_list.append(Enums.Dir.East)
+#					if not neighbours.contains("U") and rand_chance(50):
+#						dir_list.append(Enums.Dir.North)
+#					if not neighbours.contains("D") and rand_chance(50):
+#						dir_list.append(Enums.Dir.South)
+					for dir in dir_list:
+						var shell = shell_scene.instantiate()
+						dir.add_child(shell)
+						shell.call("set_type", current_tile.get_type())
+						shell.call("update_sprite")
 						
 			
 	
@@ -332,7 +361,7 @@ func update_neighbour_sprite(pos):
 			set_tile_frame(check_where_neighbours(direction), tile_dict[direction].get_node("Sprite"), tile_dict[direction].get_type())
 
 func destroyed_tile(pos, type):
-	place_tile_drop_at.emit(pos, type, pos.y >= water_edge_y)
+	DropService.call("place_tile_drop_at", pos, type, pos.y >= water_edge_y)
 	tile_dict.erase(pos)
 	update_neighbour_sprite(pos)
 

@@ -1,7 +1,8 @@
 extends Node2D
 
-@export var tile_drop_scene : PackedScene
-@export var coral_drop_scene : PackedScene
+var tile_drop_scene : PackedScene
+var coral_drop_scene : PackedScene
+var shell_drop_scene : PackedScene
 
 var rng = RandomNumberGenerator.new()
 
@@ -9,33 +10,48 @@ var drop_list = {}
 var drop_counter = 0
 	
 func _ready():
-	coral_drop_scene = preload("res://Data/Services/DropService/CoralDrop.tscn")
+	tile_drop_scene = preload("res://Data/Drops/TileDrop.tscn")
+	coral_drop_scene = preload("res://Data/Drops/CoralDrop.tscn")
+	shell_drop_scene = preload("res://Data/Drops/ShellDrop.tscn")
 	
 func place_tile_drop_at(pos, tileType, under_water):
 	var drop = tile_drop_scene.instantiate()
+	add_child(drop)
 	drop.position = pos * 32
-	drop.call("set_drop_service", self)
 	drop.call("set_drop_type", tileType)
 	drop.call("update_sprite")
 	drop_list[drop_counter] = drop
 	if under_water:
 		drop.gravity_scale = 0.1
 		drop.linear_damp = 0.8
-	add_child(drop)
 	drop.rotation = rng.randi_range(0,360)
 	drop.linear_velocity = Vector2(rng.randi_range(-5,6),rng.randi_range(-5,6)) * 8
 
 func place_coral_drop_at(pos, animation_str, frame):
 	var drop = coral_drop_scene.instantiate()
+	add_child(drop)
 	drop.position = pos
 	drop.gravity_scale = 0.1
 	drop.linear_damp = 0.8
-	drop.call("set_drop_service", self)
 	drop.call("set_animation",animation_str)
 	drop.call("set_frame", frame)
 	drop.call("update_sprite")
 	drop_list[drop_counter] = drop
+	
+	drop.rotation = rng.randi_range(0,360)
+	drop.linear_velocity = Vector2(rng.randi_range(-5,6),rng.randi_range(-5,6)) * 8
+
+func place_shell_drop_at(pos, animation_str, frame):
+	var drop = shell_drop_scene.instantiate()
 	add_child(drop)
+	drop.position = pos
+	drop.gravity_scale = 0.1
+	drop.linear_damp = 0.8
+	drop.call("set_animation",animation_str)
+	drop.call("set_frame", frame)
+	drop.call("update_sprite")
+	drop_list[drop_counter] = drop
+	
 	drop.rotation = rng.randi_range(0,360)
 	drop.linear_velocity = Vector2(rng.randi_range(-5,6),rng.randi_range(-5,6)) * 8
 

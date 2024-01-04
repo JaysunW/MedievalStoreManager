@@ -1,6 +1,6 @@
 [gd_scene load_steps=163 format=3 uid="uid://cg528oaldf8sw"]
 
-[ext_resource type="Script" path="res://Data/Tile/Tile.gd" id="1_80sbk"]
+[ext_resource type="Script" path="res://Data/Tiles/Tile.gd" id="1_80sbk"]
 [ext_resource type="Texture2D" uid="uid://cpwcv8wbqngds" path="res://Assets/Tiles/Greenery/D.png" id="2_jupbo"]
 [ext_resource type="Texture2D" uid="uid://c48s6qiikv00i" path="res://Assets/Tiles/Greenery/LD.png" id="3_os0ht"]
 [ext_resource type="Texture2D" uid="uid://cv7snr0inqsew" path="res://Assets/Tiles/Greenery/LUD.png" id="4_o3rac"]
@@ -715,6 +715,8 @@ animations = [{
 texture_filter = 1
 collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_u2fqo")
+gravity_scale = 0.0
+can_sleep = false
 lock_rotation = true
 freeze = true
 script = ExtResource("1_80sbk")
@@ -743,7 +745,7 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5ch6i")
 
 [node name="NorthSpawn" type="Node2D" parent="."]
-position = Vector2(0, -26)
+position = Vector2(0, -28)
 
 [node name="EastSpawn" type="Node2D" parent="."]
 position = Vector2(26, 0)

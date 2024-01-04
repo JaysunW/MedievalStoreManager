@@ -1,17 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://c602dxf6mby3v"]
+[gd_scene load_steps=14 format=3 uid="uid://c602dxf6mby3v"]
 
 [ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Data/Player/character.tscn" id="1_klg2i"]
 [ext_resource type="Script" path="res://Data/Services/GridService.gd" id="2_twuh3"]
-[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tile/tile.tscn" id="2_u78vr"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="3_51v31"]
 [ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="4_07dcn"]
 [ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_g2ntc"]
 [ext_resource type="PackedScene" uid="uid://bpn6b7t822f3q" path="res://Data/TileObjects/CoralObject.tscn" id="4_ith2g"]
+[ext_resource type="PackedScene" uid="uid://c3d4vuyyy45hp" path="res://Data/TileObjects/ShellObject.tscn" id="5_8kwy7"]
 [ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="6_rdp0a"]
 [ext_resource type="Script" path="res://Global/enums.gd" id="8_n5caj"]
-[ext_resource type="Script" path="res://Global/DropService.gd" id="8_ywvrw"]
-[ext_resource type="PackedScene" uid="uid://if6c8hclwknq" path="res://Data/Services/DropService/TileDrop.tscn" id="9_dl8h1"]
 [ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="10_bpfgd"]
-[ext_resource type="PackedScene" uid="uid://chm3q1pgnsq5f" path="res://Data/Services/DropService/CoralDrop.tscn" id="10_f203i"]
+[ext_resource type="PackedScene" uid="uid://dlmi0h8bqdrx6" path="res://Demo/test_rigid.tscn" id="32_jv2yh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
 size = Vector2(32, 32)
@@ -26,9 +25,12 @@ position = Vector2(32, 0)
 
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_twuh3")
-tile_scene = ExtResource("2_u78vr")
+tile_scene = ExtResource("3_51v31")
 coral_scene = ExtResource("4_ith2g")
-show_every_tile = true
+shell_scene = ExtResource("5_8kwy7")
+test_scene = ExtResource("32_jv2yh")
+width = 20
+height = 40
 
 [node name="AirBackground" type="Sprite2D" parent="GridService"]
 self_modulate = Color(1, 1, 1, 0.498039)
@@ -66,23 +68,16 @@ texture = ExtResource("4_g2ntc")
 width = 5.0
 
 [node name="DarknesService" type="CanvasModulate" parent="."]
-visible = false
+process_mode = 4
 texture_filter = 1
 script = ExtResource("6_rdp0a")
 light_offset = 4
-
-[node name="DropService" type="Node2D" parent="."]
-script = ExtResource("8_ywvrw")
-tile_drop_scene = ExtResource("9_dl8h1")
-coral_drop_scene = ExtResource("10_f203i")
 
 [node name="Enums" type="Node2D" parent="."]
 script = ExtResource("8_n5caj")
 
 [node name="FreeCam" parent="." instance=ExtResource("10_bpfgd")]
-zoom = Vector2(0.3, 0.3)
+zoom = Vector2(0.2, 0.2)
 
-[connection signal="place_tile_drop_at" from="GridService" to="DropService" method="_on_grid_service_place_tile_drop_at"]
 [connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
 [connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]
-[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="DropService" method="_on_water_area_body_entered"]

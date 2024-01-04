@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cbv8b2miguugs"]
 
 [ext_resource type="Script" path="res://Demo/ChunkDemo/ChunkDemo.gd" id="1_w0gxg"]
-[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tile/tile.tscn" id="2_nhtja"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="2_nhtja"]
 [ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="3_6vtae"]
 [ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_kq6ow"]
 

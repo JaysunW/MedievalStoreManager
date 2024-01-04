@@ -5,7 +5,7 @@ var drops_to_delete = []
 var pickup_range = 3.0 * 32
 
 const DROP_SPEED = 10
-const MAX_SPEED = 100
+const MAX_SPEED = 80
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

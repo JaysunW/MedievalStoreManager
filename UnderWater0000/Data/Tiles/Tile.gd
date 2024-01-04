@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends Node2D
 
 var grid_service = null
 var tile_position = Vector2(0,0)
@@ -25,7 +25,6 @@ func mine(damage):
 	var destruction_sprite = $Destruction
 	var frame_count = destruction_sprite.sprite_frames.get_frame_count("default")
 	destruction_sprite.frame = frame_count - int (float(health)/float(max_health) * frame_count)
-	
 
 func set_hardness(input):
 	hardness = input
@@ -53,6 +52,17 @@ func get_spawn_from_dir(dir):
 			return $SouthSpawn
 		Enums.Dir.West:
 			return $WestSpawn
+			
+func add_object_to_dir(object, dir):
+	match dir:
+		Enums.Dir.North:
+			$NorthSpawn.add_child(object)
+		Enums.Dir.East:
+			$EastSpawn.add_child(object)
+		Enums.Dir.South:
+			$SouthSpawn.add_child(object)
+		Enums.Dir.West:
+			$WestSpawn.add_child(object)
 			
 # Destroy tile and remove it from the main tile dictionary
 func destroy_tile():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://chm3q1pgnsq5f"]
 
 [ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Framework/DropPrefab.tscn" id="1_yafck"]
-[ext_resource type="Script" path="res://Data/Services/DropService/CoralDrop.gd" id="2_b41ha"]
+[ext_resource type="Script" path="res://Data/Drops/CoralDrop.gd" id="2_b41ha"]
 [ext_resource type="Texture2D" uid="uid://b130d4443u6wd" path="res://Assets/Coral/ACoral1.png" id="3_s0jrn"]
 [ext_resource type="Texture2D" uid="uid://d1u8n8oriuy8v" path="res://Assets/Coral/ACoral2.png" id="4_movsy"]
 [ext_resource type="Texture2D" uid="uid://bepl5k0s7yqwq" path="res://Assets/Coral/ACoral3.png" id="5_xqvd7"]
