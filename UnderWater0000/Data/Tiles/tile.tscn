@@ -724,13 +724,13 @@ script = ExtResource("1_80sbk")
 [node name="Greenery" type="AnimatedSprite2D" parent="."]
 visible = false
 self_modulate = Color(1, 1, 1, 0.941176)
-z_index = -2
+z_index = 25
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_luroi")
 animation = &"Greenery"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-z_index = -3
+z_index = 25
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fdck3")
 animation = &"6A"
@@ -740,12 +740,12 @@ shape = SubResource("RectangleShape2D_wceys")
 
 [node name="Destruction" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 0.941176)
-z_index = -2
+z_index = 25
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5ch6i")
 
 [node name="NorthSpawn" type="Node2D" parent="."]
-position = Vector2(0, -28)
+position = Vector2(0, -26)
 
 [node name="EastSpawn" type="Node2D" parent="."]
 position = Vector2(26, 0)

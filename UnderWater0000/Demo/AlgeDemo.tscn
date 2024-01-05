@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://cuxyvumhpleil"]
+
+[ext_resource type="Script" path="res://Demo/AlgeDemo.gd" id="1_an8bp"]
+[ext_resource type="Texture2D" uid="uid://begadvne074vt" path="res://icon.svg" id="1_usvgn"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="2_7gqhm"]
+[ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Data/Player/character.tscn" id="4_ta778"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2ss8x"]
+
+[node name="AlgeDemo" type="Node2D"]
+
+[node name="Alge" type="Node2D" parent="."]
+position = Vector2(150, 234)
+script = ExtResource("1_an8bp")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Alge"]
+node_a = NodePath("../Rigids/1")
+node_b = NodePath("../../Tile")
+softness = 1.0
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Alge"]
+position = Vector2(0, -28)
+node_a = NodePath("../Rigids/1")
+node_b = NodePath("../Rigids/2")
+softness = 1.0
+
+[node name="Rigids" type="Node2D" parent="Alge"]
+z_index = 99
+
+[node name="1" type="RigidBody2D" parent="Alge/Rigids"]
+position = Vector2(0, -14)
+mass = 0.01
+gravity_scale = -1.0
+can_sleep = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Alge/Rigids/1"]
+texture_filter = 1
+position = Vector2(5.24521e-06, -1.3113e-06)
+scale = Vector2(0.15625, 0.234375)
+texture = ExtResource("1_usvgn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Alge/Rigids/1"]
+shape = SubResource("CapsuleShape2D_2ss8x")
+
+[node name="2" type="RigidBody2D" parent="Alge/Rigids"]
+position = Vector2(0, -41)
+mass = 0.01
+gravity_scale = -1.0
+max_contacts_reported = 1
+contact_monitor = true
+can_sleep = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Alge/Rigids/2"]
+texture_filter = 1
+position = Vector2(5.24521e-06, -1.3113e-06)
+scale = Vector2(0.15625, 0.234375)
+texture = ExtResource("1_usvgn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Alge/Rigids/2"]
+shape = SubResource("CapsuleShape2D_2ss8x")
+
+[node name="Tile" parent="." instance=ExtResource("2_7gqhm")]
+position = Vector2(150, 250)
+
+[node name="Tile2" parent="." instance=ExtResource("2_7gqhm")]
+position = Vector2(184, 250)
+
+[node name="Character" parent="." instance=ExtResource("4_ta778")]
+position = Vector2(196, 202)
+start_underwater = true

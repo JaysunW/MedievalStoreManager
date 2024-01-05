@@ -1,5 +1,16 @@
 extends Node2D
 
+# Visual ordering 
+# 1- 10:
+#11- 20: Foliage
+#21- 30: Background
+#31- 40:
+#41- 50: Character
+#51- 60:
+#61- 70: Foreground
+#71- 80:
+#81- 90:
+
 enum Dir {
 	North,
 	East,

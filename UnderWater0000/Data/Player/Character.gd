@@ -5,7 +5,7 @@ extends CharacterBody2D
 
 @export var free_cam_active = false
 @export var light_activ_y = 50
-
+@export var start_underwater = false
 const SPEED = 150.0
 const SLIP = 20.0
 const MAX_Y_VELOCITY = 200
@@ -19,6 +19,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	$Camera2D.enabled = not free_cam_active
+	if start_underwater:
+		on_land = false
 
 func _process(_delta):
 	light.visible = position.y/32 > light_activ_y
