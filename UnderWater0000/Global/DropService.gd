@@ -59,7 +59,7 @@ func erase_drop(drop):
 	drop_list.erase(drop)
 
 func _on_water_area_body_entered(body):
-	if body.get_groups().has("Drop"):
+	if body.get_groups().has("DROP"):
 		body.linear_velocity = body.linear_velocity * 0.1
 		body.gravity_scale = 0.1
 		body.linear_damp = 0.8

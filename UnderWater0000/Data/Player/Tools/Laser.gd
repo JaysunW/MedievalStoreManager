@@ -25,7 +25,7 @@ func _process(_delta):
 	var rotation_mod = int (abs(rotation_degrees)) % 360
 	sprite.flip_v = (rotation_mod < 270 and rotation_mod > 90) 
 	look_at(mouse_pos)
-	if Input.is_action_pressed("left_mouse_button"):
+	if active and Input.is_action_pressed("left_mouse_button"):
 		shoot_laser(to_global(position).distance_to(mouse_pos) - sprite.position.x)
 	else:
 		laser_line.visible = false
@@ -46,7 +46,7 @@ func shoot_laser(length):
 
 		# Do damage to tiles
 		var collider = ray_cast.get_collider()
-		if collider != null and collider.get_groups().has("Tiles") and not cooldown_active:
+		if collider != null and collider.get_groups().has("TILE") and not cooldown_active:
 			cooldown_active = true
 			if collider.call("get_hardness") <= strength:
 				collider.call("mine", damage)

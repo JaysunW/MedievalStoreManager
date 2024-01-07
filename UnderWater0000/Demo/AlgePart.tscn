@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bchmogf0qba8j"]
+
+[ext_resource type="Texture2D" uid="uid://dgsbcljlx1ylp" path="res://Assets/Coral/BCoral1.png" id="1_ppcad"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5yf1i"]
+height = 32.0
+
+[node name="AlgePart" type="RigidBody2D"]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_5yf1i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2.38419e-07, -3.5)
+scale = Vector2(0.625, 1.15625)
+texture = ExtResource("1_ppcad")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(0, 14)
+node_a = NodePath("..")

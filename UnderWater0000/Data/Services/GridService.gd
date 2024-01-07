@@ -16,6 +16,7 @@ var all_counter = 0
 @export var chunk_width : int = 20
 @export var chunk_height : int = 20
 
+var show_chunks = true
 var noise_one= FastNoiseLite.new()
 var noise_two = FastNoiseLite.new()
 var temperature = FastNoiseLite.new()
@@ -170,12 +171,14 @@ func set_chunks_around_loaded_chunk():
 	for i in range(-1,2):
 		for j in range(-1,2):
 			chunks_around_loaded.append(loaded_chunk + Vector2(i,j))
-			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
-			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j) * chunk_height)) * 32)
-			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j + 1) * chunk_height)) * 32)
-			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j + 1) * chunk_height)) * 32)
-			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
-		chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(-1) * chunk_height)) * 32)
+			if show_chunks:
+				chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
+				chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j) * chunk_height)) * 32)
+				chunk_border_show.add_point((loaded_chunk_pos + Vector2((i + 1) * chunk_width,(j + 1) * chunk_height)) * 32)
+				chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j + 1) * chunk_height)) * 32)
+				chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)
+		if show_chunks:
+			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(-1) * chunk_height)) * 32)
 
 # Activates the chunk at pos
 func activate_chunks(pos):

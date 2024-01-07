@@ -1,77 +1,91 @@
-[gd_scene load_steps=13 format=3 uid="uid://cj3qcpwgq17ov"]
+[gd_scene load_steps=15 format=3 uid="uid://dekafhbm1b1n5"]
 
-[ext_resource type="Script" path="res://Data/Player/Character.gd" id="1_i3vvh"]
-[ext_resource type="Texture2D" uid="uid://cummguuq65x4f" path="res://Assets/Character/PlayerAquaLeft1.png" id="2_br3j1"]
-[ext_resource type="Texture2D" uid="uid://dj7rasjvjjuxh" path="res://Assets/Character/PlayerAquaRight1.png" id="3_mo3tc"]
-[ext_resource type="Texture2D" uid="uid://bjffx141lft5p" path="res://Assets/2d_lights_and_shadows_neutral_point_light.webp" id="4_l78nn"]
-[ext_resource type="Script" path="res://Data/Player/Tools/Tools.gd" id="5_c40v4"]
-[ext_resource type="PackedScene" uid="uid://bshu8w0haitut" path="res://Data/Player/Tools/laser.tscn" id="6_l1erv"]
-[ext_resource type="PackedScene" uid="uid://bidj12e3i433q" path="res://Data/Player/Tools/knife.tscn" id="7_u31ho"]
-[ext_resource type="PackedScene" uid="uid://ckatwb5xmwui7" path="res://Data/Player/Tools/net.tscn" id="8_8w6xf"]
-[ext_resource type="Script" path="res://Data/Player/PickupArea.gd" id="9_cyacr"]
+[ext_resource type="Script" path="res://Data/Player/Character.gd" id="1_5xd1b"]
+[ext_resource type="Texture2D" uid="uid://cummguuq65x4f" path="res://Assets/Character/PlayerAquaLeft1.png" id="2_ric10"]
+[ext_resource type="Texture2D" uid="uid://dj7rasjvjjuxh" path="res://Assets/Character/PlayerAquaRight1.png" id="3_723qe"]
+[ext_resource type="Texture2D" uid="uid://bjffx141lft5p" path="res://Assets/2d_lights_and_shadows_neutral_point_light.webp" id="4_5bmep"]
+[ext_resource type="Script" path="res://Data/Player/Tools/Tools.gd" id="5_3u86k"]
+[ext_resource type="PackedScene" uid="uid://bshu8w0haitut" path="res://Data/Player/Tools/laser.tscn" id="6_ie0yj"]
+[ext_resource type="PackedScene" uid="uid://bidj12e3i433q" path="res://Data/Player/Tools/knife.tscn" id="7_mwnye"]
+[ext_resource type="PackedScene" uid="uid://ckatwb5xmwui7" path="res://Data/Player/Tools/net.tscn" id="8_thdod"]
+[ext_resource type="Script" path="res://Data/Player/PickupArea.gd" id="9_d1jb4"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_4470m"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fu47e"]
+friction = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ncgj8"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_br3j1")
+"texture": ExtResource("2_ric10")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_mo3tc")
+"texture": ExtResource("3_723qe")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mki74"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cb2qm"]
 radius = 11.5
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6g8pg"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_oikl3"]
 radius = 128.0
 
-[node name="Character" type="CharacterBody2D" groups=["Player"]]
-z_index = 45
-texture_filter = 1
-safe_margin = 0.5
-script = ExtResource("1_i3vvh")
-light_activ_y = 30
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qy6f"]
+size = Vector2(18, 3.5)
+
+[node name="Character" type="RigidBody2D" groups=["PLAYER"]]
+physics_material_override = SubResource("PhysicsMaterial_fu47e")
+gravity_scale = 0.0
+can_sleep = false
+lock_rotation = true
+script = ExtResource("1_5xd1b")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_4470m")
+sprite_frames = SubResource("SpriteFrames_ncgj8")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)
-shape = SubResource("CapsuleShape2D_mki74")
+shape = SubResource("CapsuleShape2D_cb2qm")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(0, 1)
 enabled = false
 color = Color(0.239216, 0.239216, 0.239216, 1)
 energy = 1.15
-texture = ExtResource("4_l78nn")
+texture = ExtResource("4_5bmep")
 
 [node name="Tools" type="Node2D" parent="."]
-script = ExtResource("5_c40v4")
+script = ExtResource("5_3u86k")
 
-[node name="Laser" parent="Tools" instance=ExtResource("6_l1erv")]
+[node name="Laser" parent="Tools" instance=ExtResource("6_ie0yj")]
 
-[node name="Knife" parent="Tools" instance=ExtResource("7_u31ho")]
+[node name="Knife" parent="Tools" instance=ExtResource("7_mwnye")]
 
-[node name="Net" parent="Tools" instance=ExtResource("8_8w6xf")]
+[node name="Net" parent="Tools" instance=ExtResource("8_thdod")]
 
 [node name="PickupArea" type="Area2D" parent="."]
 monitorable = false
-script = ExtResource("9_cyacr")
+script = ExtResource("9_d1jb4")
 
 [node name="RigidCollision" type="CollisionShape2D" parent="PickupArea"]
 visible = false
 position = Vector2(1, 0)
-shape = SubResource("CircleShape2D_6g8pg")
+shape = SubResource("CircleShape2D_oikl3")
+
+[node name="OnGround" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OnGround"]
+position = Vector2(0, 14.75)
+shape = SubResource("RectangleShape2D_5qy6f")
 
 [connection signal="body_entered" from="PickupArea" to="PickupArea" method="_on_body_entered"]
 [connection signal="body_exited" from="PickupArea" to="PickupArea" method="_on_body_exited"]
+[connection signal="body_entered" from="OnGround" to="." method="_on_on_ground_body_entered"]
+[connection signal="body_exited" from="OnGround" to="." method="_on_on_ground_body_exited"]

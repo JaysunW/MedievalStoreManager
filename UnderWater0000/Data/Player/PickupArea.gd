@@ -28,9 +28,9 @@ func _physics_process(_delta):
 		drops_in_range.erase(drop)
 		
 func _on_body_entered(body):
-	if body.get_groups().has("Drop"):
+	if body.get_groups().has("DROP"):
 		drops_in_range.append(body)
 
 func _on_body_exited(body):
-	if body.get_groups().has("Drop"):
+	if body.get_groups().has("DROP"):
 		drops_in_range.erase(body)

@@ -3,7 +3,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8mpe"]
 size = Vector2(32, 32)
 
-[node name="Drop" type="RigidBody2D" groups=["Drop"]]
+[node name="Drop" type="RigidBody2D" groups=["DROP"]]
 texture_filter = 1
 can_sleep = false
 

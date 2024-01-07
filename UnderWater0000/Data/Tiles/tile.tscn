@@ -1,4 +1,4 @@
-[gd_scene load_steps=163 format=3 uid="uid://cg528oaldf8sw"]
+[gd_scene load_steps=162 format=3 uid="uid://cg528oaldf8sw"]
 
 [ext_resource type="Script" path="res://Data/Tiles/Tile.gd" id="1_80sbk"]
 [ext_resource type="Texture2D" uid="uid://cpwcv8wbqngds" path="res://Assets/Tiles/Greenery/D.png" id="2_jupbo"]
@@ -157,38 +157,6 @@
 [ext_resource type="Texture2D" uid="uid://goejs6xrgr46" path="res://Assets/Tiles/TileEffects/Destruction6.png" id="155_vqem4"]
 [ext_resource type="Texture2D" uid="uid://dph5ya4uqvm8v" path="res://Assets/Tiles/TileEffects/Destruction7.png" id="156_iuvfi"]
 [ext_resource type="Texture2D" uid="uid://1a57rsrf2a5f" path="res://Assets/Tiles/TileEffects/Destruction8.png" id="157_mfhas"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u2fqo"]
-friction = 0.5
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_luroi"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_jupbo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_os0ht")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_o3rac")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_62ta2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_yn8ia")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_p1ssm")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_8k1hk")
-}],
-"loop": true,
-"name": &"Greenery",
-"speed": 5.0
-}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fdck3"]
 animations = [{
@@ -673,8 +641,34 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wceys"]
-size = Vector2(32, 32)
+[sub_resource type="SpriteFrames" id="SpriteFrames_luroi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jupbo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_os0ht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_o3rac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_62ta2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_yn8ia")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_p1ssm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8k1hk")
+}],
+"loop": true,
+"name": &"Greenery",
+"speed": 5.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5ch6i"]
 animations = [{
@@ -711,15 +705,23 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Tile" type="RigidBody2D" groups=["Tiles"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wceys"]
+size = Vector2(32, 32)
+
+[node name="Tile" type="RigidBody2D" groups=["TILE"]]
 texture_filter = 1
 collision_layer = 3
-physics_material_override = SubResource("PhysicsMaterial_u2fqo")
 gravity_scale = 0.0
 can_sleep = false
 lock_rotation = true
 freeze = true
 script = ExtResource("1_80sbk")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = 25
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_fdck3")
+animation = &"6A"
 
 [node name="Greenery" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -729,20 +731,14 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_luroi")
 animation = &"Greenery"
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
-z_index = 25
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_fdck3")
-animation = &"6A"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_wceys")
-
 [node name="Destruction" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 0.941176)
 z_index = 25
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5ch6i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wceys")
 
 [node name="NorthSpawn" type="Node2D" parent="."]
 position = Vector2(0, -26)

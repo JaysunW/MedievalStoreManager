@@ -111,7 +111,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="TileObject" instance=ExtResource("1_1inj6")]
+[node name="TileObject" groups=["CORAL"] instance=ExtResource("1_1inj6")]
 script = ExtResource("2_w6okl")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." index="0"]

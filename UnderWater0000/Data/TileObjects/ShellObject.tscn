@@ -129,7 +129,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="TileObject" type="RigidBody2D"]
+[node name="TileObject" type="RigidBody2D" groups=["SHELL"]]
 texture_filter = 1
 can_sleep = false
 lock_rotation = true

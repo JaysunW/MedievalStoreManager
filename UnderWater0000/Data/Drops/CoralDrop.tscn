@@ -112,7 +112,6 @@ animations = [{
 }]
 
 [node name="Drop" instance=ExtResource("1_yafck")]
-texture_filter = 1
 script = ExtResource("2_b41ha")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." index="0"]

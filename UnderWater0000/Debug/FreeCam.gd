@@ -22,6 +22,8 @@ func _process(delta):
 	elif zoom_out:
 		zoom_update -= Vector2( 0.1, 0.1)
 		speed += 100
+	if speed < 0: speed = 100
+	
 	zoom_update = Vector2( clamp(zoom_update.x,0.1,10), clamp(zoom_update.y,0.1,10))
 	zoom = zoom_update
 

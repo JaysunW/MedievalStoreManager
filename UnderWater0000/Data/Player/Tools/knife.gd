@@ -4,30 +4,41 @@ extends Tool
 @onready var area_to_attack = $Area2D
 
 func _ready():
+	interactable_groups = ["FISH","CORAL","SHELL"]
 	sprite.flip_v = true
 	super()
 
 func _process(_delta):
 	super(_delta)
 
-func disable(input):
-	$Area2D.monitoring = input
-
 # Use knife
 func use_tool():
-	if not cooldown_active:
+	if active and not cooldown_active:
 		super()
 		sprite.flip_v = not sprite.flip_v
 		for object in objects_in_range:
 			object.call("take_damage", damage)
 
-func _on_area_2d_area_entered(area):
+func entered_range(input):
 	for group in interactable_groups:
-		if area.get_groups().has(group) and area.get_parent() not in objects_in_range:
-			objects_in_range.append(area.get_parent())
+		if input.get_groups().has(group) and input not in objects_in_range:
+			objects_in_range.append(input)
 			print(objects_in_range)
 			break
+	
+func exited_range(input):
+	if input in objects_in_range:
+		objects_in_range.erase(input)
+
+func _on_area_2d_area_entered(area):
+	entered_range(area.get_parent())
 
 func _on_area_2d_area_exited(area):
-	if area.get_parent() in objects_in_range:
-		objects_in_range.erase(area.get_parent())
+	exited_range((area.get_parent()))
+
+func _on_area_2d_body_entered(body):
+	entered_range(body)
+
+
+func _on_area_2d_body_exited(body):
+	exited_range(body)
