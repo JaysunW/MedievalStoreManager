@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuxyvumhpleil"]
+[gd_scene load_steps=7 format=3 uid="uid://cuxyvumhpleil"]
 
-[ext_resource type="PackedScene" uid="uid://c5gi5yrtpkf61" path="res://Data/TileObjects/Alge_Object.tscn" id="1_fylm4"]
+[ext_resource type="Script" path="res://Demo/AlgeDemo.gd" id="1_an8bp"]
 [ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="2_7gqhm"]
+[ext_resource type="PackedScene" uid="uid://bchmogf0qba8j" path="res://Demo/AlgePart.tscn" id="2_khv32"]
 [ext_resource type="PackedScene" uid="uid://dekafhbm1b1n5" path="res://Data/Player/character.tscn" id="4_k1b4t"]
 [ext_resource type="Texture2D" uid="uid://cv38sx5410tnr" path="res://Assets/Alge1.png" id="4_x7rsn"]
 
@@ -11,7 +12,10 @@ height = 32.0
 
 [node name="AlgeDemo" type="Node2D"]
 
-[node name="Alge" parent="." instance=ExtResource("1_fylm4")]
+[node name="Alge" type="Node2D" parent="."]
+script = ExtResource("1_an8bp")
+alge_scene = ExtResource("2_khv32")
+tile_scene = ExtResource("2_7gqhm")
 
 [node name="Tile2" parent="." instance=ExtResource("2_7gqhm")]
 position = Vector2(172, 150)
