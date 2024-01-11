@@ -30,9 +30,9 @@ func set_spawntile(spawntile):
 
 func spawn_alge(size):
 	# Following just for Demo purpose:
-#	var tile = tile_scene.instantiate()
-#	add_child(tile)
-#	tile.position = Vector2(250,150)
+	var tile = tile_scene.instantiate()
+	add_child(tile)
+	tile.position = Vector2(250,150)
 	for j in alge_count:
 		var local_alge_list = []
 		var offset = 32/3/2 * - (j*2-alge_count+1)
@@ -43,7 +43,7 @@ func spawn_alge(size):
 			local_alge_list.append(current_alge)
 			add_child(current_alge)
 			change_alge_length(current_alge, alge_length)
-			if i == size_offset-1: current_alge.gravity_scale = -0.3
+			if i == size_offset-1: current_alge.gravity_scale = -0.01
 			if i != 0:
 				current_alge.position = previous_alge.position + Vector2(0,-32 * alge_length)
 				current_alge.get_node("Joint").set_node_b(previous_alge.get_path())

@@ -74,3 +74,11 @@ enum FishState{
 	CHASING,
 	IDLE
 }
+
+enum Scene{
+	Game,
+	Shop,
+	Library,
+	Aquarium,
+	Unknown
+}

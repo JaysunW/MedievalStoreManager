@@ -1,5 +1,7 @@
 extends ObjectOnTile
 
+var not_enough_sprites = false
+
 func update_sprite():
 	match type:
 		0:
@@ -20,7 +22,8 @@ func update_sprite():
 			print("Something went wrong with the coral sprite update.")
 		_:
 			animation = "Brain"
-			print("Not enough corals for the area count")
+			not_enough_sprites = true
+	if not_enough_sprites: print("Not enough corals for the area count")
 	sprite.animation = animation
 	frame = rng.randi_range(0, sprite.sprite_frames.get_frame_count(animation))
 	sprite.frame = frame

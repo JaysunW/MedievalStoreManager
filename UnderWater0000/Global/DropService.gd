@@ -23,7 +23,7 @@ func place_tile_drop_at(pos, tileType, under_water):
 	drop_list[drop_counter] = drop
 	if under_water:
 		drop.gravity_scale = 0.1
-		drop.linear_damp = 0.8
+	drop.linear_damp = 0.8
 	drop.rotation = rng.randi_range(0,360)
 	drop.linear_velocity = Vector2(rng.randi_range(-5,6),rng.randi_range(-5,6)) * 8
 
@@ -58,11 +58,7 @@ func place_shell_drop_at(pos, animation_str, frame):
 func erase_drop(drop):
 	drop_list.erase(drop)
 
-func _on_water_area_body_entered(body):
-	if body.get_groups().has("DROP"):
-		body.linear_velocity = body.linear_velocity * 0.1
-		body.gravity_scale = 0.1
-		body.linear_damp = 0.8
+
 
 func _on_grid_service_place_tile_drop_at(pos, tile_type, under_water):
 	place_tile_drop_at(pos, tile_type, under_water)

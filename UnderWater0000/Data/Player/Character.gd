@@ -13,6 +13,9 @@ const JUMP_VELOCITY = -250
 
 signal free_cam
 
+var max_o2_cap = 100
+var current_o2_cap = 0
+var gold_stat = 0
 var on_land = true
 var on_ground = []
 var gravity_clamp = 0.2
@@ -66,6 +69,10 @@ func _on_water_area_body_entered(body):
 		gravity_clamp = 0.2
 		# Turn flashlight on when at certain depth
 		#$PointLight2D.visible = true
+	elif body.get_groups().has("DROP"):
+		body.linear_velocity = body.linear_velocity * 0.1
+		body.gravity_scale = 0.1
+		body.linear_damp = 0.8
 
 func _on_on_ground_body_entered(body):
 	if body.get_groups().has("TILE"):
