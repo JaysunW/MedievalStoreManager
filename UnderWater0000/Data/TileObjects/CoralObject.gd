@@ -14,16 +14,10 @@ func update_sprite():
 			animation = "Rock"
 		4:
 			animation = "Tree"
-		5:
-			animation = "Brain"
-		6:
-			animation = "Brain"
 		Enums.TileType.UNKNOWN:
 			print("Something went wrong with the coral sprite update.")
 		_:
 			animation = "Brain"
-			not_enough_sprites = true
-	if not_enough_sprites: print("Not enough corals for the area count")
 	sprite.animation = animation
 	frame = rng.randi_range(0, sprite.sprite_frames.get_frame_count(animation))
 	sprite.frame = frame

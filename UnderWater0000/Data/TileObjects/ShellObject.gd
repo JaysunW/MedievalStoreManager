@@ -14,7 +14,6 @@ func update_sprite():
 			print("Something went wrong with the coral sprite update.")
 		_:
 			animation = "Basic"
-			print("Not enough corals for the area count")
 	sprite.animation = animation
 	frame = rng.randi_range(0, sprite.sprite_frames.get_frame_count(animation)) # Could be done with noise to make it not random
 	sprite.frame = frame

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5rgp8o45owf1"]
+
+[ext_resource type="Texture2D" uid="uid://dk6rh722uw337" path="res://Assets/UI/O2Bar.png" id="1_wulur"]
+[ext_resource type="Texture2D" uid="uid://cd0iq1wujn8uy" path="res://Assets/UI/GoldUI.png" id="2_vn4tq"]
+
+[node name="Bar" type="HBoxContainer"]
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+texture_filter = 1
+layout_mode = 2
+value = 100.0
+fill_mode = 3
+texture_progress = ExtResource("1_wulur")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_vn4tq")

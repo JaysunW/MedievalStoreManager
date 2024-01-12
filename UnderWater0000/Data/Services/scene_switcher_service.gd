@@ -10,7 +10,7 @@ func _ready():
 func switch_scene(res_path):
 	call_deferred("_deferred_switch_scene", res_path)
 
-func _deffered_switch_scene(res_path):
+func _deferred_switch_scene(res_path):
 	current_scene.free()
 	var s = load(res_path)
 	current_scene = s.instantiate()

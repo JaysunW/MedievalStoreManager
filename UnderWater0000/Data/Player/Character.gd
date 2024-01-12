@@ -15,13 +15,15 @@ signal free_cam
 
 var max_o2_cap = 100
 var current_o2_cap = 0
-var gold_stat = 0
+var o2_output = 2
+var lossing_o2 = true
 var on_land = true
 var on_ground = []
 var gravity_clamp = 0.2
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
+	current_o2_cap = max_o2_cap
 	$Camera2D.enabled = not free_cam_active
 	if start_underwater:
 		on_land = false
@@ -32,12 +34,20 @@ func _process(_delta):
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 func _physics_process(_delta):
 	var direction = Vector2(Input.get_axis("left", "right"),0) # Get the input direction and handle.
-	if on_land: # On land physics 
+	if on_land: # On land physics
+		if lossing_o2:
+			$O2Timer.stop() 
+			lossing_o2 = false
 		if on_ground and Input.is_action_just_pressed("jump"):
 			linear_velocity.y = JUMP_VELOCITY
 		else:
 			linear_velocity.y += gravity * _delta * gravity_clamp
 	else: # Under water physics
+		if not lossing_o2:
+			$O2Timer.start()
+			lossing_o2 = true
+		if current_o2_cap <= 0:
+			return_to_shop()
 		direction.y = Input.get_axis("up", "down")
 		if not on_ground and linear_velocity.y < MAX_Y_VELOCITY: # Add the gravity till termal velocity is reached.
 			linear_velocity.y += gravity * _delta * gravity_clamp 
@@ -54,6 +64,10 @@ func _physics_process(_delta):
 
 func get_light_active_y():
 	return light_activ_y
+
+func return_to_shop():
+	#print("Return to shop")
+	pass
 
 func _on_air_area_body_entered(body):
 	if body.get_groups().has("PLAYER"):
@@ -81,3 +95,7 @@ func _on_on_ground_body_entered(body):
 func _on_on_ground_body_exited(body):
 	if body.get_groups().has("TILE"):
 		on_ground.erase(body)
+
+func _on_o_2_timer_timeout():
+	current_o2_cap -= o2_output
+	#print("O2: " + str(current_o2_cap))

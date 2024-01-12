@@ -65,9 +65,18 @@ func _process(_delta):
 			for chunk in old_loaded_chunk:
 				if chunk not in chunks_around_loaded:
 					deactivate_chunks(chunk)
-	if Input.is_action_just_pressed("up"):
-		pass
-
+#	if Input.is_action_just_pressed("o"):
+#		GoldService.add_gold(1)
+#		print(GoldService.get_gold())
+#	if Input.is_action_just_pressed("p"):
+#		GoldService.set_gold(100)
+#		print(GoldService.get_gold())
+#	if Input.is_action_just_pressed("i"):
+#		print(GoldService.get_gold())
+#		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
+#		print("Gold: ")
+#		print(GoldService.get_gold())
+		
 # Spawns tiles depending on x and y input.
 func spawn_tiles():
 	var ground_start = water_edge_y + 10

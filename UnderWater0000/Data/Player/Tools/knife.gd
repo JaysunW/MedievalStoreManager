@@ -23,7 +23,6 @@ func entered_range(input):
 	for group in interactable_groups:
 		if input.get_groups().has(group) and input not in objects_in_range:
 			objects_in_range.append(input)
-			print(objects_in_range)
 			break
 	
 func exited_range(input):

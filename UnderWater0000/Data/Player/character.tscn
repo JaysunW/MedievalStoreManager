@@ -85,7 +85,10 @@ shape = SubResource("CircleShape2D_oikl3")
 position = Vector2(0, 14.75)
 shape = SubResource("RectangleShape2D_5qy6f")
 
+[node name="O2Timer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="PickupArea" to="PickupArea" method="_on_body_entered"]
 [connection signal="body_exited" from="PickupArea" to="PickupArea" method="_on_body_exited"]
 [connection signal="body_entered" from="OnGround" to="." method="_on_on_ground_body_entered"]
 [connection signal="body_exited" from="OnGround" to="." method="_on_on_ground_body_exited"]
+[connection signal="timeout" from="O2Timer" to="." method="_on_o_2_timer_timeout"]
