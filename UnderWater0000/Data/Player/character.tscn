@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dekafhbm1b1n5"]
+[gd_scene load_steps=16 format=3 uid="uid://dekafhbm1b1n5"]
 
 [ext_resource type="Script" path="res://Data/Player/Character.gd" id="1_5xd1b"]
 [ext_resource type="Texture2D" uid="uid://cummguuq65x4f" path="res://Assets/Character/PlayerAquaLeft1.png" id="2_ric10"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bidj12e3i433q" path="res://Data/Player/Tools/knife.tscn" id="7_mwnye"]
 [ext_resource type="PackedScene" uid="uid://ckatwb5xmwui7" path="res://Data/Player/Tools/net.tscn" id="8_thdod"]
 [ext_resource type="Script" path="res://Data/Player/PickupArea.gd" id="9_d1jb4"]
+[ext_resource type="PackedScene" uid="uid://rgfx8okryh76" path="res://GUI/interface.tscn" id="10_dx4nr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fu47e"]
 friction = 0.0
@@ -86,6 +87,10 @@ position = Vector2(0, 14.75)
 shape = SubResource("RectangleShape2D_5qy6f")
 
 [node name="O2Timer" type="Timer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Interface" parent="CanvasLayer" instance=ExtResource("10_dx4nr")]
 
 [connection signal="body_entered" from="PickupArea" to="PickupArea" method="_on_body_entered"]
 [connection signal="body_exited" from="PickupArea" to="PickupArea" method="_on_body_exited"]

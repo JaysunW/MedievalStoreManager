@@ -19,9 +19,9 @@ config/icon="res://icon.svg"
 
 Enums="*res://Global/enums.gd"
 DropService="*res://Global/DropService.gd"
-GoldService="*res://Data/Services/gold_service.gd"
-SceneSwitcherService="*res://Data/Services/scene_switcher_service.gd"
-LoadoutService="*res://Data/Services/loadout_service.gd"
+GoldService="*res://Global/gold_service.gd"
+SceneSwitcherService="*res://Global/scene_switcher_service.gd"
+LoadoutService="*res://Global/loadout_service.gd"
 
 [input]
 

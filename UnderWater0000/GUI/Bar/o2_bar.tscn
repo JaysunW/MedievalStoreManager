@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://bl6g3o626sm1v"]
+
+[ext_resource type="Script" path="res://Bar.gd" id="1_w73h6"]
+[ext_resource type="Texture2D" uid="uid://bq4aqm8f13u12" path="res://Assets/UI/O2GaigeBack.png" id="2_ro4wy"]
+[ext_resource type="Texture2D" uid="uid://i8v8oxawx1pw" path="res://Assets/UI/AirInO2Gaige.png" id="3_mdwnw"]
+[ext_resource type="Texture2D" uid="uid://bicrwdqbn6nit" path="res://Assets/UI/O2Gaige.png" id="4_ptsb3"]
+
+[node name="O2_bar" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w73h6")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 22.0
+offset_top = 20.0
+offset_right = 54.0
+offset_bottom = 84.0
+scale = Vector2(2, 2)
+texture = ExtResource("2_ro4wy")
+stretch_mode = 2
+
+[node name="Progress" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 34.0
+offset_right = 54.0
+offset_bottom = 85.0
+scale = Vector2(2, 2)
+value = 99.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_progress = ExtResource("3_mdwnw")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 22.0
+offset_top = 20.0
+offset_right = 54.0
+offset_bottom = 84.0
+scale = Vector2(2, 2)
+texture = ExtResource("4_ptsb3")
+stretch_mode = 2

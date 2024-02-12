@@ -2,6 +2,7 @@ extends RigidBody2D
 
 @onready var sprite = $Sprite
 @onready var light = $PointLight2D
+@onready var gui =  $CanvasLayer/Interface
 
 @export var free_cam_active = false
 @export var light_activ_y = 50
@@ -46,8 +47,6 @@ func _physics_process(_delta):
 		if not lossing_o2:
 			$O2Timer.start()
 			lossing_o2 = true
-		if current_o2_cap <= 0:
-			return_to_shop()
 		direction.y = Input.get_axis("up", "down")
 		if not on_ground and linear_velocity.y < MAX_Y_VELOCITY: # Add the gravity till termal velocity is reached.
 			linear_velocity.y += gravity * _delta * gravity_clamp 
@@ -97,5 +96,10 @@ func _on_on_ground_body_exited(body):
 		on_ground.erase(body)
 
 func _on_o_2_timer_timeout():
+	print("Interface : " + str(gui))
 	current_o2_cap -= o2_output
-	#print("O2: " + str(current_o2_cap))
+	if current_o2_cap < 0:
+		print("Out of O2")
+		return_to_shop()
+		pass
+	gui.update_o2_bar((float(current_o2_cap)/float(max_o2_cap)) * 100)
