@@ -27,9 +27,8 @@
 [ext_resource type="Texture2D" uid="uid://2bu2tkwql3b0" path="res://Assets/Shell/Shell3.png" id="25_nlily"]
 [ext_resource type="Texture2D" uid="uid://cornce2umi4pp" path="res://Assets/Shell/Shell4.png" id="26_1wlo4"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sk8hm"]
-radius = 7.5
-height = 22.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3lf7e"]
+size = Vector2(13, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2fvse"]
 animations = [{
@@ -137,9 +136,9 @@ freeze = true
 script = ExtResource("2_o8n73")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4.5)
+position = Vector2(-3.61998e-06, 5.5)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_sk8hm")
+shape = SubResource("RectangleShape2D_3lf7e")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 15

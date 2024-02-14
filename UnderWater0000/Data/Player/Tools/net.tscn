@@ -32,6 +32,7 @@ script = ExtResource("1_bipas")
 [node name="RotationPoint" type="Node2D" parent="."]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="RotationPoint"]
+z_index = 45
 texture_filter = 1
 position = Vector2(-24, 24)
 rotation = 2.35619

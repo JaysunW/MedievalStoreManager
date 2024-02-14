@@ -53,17 +53,6 @@ func get_spawn_from_dir(dir):
 		Enums.Dir.West:
 			return $WestSpawn
 			
-func add_object_to_dir(object, dir):
-	match dir:
-		Enums.Dir.North:
-			$NorthSpawn.add_child(object)
-		Enums.Dir.East:
-			$EastSpawn.add_child(object)
-		Enums.Dir.South:
-			$SouthSpawn.add_child(object)
-		Enums.Dir.West:
-			$WestSpawn.add_child(object)
-			
 # Destroy tile and remove it from the main tile dictionary
 func destroy_tile():
 	grid_service.call("destroyed_tile",tile_position, type)

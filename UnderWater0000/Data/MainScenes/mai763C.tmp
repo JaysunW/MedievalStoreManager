@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c602dxf6mby3v"]
+[gd_scene load_steps=17 format=3 uid="uid://c602dxf6mby3v"]
 
 [ext_resource type="PackedScene" uid="uid://dekafhbm1b1n5" path="res://Data/Player/character.tscn" id="1_8j5xq"]
 [ext_resource type="Script" path="res://Data/Services/GridService.gd" id="2_drna8"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="9_fr8l2"]
 [ext_resource type="Script" path="res://Global/enums.gd" id="10_r583f"]
 [ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="11_4mook"]
-[ext_resource type="Script" path="res://Data/Services/FishService.gd" id="13_d7xu8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cntie"]
 
@@ -39,6 +38,7 @@ size = Vector2(32, 24)
 
 [node name="Character" parent="." instance=ExtResource("1_8j5xq")]
 position = Vector2(32, 0)
+free_cam_active = true
 
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_drna8")
@@ -47,8 +47,9 @@ coral_scene = ExtResource("4_ur48h")
 shell_scene = ExtResource("5_53wkk")
 alge_scene = ExtResource("6_nj0je")
 test_scene = SubResource("PackedScene_gtapn")
-width = 60
-height = 80
+width = 50
+height = 100
+show_every_tile = true
 
 [node name="AirBackground" type="Sprite2D" parent="GridService"]
 self_modulate = Color(1, 1, 1, 0.498039)
@@ -96,9 +97,6 @@ script = ExtResource("10_r583f")
 
 [node name="FreeCam" parent="." instance=ExtResource("11_4mook")]
 zoom = Vector2(0.2, 0.2)
-
-[node name="FishService" type="Node2D" parent="."]
-script = ExtResource("13_d7xu8")
 
 [connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
 [connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]

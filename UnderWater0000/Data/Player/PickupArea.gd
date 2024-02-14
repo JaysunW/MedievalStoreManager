@@ -21,7 +21,7 @@ func _physics_process(_delta):
 			var velocity = drop.linear_velocity
 			if velocity.length() >= MAX_SPEED:
 				drop.linear_velocity = velocity.normalized() * MAX_SPEED
-			if new_vec.length() <= 24:
+			if new_vec.length() <= 20:
 				drops_to_delete.append(drop)
 				drop.destroy_drop()
 	for drop in drops_to_delete:

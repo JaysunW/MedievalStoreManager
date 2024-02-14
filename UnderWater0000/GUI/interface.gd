@@ -3,6 +3,9 @@ extends Control
 @onready var o2_bar = $O2_bar
 @onready var coin_counter = $Coin_counter
 
+func _ready():
+	$".".visible = true
+
 func change_coins(value):
 	coin_counter.update(value)
 	

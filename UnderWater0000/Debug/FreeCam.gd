@@ -10,7 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var direction = Vector2(Input.get_axis("left","right"),Input.get_axis("up", "down"))
+	var direction = Vector2(Input.get_axis("2_left","2_right"),Input.get_axis("2_up", "2_down"))
 	if direction:
 		position += direction * delta * speed
 	var zoom_in = Input.is_action_just_released("mouse_wheel_up")
@@ -18,12 +18,9 @@ func _process(delta):
 	
 	if zoom_in:
 		zoom_update += Vector2( 0.1, 0.1)
-		speed -= 100
 	elif zoom_out:
 		zoom_update -= Vector2( 0.1, 0.1)
-		speed += 100
-	if speed < 0: speed = 100
-	
+		
 	zoom_update = Vector2( clamp(zoom_update.x,0.1,10), clamp(zoom_update.y,0.1,10))
 	zoom = zoom_update
 

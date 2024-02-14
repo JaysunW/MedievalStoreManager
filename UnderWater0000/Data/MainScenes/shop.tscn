@@ -1,6 +1,42 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvy2lamuhppe2"]
+[gd_scene load_steps=7 format=3 uid="uid://cvy2lamuhppe2"]
 
 [ext_resource type="Script" path="res://Data/MainScenes/shop.gd" id="1_wdgm1"]
+[ext_resource type="Texture2D" uid="uid://bt57dqluqamsj" path="res://Assets/Shop2.png" id="2_5wcgu"]
+[ext_resource type="Texture2D" uid="uid://5w3x6xwe87ft" path="res://Assets/Tools/Knife/KnifeMk2.png" id="3_yt67k"]
+[ext_resource type="Texture2D" uid="uid://tiia6iboflml" path="res://Assets/Tools/Laser/LaserMk2.png" id="4_twqeo"]
+[ext_resource type="Texture2D" uid="uid://cdrnkc525g47f" path="res://Assets/Tools/Net/kaescherMK2.png" id="5_hnuuw"]
+[ext_resource type="Texture2D" uid="uid://thwxklltpnec" path="res://Assets/Tools/Net/kaescherMk4.png" id="6_obahm"]
 
 [node name="Shop" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_wdgm1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Background" type="Sprite2D" parent="Camera2D"]
+position = Vector2(4, -3)
+scale = Vector2(6.5, 6.5)
+texture = ExtResource("2_5wcgu")
+metadata/_edit_lock_ = true
+
+[node name="object" type="Sprite2D" parent="Camera2D/Background"]
+position = Vector2(-15, -38)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_yt67k")
+
+[node name="object2" type="Sprite2D" parent="Camera2D/Background"]
+position = Vector2(-15, -23.2308)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("4_twqeo")
+
+[node name="object3" type="Sprite2D" parent="Camera2D/Background"]
+position = Vector2(-20.6154, -9.07692)
+rotation = 3.14159
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("5_hnuuw")
+
+[node name="object4" type="Sprite2D" parent="Camera2D/Background"]
+position = Vector2(-14.9231, 6.61538)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("6_obahm")
