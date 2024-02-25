@@ -14,7 +14,7 @@ func _ready():
 	#alge_list = $Rigids.get_children()
 	noise_one.seed = noise_seed
 
-func _process(delta):
+func _process(_delta):
 	for j in range(alge_list.size()):
 		for i in range(alge_list[j].size()):
 			var val = noise_one.get_noise_2d(j * 5, (i + noise_count) * 4) * 32
@@ -25,7 +25,6 @@ func _process(delta):
 func spawn_alge_on(spawntile, length):
 	tile = spawntile
 	var alge_count = rng.randi_range(1, 5)
-	var already_max_size = false
 	for j in alge_count:
 		var local_alge_list = []
 		var offset = 3 * - (j*2-alge_count+1)
@@ -38,7 +37,7 @@ func spawn_alge_on(spawntile, length):
 			local_alge_list.append(current_alge)
 			add_child(current_alge)
 			change_alge_length(current_alge, alge_length)
-			if i == size_offset-1: current_alge.gravity_scale = -0.01
+			if i == size_offset-1: current_alge.gravity_scale = -0.05
 			if i != 0:
 				current_alge.position = previous_alge.position + Vector2(0,-32 * alge_length)
 				current_alge.get_node("Joint").set_node_b(previous_alge.get_path())
@@ -47,6 +46,7 @@ func spawn_alge_on(spawntile, length):
 				current_alge.get_node("Joint").set_node_b(tile.get_path())
 			previous_alge = current_alge
 		alge_list.append(local_alge_list)
+		
 		
 func change_alge_length(alge, length):
 	alge.get_node("Collision").scale = Vector2.ONE * length

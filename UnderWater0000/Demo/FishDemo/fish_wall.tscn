@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wmvax"]
 size = Vector2(32, 32)
 
-[node name="FishWall" type="RigidBody2D" groups=["Obstacle"]]
+[node name="FishWall" type="RigidBody2D" groups=["OBSTACLE"]]
 can_sleep = false
 lock_rotation = true
 freeze = true

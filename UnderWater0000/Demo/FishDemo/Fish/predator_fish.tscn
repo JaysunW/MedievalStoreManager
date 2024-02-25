@@ -8,11 +8,10 @@ radius = 8.0
 height = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_65ytg"]
-radius = 64.0
+radius = 160.0
 
 [node name="Fish" type="RigidBody2D"]
 texture_filter = 1
-position = Vector2(64, 64)
 gravity_scale = 0.0
 contact_monitor = true
 can_sleep = false
@@ -20,17 +19,18 @@ script = ExtResource("1_vjev5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.3, 0.3)
 shape = SubResource("CapsuleShape2D_mtnho")
 
 [node name="DetectFish" type="Area2D" parent="."]
+scale = Vector2(0.3, 0.3)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectFish"]
 shape = SubResource("CircleShape2D_65ytg")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_2cj47")
 
 [node name="OutOfRangeTimer" type="Timer" parent="."]

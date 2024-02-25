@@ -52,7 +52,8 @@ coral_scene = ExtResource("4_ur48h")
 shell_scene = ExtResource("5_53wkk")
 alge_scene = ExtResource("6_nj0je")
 test_scene = SubResource("PackedScene_gtapn")
-width = 200
+width = 150
+height = 150
 chunk_width = 15
 chunk_height = 15
 
@@ -92,9 +93,8 @@ texture = ExtResource("8_tou7g")
 width = 5.0
 
 [node name="Test" type="Line2D" parent="GridService"]
-z_index = 100
-width = 3.0
-default_color = Color(1, 0, 0, 1)
+width = 5.0
+default_color = Color(1, 0, 1, 1)
 
 [node name="DarknesService" type="CanvasModulate" parent="."]
 process_mode = 4
@@ -118,12 +118,8 @@ special_predator_scene = ExtResource("17_ih1nr")
 
 [node name="FishSpawnTimer" type="Timer" parent="FishService"]
 wait_time = 5.0
-
-[node name="FishDespawnTimer" type="Timer" parent="FishService"]
-wait_time = 15.0
 autostart = true
 
 [connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
 [connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]
 [connection signal="timeout" from="FishService/FishSpawnTimer" to="FishService" method="_on_fish_spawn_timer_timeout"]
-[connection signal="timeout" from="FishService/FishDespawnTimer" to="FishService" method="_on_fish_despawn_timer_timeout"]

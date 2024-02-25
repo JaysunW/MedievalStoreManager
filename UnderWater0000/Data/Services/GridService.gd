@@ -7,6 +7,7 @@ var all_counter = 0
 @onready var water_background = $WaterBackground
 @onready var player = $"../Character"
 @onready var chunk_border_show = $ChunkPerimeter
+@onready var test_line = $Test
 @export var tile_scene : PackedScene
 @export var coral_scene : PackedScene
 @export var shell_scene : PackedScene
@@ -48,14 +49,13 @@ func _ready():
 	moisture.seed = noise_seed + noise_offset * 3
 	spawn_tiles()
 	spawn_foliage()
-	$"../FishService".spawn_fish(tile_dict)
 	set_sprites_of_tiles()
 	transform_backgrounds(width, height)
 	player.position = Vector2(float(width * 32)/2.0,-32)
 
 func _process(_delta):
 	if not show_every_tile:
-		var player_chunk = give_chunk_position(player.position)
+		var player_chunk = get_chunk_position(player.position)
 		if loaded_chunk != player_chunk:
 			loaded_chunk = player_chunk
 			var old_loaded_chunk = chunks_around_loaded + []
@@ -90,7 +90,7 @@ func spawn_tiles():
 			#var higherY = float(_y - y) / _y * 0.05
 			var y_offset = 5
 			var noise_around_zero = noise_value_1 * y_offset - y_offset
-			if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.5 and noise_value_2 > 0.2):
+			if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.6 and noise_value_2 > 0.4):
 				var newTile = tile_scene.instantiate()
 				add_child(newTile)
 				var border_idx = get_border_area(x,y, true)
@@ -115,7 +115,7 @@ func spawn_foliage():
 	
 	var alge_noise_offset = 2000
 	for x in range(width):
-		for y in range(water_edge_y + 1, height):
+		for y in range(water_edge_y + 3, height):
 			var pos = Vector2(x,y)
 			if tile_dict.has(pos):
 				var shell_spawned = false
@@ -141,6 +141,7 @@ func spawn_foliage():
 				noise_value_1 = get_noise(noise_one,x,y,noise_jump, shell_noise_offset)
 				noise_value_2 = get_noise(noise_two,x,y,noise_jump, shell_noise_offset)
 				if neighbours != "LRUD" and noise_value_1 > 0.4 and noise_value_2 > 0.6:
+					shell_spawned = true
 					var dir_list = []
 					if not neighbours.contains("L") and rand_chance(30):
 						dir_list.append(current_tile.get_spawn_from_dir(Enums.Dir.West))
@@ -162,7 +163,6 @@ func spawn_foliage():
 					var alge = alge_scene.instantiate()
 					current_tile.add_child(alge)
 					var length = check_free_space_above(pos, 5)
-					print(length)
 					alge.call("spawn_alge_on", current_tile,length * 2)
 
 func rand_chance(chance):
@@ -181,15 +181,78 @@ func check_free_space_above(pos, spaces):
 			count += 1
 	return count
 	
-func give_chunk_position(pos):
+func get_chunk_position(pos):
 	return Vector2(floor((pos.x + 16) / (chunk_width * 32)),floor((pos.y + 16) / (chunk_height * 32)))
 
+func get_new_fish_position():
+	#find spawnable area around player
+	var vector_list = [Vector2(1,0),Vector2(1,1),Vector2(0,1),Vector2(-1,1),Vector2(-1,0),Vector2(-1,-1),Vector2(0,-1),Vector2(1,-1),Vector2(1,0)]
+	var pair_list = []
+	var first_item = null
+	for i in range(vector_list.size()):
+		var check_pos = (player.position/32) + vector_list[i].normalized() * 15 
+		if check_pos_in_area(check_pos) and check_pos.y > water_edge_y:
+			if first_item == null:
+				first_item = i
+			else:
+				pair_list.append(Vector2(first_item,i))
+				first_item = i
+		else:
+			first_item = null
+	
+	var rand = 0
+	if(pair_list.size() > 0): rand = rng.randi_range(0,pair_list.size()-1)
+	else: return null
+	
+	var rand_pair = pair_list[rand]
+	# Calculate random pos on plane between vec1 and vec2
+	for i in range(20):
+		var x_vec = 0
+		var y_vec = 0
+		var x = rng.randf_range(0,1)
+		var y = rng.randf_range(0,1)
+		if x + y > 1:
+			x = 1 - x
+			y = 1 - y
+		var new_pos = Vector2.ZERO
+		if rng.randi_range(0,1) == 1:
+			var vec1 = vector_list[rand_pair.y].normalized() * 15
+			var vec2 = vector_list[rand_pair.x].normalized() * 15
+			var vec3 = vector_list[rand_pair.x].normalized() * 30
+			x_vec = vec1 - vec2
+			y_vec = vec3 - vec2
+			new_pos = vec2 + x_vec * x + y_vec * y
+		else: 
+			var vec1 = vector_list[rand_pair.y].normalized() * 15
+			var vec2 = vector_list[rand_pair.y].normalized() * 30
+			var vec3 = vector_list[rand_pair.x].normalized() * 30
+			x_vec = vec1 - vec2
+			y_vec = vec3 - vec2
+			new_pos = vec2 + x_vec * x + y_vec * y
+		new_pos = ((player.position/32) + new_pos).floor()
+		test_line.clear_points()
+		for p in vector_list:
+			test_line.add_point((new_pos * 32).floor() + p.normalized() * 5)
+		for p in vector_list:
+			test_line.add_point((new_pos * 32).floor() + p.normalized() * 20)
+		
+		if not tile_dict.has(new_pos) and new_pos.y > water_edge_y + 1:
+			print("Player_pos: " + str((player.position/32).floor()) + " new_pos: " + str(new_pos))
+			return (new_pos * 32).floor()
+	return null
+
+func check_pos_in_area(pos):
+	return 0 <= pos.x and pos.x < width and 0 <= pos.y and pos.y < height
+	
+func get_loaded_chunks():
+	return chunks_around_loaded
+	
 func set_chunks_around_loaded_chunk():
 	chunk_border_show.clear_points()
 	chunks_around_loaded.clear()
 	var loaded_chunk_pos = Vector2((loaded_chunk.x) * chunk_width,(loaded_chunk.y) * chunk_height)
-	for i in range(-1,2):
-		for j in range(-1,2):
+	for i in range(-2,3):
+		for j in range(-2,3):
 			chunks_around_loaded.append(loaded_chunk + Vector2(i,j))
 			if show_chunks:
 				chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(j) * chunk_height)) * 32)

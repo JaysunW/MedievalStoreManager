@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://bchmogf0qba8j"]
 
-[ext_resource type="Texture2D" uid="uid://cv38sx5410tnr" path="res://Assets/Alge1.png" id="1_vloth"]
+[ext_resource type="Texture2D" uid="uid://cv38sx5410tnr" path="res://Assets/Alge1.png" id="1_3t0kb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5yf1i"]
 radius = 4.0
 height = 32.0
 
-[node name="AlgePart" type="RigidBody2D"]
+[node name="AlgePart" type="RigidBody2D" groups=["ALGE", "OBSTACLE"]]
 texture_filter = 1
 mass = 10.0
 gravity_scale = -0.01
@@ -16,7 +16,7 @@ sleeping = true
 shape = SubResource("CapsuleShape2D_5yf1i")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_vloth")
+texture = ExtResource("1_3t0kb")
 
 [node name="Joint" type="PinJoint2D" parent="."]
 position = Vector2(0, 13)

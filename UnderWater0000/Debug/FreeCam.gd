@@ -1,10 +1,11 @@
 extends Camera2D
 
-var speed = 300
-@export var zoom_update = Vector2(0.1,0.1)
+var speed = 500
+@export var zoom_update = Vector2(0.5,0.5)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	position = $"../Character".position + Vector2.DOWN * 32 *10
 	pass # Replace with function body.
 
 
@@ -15,7 +16,7 @@ func _process(delta):
 		position += direction * delta * speed
 	var zoom_in = Input.is_action_just_released("mouse_wheel_up")
 	var zoom_out = Input.is_action_just_released("mouse_wheel_down")
-	
+
 	if zoom_in:
 		zoom_update += Vector2( 0.1, 0.1)
 	elif zoom_out:

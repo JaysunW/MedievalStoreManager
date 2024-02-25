@@ -36,7 +36,9 @@ func special_behaviour():
 	line4.add_point(to_local(position + alignment_vector.normalized() * 32 * 1.4))
 	var obstacle_avoidance_vector = calc_obstacle_avoidance()
 	for obstacle in obstacles:
-		var connection_vec = (obstacle.position) - (position) 
+		var connection_vec = (obstacle.position) - (position)
+		if obstacle.get_groups().has("ALGE"):
+			connection_vec = obstacle.position + obstacle.get_parent().get_parent().position - (position)
 		var dot_product = linear_velocity.normalized().dot(connection_vec.normalized())
 		if dot_product >= field_of_vision:
 			line5.add_point(to_local(position + connection_vec))
@@ -53,9 +55,7 @@ func special_behaviour():
 		if connection_vec.length() < 10:
 			line8.add_point(to_local($BitePosition.position))
 			line8.add_point(to_local(target.position))
-		
 	
-
 func line_around_point(line_node,pos): 
 	var size = 6
 	line_node.add_point(pos + Vector2(size,0))
@@ -63,7 +63,6 @@ func line_around_point(line_node,pos):
 	line_node.add_point(pos + Vector2(-size,0))
 	line_node.add_point(pos + Vector2(0,-size))
 	line_node.add_point(pos + Vector2(size,0))
-
-
+	
 func _on_out_of_range_timer_timeout():
 	pass # Replace with function body.

@@ -125,9 +125,13 @@ func calc_obstacle_avoidance():
 	var obstacle_avoidance = Vector2.ZERO
 	for obstacle in obstacles:
 		var connection_vec = (obstacle.position) - (position) 
+		if obstacle.get_groups().has("ALGE"):
+			connection_vec = obstacle.position + obstacle.get_parent().get_parent().position - (position)
 		var dot_product = linear_velocity.normalized().dot(connection_vec.normalized())
 		if dot_product >= field_of_vision:
 			obstacle_avoidance -= connection_vec
+	if position.y < 32 * 17:
+		obstacle_avoidance += Vector2.DOWN * 2
 	return obstacle_avoidance
 
 # Gives the avoidance vector to other fish of different species
@@ -156,7 +160,7 @@ func _on_detect_fish_body_entered(body):
 		predator_fish.append(body)
 	elif groups.has("FISH"):
 		other_fish.append(body)
-	elif groups.has("Obstacle"):
+	elif groups.has("OBSTACLE"):
 		obstacles.append(body)
 
 func _on_detect_fish_body_exited(body):
@@ -167,7 +171,7 @@ func _on_detect_fish_body_exited(body):
 		predator_fish.erase(body)
 	elif groups.has("FISH"):
 		other_fish.erase(body)
-	elif groups.has("Obstacle"):
+	elif groups.has("OBSTACLE"):
 		obstacles.erase(body)
 
 

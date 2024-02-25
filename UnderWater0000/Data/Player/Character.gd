@@ -3,6 +3,7 @@ extends RigidBody2D
 @onready var sprite = $Sprite
 @onready var light = $PointLight2D
 @onready var gui =  $CanvasLayer/Interface
+@onready var fish_spawn_perimeter = $FishSpawnPerimeter
 
 @export var free_cam_active = false
 @export var light_activ_y = 50
@@ -31,6 +32,12 @@ func _ready():
 
 func _process(_delta):
 	light.visible = position.y/32 > light_activ_y
+	fish_spawn_perimeter.clear_points()
+	var vector_list = [Vector2(1,0),Vector2(1,1),Vector2(0,1),Vector2(-1,1),Vector2(-1,0),Vector2(-1,-1),Vector2(0,-1),Vector2(1,-1),Vector2(1,0)]
+	for vec in vector_list:
+		fish_spawn_perimeter.add_point(vec.normalized()*32*15)
+	for vec in vector_list:
+		fish_spawn_perimeter.add_point(vec.normalized()*32*30)
 		
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 func _physics_process(_delta):
@@ -50,7 +57,7 @@ func _physics_process(_delta):
 		direction.y = Input.get_axis("up", "down")
 		if not on_ground and linear_velocity.y < MAX_Y_VELOCITY: # Add the gravity till termal velocity is reached.
 			linear_velocity.y += gravity * _delta * gravity_clamp 
-			
+	direction = direction.normalized()	
 	if direction.x:
 		linear_velocity.x = direction.x * SPEED
 		sprite.frame = (direction.x + 1)/2
@@ -65,7 +72,7 @@ func get_light_active_y():
 	return light_activ_y
 
 func return_to_shop():
-	#print("Return to shop")
+	print("Return to shop")
 	pass
 
 func _on_air_area_body_entered(body):
@@ -96,10 +103,10 @@ func _on_on_ground_body_exited(body):
 		on_ground.erase(body)
 
 func _on_o_2_timer_timeout():
-	print("Interface : " + str(gui))
 	current_o2_cap -= o2_output
 	if current_o2_cap < 0:
 		print("Out of O2")
 		return_to_shop()
+		$O2Timer.stop() 
 		pass
 	gui.update_o2_bar((float(current_o2_cap)/float(max_o2_cap)) * 100)

@@ -23,6 +23,12 @@ GoldService="*res://Global/gold_service.gd"
 SceneSwitcherService="*res://Global/scene_switcher_service.gd"
 LoadoutService="*res://Global/loadout_service.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+
 [input]
 
 left={

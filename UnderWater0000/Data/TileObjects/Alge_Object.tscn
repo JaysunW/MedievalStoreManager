@@ -1,8 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5gi5yrtpkf61"]
 
 [ext_resource type="Script" path="res://Demo/AlgeObject.gd" id="1_cukn0"]
-[ext_resource type="PackedScene" uid="uid://bchmogf0qba8j" path="res://Demo/AlgePart.tscn" id="2_686bh"]
+[ext_resource type="PackedScene" uid="uid://bchmogf0qba8j" path="res://Data/TileObjects/AlgePart.tscn" id="2_sqyh1"]
 
-[node name="Alge" type="Node2D"]
+[node name="Alge" type="Node2D" groups=["OBSTACLE"]]
 script = ExtResource("1_cukn0")
-alge_scene = ExtResource("2_686bh")
+alge_scene = ExtResource("2_sqyh1")

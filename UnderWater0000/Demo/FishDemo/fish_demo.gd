@@ -10,6 +10,8 @@ extends Node2D
 @export var predator_scene : PackedScene
 @export var special_fish_scene : PackedScene
 @export var special_predator_scene : PackedScene
+@export var alge_scene : PackedScene
+
 @export var with_structure = true
 @export var height = 50
 @export var width = 80
@@ -37,11 +39,11 @@ func _ready():
 	var orange_sprite = preload("res://Assets/Fish/OrangeFish.png")
 	noise_one.seed = noise_seed
 	noise_two.seed = noise_seed + noise_offset
-	$Area2D/Sprite2D.position = Vector2(width* 32/2, height* 32/2)
+	$Area2D/Sprite2D.position = Vector2(width * 16, height * 16)
 	$Area2D/Sprite2D.scale = Vector2((width), (height))
 	spawn_walls()
 	add_points_to_path()
-	$Camera2D.position = Vector2(width* 32/2, height* 32/2)
+	$Camera2D.position = Vector2(width * 16, height * 16)
 	spawn_fish(fish_scene, "BLUE", blue_fish_count, blue_sprite)
 	spawn_fish(fish_scene, "CLOWN", clown_fish_count, clown_sprite)
 	spawn_fish(fish_scene,"ORANGE", orange_fish_count,orange_sprite)
@@ -98,6 +100,12 @@ func spawn_walls():
 					var new_tile = tile_scene.instantiate()
 					new_tile.position = Vector2(x * 32,y * 32)
 					add_child(new_tile)
+					if noise_value_1 < 0.6 and noise_value_2 < 0.3:
+						var alge = alge_scene.instantiate()
+						new_tile.add_child(alge)
+						var length = 1
+						alge.call("spawn_alge_on", new_tile,length * 2)
+	
 
 func spawn_fish(input, type, size, other_sprite = null):
 	for i in range(size):
@@ -107,10 +115,11 @@ func spawn_fish(input, type, size, other_sprite = null):
 		fish.initialize_fish(type)
 		if other_sprite != null:
 			fish.set_sprite(other_sprite)
-		var direction = path_follow.rotation + PI /2
-		direction += randf_range(-PI / 4, PI / 4)
-		fish.rotation =  direction
-		fish.position = path_follow.position
+#		var direction = path_follow.rotation + PI /2
+#		direction += randf_range(-PI / 4, PI / 4)
+#		fish.rotation =  direction
+#		fish.position = path_follow.position
+		fish.position = Vector2(20 * 32, 6 * 32)
 		add_child(fish)
 
 func _on_fish_spawner_timeout():

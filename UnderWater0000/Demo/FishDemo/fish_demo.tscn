@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cjlmgr412v34e"]
+[gd_scene load_steps=11 format=3 uid="uid://cjlmgr412v34e"]
 
 [ext_resource type="Script" path="res://Demo/FishDemo/fish_demo.gd" id="1_emn7a"]
 [ext_resource type="PackedScene" uid="uid://driuhkca6sbfh" path="res://Demo/FishDemo/fish_wall.tscn" id="2_1x7by"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ix330rakblo1" path="res://Demo/FishDemo/Fish/special_fish.tscn" id="4_wsujh"]
 [ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="5_cohvw"]
 [ext_resource type="PackedScene" uid="uid://bohfgh7o00pg6" path="res://Demo/FishDemo/Fish/special_predator_fish.tscn" id="6_q0n00"]
+[ext_resource type="PackedScene" uid="uid://c5gi5yrtpkf61" path="res://Data/TileObjects/Alge_Object.tscn" id="7_6enlu"]
 
 [sub_resource type="Curve2D" id="Curve2D_nfbjn"]
 
@@ -20,13 +21,14 @@ fish_scene = ExtResource("3_8mtid")
 predator_scene = ExtResource("4_4jbfq")
 special_fish_scene = ExtResource("4_wsujh")
 special_predator_scene = ExtResource("6_q0n00")
+alge_scene = ExtResource("7_6enlu")
 height = 30
 width = 60
-blue_fish_count = 20
-clown_fish_count = 20
-orange_fish_count = 20
+blue_fish_count = 0
+clown_fish_count = 0
+orange_fish_count = 0
 predator_fish_count = 0
-special_fish_count = 0
+special_predator_fish_count = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

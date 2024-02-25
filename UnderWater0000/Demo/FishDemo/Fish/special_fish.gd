@@ -32,6 +32,8 @@ func special_behaviour():
 	var obstacle_avoidance_vector = calc_obstacle_avoidance()
 	for obstacle in obstacles:
 		var connection_vec = (obstacle.position) - (position) 
+		if obstacle.get_groups().has("ALGE"):
+			connection_vec = obstacle.position + obstacle.get_parent().get_parent().position - (position)
 		var dot_product = linear_velocity.normalized().dot(connection_vec.normalized())
 		if dot_product >= field_of_vision:
 			line5.add_point(to_local(position + connection_vec))

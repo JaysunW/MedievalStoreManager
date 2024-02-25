@@ -82,7 +82,7 @@ func _on_detect_fish_body_entered(body):
 	var groups = body.get_groups() 
 	if body != $"." and groups.has(type):
 		near_fish.append(body)
-	elif groups.has("Obstacle"):
+	elif groups.has("OBSTACLE"):
 		obstacles.append(body)
 	elif groups.has("FISH") and current_state == Enums.FishState.SWIMMING:
 		other_fish.append(body)
@@ -91,7 +91,7 @@ func _on_detect_fish_body_exited(body):
 	var groups = body.get_groups() 
 	if groups.has(type):
 		near_fish.erase(body)
-	elif groups.has("Obstacle"):
+	elif groups.has("OBSTACLE"):
 		obstacles.erase(body)
 	elif groups.has("FISH"):
 		other_fish.erase(body)

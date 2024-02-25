@@ -708,7 +708,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wceys"]
 size = Vector2(32, 32)
 
-[node name="Tile" type="RigidBody2D" groups=["TILE"]]
+[node name="Tile" type="RigidBody2D" groups=["OBSTACLE", "TILE"]]
 texture_filter = 1
 collision_layer = 3
 gravity_scale = 0.0
@@ -718,6 +718,7 @@ freeze = true
 script = ExtResource("1_80sbk")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.396078)
 z_index = 25
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fdck3")
