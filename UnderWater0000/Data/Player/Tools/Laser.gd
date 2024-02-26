@@ -7,7 +7,7 @@ extends Tool
 
 var added_laser_start = false
 var strength = 10
-
+var alternate_modes = null
 var overheat = 2
 var overheat_active = false
 

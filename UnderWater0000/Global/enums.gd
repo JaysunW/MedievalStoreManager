@@ -82,3 +82,32 @@ enum Scene{
 	Aquarium,
 	Unknown
 }
+
+enum ShopItem{
+	LASER,
+	NET,
+	KNIFE,
+	O2TANK,
+	BELL
+}
+
+enum Laser{
+	SECOND,
+	THIRD,
+	FORTH,
+	FISH
+}
+
+enum Net{
+	SECOND,
+	THIRD,
+	FORTH,
+	FISH
+}
+
+enum Knife{
+	SECOND,
+	THIRD,
+	FORTH,
+	FISH
+}

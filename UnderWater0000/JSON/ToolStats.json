@@ -1,0 +1,48 @@
+{
+	"laser": [
+		{
+			"name": "second",
+            "damage": 8,
+            "cooldown": 0.1,
+			"strength": 2,
+            "alternate_modes": 0,
+            "type": 0,
+            "sprite_path": "res://Assets/Tools/Laser/LaserMk2.png"
+		},
+		{
+			"name": "thrid",
+            "damage": 10,
+            "cooldown": 0.08,
+			"strength": 3,
+            "alternate_modes": 0,
+            "type": 1,
+            "sprite_path": "res://Assets/Tools/Laser/LaserMk3.png"
+		},
+		{
+			"name": "forth",
+            "damage": 12,
+            "cooldown": 0.04,
+			"strength": 4,
+            "alternate_modes": 1,
+            "type": 2,
+            "sprite_path": "res://Assets/Tools/Laser/LaserMk4.png"
+		}
+	],
+	"knife": [
+		{
+			"name": "second",
+            "damage": 20,
+            "cooldown": 0.8
+		},
+		{
+			"name": "thrid",
+            "damage": 20,
+            "cooldown": 0.5
+		},
+		{
+			"name": "forth",
+            "damage": 35,
+            "cooldown": 0.4,
+		}
+	]
+}
