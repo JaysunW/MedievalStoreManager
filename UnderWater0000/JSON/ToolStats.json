@@ -1,48 +1,89 @@
 {
 	"laser": [
 		{
+			"id": 0,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Laser/lasermk2.png",
+			"price": 1000,
 			"name": "second",
-            "damage": 8,
-            "cooldown": 0.1,
+			"damage": 8,
+			"cooldown": 0.1,
 			"strength": 2,
-            "alternate_modes": 0,
-            "type": 0,
-            "sprite_path": "res://Assets/Tools/Laser/LaserMk2.png"
+			"alternate_modes": 0,
+			"length": 5
 		},
 		{
+			"id": 1,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Laser/lasermk3.png",
+			"price": 2000,
 			"name": "thrid",
-            "damage": 10,
-            "cooldown": 0.08,
+			"damage": 10,
+			"cooldown": 0.08,
 			"strength": 3,
-            "alternate_modes": 0,
-            "type": 1,
-            "sprite_path": "res://Assets/Tools/Laser/LaserMk3.png"
+			"alternate_modes": 0,
+			"length": 7
 		},
 		{
+			"id": 2,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Laser/lasermk4.png",
+			"price": 3000,
 			"name": "forth",
-            "damage": 12,
-            "cooldown": 0.04,
+			"damage": 12,
+			"cooldown": 0.04,
 			"strength": 4,
-            "alternate_modes": 1,
-            "type": 2,
-            "sprite_path": "res://Assets/Tools/Laser/LaserMk4.png"
+			"alternate_modes": 0,
+			"length": 10
 		}
 	],
 	"knife": [
 		{
+			"id": 0,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Knife/knifemk2.png",
+			"price": 1000,
 			"name": "second",
-            "damage": 20,
-            "cooldown": 0.8
+			"damage": 20,
+			"cooldown": 0.8
 		},
 		{
+			"id": 1,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Knife/knifemk3.png",
+			"price": 2000,
 			"name": "thrid",
-            "damage": 20,
-            "cooldown": 0.5
+			"damage": 20,
+			"cooldown": 0.5
 		},
 		{
+			"id": 2,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Knife/knifemk4.png",
+			"price": 3000,
 			"name": "forth",
-            "damage": 35,
-            "cooldown": 0.4,
+			"damage": 35,
+			"cooldown": 0.4
+		}
+	],
+	"net": [
+		{
+			"id": 0,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Net/netmk2.png",
+			"price": 1000
+		},
+		{
+			"id": 1,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Net/netmk3.png",
+			"price": 2000
+		},
+		{
+			"id": 2,
+			"unlocked" : false,
+			"sprite_path": "res://Assets/Tools/Net/netmk4.png",
+			"price": 3000
 		}
 	]
 }

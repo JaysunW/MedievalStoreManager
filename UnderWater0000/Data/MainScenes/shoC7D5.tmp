@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://Data/MainScenes/shop.gd" id="1_wdgm1"]
 [ext_resource type="Script" path="res://ShopData/ShopCamera.gd" id="2_njvfn"]
 [ext_resource type="PackedScene" uid="uid://dclyp55c47aka" path="res://GUI/Counter/coin_counter.tscn" id="3_jcoss"]
-[ext_resource type="Texture2D" uid="uid://1b4v64mqdcis" path="res://Assets/ShopParalaxBack2.png" id="4_rnfjj"]
+[ext_resource type="Texture2D" uid="uid://ds0e0y1h7d453" path="res://Assets/ShopParalaxBack2.png" id="4_rnfjj"]
 [ext_resource type="Script" path="res://ShopData/BeltService.gd" id="5_cb3cl"]
 [ext_resource type="PackedScene" uid="uid://d0yn8sj7ak7gb" path="res://ShopData/showcase_container.tscn" id="7_gfm0i"]
-[ext_resource type="Texture2D" uid="uid://ck3n0ucvolgtv" path="res://Assets/ShopParalaxFront.png" id="9_l4huq"]
-[ext_resource type="Texture2D" uid="uid://c86m3gwfsnu3q" path="res://Assets/ShopParalaxBack1.png" id="10_am6ft"]
-[ext_resource type="Texture2D" uid="uid://ctwr2h0v8k2ta" path="res://Assets/UI/Button.png" id="10_fhqae"]
-[ext_resource type="Texture2D" uid="uid://2slhg5nylub1" path="res://Assets/Showcase_button_green.png" id="10_g0kq5"]
+[ext_resource type="Texture2D" uid="uid://c4ndfejh4hhcj" path="res://Assets/ShopParalaxFront.png" id="9_l4huq"]
+[ext_resource type="Texture2D" uid="uid://bigi4j1pawims" path="res://Assets/ShopParalaxBack1.png" id="10_am6ft"]
+[ext_resource type="Texture2D" uid="uid://et13g0bpd42i" path="res://Assets/UI/Button.png" id="10_fhqae"]
+[ext_resource type="Texture2D" uid="uid://2u1ma32wet2q" path="res://Assets/Showcase_button_green.png" id="10_g0kq5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6sv21"]
 size = Vector2(31.5762, 30.9841)
@@ -43,13 +43,13 @@ texture_filter = 1
 position = Vector2(160, 0)
 motion_offset = Vector2(1, 0)
 
-[node name="BeltSystem" type="Sprite2D" parent="ParallaxBackground/BackParallax"]
+[node name="Showcase" type="Sprite2D" parent="ParallaxBackground/BackParallax"]
 scale = Vector2(6.5, 6.5)
 texture = ExtResource("4_rnfjj")
 script = ExtResource("5_cb3cl")
 showcase_scene = ExtResource("7_gfm0i")
 
-[node name="Green" type="Button" parent="ParallaxBackground/BackParallax/BeltSystem"]
+[node name="Green" type="Button" parent="ParallaxBackground/BackParallax/Showcase"]
 offset_left = 20.0
 offset_top = -41.0769
 offset_right = 60.0
@@ -60,7 +60,7 @@ icon = ExtResource("10_g0kq5")
 flat = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Red" type="Button" parent="ParallaxBackground/BackParallax/BeltSystem"]
+[node name="Red" type="Button" parent="ParallaxBackground/BackParallax/Showcase"]
 offset_left = 20.0
 offset_top = -35.2308
 offset_right = 60.0
@@ -72,7 +72,7 @@ icon = ExtResource("10_g0kq5")
 flat = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Clipping" type="Control" parent="ParallaxBackground/BackParallax/BeltSystem"]
+[node name="Clipping" type="Control" parent="ParallaxBackground/BackParallax/Showcase"]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
@@ -81,20 +81,12 @@ offset_top = -46.0
 offset_right = 17.0
 offset_bottom = 15.0
 
-[node name="Belt0" type="Node2D" parent="ParallaxBackground/BackParallax/BeltSystem/Clipping"]
+[node name="Belt0" type="Node2D" parent="ParallaxBackground/BackParallax/Showcase/Clipping"]
 position = Vector2(30, 8.5)
 scale = Vector2(0.6, 0.6)
 
-[node name="Belt1" type="Node2D" parent="ParallaxBackground/BackParallax/BeltSystem/Clipping"]
+[node name="Belt1" type="Node2D" parent="ParallaxBackground/BackParallax/Showcase/Clipping"]
 position = Vector2(30, 25.5)
-scale = Vector2(0.6, 0.6)
-
-[node name="Belt2" type="Node2D" parent="ParallaxBackground/BackParallax/BeltSystem/Clipping"]
-position = Vector2(30, 42.5)
-scale = Vector2(0.6, 0.6)
-
-[node name="Belt3" type="Node2D" parent="ParallaxBackground/BackParallax/BeltSystem/Clipping"]
-position = Vector2(30, 59.5)
 scale = Vector2(0.6, 0.6)
 
 [node name="Background" type="Sprite2D" parent="ParallaxBackground/BackParallax"]
@@ -123,7 +115,7 @@ z_index = 100
 scale = Vector2(6.5, 6.5)
 texture = ExtResource("9_l4huq")
 
-[connection signal="button_down" from="ParallaxBackground/BackParallax/BeltSystem/Green" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_green_button_down"]
-[connection signal="button_up" from="ParallaxBackground/BackParallax/BeltSystem/Green" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_green_button_up"]
-[connection signal="button_down" from="ParallaxBackground/BackParallax/BeltSystem/Red" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_red_button_down"]
-[connection signal="button_up" from="ParallaxBackground/BackParallax/BeltSystem/Red" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_red_button_up"]
+[connection signal="button_down" from="ParallaxBackground/BackParallax/Showcase/Green" to="ParallaxBackground/BackParallax/Showcase" method="_on_green_button_down"]
+[connection signal="button_up" from="ParallaxBackground/BackParallax/Showcase/Green" to="ParallaxBackground/BackParallax/Showcase" method="_on_green_button_up"]
+[connection signal="button_down" from="ParallaxBackground/BackParallax/Showcase/Red" to="ParallaxBackground/BackParallax/Showcase" method="_on_red_button_down"]
+[connection signal="button_up" from="ParallaxBackground/BackParallax/Showcase/Red" to="ParallaxBackground/BackParallax/Showcase" method="_on_red_button_up"]

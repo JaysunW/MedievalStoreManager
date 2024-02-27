@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://Data/MainScenes/shop.gd" id="1_wdgm1"]
 [ext_resource type="Script" path="res://ShopData/ShopCamera.gd" id="2_njvfn"]
 [ext_resource type="PackedScene" uid="uid://dclyp55c47aka" path="res://GUI/Counter/coin_counter.tscn" id="3_jcoss"]
-[ext_resource type="Texture2D" uid="uid://1b4v64mqdcis" path="res://Assets/ShopParalaxBack2.png" id="4_rnfjj"]
+[ext_resource type="Texture2D" uid="uid://ds0e0y1h7d453" path="res://Assets/ShopParalaxBack2.png" id="4_rnfjj"]
 [ext_resource type="Script" path="res://ShopData/BeltService.gd" id="5_cb3cl"]
 [ext_resource type="PackedScene" uid="uid://d0yn8sj7ak7gb" path="res://ShopData/showcase_container.tscn" id="7_gfm0i"]
-[ext_resource type="Texture2D" uid="uid://ck3n0ucvolgtv" path="res://Assets/ShopParalaxFront.png" id="9_l4huq"]
-[ext_resource type="Texture2D" uid="uid://c86m3gwfsnu3q" path="res://Assets/ShopParalaxBack1.png" id="10_am6ft"]
-[ext_resource type="Texture2D" uid="uid://ctwr2h0v8k2ta" path="res://Assets/UI/Button.png" id="10_fhqae"]
-[ext_resource type="Texture2D" uid="uid://2slhg5nylub1" path="res://Assets/Showcase_button_green.png" id="10_g0kq5"]
+[ext_resource type="Texture2D" uid="uid://c4ndfejh4hhcj" path="res://Assets/ShopParalaxFront.png" id="9_l4huq"]
+[ext_resource type="Texture2D" uid="uid://bigi4j1pawims" path="res://Assets/ShopParalaxBack1.png" id="10_am6ft"]
+[ext_resource type="Texture2D" uid="uid://et13g0bpd42i" path="res://Assets/UI/Button.png" id="10_fhqae"]
+[ext_resource type="Texture2D" uid="uid://2u1ma32wet2q" path="res://Assets/Showcase_button_green.png" id="10_g0kq5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6sv21"]
 size = Vector2(31.5762, 30.9841)

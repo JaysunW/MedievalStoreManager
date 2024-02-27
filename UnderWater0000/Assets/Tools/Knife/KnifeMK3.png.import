@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cti8acsokctqt"
-path="res://.godot/imported/KnifeMK3.png-ca2dafa4cd88057929d2e9788652fff1.ctex"
+uid="uid://b6nxkm6q8lig4"
+path="res://.godot/imported/knifemk3.png-e31602abb8b015b9d7a60c642cbfdcc3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tools/Knife/KnifeMK3.png"
-dest_files=["res://.godot/imported/KnifeMK3.png-ca2dafa4cd88057929d2e9788652fff1.ctex"]
+source_file="res://Assets/Tools/Knife/knifemk3.png"
+dest_files=["res://.godot/imported/knifemk3.png-e31602abb8b015b9d7a60c642cbfdcc3.ctex"]
 
 [params]
 

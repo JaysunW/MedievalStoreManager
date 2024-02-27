@@ -8,7 +8,7 @@ func _ready():
 	for child in get_children():
 		tool_list.append(child)
 	change_tool(0)
-
+	update_tools()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -30,3 +30,13 @@ func change_tool(change):
 	for i in tool_list.size():
 		tool_list[i].activate(i == current_tool_id)
 		tool_list[i].visible = i == current_tool_id
+
+func update_tools():
+	var data = LoadoutService.get_tool_stats()
+	var latest_unlock = null
+	for laser in data["laser"]:
+		if laser["unlocked"]:
+			latest_unlock = laser
+	if latest_unlock:
+		$Laser.update_laser(latest_unlock)
+			

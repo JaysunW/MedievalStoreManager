@@ -1,30 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bshu8w0haitut"]
+[gd_scene load_steps=5 format=3 uid="uid://bshu8w0haitut"]
 
 [ext_resource type="Script" path="res://Data/Player/Tools/Laser.gd" id="1_o4khl"]
-[ext_resource type="Texture2D" uid="uid://c5f3hi6rqeoa6" path="res://Assets/Tools/Laser/LaserMk1.png" id="2_thvbu"]
-[ext_resource type="Texture2D" uid="uid://tiia6iboflml" path="res://Assets/Tools/Laser/LaserMk2.png" id="3_an77l"]
-[ext_resource type="Texture2D" uid="uid://b55viagtgamfi" path="res://Assets/Tools/Laser/LaserMk3.png" id="4_hs57e"]
-[ext_resource type="Texture2D" uid="uid://biigb8gxmwrpj" path="res://Assets/Tools/Laser/LaserMk4.png" id="5_rmenu"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ajxbr"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_thvbu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_an77l")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_hs57e")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_rmenu")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://si8vgo32h2bq" path="res://Assets/Tools/Laser/lasermk1.png" id="2_fu11g"]
 
 [sub_resource type="Curve" id="Curve_0k6xh"]
 _data = [Vector2(0.0375, 0.915789), 0.0, 0.0, 0, 0, Vector2(0.55625, 0.284211), 0.0, 0.0, 0, 0, Vector2(1, 0.915789), 0.0, 0.0, 0, 0]
@@ -38,11 +15,11 @@ colors = PackedColorArray(0.880605, 0.99, 0.8613, 1, 0.24, 1, 0.05, 1, 0, 0.6745
 [node name="Laser" type="Node2D"]
 script = ExtResource("1_o4khl")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 z_index = 45
 texture_filter = 1
 position = Vector2(28, 0)
-sprite_frames = SubResource("SpriteFrames_ajxbr")
+texture = ExtResource("2_fu11g")
 
 [node name="LaserOutput" type="Marker2D" parent="Sprite"]
 position = Vector2(0, -0.5)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://thwxklltpnec"
-path="res://.godot/imported/kaescherMk4.png-16118c8e5112e164ff3cc301b41162d3.ctex"
+uid="uid://k3ge21y1emlo"
+path="res://.godot/imported/netmk1.png-de566aa32c00da9a83f02bc4d3bc13b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tools/Net/kaescherMk4.png"
-dest_files=["res://.godot/imported/kaescherMk4.png-16118c8e5112e164ff3cc301b41162d3.ctex"]
+source_file="res://Assets/Tools/Net/netmk1.png"
+dest_files=["res://.godot/imported/netmk1.png-de566aa32c00da9a83f02bc4d3bc13b9.ctex"]
 
 [params]
 

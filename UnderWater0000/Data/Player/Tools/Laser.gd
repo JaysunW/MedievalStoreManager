@@ -1,6 +1,6 @@
 extends Tool
 
-@export var max_laser_length = 200
+@export var max_laser_length = 3
 @onready var laser_line = $Sprite/LaserOutput/Line2D
 @onready var ray_cast = $Sprite/LaserOutput/RayCast2D
 @onready var sprite = $Sprite
@@ -30,13 +30,21 @@ func _process(_delta):
 	else:
 		laser_line.visible = false
 
+func update_laser(data):
+	sprite.texture = load(data["sprite_path"])
+	damage = data["damage"]
+	cooldown = data["cooldown"]
+	strength = data["strength"]
+	alternate_modes = data["alternate_modes"]
+	max_laser_length = data["length"]
+
 func shoot_laser(length):
 	# Draw the line of the laser and damage tiles in line
 	if not overheat_active:
-		var new_position = Vector2(min(max_laser_length,length),0)
+		var new_position = Vector2(min(max_laser_length * 32,length),0)
 		ray_cast.target_position = new_position
 		if ray_cast.is_colliding():
-			new_position = Vector2(min(max_laser_length,length,ray_cast.get_collision_point().distance_to(to_global(position))- sprite.position.x),0)
+			new_position = Vector2(min(max_laser_length * 32,length,ray_cast.get_collision_point().distance_to(to_global(position))- sprite.position.x),0)
 		else:
 			new_position = new_position
 

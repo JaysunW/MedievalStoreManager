@@ -27,28 +27,15 @@ grow_horizontal = 0
 scale = Vector2(3, 3)
 texture = ExtResource("1_1kouw")
 
-[node name="Label2" type="Label" parent="TextureRect"]
-texture_filter = 1
-layout_mode = 0
-offset_left = 20.6667
-offset_top = 9.66667
-offset_right = 64.6667
-offset_bottom = 56.6667
-scale = Vector2(0.882775, 0.569036)
-theme = ExtResource("2_mqdef")
-text = "100K"
-horizontal_alignment = 2
-vertical_alignment = 1
-
 [node name="Label" type="Label" parent="TextureRect"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 20.6667
-offset_top = 9.66667
-offset_right = 64.6667
-offset_bottom = 56.6667
-scale = Vector2(0.882775, 0.569036)
+offset_left = 20.3334
+offset_top = 12.0
+offset_right = 68.3334
+offset_bottom = 34.0
+scale = Vector2(0.85, 1)
 theme = ExtResource("2_mqdef")
-text = "100K"
+text = "000K"
 horizontal_alignment = 2
 vertical_alignment = 1
