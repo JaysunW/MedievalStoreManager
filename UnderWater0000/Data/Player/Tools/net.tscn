@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckatwb5xmwui7"]
 
 [ext_resource type="Script" path="res://Data/Player/Tools/net.gd" id="1_bipas"]
-[ext_resource type="Texture2D" uid="uid://k3ge21y1emlo" path="res://Assets/Tools/Net/netmk1.png" id="2_kw7ba"]
+[ext_resource type="Texture2D" uid="uid://k5ur2hsdgui3" path="res://Assets/Tools/Net/netmk1.png" id="2_kw7ba"]
 
 [node name="Net" type="Node2D"]
 script = ExtResource("1_bipas")

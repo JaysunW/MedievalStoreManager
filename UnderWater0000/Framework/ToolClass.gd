@@ -16,6 +16,10 @@ var disabled = false
 func _ready():
 	$Cooldown.wait_time = cooldown
 
+func update_tool(data):
+	cooldown = data["cooldown"]
+	$Cooldown.wait_time = cooldown
+
 func activate(input):
 	active = input
 

@@ -45,13 +45,11 @@ func _physics_process(_delta):
 					if attack_timer.is_stopped():
 						attack_timer.start()
 						speed = normal_speed + attack_speed_up
-						print("Attacking: ", speed)
 					elif connection_vec.length() < 10:
 						attack_fish()
 						attack_timer.stop()
 						attack_cooldown_timer.start()
 						speed = normal_speed - cooldown_speed_down
-						print("Start Cooldown")
 			linear_velocity = (linear_velocity.normalized() + connection_vec.normalized() * chase_factor).normalized() * speed
 	special_behaviour()
 	
@@ -98,7 +96,6 @@ func _on_detect_fish_body_exited(body):
 
 
 func _on_out_of_range_timeout():
-	print("stopped attack")
 	set_state(Enums.FishState.SWIMMING)
 	target = null
 

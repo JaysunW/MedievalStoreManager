@@ -20,3 +20,6 @@ func load_json_file(file_path):
 
 func get_tool_stats():
 	return tool_data
+
+func set_tool_stats(data):
+	tool_data = data

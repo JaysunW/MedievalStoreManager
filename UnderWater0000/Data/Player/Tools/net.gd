@@ -2,14 +2,16 @@ extends Tool
 
 @onready var sprite = $RotationPoint/Sprite
 
-var strength = 2
-
 func _ready():
 	sprite.flip_v = true
 	super()
 
 func _process(_delta):
 	super(_delta)
+
+func update_tool(data):
+	super(data)
+	sprite.texture = load(data["sprite_path"])
 
 # Use knife
 func use_tool():

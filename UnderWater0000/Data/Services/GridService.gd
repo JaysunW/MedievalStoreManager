@@ -66,9 +66,9 @@ func _process(_delta):
 			for chunk in old_loaded_chunk:
 				if chunk not in chunks_around_loaded:
 					deactivate_chunks(chunk)
-#	if Input.is_action_just_pressed("o"):
-#		GoldService.add_gold(1)
-#		print(GoldService.get_gold())
+	if Input.is_action_just_pressed("o"):
+		GoldService.add_gold(1)
+		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
 #	if Input.is_action_just_pressed("p"):
 #		GoldService.set_gold(100)
 #		print(GoldService.get_gold())
@@ -237,7 +237,6 @@ func get_new_fish_position():
 			test_line.add_point((new_pos * 32).floor() + p.normalized() * 20)
 		
 		if not tile_dict.has(new_pos) and new_pos.y > water_edge_y + 1:
-			print("Player_pos: " + str((player.position/32).floor()) + " new_pos: " + str(new_pos))
 			return (new_pos * 32).floor()
 	return null
 

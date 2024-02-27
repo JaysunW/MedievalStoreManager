@@ -23,10 +23,8 @@ func spawn_fish(input, type, size, other_sprite = null):
 func _process(delta):
 	if not spawned:
 		var alge = alge_scene.instantiate()
-		print("First: " + str(alge.position) + " tile_pos: " + str(used_tile.position))
 		used_tile.add_child(alge)
 		alge.call("spawn_alge_on", used_tile, 6)
-		print("second: " + str(alge.position) + " tile_pos: " + str(used_tile.position))
 		spawned = true
 		spawn_fish(special_fish_scene,"BLUE", 1)
 	var mouse_pos = get_global_mouse_position()

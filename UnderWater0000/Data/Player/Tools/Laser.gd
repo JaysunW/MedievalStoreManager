@@ -30,10 +30,10 @@ func _process(_delta):
 	else:
 		laser_line.visible = false
 
-func update_laser(data):
+func update_tool(data):
+	super(data)
 	sprite.texture = load(data["sprite_path"])
 	damage = data["damage"]
-	cooldown = data["cooldown"]
 	strength = data["strength"]
 	alternate_modes = data["alternate_modes"]
 	max_laser_length = data["length"]

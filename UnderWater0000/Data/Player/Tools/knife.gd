@@ -11,6 +11,11 @@ func _ready():
 func _process(_delta):
 	super(_delta)
 
+func update_tool(data):
+	super(data)
+	sprite.texture = load(data["sprite_path"])
+	damage = data["damage"]
+
 # Use knife
 func use_tool():
 	if active and not cooldown_active:

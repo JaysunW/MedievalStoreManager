@@ -40,7 +40,6 @@ class SpawnFishType:
 		sprite = _sprite
 
 func _ready():
-	print(spawn_list.size())
 	for i in range(5):
 		var size = i + 5
 		spawn_list.append(SpawnFishType.new(fish_scene, "BLUE", size,blue_sprite))
@@ -49,10 +48,8 @@ func _ready():
 	for i in range(2):
 		var size = i + 1
 		spawn_list.append(SpawnFishType.new(fish_scene, "PIRANHA", size,piranha_sprite))
-	print(spawn_list.size())
 	
-func _process(delta):
-	#$"../GridService".get_new_fish_position()
+func _process(_delta):
 	pass
 
 func spawn_fish(input, type, size, other_sprite = null):
@@ -84,5 +81,4 @@ func _on_fish_despawn_timer_timeout():
 		fish_list.erase(fish)
 		fish.queue_free()
 	to_delete_list.clear()
-	print("Despawned")
 	pass # Replace with function body.

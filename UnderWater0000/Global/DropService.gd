@@ -58,8 +58,6 @@ func place_shell_drop_at(pos, animation_str, frame):
 func erase_drop(drop):
 	drop_list.erase(drop)
 
-
-
 func _on_grid_service_place_tile_drop_at(pos, tile_type, under_water):
 	place_tile_drop_at(pos, tile_type, under_water)
 

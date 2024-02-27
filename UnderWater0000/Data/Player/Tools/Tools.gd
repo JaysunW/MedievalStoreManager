@@ -34,9 +34,10 @@ func change_tool(change):
 func update_tools():
 	var data = LoadoutService.get_tool_stats()
 	var latest_unlock = null
-	for laser in data["laser"]:
-		if laser["unlocked"]:
-			latest_unlock = laser
-	if latest_unlock:
-		$Laser.update_laser(latest_unlock)
-			
+	for tool in tool_list:
+		latest_unlock = null
+		for tool_data in data[tool.name]:
+			if tool_data["unlocked"]:
+				latest_unlock = tool_data
+		if latest_unlock:
+			tool.update_tool(latest_unlock)

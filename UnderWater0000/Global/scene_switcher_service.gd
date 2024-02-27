@@ -1,5 +1,8 @@
 extends Node
 
+var main_scene_path = "res://Data/MainScenes/main.tscn"
+var shop_scene_path = "res://Data/MainScenes/shop.tscn"
+
 var current_scene = null
 # Called when the node enters the scene tree for the first time.
 func _ready():

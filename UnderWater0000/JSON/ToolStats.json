@@ -45,7 +45,7 @@
 			"price": 1000,
 			"name": "second",
 			"damage": 20,
-			"cooldown": 0.8
+			"cooldown": 0.9
 		},
 		{
 			"id": 1,
@@ -54,7 +54,7 @@
 			"price": 2000,
 			"name": "thrid",
 			"damage": 20,
-			"cooldown": 0.5
+			"cooldown": 0.9
 		},
 		{
 			"id": 2,
@@ -63,7 +63,7 @@
 			"price": 3000,
 			"name": "forth",
 			"damage": 35,
-			"cooldown": 0.4
+			"cooldown": 0.9
 		}
 	],
 	"net": [
@@ -71,19 +71,23 @@
 			"id": 0,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Net/netmk2.png",
-			"price": 1000
+			"price": 1000,
+			"cooldown": 0.9
+			
 		},
 		{
 			"id": 1,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Net/netmk3.png",
-			"price": 2000
+			"price": 2000,
+			"cooldown": 0.9
 		},
 		{
 			"id": 2,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Net/netmk4.png",
-			"price": 3000
+			"price": 3000,
+			"cooldown": 0.9
 		}
 	]
 }
