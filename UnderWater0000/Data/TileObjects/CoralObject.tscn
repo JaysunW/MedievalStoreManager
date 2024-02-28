@@ -118,4 +118,4 @@ script = ExtResource("2_w6okl")
 z_index = 15
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_ed46o")
-animation = &"Basic"
+animation = &"Bowl"

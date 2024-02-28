@@ -1,4 +1,5 @@
 extends Node2D
+class_name grid_service
 
 var all_counter = 0
 
@@ -8,15 +9,19 @@ var all_counter = 0
 @onready var player = $"../Character"
 @onready var chunk_border_show = $ChunkPerimeter
 @onready var test_line = $Test
+
 @export var tile_scene : PackedScene
 @export var coral_scene : PackedScene
 @export var shell_scene : PackedScene
 @export var alge_scene : PackedScene
 @export var test_scene : PackedScene
+
 @export var width : int = 100
 @export var height : int = 200
 @export var chunk_width : int = 20
 @export var chunk_height : int = 20
+@export var fill_every_tile = false
+@export var show_every_tile = false
 
 var show_chunks = true
 var noise_one= FastNoiseLite.new()
@@ -32,15 +37,11 @@ var border_amount = 6
 var tiles_around_border = 2
 var tile_dict = {}
 var sprite_name_list = ["1A", "1All","2A", "2All","3A", "3All","4A", "4All","5A", "5All","6A", "6All"]
-var water_edge_y = 5 # How many land tiles till water comes
+static var water_edge_y = 5 # How many land tiles till water comes
 
-#var saved_chunks = [] # All chunks that have already been loaded
-@export var fill_every_tile = false
-@export var show_every_tile = false
 var loaded_chunk = Vector2.ZERO
 var chunks_around_loaded = []
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	water_edge_y = min(float(height)/10,15)
 	noise_one.seed = noise_seed
@@ -66,9 +67,6 @@ func _process(_delta):
 			for chunk in old_loaded_chunk:
 				if chunk not in chunks_around_loaded:
 					deactivate_chunks(chunk)
-	if Input.is_action_just_pressed("o"):
-		GoldService.add_gold(1)
-		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
 #	if Input.is_action_just_pressed("p"):
 #		GoldService.set_gold(100)
 #		print(GoldService.get_gold())
@@ -77,6 +75,9 @@ func _process(_delta):
 #		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
 #		print("Gold: ")
 #		print(GoldService.get_gold())
+	if Input.is_action_just_pressed("o"):
+		GoldService.add_gold(1)
+		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
 		
 # Spawns tiles depending on x and y input.
 func spawn_tiles():
@@ -87,27 +88,31 @@ func spawn_tiles():
 		for y in range(ground, height):
 			var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
 			var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
-			#var higherY = float(_y - y) / _y * 0.05
 			var y_offset = 5
 			var noise_around_zero = noise_value_1 * y_offset - y_offset
 			if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.6 and noise_value_2 > 0.4):
-				var newTile = tile_scene.instantiate()
-				add_child(newTile)
+				var new_tile = tile_scene.instantiate()
+				add_child(new_tile)
 				var border_idx = get_border_area(x,y, true)
-				newTile.position = Vector2(x * 32,y * 32)
+				new_tile.position = Vector2(x * 32,y * 32)
 				# Puts harder tiles in the middle of a chunk
 				if (noise_value_1 > 0.8 and noise_value_2 > 0.6): border_idx += 2
 				elif (noise_value_1 > 0.7 and noise_value_2 > 0.4): border_idx += 1
 				if border_idx >= border_amount: border_idx = 0
 				# Sets stats of the tile
-				newTile.call("set_grid_service", $".")
-				newTile.call("set_tile_position", Vector2(x,y))
-				newTile.call("set_type", get_tile_type_for_area(border_idx))
-				newTile.call("set_hardness", border_idx)
-				tile_dict[Vector2(x,y)] = newTile
+				var tile_signal = new_tile.get_destroy_signal()
+				DropService.set_tile_signal(tile_signal)
+				tile_signal.connect(_destroyed_tile)
+				new_tile.set_tile_position(Vector2(x,y))
+				new_tile.set_hardness(border_idx)
+				tile_dict[Vector2(x,y)] = new_tile
 				if not show_every_tile:
-					newTile.visible = false
-					newTile.set_process(false)
+					new_tile.visible = false
+					new_tile.set_process(false)
+
+func _destroyed_tile(pos, _type):
+	tile_dict.erase(pos)
+	update_neighbour_sprite(pos)
 
 func spawn_foliage():
 	var noise_jump = 10
@@ -205,7 +210,7 @@ func get_new_fish_position():
 	else: return null
 	
 	var rand_pair = pair_list[rand]
-	# Calculate random pos on plane between vec1 and vec2
+	# Calculate random pos on plane between vec1 and vec2 up to 20 times
 	for i in range(20):
 		var x_vec = 0
 		var y_vec = 0
@@ -280,24 +285,6 @@ func deactivate_chunks(pos):
 				tile_to_deactivate.visible = false
 				tile_to_deactivate.set_process(false)
 
-# For input of border area gives corresponding tile type
-func get_tile_type_for_area(input):
-	match input:
-		0:
-			return Enums.TileType.A0
-		1:
-			return Enums.TileType.A1
-		2:
-			return Enums.TileType.A2
-		3:
-			return Enums.TileType.A3
-		4:
-			return Enums.TileType.A4
-		5:
-			return Enums.TileType.A5
-		_:
-			return Enums.TileType.UNKNOWN
-			
 # Returns the number of borderarea you are in.
 func get_border_area(x, y, is_with_noise = false):
 	var border_height = float(height) / border_amount
@@ -444,11 +431,6 @@ func update_neighbour_sprite(pos):
 	for direction in direction_list:
 		if tile_dict.has(direction):
 			set_tile_frame(check_where_neighbours(direction), tile_dict[direction].get_node("Sprite"), tile_dict[direction].get_type())
-
-func destroyed_tile(pos, type):
-	DropService.call("place_tile_drop_at", pos, type, pos.y >= water_edge_y)
-	tile_dict.erase(pos)
-	update_neighbour_sprite(pos)
 
 func get_size():
 	return Vector2(width, height)

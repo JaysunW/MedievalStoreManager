@@ -18,7 +18,6 @@ func update_sprite():
 			print("Something went wrong with the coral sprite update.")
 		_:
 			animation = "Brain"
-	sprite.animation = animation
 	frame = rng.randi_range(0, sprite.sprite_frames.get_frame_count(animation))
 	sprite.frame = frame
 

@@ -66,6 +66,7 @@ enum DropType {
 	TILE,
 	CORAL,
 	SHELL,
+	JUWEL,
 	UNKNOWN
 }
 

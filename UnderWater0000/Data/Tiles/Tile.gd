@@ -1,12 +1,13 @@
 extends Node2D
 
-var grid_service = null
 var tile_position = Vector2(0,0)
 var type = Enums.TileType.UNKNOWN
 
 var max_health = 100
 var health = max_health
 var hardness = 1
+
+signal destroyed(type_position, type)
 
 func _ready():
 	pass
@@ -26,19 +27,25 @@ func mine(damage):
 	var frame_count = destruction_sprite.sprite_frames.get_frame_count("default")
 	destruction_sprite.frame = frame_count - int (float(health)/float(max_health) * frame_count)
 
+func get_destroy_signal():
+	return destroyed
+
 func set_hardness(input):
 	hardness = input
-func set_grid_service(input):
-	grid_service = input
+	type = input
+	
 func set_tile_position(input):
 	tile_position = input
+	
 func set_type(input):
 	type = input
 	
 func get_hardness():
 	return hardness
+	
 func get_type():
 	return type
+	
 func get_tile_position():
 	return tile_position
 	
@@ -55,5 +62,5 @@ func get_spawn_from_dir(dir):
 			
 # Destroy tile and remove it from the main tile dictionary
 func destroy_tile():
-	grid_service.call("destroyed_tile",tile_position, type)
+	destroyed.emit(tile_position,type)
 	queue_free()
