@@ -4,10 +4,9 @@ var button = null
 var start_position = Vector2.ZERO
 var item_pressed = false
 var data = null
-var category = null
 var initial_color = Color(1,1,1)
 
-signal item_selected(data, category, container)
+signal item_selected(data, container)
 signal item_deselected
 
 func _ready():
@@ -17,6 +16,7 @@ func _ready():
 func _process(_delta):
 	if item_pressed:
 		pass
+		# Idea to drop an item in the area to buy
 		#button.position = to_local(get_global_mouse_position())
 
 func item_bought():
@@ -25,10 +25,19 @@ func item_bought():
 	$PrizeTagBack.visible = false
 	button.disabled = true
 	button.modulate = Color(1,1,1)
+
+func not_bought():
+	button.modulate = Color(1,0,0)
+	$NotBuyable.start()
 	
-func set_data(_data, _category):
+func set_container(_data):
+	set_data(_data)
+	set_sprite(load(_data["sprite_path"]))
+	set_price(_data["price"])
+	is_unlocked(_data["unlocked"])
+	
+func set_data(_data):
 	data = _data
-	category = _category
 	
 func set_sprite(sprite):
 	if sprite:
@@ -46,7 +55,7 @@ func is_unlocked(input):
 		button.modulate = Color(0,0,0)
 		initial_color = Color(0,0,0)
 	
-func set_prize(prize):
+func set_price(prize):
 	$PrizeTagBack/PrizeTagBack2/Label.text = GoldService.convert_value_to_str(prize)
 
 func get_select_signal():
@@ -57,16 +66,12 @@ func get_deselect_signal():
 
 func _on_texture_button_button_down():
 	item_pressed = true
-	item_selected.emit(data, category, self)
+	item_selected.emit(data, self)
 
 func _on_texture_button_button_up():
 	item_deselected.emit()
 	item_pressed = false
 	button.position = start_position
-
-func not_bought():
-	button.modulate = Color(1,0,0)
-	$NotBuyable.start()
 	
 func _on_not_buyable_timeout():
 	button.modulate = initial_color
