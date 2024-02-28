@@ -25,5 +25,5 @@ func update_sprite():
 	sprite.frame = frame
 
 func destroyed():
-	drop.emit(to_global(position), border_idx, Pearl_sprite)
+	dropped.emit(to_global(position), border_idx, drop_type, Pearl_sprite)
 	queue_free()

@@ -20,7 +20,7 @@ func _process(delta):
 		belt.position += Vector2.LEFT * move_dir * delta * belt_speed
 
 func add_every_laser():
-	var tool_data = LoadoutService.get_tool_data()
+	var tool_data = DataService.get_tool_data()
 	for i in range(tool_data.size()):
 		var key_list = tool_data.keys()
 		for tool in tool_data[key_list[i]]:

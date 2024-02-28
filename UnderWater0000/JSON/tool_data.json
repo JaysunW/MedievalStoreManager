@@ -8,7 +8,7 @@
 			"name": "laser",
 			"damage": 8,
 			"cooldown": 0.1,
-			"strength": 2,
+			"strength": 1,
 			"alternate_modes": 0,
 			"length": 5
 		},
@@ -20,7 +20,7 @@
 			"name": "laser",
 			"damage": 10,
 			"cooldown": 0.08,
-			"strength": 3,
+			"strength": 2,
 			"alternate_modes": 0,
 			"length": 7
 		},
@@ -32,7 +32,7 @@
 			"name": "laser",
 			"damage": 12,
 			"cooldown": 0.04,
-			"strength": 4,
+			"strength": 3,
 			"alternate_modes": 0,
 			"length": 10
 		}
@@ -44,7 +44,7 @@
 			"sprite_path": "res://Assets/Tools/Knife/knifemk2.png",
 			"price": 1000,
 			"name": "knife",
-			"damage": 20,
+			"damage": 10,
 			"cooldown": 0.9
 		},
 		{
@@ -54,7 +54,7 @@
 			"price": 2000,
 			"name": "knife",
 			"damage": 20,
-			"cooldown": 0.9
+			"cooldown": 0.7
 		},
 		{
 			"id": 2,
@@ -63,7 +63,7 @@
 			"price": 3000,
 			"name": "knife",
 			"damage": 35,
-			"cooldown": 0.9
+			"cooldown": 0.7
 		}
 	],
 	"net": [

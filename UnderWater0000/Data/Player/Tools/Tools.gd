@@ -32,7 +32,7 @@ func change_tool(change):
 		tool_list[i].visible = i == current_tool_id
 
 func update_tools():
-	var data = LoadoutService.get_tool_data()
+	var data = DataService.get_tool_data()
 	var latest_unlock = null
 	for tool in tool_list:
 		latest_unlock = null

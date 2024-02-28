@@ -8,7 +8,7 @@ var hardness = 1
 var drop_type = Enums.DropType.TILE
 
 signal destroyed(type_position)
-signal dropped(pos,hardness, sprite)
+signal dropped(pos, hardness, drop_type, sprite)
 
 func _ready():
 	pass
@@ -60,5 +60,5 @@ func get_spawn_from_dir(dir):
 #  Destroy tile and remove it from the main tile dictionary
 func destroy_tile():
 	destroyed.emit(tile_position)
-	dropped.emit(tile_position * 32, hardness, $Sprite.sprite_frames.get_frame_texture($Sprite.animation, 0))
+	dropped.emit(tile_position * 32, hardness, drop_type, $Sprite.sprite_frames.get_frame_texture($Sprite.animation, 0))
 	queue_free()

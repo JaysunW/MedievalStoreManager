@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dclyp55c47aka" path="res://GUI/Counter/coin_counter.tscn" id="3_jcoss"]
 [ext_resource type="Texture2D" uid="uid://buanhy236fd5i" path="res://Assets/Showcase_button_red.png" id="4_8odmg"]
 [ext_resource type="Texture2D" uid="uid://ds0e0y1h7d453" path="res://Assets/ShopParalaxBack2.png" id="4_rnfjj"]
-[ext_resource type="Script" path="res://ShopData/BeltService.gd" id="5_cb3cl"]
+[ext_resource type="Script" path="res://ShopData/belt_system.gd" id="5_cb3cl"]
 [ext_resource type="PackedScene" uid="uid://d0yn8sj7ak7gb" path="res://ShopData/showcase_container.tscn" id="7_gfm0i"]
 [ext_resource type="Texture2D" uid="uid://c4ndfejh4hhcj" path="res://Assets/ShopParalaxFront.png" id="9_l4huq"]
 [ext_resource type="Texture2D" uid="uid://bigi4j1pawims" path="res://Assets/ShopParalaxBack1.png" id="10_am6ft"]

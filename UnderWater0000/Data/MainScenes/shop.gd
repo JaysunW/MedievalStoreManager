@@ -9,9 +9,9 @@ func buy_item(item, container):
 		print("category: " + str(item["name"]))
 		GoldService.add_gold(-item["price"])
 		container.item_bought()
-		var tool_stats = LoadoutService.get_tool_data()
+		var tool_stats = DataService.get_tool_data()
 		tool_stats[item["name"]][item["id"]]["unlocked"] = true
-		LoadoutService.set_tool_data(tool_stats)
+		DataService.set_tool_data(tool_stats)
 	else:
 		#  Player didn't have enough money
 		container.not_bought()

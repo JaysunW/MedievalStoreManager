@@ -76,7 +76,7 @@ func _process(_delta):
 #		print("Gold: ")
 #		print(GoldService.get_gold())
 	if Input.is_action_just_pressed("o"):
-		GoldService.add_gold(1)
+#		GoldService.add_gold(1)
 		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
 		
 # Spawns tiles depending on x and y input.
