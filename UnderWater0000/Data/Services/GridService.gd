@@ -95,13 +95,13 @@ func spawn_tiles():
 				add_child(new_tile)
 				var border_idx = get_border_area(x,y, true)
 				new_tile.position = Vector2(x * 32,y * 32)
-				# Puts harder tiles in the middle of a chunk
+				#  Puts harder tiles in the middle of a chunk
 				if (noise_value_1 > 0.8 and noise_value_2 > 0.6): border_idx += 2
 				elif (noise_value_1 > 0.7 and noise_value_2 > 0.4): border_idx += 1
 				if border_idx >= border_amount: border_idx = 0
-				# Sets stats of the tile
+				#  Sets stats of the tile
 				var tile_signal = new_tile.get_destroy_signal()
-				DropService.set_tile_signal(tile_signal)
+				DropService.set_drop_signal(new_tile.get_drop_signal())
 				tile_signal.connect(_destroyed_tile)
 				new_tile.set_tile_position(Vector2(x,y))
 				new_tile.set_hardness(border_idx)
@@ -110,7 +110,7 @@ func spawn_tiles():
 					new_tile.visible = false
 					new_tile.set_process(false)
 
-func _destroyed_tile(pos, _type):
+func _destroyed_tile(pos):
 	tile_dict.erase(pos)
 	update_neighbour_sprite(pos)
 
@@ -141,8 +141,9 @@ func spawn_foliage():
 					for dir in dir_list:
 						var coral = coral_scene.instantiate()
 						dir.add_child(coral)
-						coral.call("set_type", current_tile.get_type())
-						coral.call("update_sprite")
+						coral.set_border_idx(current_tile.get_hardness())
+						coral.update_sprite()
+						DropService.set_drop_signal(coral.get_drop_signal())
 				noise_value_1 = get_noise(noise_one,x,y,noise_jump, shell_noise_offset)
 				noise_value_2 = get_noise(noise_two,x,y,noise_jump, shell_noise_offset)
 				if neighbours != "LRUD" and noise_value_1 > 0.4 and noise_value_2 > 0.6:
@@ -160,15 +161,16 @@ func spawn_foliage():
 						shell_spawned = true
 						var shell = shell_scene.instantiate()
 						dir.add_child(shell)
-						shell.call("set_type", current_tile.get_type())
-						shell.call("update_sprite")
+						shell.set_border_idx(current_tile.get_hardness())
+						shell.update_sprite()
+						DropService.set_drop_signal(shell.get_drop_signal())
 				noise_value_1 = get_noise(noise_one,x,y,noise_jump, alge_noise_offset)
 				noise_value_2 = get_noise(noise_two,x,y,noise_jump, alge_noise_offset)
 				if not neighbours.contains("U") and not shell_spawned and noise_value_1 > 0.4 and noise_value_2 > 0.6:
 					var alge = alge_scene.instantiate()
 					current_tile.add_child(alge)
 					var length = check_free_space_above(pos, 5)
-					alge.call("spawn_alge_on", current_tile,length * 2)
+					alge.spawn_alge_on(current_tile,length * 2)
 
 func rand_chance(chance):
 	return rng.randf_range(0,100) < chance
@@ -331,7 +333,7 @@ func set_sprites_of_tiles():
 		for x in range(width):
 			if tile_dict.has(Vector2(x,y)):
 				var neighbours = check_where_neighbours(Vector2(x,y))
-				set_tile_frame(neighbours, tile_dict[Vector2(x,y)].get_node("Sprite"), tile_dict[Vector2(x,y)].get_type())
+				set_tile_frame(neighbours, tile_dict[Vector2(x,y)].get_node("Sprite"), tile_dict[Vector2(x,y)].get_hardness())
 				if y < water_edge_y + 1:
 					set_tile_greenery(neighbours, tile_dict[Vector2(x,y)].get_node("Greenery"))
 					
@@ -430,7 +432,7 @@ func update_neighbour_sprite(pos):
 	var direction_list = [Vector2(pos.x-1,pos.y), Vector2(pos.x+1,pos.y), Vector2(pos.x,pos.y-1), Vector2(pos.x,pos.y+1)]
 	for direction in direction_list:
 		if tile_dict.has(direction):
-			set_tile_frame(check_where_neighbours(direction), tile_dict[direction].get_node("Sprite"), tile_dict[direction].get_type())
+			set_tile_frame(check_where_neighbours(direction), tile_dict[direction].get_node("Sprite"), tile_dict[direction].get_hardness())
 
 func get_size():
 	return Vector2(width, height)

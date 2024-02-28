@@ -1,5 +1,11 @@
 extends ObjectOnTile
 
+const Pearl_sprite = preload("res://Assets/Drop/Pearl.png")
+
+func _ready():
+	super()
+	drop_type = Enums.DropType.SHELL
+
 func update_sprite():
 	match type:
 		0:
@@ -19,5 +25,5 @@ func update_sprite():
 	sprite.frame = frame
 
 func destroyed():
-	DropService.call("place_shell_drop_at", to_global(position), "Pearl", 0)
-	super()
+	drop.emit(to_global(position), border_idx, Pearl_sprite)
+	queue_free()

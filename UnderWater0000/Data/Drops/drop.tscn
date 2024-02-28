@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwyj1ujhq1okx"]
+
+[ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Framework/DropPrefab.tscn" id="1_pavkq"]
+[ext_resource type="Script" path="res://Data/Drops/drop.gd" id="2_4lysr"]
+
+[node name="Drop" instance=ExtResource("1_pavkq")]
+script = ExtResource("2_4lysr")
+
+[node name="Sprite" type="Sprite2D" parent="." index="0"]
+scale = Vector2(0.25, 0.25)

@@ -130,7 +130,7 @@ func calc_obstacle_avoidance():
 		var dot_product = linear_velocity.normalized().dot(connection_vec.normalized())
 		if dot_product >= field_of_vision:
 			obstacle_avoidance -= connection_vec
-	if position.y < 32 * 17:
+	if position.y < (grid_service.water_edge_y + 1) * 32:
 		obstacle_avoidance += Vector2.DOWN * 2
 	return obstacle_avoidance
 

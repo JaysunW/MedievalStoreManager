@@ -18,10 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 Enums="*res://Global/enums.gd"
-DropService="*res://Global/DropService.gd"
+DropService="*res://Global/drop_service.gd"
 GoldService="*res://Global/gold_service.gd"
 SceneSwitcherService="*res://Global/scene_switcher_service.gd"
-LoadoutService="*res://Global/loadout_service.gd"
+LoadoutService="*res://Global/data_service.gd"
 
 [display]
 

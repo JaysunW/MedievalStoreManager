@@ -51,7 +51,7 @@ coral_scene = ExtResource("4_ur48h")
 shell_scene = ExtResource("5_53wkk")
 alge_scene = ExtResource("6_nj0je")
 test_scene = SubResource("PackedScene_gtapn")
-width = 200
+height = 100
 chunk_width = 15
 chunk_height = 15
 

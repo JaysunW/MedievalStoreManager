@@ -5,12 +5,13 @@ extends RigidBody2D
 @onready var gui =  $CanvasLayer/Interface
 @onready var fish_spawn_perimeter = $FishSpawnPerimeter
 
-#Debug
+#  Debug
 @export var free_cam_active = false
 @export var start_underwater = false
 @export var should_return_to_shop = false
 
 @export var light_activ_y = 50
+
 const SPEED = 150.0
 const SLIP = 20.0
 const MAX_Y_VELOCITY = 200
@@ -79,8 +80,7 @@ func get_light_active_y():
 	return light_activ_y
 
 func return_to_shop():
-	if should_return_to_shop:
-		SceneSwitcherService.switch_scene(SceneSwitcherService.shop_scene_path)
+	SceneSwitcherService.switch_scene(SceneSwitcherService.shop_scene_path)
 
 func _on_air_area_body_entered(body):
 	if body.get_groups().has("PLAYER"):
@@ -110,14 +110,14 @@ func _on_on_ground_body_exited(body):
 		on_ground.erase(body)
 
 func _on_o_2_timer_timeout():
-	current_o2_cap -= o2_output
-	if current_o2_cap < 0:
-		$OutOfO2.start()
-		$Sprite.self_modulate = Color(1,0,0)
-		empty_o2 = true
-		$O2Timer.stop()
-	gui.update_o2_bar((float(current_o2_cap)/float(max_o2_cap)) * 100)
-
+	if should_return_to_shop:
+		current_o2_cap -= o2_output
+		gui.update_o2_bar((float(current_o2_cap)/float(max_o2_cap)) * 100)
+		if current_o2_cap < 0:
+			$OutOfO2.start()
+			$Sprite.self_modulate = Color(1,0,0)
+			empty_o2 = true
+			$O2Timer.stop()
 
 func _on_out_of_o_2_timeout():
 	$Sprite.self_modulate = Color(1,1,1)

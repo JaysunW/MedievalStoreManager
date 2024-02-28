@@ -67,21 +67,22 @@ enum DropType {
 	CORAL,
 	SHELL,
 	JUWEL,
-	UNKNOWN
+	ALGE,
+	UNKNOWN,
 }
 
 enum FishState{
 	SWIMMING,
 	CHASING,
-	IDLE
+	IDLE,
 }
 
 enum Scene{
-	Game,
-	Shop,
-	Library,
-	Aquarium,
-	Unknown
+	MAIN,
+	SHOP,
+	LIBRARY,
+	AQUARIUM,
+	UNKNOWN,
 }
 
 enum ShopItem{
@@ -89,7 +90,7 @@ enum ShopItem{
 	NET,
 	KNIFE,
 	O2TANK,
-	BELL
+	BELL,
 }
 
 enum Laser{
