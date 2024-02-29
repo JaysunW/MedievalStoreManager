@@ -43,6 +43,7 @@ size = Vector2(32, 24)
 
 [node name="Character" parent="." groups=["OBSTACLE"] instance=ExtResource("1_8j5xq")]
 position = Vector2(32, 0)
+free_cam_active = true
 
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_gab70")
@@ -51,9 +52,10 @@ coral_scene = ExtResource("4_ur48h")
 shell_scene = ExtResource("5_53wkk")
 alge_scene = ExtResource("6_nj0je")
 test_scene = SubResource("PackedScene_gtapn")
-height = 100
+width = 200
 chunk_width = 15
 chunk_height = 15
+show_every_tile = true
 
 [node name="AirBackground" type="Sprite2D" parent="GridService"]
 self_modulate = Color(1, 1, 1, 0.498039)
@@ -116,11 +118,11 @@ special_fish_scene = ExtResource("16_2m68w")
 special_predator_scene = ExtResource("17_ih1nr")
 
 [node name="FishSpawnTimer" type="Timer" parent="FishService"]
-wait_time = 5.0
+wait_time = 0.5
 autostart = true
 
 [node name="FishDespawnTimer" type="Timer" parent="FishService"]
-wait_time = 15.0
+wait_time = 10.0
 autostart = true
 
 [connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]

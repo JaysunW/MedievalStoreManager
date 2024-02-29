@@ -53,10 +53,10 @@ func _process(_delta):
 	pass
 
 func spawn_fish(input, type, size, other_sprite = null):
+	var pos = $"../GridService".get_new_fish_position()
+	if not pos:
+		return
 	for i in range(size):
-		var pos = $"../GridService".get_new_fish_position()
-		if not pos:
-			return
 		var new_fish = input.instantiate()
 		new_fish.initialize_fish(type)
 		if other_sprite:

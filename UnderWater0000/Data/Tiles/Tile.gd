@@ -6,6 +6,7 @@ var max_health = 100
 var health = max_health
 var hardness = 1
 var drop_type = Enums.DropType.TILE
+var destroyable = true
 
 signal destroyed(type_position)
 signal dropped(pos, hardness, drop_type, sprite)
@@ -18,21 +19,25 @@ func _process(_delta):
 
 #  Mine tile by a certain amount of damage
 func mine(damage):
-	health -= damage
-	if health <= 0:
-		destroy_tile()
-		return
-		
-	#  Sets destruction texture of the tile
-	var destruction_sprite = $Destruction
-	var frame_count = destruction_sprite.sprite_frames.get_frame_count("default")
-	destruction_sprite.frame = frame_count - int (float(health)/float(max_health) * frame_count)
+	if destroyable:
+		health -= damage
+		if health <= 0:
+			destroy_tile()
+			return
+			
+		#  Sets destruction texture of the tile
+		var destruction_sprite = $Destruction
+		var frame_count = destruction_sprite.sprite_frames.get_frame_count("default")
+		destruction_sprite.frame = frame_count - int (float(health)/float(max_health) * frame_count)
 
 func set_hardness(input):
 	hardness = input
 
 func set_tile_position(input):
 	tile_position = input
+
+func set_destroyability(input):
+	destroyable = input
 
 func get_hardness():
 	return hardness

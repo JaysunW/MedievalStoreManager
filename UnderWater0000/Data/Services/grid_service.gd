@@ -38,6 +38,7 @@ var tiles_around_border = 2
 var tile_dict = {}
 var sprite_name_list = ["1A", "1All","2A", "2All","3A", "3All","4A", "4All","5A", "5All","6A", "6All"]
 static var water_edge_y = 5 # How many land tiles till water comes
+static var border_edge_x = 4 # How many land tiles till water comes
 
 var loaded_chunk = Vector2.ZERO
 var chunks_around_loaded = []
@@ -85,30 +86,43 @@ func spawn_tiles():
 	var ground_start = water_edge_y + 10
 	for x in range(width):
 		var ground = (noise_one.get_noise_2d(x * noise_ground_jump, 0) + 1) * 0.5 * ground_start
+		if x < 2 or x > width - 2:
+			ground = 0
+		elif x < 5 or x > width-5:
+			ground = water_edge_y
 		for y in range(ground, height):
-			var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
-			var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
-			var y_offset = 5
-			var noise_around_zero = noise_value_1 * y_offset - y_offset
-			if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.6 and noise_value_2 > 0.4):
-				var new_tile = tile_scene.instantiate()
-				add_child(new_tile)
-				var border_idx = get_border_area(x,y, true)
-				new_tile.position = Vector2(x * 32,y * 32)
-				#  Puts harder tiles in the middle of a chunk
-				if (noise_value_1 > 0.8 and noise_value_2 > 0.6): border_idx += 2
-				elif (noise_value_1 > 0.7 and noise_value_2 > 0.4): border_idx += 1
-				if border_idx >= border_amount: border_idx = 0
-				#  Sets stats of the tile
-				var tile_signal = new_tile.get_destroy_signal()
-				DropService.set_drop_signal(new_tile.get_drop_signal())
-				tile_signal.connect(_destroyed_tile)
-				new_tile.set_tile_position(Vector2(x,y))
-				new_tile.set_hardness(border_idx)
-				tile_dict[Vector2(x,y)] = new_tile
-				if not show_every_tile:
-					new_tile.visible = false
-					new_tile.set_process(false)
+			var side_border = (noise_one.get_noise_2d(x * 2, y * 2) + 1) * 0.5 * border_edge_x + 1
+			if x < side_border or x >= width - side_border or y > height - side_border:
+				setup_tile(Vector2(x,y), border_amount - 1, false)
+			else:
+				var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
+				var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
+				var y_offset = 5
+				var noise_around_zero = noise_value_1 * y_offset - y_offset
+				if fill_every_tile or y == height - 1 or is_y_around_border(y + noise_around_zero, tiles_around_border) or (noise_value_1 > 0.6 and noise_value_2 > 0.4):
+					#  Puts harder tiles in the middle of a chunk
+					var border_idx = get_border_area(x,y, true)
+					if (noise_value_1 > 0.8 and noise_value_2 > 0.6): border_idx += 2
+					elif (noise_value_1 > 0.7 and noise_value_2 > 0.4): border_idx += 1
+					if border_idx >= border_amount: border_idx = 0
+					#  Sets stats of the tile
+					setup_tile(Vector2(x,y), border_idx)
+
+func setup_tile(pos, border_idx, destroyable = true):
+	var new_tile = tile_scene.instantiate()
+	add_child(new_tile)
+	var tile_signal = new_tile.get_destroy_signal()
+	tile_signal.connect(_destroyed_tile)
+	DropService.set_drop_signal(new_tile.get_drop_signal())
+	if not destroyable: 
+		new_tile.set_destroyability(false)
+	new_tile.position = pos * 32
+	new_tile.set_tile_position(pos)
+	new_tile.set_hardness(border_idx)
+	tile_dict[pos] = new_tile
+	if not show_every_tile:
+		new_tile.visible = false
+		new_tile.set_process(false)
 
 func _destroyed_tile(pos):
 	tile_dict.erase(pos)
@@ -208,8 +222,10 @@ func get_new_fish_position():
 			first_item = null
 	
 	var rand = 0
-	if(pair_list.size() > 0): rand = rng.randi_range(0,pair_list.size()-1)
-	else: return null
+	if(pair_list.size() > 0): 
+		rand = rng.randi_range(0,pair_list.size()-1)
+	else: 
+		return null
 	
 	var rand_pair = pair_list[rand]
 	# Calculate random pos on plane between vec1 and vec2 up to 20 times
@@ -243,7 +259,9 @@ func get_new_fish_position():
 		for p in vector_list:
 			test_line.add_point((new_pos * 32).floor() + p.normalized() * 20)
 		
-		if not tile_dict.has(new_pos) and new_pos.y > water_edge_y + 1:
+		var same_pos_as_tile = tile_dict.has(new_pos)
+		var under_water_edge = new_pos.y > water_edge_y + 1
+		if not same_pos_as_tile and under_water_edge and is_inside_of_grid(new_pos):
 			return (new_pos * 32).floor()
 	return null
 
@@ -433,6 +451,9 @@ func update_neighbour_sprite(pos):
 	for direction in direction_list:
 		if tile_dict.has(direction):
 			set_tile_frame(check_where_neighbours(direction), tile_dict[direction].get_node("Sprite"), tile_dict[direction].get_hardness())
+
+func is_inside_of_grid(vec):
+	return vec.x >= 0 and vec.x < width and vec.y >= 0 and vec.y < height
 
 func get_size():
 	return Vector2(width, height)

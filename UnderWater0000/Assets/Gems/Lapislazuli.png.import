@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgl6d6sow8bsf"
-path="res://.godot/imported/Lapislazuli.png-9e1d8b07bd6f166e399943b9057ae625.ctex"
+path="res://.godot/imported/lapislazuli.png-6db1598ee994893de4446ca87b828b98.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Gems/Lapislazuli.png"
-dest_files=["res://.godot/imported/Lapislazuli.png-9e1d8b07bd6f166e399943b9057ae625.ctex"]
+source_file="res://Assets/Gems/lapislazuli.png"
+dest_files=["res://.godot/imported/lapislazuli.png-6db1598ee994893de4446ca87b828b98.ctex"]
 
 [params]
 

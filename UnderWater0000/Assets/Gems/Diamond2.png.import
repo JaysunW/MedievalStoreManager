@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c44lw5qpfpnsg"
-path="res://.godot/imported/Diamond2.png-65050fab09667a93b5a935a19c733201.ctex"
+path="res://.godot/imported/diamond2.png-7b9f36b9a65a356f37a35466ac4d00e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Gems/Diamond2.png"
-dest_files=["res://.godot/imported/Diamond2.png-65050fab09667a93b5a935a19c733201.ctex"]
+source_file="res://Assets/Gems/diamond2.png"
+dest_files=["res://.godot/imported/diamond2.png-7b9f36b9a65a356f37a35466ac4d00e0.ctex"]
 
 [params]
 

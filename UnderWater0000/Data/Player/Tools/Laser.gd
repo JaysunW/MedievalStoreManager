@@ -6,7 +6,7 @@ extends Tool
 @onready var sprite = $Sprite
 
 var added_laser_start = false
-var strength = 10
+var strength = 0
 var alternate_modes = null
 var overheat = 2
 var overheat_active = false
@@ -56,8 +56,8 @@ func shoot_laser(length):
 		var collider = ray_cast.get_collider()
 		if collider != null and collider.get_groups().has("TILE") and not cooldown_active:
 			cooldown_active = true
-			if collider.call("get_hardness") <= strength:
-				collider.call("mine", damage)
+			if collider.get_hardness() <= strength and collider.destroyable:
+				collider.mine( damage)
 				$Cooldown.start()
 			else:
 				laser_line.visible = false
@@ -65,9 +65,11 @@ func shoot_laser(length):
 				overheat_active = true
 				$Overheat.start()
 	else:
+		$Sprite.self_modulate = Color(1,0,0)
 		# Add overheat animation/ particles
 		pass
 
 func _on_overheat_timeout():
 	overheat_active = false
+	$Sprite.self_modulate = Color(1,1,1)
 	pass # Replace with function body.
