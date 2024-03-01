@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p8oe5kcawhbn"
-path="res://.godot/imported/clownfish.png-7cacd011060ee77f8b8447f598e7c2e2.ctex"
+uid="uid://djby6n0yv7nkm"
+path="res://.godot/imported/TRDL1.png-29fbf7f5ecdb95c71778a5d0e4087832.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Fish/clownfish.png"
-dest_files=["res://.godot/imported/clownfish.png-7cacd011060ee77f8b8447f598e7c2e2.ctex"]
+source_file="res://Assets/Tiles/Glass/AllSides/TRDL1.png"
+dest_files=["res://.godot/imported/TRDL1.png-29fbf7f5ecdb95c71778a5d0e4087832.ctex"]
 
 [params]
 

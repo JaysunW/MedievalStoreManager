@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cy1hmipt4g5ar"]
 
-[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/BlueFish.png" id="1_54exa"]
-[ext_resource type="Script" path="res://Demo/FishDemo/Fish/fish.gd" id="1_b6k7i"]
+[ext_resource type="Texture2D" uid="uid://tolg14boo2io" path="res://Assets/Fish/blue_fish.png" id="1_54exa"]
+[ext_resource type="Script" path="res://Data/Fish/fish.gd" id="1_b6k7i"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
 radius = 12.0

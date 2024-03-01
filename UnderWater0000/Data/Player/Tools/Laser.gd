@@ -6,13 +6,13 @@ extends Tool
 @onready var sprite = $Sprite
 
 var added_laser_start = false
-var strength = 0
+var strength = 10
 var alternate_modes = null
 var overheat = 2
 var overheat_active = false
 
 func _ready():
-	damage = 20
+	damage = 50
 	cooldown = 0.001
 	$Cooldown.wait_time = cooldown
 	$Overheat.wait_time = overheat

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2qwck0hhma7g"
-path="res://.godot/imported/OrangeFish.png-b2d1eb0446acf9eeab1a2dbe87c33ca4.ctex"
+uid="uid://beu0hnsoifp0y"
+path="res://.godot/imported/TRD.png-1fd54c48137b9140c744982f88e52951.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Fish/OrangeFish.png"
-dest_files=["res://.godot/imported/OrangeFish.png-b2d1eb0446acf9eeab1a2dbe87c33ca4.ctex"]
+source_file="res://Assets/Tiles/Glass/TRD.png"
+dest_files=["res://.godot/imported/TRD.png-1fd54c48137b9140c744982f88e52951.ctex"]
 
 [params]
 

@@ -77,61 +77,63 @@
 			"value" : 600
 		}
 	],
+	
 	"GEM": [
 		{
+			"comment": "Rarity only in the range between 0-9 inklusive",
 			"name" : "blue_diamond",
-			"sprite" : "res://Assets/Gems/blue_diamond.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/blue_diamond.png",
+			"rarity" : 9,
+			"border_idx_list" : [4,5],
 			"value" : 1000
 		},
 		{
 			"name" : "emerald",
-			"sprite" : "res://Assets/Gems/emerald.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/emerald.png",
+			"rarity" : 7,
+			"border_idx_list" : [3,4,5],
 			"value" : 1000
 		},
 		{
 			"name" : "lapislazuli",
-			"sprite" : "res://Assets/Gems/lapislazuli.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/lapislazuli.png",
+			"rarity" : 5,
+			"border_idx_list" : [1,2,3,5],
 			"value" : 1000
 		},
 		{
 			"name" : "quamarin",
-			"sprite" : "res://Assets/Gems/quamarin.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/quamarin.png",
+			"rarity" : 4,
+			"border_idx_list" : [1,2,3],
 			"value" : 1000
 		},
 		{
 			"name" : "quartz",
-			"sprite" : "res://Assets/Gems/quartz.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/quartz.png",
+			"rarity" : 0,
+			"border_idx_list" : [0,1,2,3,4,5],
 			"value" : 1000
 		},
 		{
 			"name" : "rubin",
-			"sprite" : "res://Assets/Gems/rubin.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/rubin.png",
+			"rarity" : 7,
+			"border_idx_list" : [0,1,2,3,4],
 			"value" : 1000
 		},
 		{
 			"name" : "tiger_eye",
-			"sprite" : "res://Assets/Gems/tiger_eye.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/tiger_eye.png",
+			"rarity" : 1,
+			"border_idx_list" : [0,1,2,3],
 			"value" : 1000
 		},
 		{
 			"name" : "turquoise",
-			"sprite" : "res://Assets/Gems/turquoise.png",
-			"border_idx_list" : [0,1],
-			"chance" : 10,
+			"sprite_path" : "res://Assets/Gems/turquoise.png",
+			"rarity" : 4,
+			"border_idx_list" : [1,2,4,5],
 			"value" : 1000
 		}
 	],

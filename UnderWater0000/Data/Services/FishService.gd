@@ -5,10 +5,10 @@ extends Node2D
 @export var special_fish_scene : PackedScene
 @export var special_predator_scene : PackedScene
 
-var blue_sprite = preload("res://Assets/Fish/BlueFish.png")
-var clown_sprite = preload("res://Assets/Fish/clownfish.png")
-var piranha_sprite = preload("res://Assets/Fish/Piranha.png")
-var orange_sprite = preload("res://Assets/Fish/OrangeFish.png")
+var blue_sprite = preload("res://Assets/Fish/blue_fish.png")
+var clown_sprite = preload("res://Assets/Fish/clown_fish.png")
+var piranha_sprite = preload("res://Assets/Fish/piranha.png")
+var orange_sprite = preload("res://Assets/Fish/orange_fish.png")
 
 @onready var spawn_timer = $FishSpawnTimer
 @onready var despawn_timer = $FishDespawnTimer

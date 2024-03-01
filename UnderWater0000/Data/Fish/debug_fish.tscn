@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ix330rakblo1"]
 
-[ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Demo/FishDemo/Fish/fish.tscn" id="1_8tqqr"]
-[ext_resource type="Script" path="res://Demo/FishDemo/Fish/special_fish.gd" id="1_286su"]
+[ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Data/Fish/fish.tscn" id="1_8tqqr"]
+[ext_resource type="Script" path="res://Data/Fish/debug_fish.gd" id="1_286su"]
 
 [node name="Fish" instance=ExtResource("1_8tqqr")]
 script = ExtResource("1_286su")

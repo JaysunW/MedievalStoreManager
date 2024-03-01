@@ -1,0 +1,42 @@
+{
+	"PREY": {
+		"BLUE" : {
+			"sprite_path" : "res://Assets/Fish/blue_fish.png",
+			"value" : 100,
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 0,
+			"predator" : false,
+			"name" : "Bluey",
+			"description" : "Blue fish what are you expecting"
+		},
+		"CLOWN" : {
+			"sprite_path" : "res://Assets/Fish/clown_fish.png",
+			"value" : 120,
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 1,
+			"predator" : false,
+			"name" : "Clownfish",
+			"description" : "It seems to be a clown but don't expect it to make jokes and yes I'm 'shore' of it "
+		},
+		"ORANGE" : {
+			"sprite_path" : "res://Assets/Fish/orange_fish.png",
+			"value" : 110,
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 0,
+			"predator" : false,
+			"name" : "Orange Dory",
+			"description" : "WIP"
+		}
+	},
+	"PREDATOR" : {
+		"PIRANHA" : {
+			"sprite_path" : "res://Assets/Fish/piranha.png",
+			"value" : 150,
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 2,
+			"predator" : true,
+			"name" : "Piranha",
+			"description" : "Eats you xD"
+		}
+	}
+}

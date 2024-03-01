@@ -54,6 +54,7 @@ func _ready():
 	set_sprites_of_tiles()
 	transform_backgrounds(width, height)
 	player.position = Vector2(float(width * 32)/2.0,-32)
+	DropService.decide_gem(0)
 
 func _process(_delta):
 	if not show_every_tile:

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tolg14boo2io"
-path="res://.godot/imported/BlueFish.png-dc63f84e7fdffcdf4cdebf3942c65bdf.ctex"
+uid="uid://dpwpwqoysme81"
+path="res://.godot/imported/TDL.png-30cfd54e57696d76159a51e0ad155b91.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Fish/BlueFish.png"
-dest_files=["res://.godot/imported/BlueFish.png-dc63f84e7fdffcdf4cdebf3942c65bdf.ctex"]
+source_file="res://Assets/Tiles/Glass/TDL.png"
+dest_files=["res://.godot/imported/TDL.png-30cfd54e57696d76159a51e0ad155b91.ctex"]
 
 [params]
 

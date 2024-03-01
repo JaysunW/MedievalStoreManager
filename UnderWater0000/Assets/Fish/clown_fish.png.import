@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c44lw5qpfpnsg"
-path="res://.godot/imported/diamond2.png-7b9f36b9a65a356f37a35466ac4d00e0.ctex"
+uid="uid://p8oe5kcawhbn"
+path="res://.godot/imported/clown_fish.png-df14d86ed37fb58a4d9a5ae8bb1caa99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Gems/diamond2.png"
-dest_files=["res://.godot/imported/diamond2.png-7b9f36b9a65a356f37a35466ac4d00e0.ctex"]
+source_file="res://Assets/Fish/clown_fish.png"
+dest_files=["res://.godot/imported/clown_fish.png-df14d86ed37fb58a4d9a5ae8bb1caa99.ctex"]
 
 [params]
 

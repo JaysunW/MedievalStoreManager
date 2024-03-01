@@ -17,7 +17,7 @@ var rng = RandomNumberGenerator.new()
 var type = ""
 
 var counter = 0
-var separation_force = 0.11
+var separation_force = 0.1
 var alignment_force = 0.1
 var cohesion_force = 0.1
 var obstacle_avoidance_force = 0.14
@@ -38,7 +38,7 @@ func _ready():
 	$".".add_to_group("FISH")
 	stress_timer.wait_time = stress_time
 	speed += rng.randi_range(-10,10)
-	detect_fish_shape.shape.radius = vision_radius
+	#detect_fish_shape.shape.radius = vision_radius
 	linear_velocity = Vector2(normal_speed,0).rotated(rotation)
 	pass
 
@@ -83,6 +83,7 @@ func set_sprite(new_sprite):
 	
 func set_state(new_state):
 	current_state = new_state
+	
 # Gives the separation vector to fish of same species
 func calc_separation():
 	var separation = Vector2.ZERO

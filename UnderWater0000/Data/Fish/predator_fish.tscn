@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://g1y668ftpdlu"]
 
-[ext_resource type="Script" path="res://Demo/FishDemo/Fish/predator_fish.gd" id="1_vjev5"]
-[ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/Piranha.png" id="2_2cj47"]
+[ext_resource type="Script" path="res://Data/Fish/predator_fish.gd" id="1_vjev5"]
+[ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/piranha.png" id="2_2cj47"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
 radius = 8.0

@@ -66,7 +66,7 @@ enum DropType {
 	TILE,
 	CORAL,
 	SHELL,
-	JUWEL,
+	GEM,
 	ALGE,
 	UNKNOWN,
 }
@@ -97,7 +97,7 @@ enum Laser{
 	SECOND,
 	THIRD,
 	FORTH,
-	FISH
+	FISH,
 }
 
 enum Net{
@@ -112,4 +112,14 @@ enum Knife{
 	THIRD,
 	FORTH,
 	FISH
+}
+
+enum PREDATOR{
+	PIRANHA,
+}
+
+enum PREY{
+	BLUE,
+	CLOWN,
+	ORANGE,
 }

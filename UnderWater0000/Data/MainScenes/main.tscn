@@ -13,10 +13,10 @@
 [ext_resource type="Script" path="res://Global/enums.gd" id="10_r583f"]
 [ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="11_4mook"]
 [ext_resource type="Script" path="res://Data/Services/FishService.gd" id="13_d7xu8"]
-[ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Demo/FishDemo/Fish/fish.tscn" id="14_y6u34"]
-[ext_resource type="PackedScene" uid="uid://g1y668ftpdlu" path="res://Demo/FishDemo/Fish/predator_fish.tscn" id="15_dvjsy"]
-[ext_resource type="PackedScene" uid="uid://ix330rakblo1" path="res://Demo/FishDemo/Fish/special_fish.tscn" id="16_2m68w"]
-[ext_resource type="PackedScene" uid="uid://bohfgh7o00pg6" path="res://Demo/FishDemo/Fish/special_predator_fish.tscn" id="17_ih1nr"]
+[ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Data/Fish/fish.tscn" id="14_y6u34"]
+[ext_resource type="PackedScene" uid="uid://g1y668ftpdlu" path="res://Data/Fish/predator_fish.tscn" id="15_dvjsy"]
+[ext_resource type="PackedScene" uid="uid://ix330rakblo1" path="res://Data/Fish/debug_fish.tscn" id="16_2m68w"]
+[ext_resource type="PackedScene" uid="uid://bohfgh7o00pg6" path="res://Data/Fish/special_predator_fish.tscn" id="17_ih1nr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cntie"]
 
@@ -43,7 +43,6 @@ size = Vector2(32, 24)
 
 [node name="Character" parent="." groups=["OBSTACLE"] instance=ExtResource("1_8j5xq")]
 position = Vector2(32, 0)
-free_cam_active = true
 
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_gab70")
@@ -52,10 +51,9 @@ coral_scene = ExtResource("4_ur48h")
 shell_scene = ExtResource("5_53wkk")
 alge_scene = ExtResource("6_nj0je")
 test_scene = SubResource("PackedScene_gtapn")
-width = 200
+width = 50
 chunk_width = 15
 chunk_height = 15
-show_every_tile = true
 
 [node name="AirBackground" type="Sprite2D" parent="GridService"]
 self_modulate = Color(1, 1, 1, 0.498039)
