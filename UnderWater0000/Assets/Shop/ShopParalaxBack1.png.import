@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bigi4j1pawims"
-path="res://.godot/imported/ShopParalaxBack1.png-15ba4ffad298b7fca7607c8d54f62576.ctex"
+path="res://.godot/imported/ShopParalaxBack1.png-65e49979a1bf48cf5fe922458498232e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/ShopParalaxBack1.png"
-dest_files=["res://.godot/imported/ShopParalaxBack1.png-15ba4ffad298b7fca7607c8d54f62576.ctex"]
+source_file="res://Assets/Shop/ShopParalaxBack1.png"
+dest_files=["res://.godot/imported/ShopParalaxBack1.png-65e49979a1bf48cf5fe922458498232e.ctex"]
 
 [params]
 

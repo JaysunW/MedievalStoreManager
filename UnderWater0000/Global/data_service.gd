@@ -3,10 +3,12 @@ extends Node
 var tool_data = {}
 var drop_data = {}
 var fish_data = {}
+var player_data = {}
 
 var tool_data_file_path = "res://JSON/tool_data.json"
 var drop_data_file_path = "res://JSON/drop_data.json"
 var fish_data_file_path = "res://JSON/fish_data.json"
+var player_data_file_path = ""
 
 func _ready():
 	tool_data = load_json_file(tool_data_file_path)
@@ -35,3 +37,6 @@ func get_drop_data():
 
 func get_fish_data():
 	return fish_data
+
+func get_player_data():
+	return player_data

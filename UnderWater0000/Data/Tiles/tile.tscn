@@ -16,21 +16,21 @@
 [ext_resource type="Texture2D" uid="uid://b5na2gxg4hyjr" path="res://Assets/Tiles/Border1/RD.png" id="14_trg4l"]
 [ext_resource type="Texture2D" uid="uid://c2ufn7ltre0lk" path="res://Assets/Tiles/Border1/RDL.png" id="15_ki1gh"]
 [ext_resource type="Texture2D" uid="uid://dhlnfl3duuu0w" path="res://Assets/Tiles/Border1/RL.png" id="16_axagn"]
+[ext_resource type="Texture2D" uid="uid://djby6n0yv7nkm" path="res://Assets/Tiles/Border1/AllSides/TRDL1.png" id="17_i7pdk"]
 [ext_resource type="Texture2D" uid="uid://bs7pb10q7llwl" path="res://Assets/Tiles/Border1/T.png" id="17_wfck6"]
+[ext_resource type="Texture2D" uid="uid://djm7msedwefua" path="res://Assets/Tiles/Border1/AllSides/TRDL2.png" id="18_mh7oj"]
 [ext_resource type="Texture2D" uid="uid://dpcb6mstpxbd1" path="res://Assets/Tiles/Border1/TD.png" id="18_wnjxt"]
+[ext_resource type="Texture2D" uid="uid://dnrfb158hxbhn" path="res://Assets/Tiles/Border1/AllSides/TRDL3.png" id="19_mi0g8"]
 [ext_resource type="Texture2D" uid="uid://cunm46cfxvgqv" path="res://Assets/Tiles/Border1/TDL.png" id="19_uw6h3"]
 [ext_resource type="Texture2D" uid="uid://kg6v1664y1hk" path="res://Assets/Tiles/Border1/TL.png" id="20_45rlq"]
+[ext_resource type="Texture2D" uid="uid://cdma0lcviaq7k" path="res://Assets/Tiles/Border1/AllSides/TRDL4.png" id="20_lqpi5"]
 [ext_resource type="Texture2D" uid="uid://ctsvw0yl765wj" path="res://Assets/Tiles/Border1/TR.png" id="21_t7wou"]
+[ext_resource type="Texture2D" uid="uid://danu1evugvrai" path="res://Assets/Tiles/Border1/AllSides/TRDL5.png" id="21_tucq0"]
+[ext_resource type="Texture2D" uid="uid://vdvshkwmkktb" path="res://Assets/Tiles/Border1/AllSides/TRDL6.png" id="22_knxer"]
 [ext_resource type="Texture2D" uid="uid://cthv37g0kmbkk" path="res://Assets/Tiles/Border1/TRD.png" id="22_xxrhv"]
+[ext_resource type="Texture2D" uid="uid://ccmvlapk7cnpw" path="res://Assets/Tiles/Border1/AllSides/TRDL7.png" id="23_ii3d2"]
 [ext_resource type="Texture2D" uid="uid://b2w0m2vfcd2uo" path="res://Assets/Tiles/Border1/TRL.png" id="23_sm7ya"]
-[ext_resource type="Texture2D" uid="uid://djby6n0yv7nkm" path="res://Assets/Tiles/Border1/AllSides/TRDL1.png" id="24_0x1xe"]
-[ext_resource type="Texture2D" uid="uid://djm7msedwefua" path="res://Assets/Tiles/Border1/AllSides/TRDL2.png" id="25_jj56j"]
-[ext_resource type="Texture2D" uid="uid://dnrfb158hxbhn" path="res://Assets/Tiles/Border1/AllSides/TRDL3.png" id="26_dc1pl"]
-[ext_resource type="Texture2D" uid="uid://cdma0lcviaq7k" path="res://Assets/Tiles/Border1/AllSides/TRDL4.png" id="27_wbsfv"]
-[ext_resource type="Texture2D" uid="uid://danu1evugvrai" path="res://Assets/Tiles/Border1/AllSides/TRDL5.png" id="28_qqvqd"]
-[ext_resource type="Texture2D" uid="uid://vdvshkwmkktb" path="res://Assets/Tiles/Border1/AllSides/TRDL6.png" id="29_njcos"]
-[ext_resource type="Texture2D" uid="uid://ccmvlapk7cnpw" path="res://Assets/Tiles/Border1/AllSides/TRDL7.png" id="30_4bcvf"]
-[ext_resource type="Texture2D" uid="uid://b1w17pbl8ffab" path="res://Assets/Tiles/Border1/AllSides/TRDL.png" id="31_nxdrb"]
+[ext_resource type="Texture2D" uid="uid://b1w17pbl8ffab" path="res://Assets/Tiles/Border1/AllSides/TRDL.png" id="24_yl5as"]
 [ext_resource type="Texture2D" uid="uid://dtymb8u5ubto" path="res://Assets/Tiles/Border2/A.png" id="32_nyy00"]
 [ext_resource type="Texture2D" uid="uid://cb41550ygdfwl" path="res://Assets/Tiles/Border2/D.png" id="33_ynxpt"]
 [ext_resource type="Texture2D" uid="uid://b1ieoa3wgol8p" path="res://Assets/Tiles/Border2/DL.png" id="34_iy15a"]
@@ -212,28 +212,28 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("24_0x1xe")
+"texture": ExtResource("17_i7pdk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_jj56j")
+"texture": ExtResource("18_mh7oj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("26_dc1pl")
+"texture": ExtResource("19_mi0g8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("27_wbsfv")
+"texture": ExtResource("20_lqpi5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("28_qqvqd")
+"texture": ExtResource("21_tucq0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("29_njcos")
+"texture": ExtResource("22_knxer")
 }, {
 "duration": 1.0,
-"texture": ExtResource("30_4bcvf")
+"texture": ExtResource("23_ii3d2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("31_nxdrb")
+"texture": ExtResource("24_yl5as")
 }],
 "loop": true,
 "name": &"1All",
@@ -718,11 +718,10 @@ freeze = true
 script = ExtResource("1_80sbk")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.396078)
 z_index = 25
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fdck3")
-animation = &"6A"
+animation = &"6All"
 
 [node name="Greenery" type="AnimatedSprite2D" parent="."]
 visible = false

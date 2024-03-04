@@ -44,9 +44,9 @@ func special_behaviour():
 	line6.add_point(to_local(position + linear_velocity / speed * 32 * 1.8))
 
 func line_around_point(line_node,pos): 
-	var size = 6
-	line_node.add_point(pos + Vector2(size,0))
-	line_node.add_point(pos + Vector2(0,size))
-	line_node.add_point(pos + Vector2(-size,0))
-	line_node.add_point(pos + Vector2(0,-size))
-	line_node.add_point(pos + Vector2(size,0))
+	var point_size = 6
+	line_node.add_point(pos + Vector2(point_size,0))
+	line_node.add_point(pos + Vector2(0,point_size))
+	line_node.add_point(pos + Vector2(-point_size,0))
+	line_node.add_point(pos + Vector2(0,-point_size))
+	line_node.add_point(pos + Vector2(point_size,0))

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccmvlapk7cnpw"
-path="res://.godot/imported/TRDL7.png-00a3d2bda63be9e58b577f46564ccbdd.ctex"
+uid="uid://2u1ma32wet2q"
+path="res://.godot/imported/Showcase_button_green.png-94e7ceec74df22d248305574ed970fa6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/Glass/AllSides/TRDL7.png"
-dest_files=["res://.godot/imported/TRDL7.png-00a3d2bda63be9e58b577f46564ccbdd.ctex"]
+source_file="res://Assets/Shop/Showcase_button_green.png"
+dest_files=["res://.godot/imported/Showcase_button_green.png-94e7ceec74df22d248305574ed970fa6.ctex"]
 
 [params]
 

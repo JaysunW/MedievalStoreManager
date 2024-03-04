@@ -16,9 +16,6 @@ rotation = 2.35619
 texture = ExtResource("2_kw7ba")
 flip_v = true
 
-[node name="Cooldown" type="Timer" parent="."]
-one_shot = true
-
 [node name="Area2D" type="Area2D" parent="."]
 texture_filter = 1
 
@@ -27,4 +24,9 @@ position = Vector2(24, 0)
 scale = Vector2(1, 1.125)
 polygon = PackedVector2Array(0, 0, 0, 10, 8, 10, 15, 0, 8, -10, 0, -10)
 
+[node name="Cooldown" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]

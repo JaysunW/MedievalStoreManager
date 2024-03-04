@@ -6,8 +6,11 @@ extends RigidBody2D
 @onready var stress_timer = $StressTimer
 
 # Stats
-var health = 100
+var max_health = 100
+var health = 0
 
+var size = 0
+var catch_chance = 10
 var normal_speed = 100
 var speed = normal_speed
 var stress_speed_up = 20
@@ -33,8 +36,10 @@ var obstacles = []
 var field_of_vision = -0.2 # Between -1 and 1, 1 directly infront
 var vision_radius = 64
 
+signal caught(type)
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	health = max_health
 	$".".add_to_group("FISH")
 	stress_timer.wait_time = stress_time
 	speed += rng.randi_range(-10,10)
@@ -42,7 +47,6 @@ func _ready():
 	linear_velocity = Vector2(normal_speed,0).rotated(rotation)
 	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	sprite.look_at(position + linear_velocity)
 	sprite.flip_v = abs(sprite.global_rotation) > 1.5
@@ -57,7 +61,10 @@ func _physics_process(_delta):
 	var velocity_direction =  alignment_vector.normalized() * alignment_force + cohesion_vector.normalized() * cohesion_force
 	velocity_direction += fish_avoidance_vector.normalized() * fish_avoidance_force + linear_velocity.normalized() + separation_vector.normalized() * separation_force
 	velocity_direction = (velocity_direction  + obstacle_avoidance_vector.normalized() * obstacle_avoidance_force).normalized()
-	linear_velocity = (velocity_direction + predator_avoidance_vector.normalized() * obstacle_avoidance_force).normalized() * speed
+	if position.y < (grid_service.water_edge_y + 2) * 32:
+		linear_velocity = (velocity_direction + predator_avoidance_vector.normalized() * obstacle_avoidance_force + Vector2.DOWN).normalized() * speed
+	else:
+		linear_velocity = (velocity_direction + predator_avoidance_vector.normalized() * obstacle_avoidance_force).normalized() * speed
 	special_behaviour()
 	
 func special_behaviour():
@@ -66,10 +73,26 @@ func special_behaviour():
 func take_damage(damage):
 	health -= damage
 	print("Health: " , health)
+	print(": fish.gd")
 	if health < 0:
 		print("Dead")
 	stress_timer.start()
 	speed += stress_speed_up
+
+func try_catch_fish(value):
+	print("Value in: ",value)
+	var rand_int = randi_range(0,99)
+	var gate = round(catch_chance + value * 1 - health/max_health)
+	print("Rand_int: " , rand_int)
+	print("Gate: ", gate)
+	if rand_int < gate:
+		caught.emit(type)
+	else:
+		$EscapedTimer.start()
+		$Sprite.self_modulate = Color(0,0,1)
+
+func get_caught_signal():
+	return caught
 
 func initialize_fish(input):
 	set_type(input)
@@ -131,8 +154,6 @@ func calc_obstacle_avoidance():
 		var dot_product = linear_velocity.normalized().dot(connection_vec.normalized())
 		if dot_product >= field_of_vision:
 			obstacle_avoidance -= connection_vec
-	if position.y < (grid_service.water_edge_y + 1) * 32:
-		obstacle_avoidance += Vector2.DOWN * 2
 	return obstacle_avoidance
 
 # Gives the avoidance vector to other fish of different species
@@ -179,3 +200,7 @@ func _on_detect_fish_body_exited(body):
 func _on_stress_timer_timeout():
 	speed = normal_speed
 	pass # Replace with function body.
+
+
+func _on_escaped_timer_timeout():
+	$Sprite.self_modulate = Color(1,1,1)

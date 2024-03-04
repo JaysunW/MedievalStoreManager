@@ -23,9 +23,9 @@ fish_scene = ExtResource("2_ulddk")
 predator_scene = ExtResource("3_bcxp4")
 debug_fish_scene = ExtResource("6_sqkfi")
 debug_predator_scene = ExtResource("7_agbjm")
-blue_fish_count = 100
-clown_fish_count = 0
-orange_fish_count = 0
+blue_fish_count = 30
+clown_fish_count = 30
+orange_fish_count = 30
 predator_fish_count = 0
 debug_predator_fish_count = 0
 

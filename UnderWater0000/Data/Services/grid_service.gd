@@ -22,8 +22,9 @@ var all_counter = 0
 @export var chunk_height : int = 20
 @export var fill_every_tile = false
 @export var show_every_tile = false
+@export var show_chunks = true
+@export var show_fish_placement = true
 
-var show_chunks = true
 var noise_one= FastNoiseLite.new()
 var noise_two = FastNoiseLite.new()
 var temperature = FastNoiseLite.new()
@@ -36,7 +37,7 @@ var rng = RandomNumberGenerator.new()
 var border_amount = 6
 var tiles_around_border = 2
 var tile_dict = {}
-var sprite_name_list = ["1A", "1All","2A", "2All","3A", "3All","4A", "4All","5A", "5All","6A", "6All"]
+var sprite_name_list = ["1A", "1All","2A", "2All","3A", "3All","4A", "4All","5A", "5All","6A", "6All", "Glass", "GlassA"]
 static var water_edge_y = 5 # How many land tiles till water comes
 static var border_edge_x = 4 # How many land tiles till water comes
 
@@ -94,7 +95,7 @@ func spawn_tiles():
 		for y in range(ground, height):
 			var side_border = (noise_one.get_noise_2d(x * 2, y * 2) + 1) * 0.5 * border_edge_x + 1
 			if x < side_border or x >= width - side_border or y > height - side_border:
-				setup_tile(Vector2(x,y), border_amount - 1, false)
+				setup_tile(Vector2(x,y), border_amount-1, false)
 			else:
 				var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
 				var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
@@ -255,6 +256,7 @@ func get_new_fish_position():
 			new_pos = vec2 + x_vec * x + y_vec * y
 		new_pos = ((player.position/32) + new_pos).floor()
 		test_line.clear_points()
+		
 		for p in vector_list:
 			test_line.add_point((new_pos * 32).floor() + p.normalized() * 5)
 		for p in vector_list:
@@ -288,7 +290,6 @@ func set_chunks_around_loaded_chunk():
 		if show_chunks:
 			chunk_border_show.add_point((loaded_chunk_pos + Vector2((i) * chunk_width,(-1) * chunk_height)) * 32)
 
-# Activates the chunk at pos
 func activate_chunks(pos):
 	for y in range(pos.y * chunk_height,(pos.y + 1) * chunk_height):
 		for x in range(pos.x * chunk_width,(pos.x + 1) * chunk_width):
@@ -297,7 +298,6 @@ func activate_chunks(pos):
 				tile_to_activate.visible = true
 				tile_to_activate.set_process(true)
 
-# Deactivates the chunk at pos
 func deactivate_chunks(pos):
 	for y in range(pos.y * chunk_height,(pos.y + 1) * chunk_height):
 		for x in range(pos.x * chunk_width,(pos.x + 1) * chunk_width):
@@ -353,7 +353,7 @@ func set_sprites_of_tiles():
 			if tile_dict.has(Vector2(x,y)):
 				var neighbours = check_where_neighbours(Vector2(x,y))
 				set_tile_frame(neighbours, tile_dict[Vector2(x,y)].get_node("Sprite"), tile_dict[Vector2(x,y)].get_hardness())
-				if y < water_edge_y + 1:
+				if y < water_edge_y + 1 and not (x < 2 or x >= width - 2):
 					set_tile_greenery(neighbours, tile_dict[Vector2(x,y)].get_node("Greenery"))
 					
 # Given a string of neighbours and the sprite of a tile set its greenery.

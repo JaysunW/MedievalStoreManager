@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djby6n0yv7nkm"
-path="res://.godot/imported/TRDL1.png-29fbf7f5ecdb95c71778a5d0e4087832.ctex"
+uid="uid://b1vluffjcdv1b"
+path="res://.godot/imported/Shop.png-3ce29f152b1bdd5958a5dbed94656b3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/Glass/AllSides/TRDL1.png"
-dest_files=["res://.godot/imported/TRDL1.png-29fbf7f5ecdb95c71778a5d0e4087832.ctex"]
+source_file="res://Assets/Shop/Shop.png"
+dest_files=["res://.godot/imported/Shop.png-3ce29f152b1bdd5958a5dbed94656b3e.ctex"]
 
 [params]
 

@@ -35,6 +35,10 @@ texture = ExtResource("1_54exa")
 [node name="StressTimer" type="Timer" parent="."]
 wait_time = 2.0
 
+[node name="EscapedTimer" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="body_entered" from="DetectFish" to="." method="_on_detect_fish_body_entered"]
 [connection signal="body_exited" from="DetectFish" to="." method="_on_detect_fish_body_exited"]
 [connection signal="timeout" from="StressTimer" to="." method="_on_stress_timer_timeout"]
+[connection signal="timeout" from="EscapedTimer" to="." method="_on_escaped_timer_timeout"]

@@ -63,7 +63,11 @@ func spawn_fish(input, type, size, other_sprite = null):
 			new_fish.set_sprite(other_sprite)
 		add_child(new_fish)
 		new_fish.position = pos
+		new_fish.get_caught_signal().connect(fish_got_caught)
 		fish_list.append(new_fish)
+
+func fish_got_caught(type):
+	print(type, " caught : fish_service")
 
 func _on_fish_spawn_timer_timeout():
 	spawn_timer.wait_time = rng.randi_range(spawn_time_min,spawn_time_max)

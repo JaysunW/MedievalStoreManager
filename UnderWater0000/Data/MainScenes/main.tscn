@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Data/Fish/fish.tscn" id="14_y6u34"]
 [ext_resource type="PackedScene" uid="uid://g1y668ftpdlu" path="res://Data/Fish/predator_fish.tscn" id="15_dvjsy"]
 [ext_resource type="PackedScene" uid="uid://ix330rakblo1" path="res://Data/Fish/debug_fish.tscn" id="16_2m68w"]
-[ext_resource type="PackedScene" uid="uid://bohfgh7o00pg6" path="res://Data/Fish/special_predator_fish.tscn" id="17_ih1nr"]
+[ext_resource type="PackedScene" uid="uid://bohfgh7o00pg6" path="res://Data/Fish/debug_predator_fish.tscn" id="17_ih1nr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cntie"]
 
@@ -54,6 +54,8 @@ test_scene = SubResource("PackedScene_gtapn")
 width = 50
 chunk_width = 15
 chunk_height = 15
+show_chunks = false
+show_fish_placement = false
 
 [node name="AirBackground" type="Sprite2D" parent="GridService"]
 self_modulate = Color(1, 1, 1, 0.498039)

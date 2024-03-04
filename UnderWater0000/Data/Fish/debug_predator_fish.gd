@@ -57,12 +57,12 @@ func special_behaviour():
 			line8.add_point(to_local(target.position))
 	
 func line_around_point(line_node,pos): 
-	var size = 6
-	line_node.add_point(pos + Vector2(size,0))
-	line_node.add_point(pos + Vector2(0,size))
-	line_node.add_point(pos + Vector2(-size,0))
-	line_node.add_point(pos + Vector2(0,-size))
-	line_node.add_point(pos + Vector2(size,0))
+	var point_size = 6
+	line_node.add_point(pos + Vector2(point_size,0))
+	line_node.add_point(pos + Vector2(0,point_size))
+	line_node.add_point(pos + Vector2(-point_size,0))
+	line_node.add_point(pos + Vector2(0,-point_size))
+	line_node.add_point(pos + Vector2(point_size,0))
 	
 func _on_out_of_range_timer_timeout():
 	pass # Replace with function body.

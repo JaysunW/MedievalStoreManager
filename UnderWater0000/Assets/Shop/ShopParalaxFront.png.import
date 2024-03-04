@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2u1ma32wet2q"
-path="res://.godot/imported/Showcase_button_green.png-11d12429f124b9100a1e5828ffae38f6.ctex"
+uid="uid://c4ndfejh4hhcj"
+path="res://.godot/imported/ShopParalaxFront.png-b8a6d65c27ff365b0606660ada982bcb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Showcase_button_green.png"
-dest_files=["res://.godot/imported/Showcase_button_green.png-11d12429f124b9100a1e5828ffae38f6.ctex"]
+source_file="res://Assets/Shop/ShopParalaxFront.png"
+dest_files=["res://.godot/imported/ShopParalaxFront.png-b8a6d65c27ff365b0606660ada982bcb.ctex"]
 
 [params]
 

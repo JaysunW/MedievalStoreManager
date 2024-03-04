@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bl6g3o626sm1v"]
 
 [ext_resource type="Script" path="res://Bar.gd" id="1_w73h6"]
-[ext_resource type="Texture2D" uid="uid://0ipjnqksa648" path="res://Assets/O2TankBack.png" id="2_iilmf"]
+[ext_resource type="Texture2D" uid="uid://0ipjnqksa648" path="res://Assets/UI/O2TankBack.png" id="2_iilmf"]
 [ext_resource type="Texture2D" uid="uid://i8v8oxawx1pw" path="res://Assets/UI/AirInO2Gaige.png" id="3_mdwnw"]
-[ext_resource type="Texture2D" uid="uid://bec6xo5vju7g" path="res://Assets/O2TankFront.png" id="4_2d8m5"]
+[ext_resource type="Texture2D" uid="uid://bec6xo5vju7g" path="res://Assets/UI/O2TankFront.png" id="4_2d8m5"]
 
 [node name="O2_bar" type="Control"]
 texture_filter = 1

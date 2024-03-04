@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds0e0y1h7d453"
-path="res://.godot/imported/ShopParalaxBack2.png-8146bf9b596c895a7984d61ef8b6d156.ctex"
+uid="uid://bt57dqluqamsj"
+path="res://.godot/imported/Shop2.png-cae0134f417c5a4320f9894c5277e8bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/ShopParalaxBack2.png"
-dest_files=["res://.godot/imported/ShopParalaxBack2.png-8146bf9b596c895a7984d61ef8b6d156.ctex"]
+source_file="res://Assets/Shop/Shop2.png"
+dest_files=["res://.godot/imported/Shop2.png-cae0134f417c5a4320f9894c5277e8bc.ctex"]
 
 [params]
 

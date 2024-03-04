@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://docburp3nu5td"
-path="res://.godot/imported/O2Meter.png-7dd326dbaf90a4e1b28b7516bd254676.ctex"
+uid="uid://buanhy236fd5i"
+path="res://.godot/imported/Showcase_button_red.png-9aa67114eed62c2d68f6b45d5f64dbf1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/O2Meter.png"
-dest_files=["res://.godot/imported/O2Meter.png-7dd326dbaf90a4e1b28b7516bd254676.ctex"]
+source_file="res://Assets/Shop/Showcase_button_red.png"
+dest_files=["res://.godot/imported/Showcase_button_red.png-9aa67114eed62c2d68f6b45d5f64dbf1.ctex"]
 
 [params]
 

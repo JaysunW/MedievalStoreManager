@@ -5,6 +5,7 @@ extends Tool
 @onready var ray_cast = $Sprite/LaserOutput/RayCast2D
 @onready var sprite = $Sprite
 
+var damage = 50
 var added_laser_start = false
 var strength = 10
 var alternate_modes = null
@@ -39,6 +40,7 @@ func update_tool(data):
 	max_laser_length = data["length"]
 
 func shoot_laser(length):
+	print(length)
 	# Draw the line of the laser and damage tiles in line
 	if not overheat_active:
 		var new_position = Vector2(min(max_laser_length * 32,length),0)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vdvshkwmkktb"
-path="res://.godot/imported/TRDL6.png-be0571bd0baa089d6eb6cc42f65f6c1c.ctex"
+uid="uid://ds0e0y1h7d453"
+path="res://.godot/imported/ShopParalaxBack2.png-ee9fe85f0789466f8bfff84a7ce35c5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/Glass/AllSides/TRDL6.png"
-dest_files=["res://.godot/imported/TRDL6.png-be0571bd0baa089d6eb6cc42f65f6c1c.ctex"]
+source_file="res://Assets/Shop/ShopParalaxBack2.png"
+dest_files=["res://.godot/imported/ShopParalaxBack2.png-ee9fe85f0789466f8bfff84a7ce35c5a.ctex"]
 
 [params]
 

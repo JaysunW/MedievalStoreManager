@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4ndfejh4hhcj"
-path="res://.godot/imported/ShopParalaxFront.png-e0aa455e82b0d8ba098fee25fc787b6e.ctex"
+uid="uid://0ipjnqksa648"
+path="res://.godot/imported/O2TankBack.png-e0e1a52681d3ecd02c9866be5e55c749.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/ShopParalaxFront.png"
-dest_files=["res://.godot/imported/ShopParalaxFront.png-e0aa455e82b0d8ba098fee25fc787b6e.ctex"]
+source_file="res://Assets/UI/O2TankBack.png"
+dest_files=["res://.godot/imported/O2TankBack.png-e0e1a52681d3ecd02c9866be5e55c749.ctex"]
 
 [params]
 
