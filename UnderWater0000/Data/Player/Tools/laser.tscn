@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bshu8w0haitut"]
 
 [ext_resource type="Script" path="res://Data/Player/Tools/Laser.gd" id="1_o4khl"]
-[ext_resource type="Texture2D" uid="uid://c6ngxn2f8etkv" path="res://Assets/Tools/Laser/LaserMk1.png" id="2_fu11g"]
+[ext_resource type="Texture2D" uid="uid://c6ngxn2f8etkv" path="res://Assets/Tools/Laser/lasermk1.png" id="2_fu11g"]
 
 [sub_resource type="Curve" id="Curve_0k6xh"]
 _data = [Vector2(0.0375, 0.915789), 0.0, 0.0, 0, 0, Vector2(0.55625, 0.284211), 0.0, 0.0, 0, 0, Vector2(1, 0.915789), 0.0, 0.0, 0, 0]

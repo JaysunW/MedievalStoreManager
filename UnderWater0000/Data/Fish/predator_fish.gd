@@ -20,7 +20,7 @@ func _ready():
 	out_of_range_timer.wait_time = out_of_range_time
 	attack_timer.wait_time = attack_time
 	attack_cooldown_timer.wait_time = attack_cooldown_time
-	$".".add_to_group("PREDATOR")
+	self.add_to_group("PREDATOR")
 	super()
 
 func _physics_process(_delta):
@@ -58,7 +58,7 @@ func target_in_vision():
 	var min_dst = vision_radius
 	for fish in other_fish:
 		var groups = fish.get_groups() 
-		if groups.has("FISH") and not groups.has(type):
+		if not groups.has("PREDATOR"):
 			var connection_vec = (fish.position) - (position) 
 			var dot_product = linear_velocity.normalized().dot(connection_vec.normalized())
 			if dot_product >= field_of_vision:

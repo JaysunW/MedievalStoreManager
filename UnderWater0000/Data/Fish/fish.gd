@@ -40,7 +40,7 @@ signal caught(type)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	health = max_health
-	$".".add_to_group("FISH")
+	self.add_to_group("FISH")
 	stress_timer.wait_time = stress_time
 	speed += rng.randi_range(-10,10)
 	#detect_fish_shape.shape.radius = vision_radius
@@ -107,6 +107,22 @@ func set_sprite(new_sprite):
 func set_state(new_state):
 	current_state = new_state
 	
+func set_size(_size):
+	size = _size
+	match size:
+		0:
+			return
+		1:
+			var sprite = $CollisionShape2D
+			sprite.scale = Vector2(0.5,0.5)
+			var collision_shape = $CollisionShape2D
+			collision_shape.radius = 16
+			collision_shape.height = 85
+		2: 
+			print("Problem : fish.gd")
+		_:
+			print("Problem : fish.gd")
+			
 # Gives the separation vector to fish of same species
 func calc_separation():
 	var separation = Vector2.ZERO
@@ -196,11 +212,9 @@ func _on_detect_fish_body_exited(body):
 	elif groups.has("OBSTACLE"):
 		obstacles.erase(body)
 
-
 func _on_stress_timer_timeout():
 	speed = normal_speed
 	pass # Replace with function body.
-
 
 func _on_escaped_timer_timeout():
 	$Sprite.self_modulate = Color(1,1,1)

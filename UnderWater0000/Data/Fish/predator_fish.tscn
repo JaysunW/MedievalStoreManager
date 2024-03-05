@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://g1y668ftpdlu"]
 
 [ext_resource type="Script" path="res://Data/Fish/predator_fish.gd" id="1_vjev5"]
-[ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/piranha.png" id="2_2cj47"]
+[ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/Piranha.png" id="2_2cj47"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
 radius = 8.0
@@ -51,8 +51,6 @@ position = Vector2(7, 0)
 wait_time = 2.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="area_entered" from="DetectFish" to="." method="_on_detect_fish_area_entered"]
-[connection signal="area_exited" from="DetectFish" to="." method="_on_detect_fish_area_exited"]
 [connection signal="body_entered" from="DetectFish" to="." method="_on_detect_fish_body_entered"]
 [connection signal="body_exited" from="DetectFish" to="." method="_on_detect_fish_body_exited"]
 [connection signal="timeout" from="OutOfRangeTimer" to="." method="_on_out_of_range_timeout"]

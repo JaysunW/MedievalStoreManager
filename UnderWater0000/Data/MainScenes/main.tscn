@@ -43,6 +43,7 @@ size = Vector2(32, 24)
 
 [node name="Character" parent="." groups=["OBSTACLE"] instance=ExtResource("1_8j5xq")]
 position = Vector2(32, 0)
+free_cam_active = true
 
 [node name="GridService" type="Node2D" parent="."]
 script = ExtResource("2_gab70")

@@ -3,8 +3,10 @@
 		"BLUE" : {
 			"sprite_path" : "res://Assets/Fish/blue_fish.png",
 			"value" : 100,
+			"type" : "BLUE",
 			"border_idx_list" : [0,1,2,3,4,5],
 			"rarity" : 0,
+			"size" : 0,
 			"predator" : false,
 			"name" : "Bluey",
 			"description" : "Blue fish what are you expecting"
@@ -12,8 +14,10 @@
 		"CLOWN" : {
 			"sprite_path" : "res://Assets/Fish/clown_fish.png",
 			"value" : 120,
+			"type" : "CLOWN",
 			"border_idx_list" : [0,1,2,3,4,5],
 			"rarity" : 1,
+			"size" : 0,
 			"predator" : false,
 			"name" : "Clownfish",
 			"description" : "It seems to be a clown but don't expect it to make jokes and yes I'm 'shore' of it "
@@ -21,10 +25,45 @@
 		"ORANGE" : {
 			"sprite_path" : "res://Assets/Fish/orange_fish.png",
 			"value" : 110,
+			"type" : "ORANGE",
 			"border_idx_list" : [0,1,2,3,4,5],
 			"rarity" : 0,
+			"size" : 0,
 			"predator" : false,
 			"name" : "Orange Dory",
+			"description" : "WIP"
+		},
+		"CARP" : {
+			"sprite_path" : "res://Assets/Fish/Size1/carp.png",
+			"value" : 210,
+			"type" : "CARP",
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 0,
+			"size" : 1,
+			"predator" : false,
+			"name" : "WIP",
+			"description" : "WIP"
+		},
+		"LONGSALMON" : {
+			"sprite_path" : "res://Assets/Fish/Size1/long_salmon.png",
+			"value" : 220,
+			"type" : "LONGSALMON",
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 0,
+			"size" : 1,
+			"predator" : false,
+			"name" : "WIP",
+			"description" : "WIP"
+		},
+		"SALMON" : {
+			"sprite_path" : "res://Assets/Fish/Size1/salmon.png",
+			"value" : 200,
+			"type" : "SALMON",
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 0,
+			"size" : 1,
+			"predator" : false,
+			"name" : "WIP",
 			"description" : "WIP"
 		}
 	},
@@ -32,11 +71,24 @@
 		"PIRANHA" : {
 			"sprite_path" : "res://Assets/Fish/piranha.png",
 			"value" : 150,
+			"type" : "PIRANHA",
 			"border_idx_list" : [0,1,2,3,4,5],
 			"rarity" : 2,
+			"size" : 0,
 			"predator" : true,
 			"name" : "Piranha",
 			"description" : "Eats you xD"
+		},
+		"DIPPY" : {
+			"sprite_path" : "res://Assets/Fish/Size1/dippy.png",
+			"value" : 250,
+			"type" : "DIPPY",
+			"border_idx_list" : [0,1,2,3,4,5],
+			"rarity" : 2,
+			"size" : 1,
+			"predator" : true,
+			"name" : "WIP",
+			"description" : "Also eats you"
 		}
 	}
 }

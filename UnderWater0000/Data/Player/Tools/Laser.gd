@@ -40,7 +40,6 @@ func update_tool(data):
 	max_laser_length = data["length"]
 
 func shoot_laser(length):
-	print(length)
 	# Draw the line of the laser and damage tiles in line
 	if not overheat_active:
 		var new_position = Vector2(min(max_laser_length * 32,length),0)
@@ -70,6 +69,8 @@ func shoot_laser(length):
 		$Sprite.self_modulate = Color(1,0,0)
 		# Add overheat animation/ particles
 		pass
+
+
 
 func _on_overheat_timeout():
 	overheat_active = false
