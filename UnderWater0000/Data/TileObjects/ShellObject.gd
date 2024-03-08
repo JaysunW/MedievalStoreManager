@@ -7,7 +7,7 @@ func _ready():
 	drop_type = Enums.DropType.SHELL
 
 func update_sprite():
-	match type:
+	match border_idx:
 		0:
 			animation = "Basic" 
 		1:

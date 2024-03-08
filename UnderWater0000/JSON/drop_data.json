@@ -2,79 +2,79 @@
 	"TILE": [
 		{
 			"id" : 0,
-			"value" : 100
+			"value" : 50
 		},
 		{
 			"id" : 1,
-			"value" : 200
+			"value" : 100
 		},
 		{
 			"id" : 2,
-			"value" : 300
+			"value" : 150
 		},
 		{
 			"id" : 3,
-			"value" : 400
+			"value" : 200
 		},
 		{
 			"id" : 4,
-			"value" : 500
+			"value" : 250
 		},
 		{
 			"id" : 5,
-			"value" : 600
+			"value" : 300
 		}
 	],
 	"CORAL": [
 		{
 			"id" : 0,
-			"value" : 100
+			"value" : 40
 		},
 		{
 			"id" : 1,
-			"value" : 200
+			"value" : 80
 		},
 		{
 			"id" : 2,
-			"value" : 300
+			"value" : 120
 		},
 		{
 			"id" : 3,
-			"value" : 400
+			"value" : 160
 		},
 		{
 			"id" : 4,
-			"value" : 500
+			"value" : 200
 		},
 		{
 			"id" : 5,
-			"value" : 600
+			"value" : 240
 		}
 	],
 	"SHELL": [
 		{
 			"id" : 0,
-			"value" : 100
+			"value" : 60
 		},
 		{
 			"id" : 1,
-			"value" : 200
+			"value" : 120
 		},
 		{
 			"id" : 2,
-			"value" : 300
+			"value" : 180
 		},
 		{
 			"id" : 3,
-			"value" : 400
+			"value" : 240
 		},
 		{
 			"id" : 4,
-			"value" : 500
+			"value" : 300
 		},
 		{
 			"id" : 5,
-			"value" : 600
+			"value" : 360
 		}
 	],
 	
@@ -92,49 +92,49 @@
 			"sprite_path" : "res://Assets/Gems/emerald.png",
 			"rarity" : 7,
 			"border_idx_list" : [3,4,5],
-			"value" : 1000
+			"value" : 800
 		},
 		{
 			"name" : "lapislazuli",
 			"sprite_path" : "res://Assets/Gems/lapislazuli.png",
 			"rarity" : 5,
 			"border_idx_list" : [1,2,3,5],
-			"value" : 1000
+			"value" : 600
 		},
 		{
 			"name" : "quamarin",
 			"sprite_path" : "res://Assets/Gems/quamarin.png",
 			"rarity" : 4,
 			"border_idx_list" : [1,2,3],
-			"value" : 1000
+			"value" : 500
 		},
 		{
 			"name" : "quartz",
 			"sprite_path" : "res://Assets/Gems/quartz.png",
 			"rarity" : 0,
 			"border_idx_list" : [0,1,2,3,4,5],
-			"value" : 1000
+			"value" : 100
 		},
 		{
 			"name" : "rubin",
 			"sprite_path" : "res://Assets/Gems/rubin.png",
 			"rarity" : 7,
 			"border_idx_list" : [0,1,2,3,4],
-			"value" : 1000
+			"value" : 800
 		},
 		{
 			"name" : "tiger_eye",
 			"sprite_path" : "res://Assets/Gems/tiger_eye.png",
 			"rarity" : 1,
 			"border_idx_list" : [0,1,2,3],
-			"value" : 1000
+			"value" : 200
 		},
 		{
 			"name" : "turquoise",
 			"sprite_path" : "res://Assets/Gems/turquoise.png",
 			"rarity" : 4,
 			"border_idx_list" : [1,2,4,5],
-			"value" : 1000
+			"value" : 500
 		}
 	],
 }

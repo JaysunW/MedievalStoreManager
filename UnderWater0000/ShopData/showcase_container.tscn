@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0yn8sj7ak7gb"]
+[gd_scene load_steps=7 format=3 uid="uid://d0yn8sj7ak7gb"]
 
 [ext_resource type="Script" path="res://ShopData/ShowcaseContainer.gd" id="1_0v1jf"]
 [ext_resource type="Texture2D" uid="uid://ct22qjvvxd38o" path="res://Assets/Tools/Laser/lasermk4.png" id="2_3pd8v"]
 [ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="3_ijurp"]
+[ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="3_x1ye7"]
 [ext_resource type="Theme" uid="uid://diysbnrylbyed" path="res://GUI/Theme/default_theme.tres" id="4_7lkrf"]
+[ext_resource type="Texture2D" uid="uid://bqdjq7kgixtji" path="res://Assets/Shop/Cross.png" id="5_pq73l"]
 
 [node name="ShowcaseContainer" type="Node2D"]
 script = ExtResource("1_0v1jf")
@@ -15,18 +17,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 19.0
+offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.8, 0.8)
 texture_normal = ExtResource("2_3pd8v")
 
 [node name="PrizeTagBack" type="Sprite2D" parent="."]
+self_modulate = Color(0.589096, 0.589096, 0.589096, 1)
 position = Vector2(0, 13)
 scale = Vector2(0.75, 0.2)
-texture = ExtResource("3_ijurp")
+texture = ExtResource("3_x1ye7")
 
 [node name="PrizeTagBack2" type="Sprite2D" parent="PrizeTagBack"]
 self_modulate = Color(0, 0, 0, 1)
@@ -55,7 +59,13 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="NotBuyable" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.5
+
+[node name="Cross" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_pq73l")
 
 [connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]
 [connection signal="button_up" from="TextureButton" to="." method="_on_texture_button_button_up"]

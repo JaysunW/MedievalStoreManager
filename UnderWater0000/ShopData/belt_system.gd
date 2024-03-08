@@ -6,20 +6,28 @@ extends Sprite2D
 var belt_item_list = []
 var belts = []
 var move_list = [0,0,0,0]
-var move_dir = 0
+var start_x_position = 0
+var button_pressed = false
+var current_button = 0
 
 func _ready():
 	for child in $Clipping.get_children():
 		belts.append(child)
 		belt_item_list.append([])
-	add_every_laser()
+		start_x_position = child.position.x
+	add_every_upgrade()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	for belt in belts:
-		belt.position += Vector2.LEFT * move_dir * delta * belt_speed
-
-func add_every_laser():
+	if button_pressed:
+		var i = current_button
+		var current_position = belts[i].position
+		var end_x_position = start_x_position + 32 * (belt_item_list[i].size() - 3)
+		var diff_x_position = end_x_position - start_x_position
+		var delta_x = clamp(current_position.x - 1 * move_list[i] * delta * belt_speed, start_x_position - diff_x_position, end_x_position - diff_x_position)
+		belts[i].position = Vector2( delta_x, current_position.y)
+		
+func add_every_upgrade():
 	var tool_data = DataService.get_tool_data()
 	for i in range(tool_data.size()):
 		var key_list = tool_data.keys()
@@ -44,14 +52,20 @@ func _item_deselected():
 	# Deselect Item
 	pass
 
-func _on_green_button_down():
-	move_dir = 1
+func _on_green_button_down(input):
+	move_list[input] = 1
+	current_button = input
+	button_pressed = true
 
 func _on_green_button_up():
-	move_dir = 0
+	move_list = [0,0,0,0]
+	button_pressed = false
 
-func _on_red_button_down():
-	move_dir = -1
+func _on_red_button_down(input):
+	move_list[input] = -1
+	current_button = input
+	button_pressed = true
 
 func _on_red_button_up():
-	move_dir = 0
+	move_list = [0,0,0,0]
+	button_pressed = false

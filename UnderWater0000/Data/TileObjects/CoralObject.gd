@@ -7,7 +7,8 @@ func _ready():
 	drop_type = Enums.DropType.CORAL
 
 func update_sprite():
-	match type:
+	print(border_idx)
+	match int(border_idx):
 		0:
 			animation = "Basic"
 		1:
@@ -22,5 +23,7 @@ func update_sprite():
 			print("Something went wrong with the coral sprite update.")
 		_:
 			animation = "Brain"
+	print("An: ", animation)
 	frame = rng.randi_range(0, sprite.sprite_frames.get_frame_count(animation))
+	sprite.animation = animation
 	sprite.frame = frame

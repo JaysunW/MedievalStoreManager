@@ -36,7 +36,7 @@ var obstacles = []
 var field_of_vision = -0.2 # Between -1 and 1, 1 directly infront
 var vision_radius = 64
 
-signal caught(type)
+signal caught(fish)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	health = max_health
@@ -72,24 +72,19 @@ func special_behaviour():
 
 func take_damage(damage):
 	health -= damage
-	print("Health: " , health)
-	print(": fish.gd")
 	if health < 0:
 		print("Dead")
 	stress_timer.start()
 	speed += stress_speed_up
 
 func try_catch_fish(value):
-	print("Value in: ",value)
 	var rand_int = randi_range(0,99)
 	var gate = round(catch_chance + value * 1 - health/max_health)
-	print("Rand_int: " , rand_int)
-	print("Gate: ", gate)
 	if rand_int < gate:
-		caught.emit(type)
+		caught.emit(self)
 	else:
-		$EscapedTimer.start()
 		$Sprite.self_modulate = Color(0,0,1)
+		$EscapedTimer.start()
 
 func get_caught_signal():
 	return caught
@@ -109,20 +104,26 @@ func set_state(new_state):
 	
 func set_size(_size):
 	size = _size
-	match size:
+	match int(size):
 		0:
-			return
-		1:
-			var sprite = $CollisionShape2D
-			sprite.scale = Vector2(0.5,0.5)
+			sprite.scale = Vector2(0.3,0.3)
 			var collision_shape = $CollisionShape2D
-			collision_shape.radius = 16
-			collision_shape.height = 85
+			collision_shape.shape.radius = 12
+			collision_shape.shape.height = 32
+		1:
+			sprite.scale = Vector2(0.4,0.4)
+			var collision_shape = $CollisionShape2D
+			collision_shape.position = collision_shape.position - Vector2(-2,0)
+			collision_shape.shape.radius = 12
+			collision_shape.shape.height = 66
 		2: 
-			print("Problem : fish.gd")
+			print("Size Problem : fish.gd")
 		_:
-			print("Problem : fish.gd")
-			
+			print("Default Size Problem : fish.gd")
+
+func get_type():
+	return type
+
 # Gives the separation vector to fish of same species
 func calc_separation():
 	var separation = Vector2.ZERO

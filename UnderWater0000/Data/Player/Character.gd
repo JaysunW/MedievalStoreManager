@@ -19,7 +19,7 @@ const JUMP_VELOCITY = -250
 
 signal free_cam
 
-var max_o2_cap = 100
+var max_o2_cap = 50
 var current_o2_cap = 0
 var o2_output = 2
 var lossing_o2 = true
@@ -30,10 +30,27 @@ var gravity_clamp = 0.2
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
-	current_o2_cap = max_o2_cap
+	update_O2()
 	$Camera2D.enabled = not free_cam_active
 	if start_underwater:
 		on_land = false
+
+func update_O2():
+	var data = DataService.get_tool_data()
+	var latest_unlock = null
+	for tool_data in data["O2"]:
+		if tool_data["unlocked"]:
+			latest_unlock = tool_data
+	if latest_unlock:
+		sprite.animation = str(latest_unlock["id"] + 1)
+		update_O2_sprite(latest_unlock)
+		max_o2_cap = latest_unlock["capacity"]
+	current_o2_cap = max_o2_cap
+
+func update_O2_sprite(o2_dic):
+	var interface = $CanvasLayer/Interface
+	interface.set_o2_front(load(o2_dic["front_sprite_path"]))
+	interface.set_o2_back(load(o2_dic["back_sprite_path"]))
 
 func _process(_delta):
 	light.visible = position.y/32 > light_activ_y
@@ -114,10 +131,11 @@ func _on_o_2_timer_timeout():
 		current_o2_cap -= o2_output
 		gui.update_o2_bar((float(current_o2_cap)/float(max_o2_cap)) * 100)
 		if current_o2_cap < 0:
-			$OutOfO2.start()
+			linear_velocity = Vector2.ZERO
+			$O2Timer.stop()
 			$Sprite.self_modulate = Color(1,0,0)
 			empty_o2 = true
-			$O2Timer.stop()
+			$OutOfO2.start()
 
 func _on_out_of_o_2_timeout():
 	$Sprite.self_modulate = Color(1,1,1)

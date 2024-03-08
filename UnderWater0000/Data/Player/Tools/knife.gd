@@ -3,9 +3,10 @@ extends Tool
 @onready var sprite = $RotationPoint/Sprite
 @onready var area_to_attack = $Area2D
 
-var damage = 50
+var damage = 10
 
 func _ready():
+	cooldown = 1
 	interactable_groups = ["FISH","CORAL","SHELL"]
 	sprite.flip_v = true
 	super()

@@ -27,7 +27,9 @@ func item_bought():
 	button.modulate = Color(1,1,1)
 
 func not_bought():
-	button.modulate = Color(1,0,0)
+	$PrizeTagBack/PrizeTagBack2/Label.add_theme_color_override("font_color", Color(1, 0, 0))
+	$PrizeTagBack/PrizeTagBack2/Label.add_theme_color_override("font_shadow_color", Color(1, 0, 0))
+	$Cross.visible = true
 	$NotBuyable.start()
 	
 func set_container(_data):
@@ -56,7 +58,10 @@ func is_unlocked(input):
 		initial_color = Color(0,0,0)
 	
 func set_price(prize):
-	$PrizeTagBack/PrizeTagBack2/Label.text = GoldService.convert_value_to_str(prize)
+	if int(prize) == 100000000:
+		$PrizeTagBack/PrizeTagBack2/Label.text = "???"
+	else:
+		$PrizeTagBack/PrizeTagBack2/Label.text = GoldService.convert_value_to_str(prize)
 
 func get_select_signal():
 	return item_selected
@@ -74,4 +79,6 @@ func _on_texture_button_button_up():
 	button.position = start_position
 	
 func _on_not_buyable_timeout():
-	button.modulate = initial_color
+	$PrizeTagBack/PrizeTagBack2/Label.remove_theme_color_override("font_color")
+	$PrizeTagBack/PrizeTagBack2/Label.remove_theme_color_override("font_shadow_color")
+	$Cross.visible = false

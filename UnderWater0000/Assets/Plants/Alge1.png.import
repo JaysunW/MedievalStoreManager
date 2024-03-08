@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cv38sx5410tnr"
-path="res://.godot/imported/Alge1.png-1b5cfd00521a2c224c7bf49588fb02c1.ctex"
+path="res://.godot/imported/Alge1.png-211be382aba27c0d820b64d799e78fe0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Alge1.png"
-dest_files=["res://.godot/imported/Alge1.png-1b5cfd00521a2c224c7bf49588fb02c1.ctex"]
+source_file="res://Assets/Plants/Alge1.png"
+dest_files=["res://.godot/imported/Alge1.png-211be382aba27c0d820b64d799e78fe0.ctex"]
 
 [params]
 

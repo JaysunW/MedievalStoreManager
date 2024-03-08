@@ -1,7 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://g1y668ftpdlu"]
 
 [ext_resource type="Script" path="res://Data/Fish/predator_fish.gd" id="1_vjev5"]
-[ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/Piranha.png" id="2_2cj47"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
 radius = 8.0
@@ -9,6 +8,9 @@ height = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_65ytg"]
 radius = 160.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_70dxy"]
+load_path = "res://.godot/imported/Piranha.png-a98854fb50640834208fd2f302cab48f.ctex"
 
 [node name="Fish" type="RigidBody2D"]
 texture_filter = 1
@@ -31,7 +33,7 @@ shape = SubResource("CircleShape2D_65ytg")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_2cj47")
+texture = SubResource("CompressedTexture2D_70dxy")
 
 [node name="OutOfRangeTimer" type="Timer" parent="."]
 one_shot = true
@@ -49,6 +51,9 @@ position = Vector2(7, 0)
 
 [node name="StressTimer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="EscapedTimer" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="DetectFish" to="." method="_on_detect_fish_body_entered"]

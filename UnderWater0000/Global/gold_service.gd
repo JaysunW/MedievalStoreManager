@@ -1,6 +1,6 @@
 extends Node
 
-var player_gold = 2000
+var player_gold = 0
 signal gold_changed
 
 func get_gold_signal():
@@ -25,6 +25,8 @@ func convert_value_to_str(value):
 	var list = ["K", "M", "B", "T"]
 	for i in range(list.size()):
 		var tmp = pow(10,(i + 1) * 3)
-		if value > tmp - 1 and value < 10 * pow(10,(i + 2) * 3):
-			return str(int(value/tmp)) + list[i]
+		if value > tmp - 1 and value < pow(10,(i + 2) * 3):
+			var output_string = ("%3.2f" % (value/tmp)) + list[i]
+			print(output_string)
+			return output_string
 	return str(value)

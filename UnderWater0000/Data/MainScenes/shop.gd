@@ -6,7 +6,6 @@ func buy_item(item, container):
 	var player_gold = GoldService.get_gold()
 	if item["price"] <= player_gold:
 		#  Give player the upgrade
-		print("category: " + str(item["name"]))
 		GoldService.add_gold(-item["price"])
 		container.item_bought()
 		var tool_stats = DataService.get_tool_data()
@@ -18,3 +17,9 @@ func buy_item(item, container):
 
 func _on_texture_button_button_down():
 	SceneSwitcherService.switch_scene(SceneSwitcherService.main_scene_path)
+
+func _on_change_scene_mouse_entered():
+	$ParallaxBackground/BackParallax/Sign.texture = load("res://Assets/Shop/sign_hover.png")
+
+func _on_change_scene_mouse_exited():
+	$ParallaxBackground/BackParallax/Sign.texture = load("res://Assets/Shop/sign.png")

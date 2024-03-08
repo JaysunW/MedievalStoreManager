@@ -98,9 +98,13 @@ z_index = 100
 width = 3.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="BorderArea" type="Line2D" parent="GridService"]
+z_index = 2000
+default_color = Color(0.827451, 0, 1, 1)
+
 [node name="DarknesService" type="CanvasModulate" parent="."]
-process_mode = 4
 texture_filter = 1
+color = Color(0.564706, 0.564706, 0.564706, 1)
 script = ExtResource("9_fr8l2")
 light_offset = 4
 
@@ -119,7 +123,7 @@ special_fish_scene = ExtResource("16_2m68w")
 special_predator_scene = ExtResource("17_ih1nr")
 
 [node name="FishSpawnTimer" type="Timer" parent="FishService"]
-wait_time = 0.5
+wait_time = 4.0
 autostart = true
 
 [node name="FishDespawnTimer" type="Timer" parent="FishService"]

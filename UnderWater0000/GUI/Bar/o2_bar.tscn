@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bl6g3o626sm1v"]
 
 [ext_resource type="Script" path="res://Bar.gd" id="1_w73h6"]
-[ext_resource type="Texture2D" uid="uid://0ipjnqksa648" path="res://Assets/UI/O2TankBack.png" id="2_iilmf"]
+[ext_resource type="Texture2D" uid="uid://dcmyhxgsj7cmf" path="res://Assets/UI/o2_tank_back_1.png" id="2_df3bq"]
 [ext_resource type="Texture2D" uid="uid://i8v8oxawx1pw" path="res://Assets/UI/AirInO2Gaige.png" id="3_mdwnw"]
-[ext_resource type="Texture2D" uid="uid://bec6xo5vju7g" path="res://Assets/UI/O2TankFront.png" id="4_2d8m5"]
+[ext_resource type="Texture2D" uid="uid://b8bblp4doykgx" path="res://Assets/UI/o2_tank_front_1.png" id="4_e6rl5"]
 
 [node name="O2_bar" type="Control"]
 texture_filter = 1
@@ -21,14 +21,14 @@ layout_mode = 1
 anchors_preset = 0
 scale = Vector2(3, 3)
 
-[node name="TextureRect2" type="TextureRect" parent="Control"]
+[node name="Back" type="TextureRect" parent="Control"]
 texture_filter = 1
 layout_mode = 0
 offset_left = 33.6667
 offset_top = 25.0
 offset_right = 65.6667
 offset_bottom = 105.0
-texture = ExtResource("2_iilmf")
+texture = ExtResource("2_df3bq")
 expand_mode = 1
 stretch_mode = 2
 
@@ -43,13 +43,13 @@ fill_mode = 3
 nine_patch_stretch = true
 texture_progress = ExtResource("3_mdwnw")
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="Front" type="TextureRect" parent="Control"]
 texture_filter = 1
 layout_mode = 0
 offset_left = 33.6667
 offset_top = 25.0
 offset_right = 65.6667
 offset_bottom = 105.0
-texture = ExtResource("4_2d8m5")
+texture = ExtResource("4_e6rl5")
 expand_mode = 1
 stretch_mode = 2

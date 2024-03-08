@@ -38,6 +38,7 @@ curve = SubResource("Curve2D_nfbjn")
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 
 [node name="FishSpawner" type="Timer" parent="."]
+wait_time = 2.0
 
 [node name="SpecialFishSpawner" type="Timer" parent="."]
 wait_time = 10.0

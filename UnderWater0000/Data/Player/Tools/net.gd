@@ -7,7 +7,7 @@ var catch_change = 10
 var catch_sizes = ["SMALL"]
 
 func _ready():
-	
+	cooldown = 1
 	interactable_groups = ["FISH"]
 	sprite.flip_v = true
 	super()
@@ -18,6 +18,8 @@ func _process(_delta):
 func update_tool(data):
 	super(data)
 	sprite.texture = load(data["sprite_path"])
+	strength = data["strength"]
+	
 
 # Use knife
 func use_tool():

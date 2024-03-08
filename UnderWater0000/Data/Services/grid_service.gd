@@ -45,6 +45,7 @@ var loaded_chunk = Vector2.ZERO
 var chunks_around_loaded = []
 
 func _ready():
+	noise_seed = rng.randi_range(0,2000)
 	water_edge_y = min(float(height)/10,15)
 	noise_one.seed = noise_seed
 	noise_two.seed = noise_seed + noise_offset
@@ -54,7 +55,7 @@ func _ready():
 	spawn_foliage()
 	set_sprites_of_tiles()
 	transform_backgrounds(width, height)
-	player.position = Vector2(float(width * 32)/2.0,-32)
+	player.position = Vector2(float(width)/2.0, water_edge_y-1)*32
 	DropService.decide_gem(0)
 
 func _process(_delta):
@@ -84,18 +85,22 @@ func _process(_delta):
 		
 # Spawns tiles depending on x and y input.
 func spawn_tiles():
+	place_player_boat(Vector2(float(width)/2.0, water_edge_y-0.3))
 	var noise_jump = 6
 	var ground_start = water_edge_y + 10
+	
 	for x in range(width):
 		var ground = (noise_one.get_noise_2d(x * noise_ground_jump, 0) + 1) * 0.5 * ground_start
 		if x < 2 or x > width - 2:
 			ground = 0
-		elif x < 5 or x > width-5:
+		elif x < 5 or x > width-5 or (x >= width/2-2) and x <= width/2+2: #  Change start spawn hight of tiles so player can't go above borders and nothing spawns above player at start
 			ground = water_edge_y
 		for y in range(ground, height):
 			var side_border = (noise_one.get_noise_2d(x * 2, y * 2) + 1) * 0.5 * border_edge_x + 1
-			if x < side_border or x >= width - side_border or y > height - side_border:
+			if x < side_border or x >= width - side_border or y > height - side_border : #  place area for borders 
 				setup_tile(Vector2(x,y), border_amount-1, false)
+			elif (x > width / 2 - 1 and x < width / 2 + 1 and y == water_edge_y): #  place area under player at start
+				setup_tile(Vector2(x,y), 0, false)
 			else:
 				var noise_value_1 = (noise_one.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
 				var noise_value_2 = (noise_two.get_noise_2d(x * noise_jump, y * noise_jump) + 1) * 0.5
@@ -109,6 +114,14 @@ func spawn_tiles():
 					if border_idx >= border_amount: border_idx = 0
 					#  Sets stats of the tile
 					setup_tile(Vector2(x,y), border_idx)
+
+func place_player_boat(pos):
+	var sprite = Sprite2D.new()
+	sprite.texture = load("res://Assets/Ship.png")
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	sprite.position = pos * 32 
+	sprite.z_index = 100
+	self.add_child(sprite)
 
 func setup_tile(pos, border_idx, destroyable = true):
 	var new_tile = tile_scene.instantiate()

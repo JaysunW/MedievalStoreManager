@@ -42,6 +42,7 @@ func _place_gem_at(pos, border_idx):
 	drop.set_texture(load(gem_data_dic["sprite_path"]))
 	drop.set_border_idx(border_idx)
 	drop.set_type(Enums.DropType.GEM)
+	drop.glow()
 	drop_list[drop_counter] = drop
 	if pos.y >= grid_service.water_edge_y:
 		drop.gravity_scale = 0.1
@@ -49,7 +50,7 @@ func _place_gem_at(pos, border_idx):
 	drop.rotation = rng.randi_range(0,360)
 	drop.linear_velocity = Vector2(rng.randi_range(-5,6),rng.randi_range(-5,6)) * 8
 	
-func decide_gem(idx):
+func decide_gem(border_id):
 	var gem_data_list = DataService.get_drop_data()["GEM"]
 	var gem_to_look_at = []
 	var rarity_max = 10
@@ -57,7 +58,7 @@ func decide_gem(idx):
 	var random_int = rng.randi_range(0,99)
 	for i in range(gem_data_list.size()):
 		var list = gem_data_list[i]["border_idx_list"]
-		if list.has(float(idx)):
+		if list.has(float(border_id)):
 			gem_to_look_at.append(gem_data_list[i])
 			rarity_sum += float(rarity_max - gem_data_list[i]["rarity"])
 	var bottom_border_percent = 0
@@ -69,14 +70,14 @@ func decide_gem(idx):
 		bottom_border_percent = upper_border_percent
 	print("Something went wrong with the gem decision, maybe faulty rarity of gems : DropService ")
 	print("Should be 100: " + str(bottom_border_percent) + " gem_to_look size: " + str(gem_to_look_at.size()) + " randint: "+str(random_int) )
-	print("Border_idx :" + str(idx))
+	print("Border_idx :" + str(border_id))
 	return null
 
 func collect_drop(type, idx):
 	var drop_data = DataService.get_drop_data()
 	var value = drop_data[Enums.DropType.keys()[type]][idx]["value"]
 #	print("Added: " + str(value) + " Gold : drop_service")
-	GoldService.add_gold(value)
+	GoldService.add_gold(value - rng.randi_range(0,value/4))
 
 func erase_drop(drop):
 	drop_list.erase(drop)

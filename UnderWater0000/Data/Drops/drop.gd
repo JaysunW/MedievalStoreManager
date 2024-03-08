@@ -27,6 +27,9 @@ func collect_drop():
 	DropService.erase_drop(self)
 	queue_free()
 
+func glow():
+	$PointLight2D.visible = true
+
 func _on_lifetime_timeout():
 	destroy_drop()
 

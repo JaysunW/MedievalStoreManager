@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bshu8w0haitut"]
+[gd_scene load_steps=6 format=3 uid="uid://bshu8w0haitut"]
 
 [ext_resource type="Script" path="res://Data/Player/Tools/Laser.gd" id="1_o4khl"]
 [ext_resource type="Texture2D" uid="uid://c6ngxn2f8etkv" path="res://Assets/Tools/Laser/lasermk1.png" id="2_fu11g"]
+[ext_resource type="Texture2D" uid="uid://bjffx141lft5p" path="res://Assets/2d_lights_and_shadows_neutral_point_light.webp" id="3_h2geb"]
 
 [sub_resource type="Curve" id="Curve_0k6xh"]
 _data = [Vector2(0.0375, 0.915789), 0.0, 0.0, 0, 0, Vector2(0.55625, 0.284211), 0.0, 0.0, 0, 0, Vector2(1, 0.915789), 0.0, 0.0, 0, 0]
@@ -21,8 +22,22 @@ texture_filter = 1
 position = Vector2(28, 0)
 texture = ExtResource("2_fu11g")
 
+[node name="output_point_light" type="PointLight2D" parent="Sprite"]
+visible = false
+position = Vector2(2, -1)
+color = Color(0.866667, 0.992157, 0.843137, 1)
+texture = ExtResource("3_h2geb")
+texture_scale = 0.1
+
 [node name="LaserOutput" type="Marker2D" parent="Sprite"]
 position = Vector2(0, -0.5)
+
+[node name="contact_point_light" type="PointLight2D" parent="Sprite/LaserOutput"]
+visible = false
+position = Vector2(2, -0.5)
+color = Color(0, 0.67451, 0.0980392, 1)
+texture = ExtResource("3_h2geb")
+texture_scale = 0.1
 
 [node name="Line2D" type="Line2D" parent="Sprite/LaserOutput"]
 z_index = -1
