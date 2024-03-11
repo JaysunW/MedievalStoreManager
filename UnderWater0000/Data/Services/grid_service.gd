@@ -72,16 +72,15 @@ func _process(_delta):
 				if chunk not in chunks_around_loaded:
 					deactivate_chunks(chunk)
 #	if Input.is_action_just_pressed("p"):
-#		GoldService.set_gold(100)
-#		print(GoldService.get_gold())
+#		DataService.load_save()
+#		print("LOAD")
 #	if Input.is_action_just_pressed("i"):
 #		print(GoldService.get_gold())
 #		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
 #		print("Gold: ")
 #		print(GoldService.get_gold())
 	if Input.is_action_just_pressed("o"):
-#		GoldService.add_gold(1)
-		SceneSwitcherService.switch_scene("res://Data/MainScenes/shop.tscn")
+		SceneSwitcherService.switch_scene(SceneSwitcherService.shop_scene_path)
 		
 # Spawns tiles depending on x and y input.
 func spawn_tiles():
@@ -268,12 +267,12 @@ func get_new_fish_position():
 			y_vec = vec3 - vec2
 			new_pos = vec2 + x_vec * x + y_vec * y
 		new_pos = ((player.position/32) + new_pos).floor()
-		test_line.clear_points()
-		
-		for p in vector_list:
-			test_line.add_point((new_pos * 32).floor() + p.normalized() * 5)
-		for p in vector_list:
-			test_line.add_point((new_pos * 32).floor() + p.normalized() * 20)
+#		test_line.clear_points()
+#
+#		for p in vector_list:
+#			test_line.add_point((new_pos * 32).floor() + p.normalized() * 5)
+#		for p in vector_list:
+#			test_line.add_point((new_pos * 32).floor() + p.normalized() * 20)
 		
 		var same_pos_as_tile = tile_dict.has(new_pos)
 		var under_water_edge = new_pos.y > water_edge_y + 1

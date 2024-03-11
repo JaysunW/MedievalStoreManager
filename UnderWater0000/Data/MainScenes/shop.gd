@@ -15,11 +15,14 @@ func buy_item(item, container):
 		#  Player didn't have enough money
 		container.not_bought()
 
-func _on_texture_button_button_down():
-	SceneSwitcherService.switch_scene(SceneSwitcherService.main_scene_path)
-
 func _on_change_scene_mouse_entered():
 	$ParallaxBackground/BackParallax/Sign.texture = load("res://Assets/Shop/sign_hover.png")
 
 func _on_change_scene_mouse_exited():
 	$ParallaxBackground/BackParallax/Sign.texture = load("res://Assets/Shop/sign.png")
+
+func _on_change_scene_button_down():
+	SceneSwitcherService.switch_scene(SceneSwitcherService.main_scene_path)
+
+func _on_save_game_button_down():
+	DataService.save_data()

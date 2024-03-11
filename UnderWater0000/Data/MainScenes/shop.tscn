@@ -1,11 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://cvy2lamuhppe2"]
+[gd_scene load_steps=16 format=3 uid="uid://cvy2lamuhppe2"]
 
 [ext_resource type="Script" path="res://Data/MainScenes/shop.gd" id="1_wdgm1"]
 [ext_resource type="Script" path="res://ShopData/ShopCamera.gd" id="2_njvfn"]
 [ext_resource type="PackedScene" uid="uid://dclyp55c47aka" path="res://GUI/Counter/coin_counter.tscn" id="3_jcoss"]
-[ext_resource type="Texture2D" uid="uid://c0sqb4e7cbr58" path="res://Assets/tmp_background.png" id="4_1g86p"]
 [ext_resource type="Theme" uid="uid://bbqr15t87mtlm" path="res://GUI/Theme/shop_sign_theme.tres" id="4_5t1cd"]
 [ext_resource type="Texture2D" uid="uid://ds6fah17oasyg" path="res://Assets/Shop/sign.png" id="4_k7edv"]
+[ext_resource type="Texture2D" uid="uid://ofavwgcnmoet" path="res://Assets/Shop/shop_background.png" id="4_mumwr"]
 [ext_resource type="Texture2D" uid="uid://ds0e0y1h7d453" path="res://Assets/Shop/ShopParalaxBack2.png" id="4_rnfjj"]
 [ext_resource type="Script" path="res://ShopData/belt_system.gd" id="5_cb3cl"]
 [ext_resource type="PackedScene" uid="uid://d0yn8sj7ak7gb" path="res://ShopData/showcase_container.tscn" id="7_gfm0i"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://et13g0bpd42i" path="res://Assets/UI/Button.png" id="10_fhqae"]
 [ext_resource type="Texture2D" uid="uid://2u1ma32wet2q" path="res://Assets/Shop/Showcase_button_green.png" id="10_g0kq5"]
 [ext_resource type="Texture2D" uid="uid://cvry6rkmooyqt" path="res://Assets/Shop/paralax_front_shop.png" id="11_a8syu"]
+[ext_resource type="Texture2D" uid="uid://c8cqxf2aakjel" path="res://Assets/Shop/Showcase_button_green_highlight.png" id="13_wi4rb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6sv21"]
 size = Vector2(31.5762, 30.9841)
@@ -20,18 +21,20 @@ size = Vector2(31.5762, 30.9841)
 [node name="Shop" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_wdgm1")
+metadata/_edit_horizontal_guides_ = [-585.0]
 
 [node name="ShopCamera" type="Camera2D" parent="."]
+offset = Vector2(180, 50)
 script = ExtResource("2_njvfn")
 
 [node name="Coin_counter" parent="ShopCamera" instance=ExtResource("3_jcoss")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = 961.0
-offset_top = -534.0
-offset_right = 961.0
-offset_bottom = -534.0
+offset_left = 1125.0
+offset_top = -476.0
+offset_right = 1125.0
+offset_bottom = -476.0
 grow_horizontal = 0
 grow_vertical = 1
 scale = Vector2(1.5, 1.5)
@@ -39,19 +42,22 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(-50, 0)
+scale = Vector2(1.2, 1.2)
+transform = Transform2D(1.2, 0, 0, 1.2, -50, 0)
 scroll_base_scale = Vector2(0.9, 0.9)
-
-[node name="WaterBack" type="Sprite2D" parent="ParallaxBackground"]
-z_index = -100
-texture_filter = 1
-position = Vector2(964, 534)
-scale = Vector2(40, 40)
-texture = ExtResource("4_1g86p")
 
 [node name="BackParallax" type="ParallaxLayer" parent="ParallaxBackground"]
 texture_filter = 1
-position = Vector2(160, 0)
+position = Vector2(150, 0)
 motion_offset = Vector2(1, 0)
+
+[node name="WaterBack" type="Sprite2D" parent="ParallaxBackground/BackParallax"]
+z_index = -100
+texture_filter = 1
+position = Vector2(-58, -20)
+scale = Vector2(6, 6)
+texture = ExtResource("4_mumwr")
 
 [node name="BeltSystem" type="Sprite2D" parent="ParallaxBackground/BackParallax"]
 scale = Vector2(6.5, 6.5)
@@ -199,15 +205,47 @@ offset_right = 16.0
 offset_bottom = 11.0
 stretch_mode = 0
 
-[node name="ChangeSceneLabel" type="Label" parent="ParallaxBackground/BackParallax/Sign"]
+[node name="ChangeSceneLabel" type="Label" parent="ParallaxBackground/BackParallax/Sign/ChangeScene"]
 z_index = 55
-offset_left = -12.6923
-offset_top = -1.23077
-offset_right = 19.3077
-offset_bottom = 9.76923
-scale = Vector2(0.8, 0.8)
+layout_mode = 0
+offset_left = 2.25641
+offset_top = 2.38461
+offset_right = 162.256
+offset_bottom = 57.3846
+scale = Vector2(0.15, 0.15)
 theme = ExtResource("4_5t1cd")
 text = "To Sea"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaveGame" type="TextureButton" parent="ParallaxBackground/BackParallax"]
+z_index = 100
+texture_filter = 1
+offset_left = 83.0
+offset_top = 240.0
+offset_right = 143.0
+offset_bottom = 301.0
+texture_normal = ExtResource("10_g0kq5")
+texture_hover = ExtResource("13_wi4rb")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="ParallaxBackground/BackParallax/SaveGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.8333
+offset_top = -21.3333
+offset_right = 101.167
+offset_bottom = 33.6667
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.9)
+theme = ExtResource("4_5t1cd")
+theme_override_font_sizes/font_size = 50
+text = "Save"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -219,7 +257,6 @@ motion_scale = Vector2(1.2, 1)
 z_index = 100
 scale = Vector2(6.5, 6.5)
 texture = ExtResource("11_a8syu")
-metadata/_edit_lock_ = true
 
 [connection signal="button_down" from="ParallaxBackground/BackParallax/BeltSystem/Green1" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_green_button_down" binds= [0]]
 [connection signal="button_up" from="ParallaxBackground/BackParallax/BeltSystem/Green1" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_green_button_up"]
@@ -237,6 +274,7 @@ metadata/_edit_lock_ = true
 [connection signal="button_up" from="ParallaxBackground/BackParallax/BeltSystem/Red3" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_red_button_up"]
 [connection signal="button_down" from="ParallaxBackground/BackParallax/BeltSystem/Red4" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_red_button_down" binds= [3]]
 [connection signal="button_up" from="ParallaxBackground/BackParallax/BeltSystem/Red4" to="ParallaxBackground/BackParallax/BeltSystem" method="_on_red_button_up"]
-[connection signal="button_down" from="ParallaxBackground/BackParallax/Sign/ChangeScene" to="." method="_on_texture_button_button_down"]
+[connection signal="button_down" from="ParallaxBackground/BackParallax/Sign/ChangeScene" to="." method="_on_change_scene_button_down"]
 [connection signal="mouse_entered" from="ParallaxBackground/BackParallax/Sign/ChangeScene" to="." method="_on_change_scene_mouse_entered"]
 [connection signal="mouse_exited" from="ParallaxBackground/BackParallax/Sign/ChangeScene" to="." method="_on_change_scene_mouse_exited"]
+[connection signal="button_down" from="ParallaxBackground/BackParallax/SaveGame" to="." method="_on_save_game_button_down"]

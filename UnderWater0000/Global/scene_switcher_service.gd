@@ -2,6 +2,7 @@ extends Node
 
 var main_scene_path = "res://Data/MainScenes/main.tscn"
 var shop_scene_path = "res://Data/MainScenes/shop.tscn"
+var menu_scene_paht = "res://Data/MainScenes/menu.tscn"
 
 var current_scene = null
 

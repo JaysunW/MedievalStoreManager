@@ -34,6 +34,7 @@ func _physics_process(_delta):
 		Enums.FishState.CHASING:
 			if target == null:
 				current_state = Enums.FishState.SWIMMING
+				return
 			var connection_vec = target.position - position
 			if connection_vec.length() > vision_radius:
 				if out_of_range_timer.is_stopped():
@@ -94,17 +95,14 @@ func _on_detect_fish_body_exited(body):
 	elif groups.has("FISH"):
 		other_fish.erase(body)
 
-
 func _on_out_of_range_timeout():
 	set_state(Enums.FishState.SWIMMING)
 	target = null
-
 
 func _on_attack_timer_timeout():
 	attack_cooldown_timer.start()
 	speed = normal_speed - cooldown_speed_down
 	pass # Replace with function body.
-
 
 func _on_attack_cooldown_timer_timeout():
 	speed = normal_speed

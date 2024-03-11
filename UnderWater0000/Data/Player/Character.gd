@@ -4,6 +4,7 @@ extends RigidBody2D
 @onready var light = $PointLight2D
 @onready var gui =  $CanvasLayer/Interface
 @onready var fish_spawn_perimeter = $FishSpawnPerimeter
+@onready var previous_player_position = position
 
 #  Debug
 @export var free_cam_active = false
@@ -28,6 +29,8 @@ var empty_o2 = false
 var on_ground = []
 var gravity_clamp = 0.2
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+var cam_max_distance = 8
 
 func _ready():
 	update_O2()
@@ -54,12 +57,19 @@ func update_O2_sprite(o2_dic):
 
 func _process(_delta):
 	light.visible = position.y/32 > light_activ_y
-	fish_spawn_perimeter.clear_points()
-	var vector_list = [Vector2(1,0),Vector2(1,1),Vector2(0,1),Vector2(-1,1),Vector2(-1,0),Vector2(-1,-1),Vector2(0,-1),Vector2(1,-1),Vector2(1,0)]
-	for vec in vector_list:
-		fish_spawn_perimeter.add_point(vec.normalized()*32*15)
-	for vec in vector_list:
-		fish_spawn_perimeter.add_point(vec.normalized()*32*30)
+	var connect_vec = position - previous_player_position
+	if connect_vec.length() > 200:
+		previous_player_position = position
+	elif connect_vec.length() > 0:
+		previous_player_position += connect_vec.length() * (connect_vec / cam_max_distance) * _delta
+		$Camera2D.position = previous_player_position - position
+
+#	fish_spawn_perimeter.clear_points()
+#	var vector_list = [Vector2(1,0),Vector2(1,1),Vector2(0,1),Vector2(-1,1),Vector2(-1,0),Vector2(-1,-1),Vector2(0,-1),Vector2(1,-1),Vector2(1,0)]
+#	for vec in vector_list:
+#		fish_spawn_perimeter.add_point(vec.normalized()*32*15)
+#	for vec in vector_list:
+#		fish_spawn_perimeter.add_point(vec.normalized()*32*30)
 		
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 func _physics_process(_delta):
@@ -98,6 +108,9 @@ func get_light_active_y():
 
 func return_to_shop():
 	SceneSwitcherService.switch_scene(SceneSwitcherService.shop_scene_path)
+
+func fish_caught():
+	$Caught.emitting = true
 
 func _on_air_area_body_entered(body):
 	if body.get_groups().has("PLAYER"):
@@ -138,5 +151,4 @@ func _on_o_2_timer_timeout():
 			$OutOfO2.start()
 
 func _on_out_of_o_2_timeout():
-	$Sprite.self_modulate = Color(1,1,1)
 	return_to_shop()

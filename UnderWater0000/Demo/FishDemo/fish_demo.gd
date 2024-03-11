@@ -37,7 +37,6 @@ var rng = RandomNumberGenerator.new()
 func _ready():
 	fish_data = DataService.get_fish_data()
 	for type in fish_data:
-		print(type)
 		var type_dic = fish_data[type]
 		for fish_group in type_dic:
 			sprite_dic[fish_group] = load(type_dic[fish_group]["sprite_path"])

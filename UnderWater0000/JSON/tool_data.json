@@ -4,7 +4,7 @@
 			"id": 0,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Laser/lasermk2.png",
-			"price": 1200,
+			"price": 1800,
 			"name": "laser",
 			"damage": 8,
 			"cooldown": 0.1,
@@ -16,7 +16,7 @@
 			"id": 1,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Laser/lasermk3.png",
-			"price": 2300,
+			"price": 3600,
 			"name": "laser",
 			"damage": 10,
 			"cooldown": 0.08,
@@ -78,7 +78,7 @@
 			"id": 0,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Knife/knifemk2.png",
-			"price": 800,
+			"price": 1400,
 			"name": "knife",
 			"damage": 10,
 			"cooldown": 0.9
@@ -87,7 +87,7 @@
 			"id": 1,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Knife/knifemk3.png",
-			"price": 1700,
+			"price": 2300,
 			"name": "knife",
 			"damage": 15,
 			"cooldown": 0.7
@@ -134,7 +134,7 @@
 			"id": 0,
 			"unlocked" : false,
 			"sprite_path": "res://Assets/Tools/Net/netmk2.png",
-			"price": 1400,
+			"price": 1600,
 			"name": "net",
 			"strength": 1,
 			"cooldown": 0.9
@@ -183,7 +183,7 @@
 			"sprite_path": "res://Assets/Tools/Snorkel2.png",
 			"front_sprite_path": "res://Assets/UI/o2_tank_front_2.png",
 			"back_sprite_path": "res://Assets/UI/o2_tank_back_2.png",
-			"price": 1000,
+			"price": 2500,
 			"name": "O2",
 			"capacity": 150
 		},
@@ -193,7 +193,7 @@
 			"sprite_path": "res://Assets/Tools/Tank1.png",
 			"front_sprite_path": "res://Assets/UI/o2_tank_front_3.png",
 			"back_sprite_path": "res://Assets/UI/o2_tank_back_3.png",
-			"price": 2000,
+			"price": 4500,
 			"name": "O2",
 			"capacity": 200
 		}

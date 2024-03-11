@@ -4,6 +4,7 @@ extends RigidBody2D
 @onready var detect_fish_shape = $DetectFish/CollisionShape2D
 @onready var sprite = $Sprite
 @onready var stress_timer = $StressTimer
+@onready var show_health_timer = $ShowHealthTimer
 
 # Stats
 var max_health = 100
@@ -48,7 +49,10 @@ func _ready():
 	pass
 
 func _physics_process(_delta):
-	sprite.look_at(position + linear_velocity)
+	var look_direction = position + linear_velocity
+	sprite.look_at(look_direction)
+	var look_vec_collision_shape = position + Vector2(linear_velocity.y, -linear_velocity.x)
+	$CollisionShape2D.look_at(look_vec_collision_shape)
 	sprite.flip_v = abs(sprite.global_rotation) > 1.5
 
 	var cohesion_vector = calc_cohesion()
@@ -74,8 +78,13 @@ func take_damage(damage):
 	health -= damage
 	if health < 0:
 		print("Dead")
-	stress_timer.start()
-	speed += stress_speed_up
+	else:
+		$Blood.emitting = true
+		$Back/Progress.value = health/float(max_health) * 100
+		stress_fish()
+		show_health_timer.start()
+		$Back.visible = true
+		
 
 func try_catch_fish(value):
 	var rand_int = randi_range(0,99)
@@ -83,8 +92,13 @@ func try_catch_fish(value):
 	if rand_int < gate:
 		caught.emit(self)
 	else:
-		$Sprite.self_modulate = Color(0,0,1)
-		$EscapedTimer.start()
+		$Bubbles.emitting = true
+		stress_fish()
+
+func stress_fish():
+	stress_timer.stop()
+	stress_timer.start()
+	speed += stress_speed_up
 
 func get_caught_signal():
 	return caught
@@ -104,23 +118,21 @@ func set_state(new_state):
 	
 func set_size(_size):
 	size = _size
+	var collision_shape = $CollisionShape2D
 	match int(size):
 		0:
 			sprite.scale = Vector2(0.3,0.3)
-			var collision_shape = $CollisionShape2D
 			collision_shape.shape.radius = 12
 			collision_shape.shape.height = 32
 		1:
 			sprite.scale = Vector2(0.4,0.4)
-			var collision_shape = $CollisionShape2D
-			collision_shape.position = collision_shape.position - Vector2(-2,0)
 			collision_shape.shape.radius = 12
 			collision_shape.shape.height = 66
 		2: 
 			print("Size Problem : fish.gd")
 		_:
 			print("Default Size Problem : fish.gd")
-
+			
 func get_type():
 	return type
 
@@ -215,7 +227,6 @@ func _on_detect_fish_body_exited(body):
 
 func _on_stress_timer_timeout():
 	speed = normal_speed
-	pass # Replace with function body.
 
-func _on_escaped_timer_timeout():
-	$Sprite.self_modulate = Color(1,1,1)
+func _on_show_health_timer_timeout():
+	$Back.visible = false

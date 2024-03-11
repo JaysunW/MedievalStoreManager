@@ -15,11 +15,11 @@ var overheat = 2
 var overheat_active = false
 
 func _ready():
-#	damage = 8
-#	cooldown = 0.1
-	damage = 50
-	cooldown = 0.05
-	strength = 10
+	damage = 8
+	cooldown = 0.1
+#	damage = 50
+#	cooldown = 0.05
+#	strength = 10
 	$Cooldown.wait_time = cooldown
 	$Overheat.wait_time = overheat
 	ray_cast.target_position = Vector2.ZERO
@@ -75,6 +75,8 @@ func shoot_laser(length):
 				overheat_active = true
 				$Overheat.start()
 	else:
+		output_light.visible = false
+		contact_light.visible = false
 		$Sprite.self_modulate = Color(1,0,0)
 		# Add overheat animation/ particles
 		pass

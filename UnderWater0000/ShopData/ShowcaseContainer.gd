@@ -5,6 +5,7 @@ var start_position = Vector2.ZERO
 var item_pressed = false
 var data = null
 var initial_color = Color(1,1,1)
+var is_item_bought = false
 
 signal item_selected(data, container)
 signal item_deselected
@@ -20,6 +21,7 @@ func _process(_delta):
 		#button.position = to_local(get_global_mouse_position())
 
 func item_bought():
+	is_item_bought = true
 	item_pressed = false
 	button.position = start_position
 	$PrizeTagBack.visible = false
@@ -82,3 +84,14 @@ func _on_not_buyable_timeout():
 	$PrizeTagBack/PrizeTagBack2/Label.remove_theme_color_override("font_color")
 	$PrizeTagBack/PrizeTagBack2/Label.remove_theme_color_override("font_shadow_color")
 	$Cross.visible = false
+
+func _on_texture_button_mouse_entered():
+	if not is_item_bought:
+		$TextureButton.position = $TextureButton.position - Vector2( 3, 3)
+		$TextureButton.scale = Vector2( 1, 1)
+		$PrizeTagBack.scale = Vector2( 0.8, 0.25)
+	
+func _on_texture_button_mouse_exited():
+	$TextureButton.position = start_position
+	$TextureButton.scale = Vector2( 0.8, 0.8)
+	$PrizeTagBack.scale = Vector2( 0.75, 0.2)

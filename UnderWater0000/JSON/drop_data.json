@@ -6,23 +6,23 @@
 		},
 		{
 			"id" : 1,
-			"value" : 100
+			"value" : 70
 		},
 		{
 			"id" : 2,
-			"value" : 150
+			"value" : 90
 		},
 		{
 			"id" : 3,
-			"value" : 200
+			"value" : 110
 		},
 		{
 			"id" : 4,
-			"value" : 250
+			"value" : 130
 		},
 		{
 			"id" : 5,
-			"value" : 300
+			"value" : 150
 		}
 	],
 	"CORAL": [

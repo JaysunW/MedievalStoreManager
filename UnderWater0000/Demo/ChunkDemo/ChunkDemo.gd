@@ -107,8 +107,6 @@ func _process(delta):
 		for chunk in old_loaded_chunk:
 			if chunk not in chunks_around_loaded:
 				deactivate_chunks(chunk)
-		print("Unlo: ", old_loaded_chunk)
-		print("Load: ", chunks_around_loaded)
 		activate_chunks(loaded_chunk)
 		
 	if Input.is_action_just_pressed("up"):

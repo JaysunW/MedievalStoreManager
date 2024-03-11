@@ -1,0 +1,97 @@
+[gd_scene load_steps=4 format=3 uid="uid://brli0g0jxgb77"]
+
+[ext_resource type="Script" path="res://Data/MainScenes/menu.gd" id="1_8qiig"]
+[ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="1_70di2"]
+[ext_resource type="Theme" uid="uid://bbqr15t87mtlm" path="res://GUI/Theme/shop_sign_theme.tres" id="2_c01rk"]
+
+[node name="menu" type="Node2D"]
+script = ExtResource("1_8qiig")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Start" type="TextureButton" parent="Camera2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = -43.0
+offset_right = 210.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_70di2")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Camera2D/Start"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_c01rk")
+theme_override_font_sizes/font_size = 100
+text = "START"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Load" type="TextureButton" parent="Camera2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.0
+offset_top = 97.0
+offset_right = 207.0
+offset_bottom = 183.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_70di2")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Camera2D/Load"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_c01rk")
+theme_override_font_sizes/font_size = 100
+text = "LOAD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="End" type="TextureButton" parent="Camera2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.0
+offset_top = 239.0
+offset_right = 207.0
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_70di2")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Camera2D/End"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_c01rk")
+theme_override_font_sizes/font_size = 40
+text = "End (not working)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_down" from="Camera2D/Start" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="Camera2D/Load" to="." method="_on_load_button_down"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dekafhbm1b1n5"]
+[gd_scene load_steps=24 format=3 uid="uid://dekafhbm1b1n5"]
 
 [ext_resource type="Script" path="res://Data/Player/Character.gd" id="1_5xd1b"]
 [ext_resource type="Texture2D" uid="uid://cummguuq65x4f" path="res://Assets/Character/PlayerAquaLeft1.png" id="2_ric10"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Data/Player/PickupArea.gd" id="9_d1jb4"]
 [ext_resource type="Texture2D" uid="uid://cr5naomvaorr7" path="res://Assets/Character/PlayerAquaRight4.png" id="9_jsw36"]
 [ext_resource type="PackedScene" uid="uid://rgfx8okryh76" path="res://GUI/interface.tscn" id="10_dx4nr"]
+[ext_resource type="Texture2D" uid="uid://bhlbmk4jp4mgg" path="res://Assets/Partciles/CaughtParticle.png" id="17_0bs0d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fu47e"]
 friction = 0.0
@@ -95,6 +96,7 @@ sprite_frames = SubResource("SpriteFrames_ncgj8")
 animation = &"0"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(50, 0)
 zoom = Vector2(3, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -146,6 +148,24 @@ shape = SubResource("RectangleShape2D_5qy6f")
 [node name="FishSpawnPerimeter" type="Line2D" parent="."]
 width = 5.0
 default_color = Color(0.913725, 0, 0.0823529, 1)
+
+[node name="Caught" type="CPUParticles2D" parent="."]
+z_index = 100
+texture_filter = 1
+emitting = false
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.5
+randomness = 1.0
+texture = ExtResource("17_0bs0d")
+emission_shape = 1
+emission_sphere_radius = 5.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 6.0
+initial_velocity_max = 6.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
 
 [connection signal="body_entered" from="PickupArea" to="PickupArea" method="_on_body_entered"]
 [connection signal="body_exited" from="PickupArea" to="PickupArea" method="_on_body_exited"]

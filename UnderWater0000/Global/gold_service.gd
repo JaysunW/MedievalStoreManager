@@ -10,10 +10,14 @@ func add_gold(value):
 	player_gold += value
 	if player_gold < 0:
 		print("Somethings wrong with the amount of Gold: " + str(player_gold))
+	DataService.set_player_data({"GOLD" : player_gold})
 	gold_changed.emit()
 		
 func set_gold(input):
 	player_gold = input
+
+func initialize():
+	player_gold = DataService.get_player_data()["GOLD"]
 
 func get_gold():
 	return player_gold
@@ -27,6 +31,5 @@ func convert_value_to_str(value):
 		var tmp = pow(10,(i + 1) * 3)
 		if value > tmp - 1 and value < pow(10,(i + 2) * 3):
 			var output_string = ("%3.2f" % (value/tmp)) + list[i]
-			print(output_string)
 			return output_string
 	return str(value)
