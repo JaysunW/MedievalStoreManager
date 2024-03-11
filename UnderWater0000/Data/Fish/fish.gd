@@ -65,8 +65,9 @@ func _physics_process(_delta):
 	var velocity_direction =  alignment_vector.normalized() * alignment_force + cohesion_vector.normalized() * cohesion_force
 	velocity_direction += fish_avoidance_vector.normalized() * fish_avoidance_force + linear_velocity.normalized() + separation_vector.normalized() * separation_force
 	velocity_direction = (velocity_direction  + obstacle_avoidance_vector.normalized() * obstacle_avoidance_force).normalized()
-	if position.y < (grid_service.water_edge_y + 2) * 32:
-		linear_velocity = (velocity_direction + predator_avoidance_vector.normalized() * obstacle_avoidance_force + Vector2.DOWN).normalized() * speed
+	var distance_from_water_edge = clamp((grid_service.water_edge_y + 2) * 32 - position.y, 0, 300) 
+	if distance_from_water_edge:
+		linear_velocity = (velocity_direction + predator_avoidance_vector.normalized() * obstacle_avoidance_force + Vector2.DOWN * (distance_from_water_edge/64.0)).normalized() * speed
 	else:
 		linear_velocity = (velocity_direction + predator_avoidance_vector.normalized() * obstacle_avoidance_force).normalized() * speed
 	special_behaviour()
@@ -183,6 +184,9 @@ func calc_obstacle_avoidance():
 		var dot_product = linear_velocity.normalized().dot(connection_vec.normalized())
 		if dot_product >= field_of_vision:
 			obstacle_avoidance -= connection_vec
+		var distance_from_water_edge = clamp((grid_service.water_edge_y + 2) * 32 - position.y, 0, 300) 
+		if distance_from_water_edge:
+			obstacle_avoidance -= Vector2.DOWN
 	return obstacle_avoidance
 
 # Gives the avoidance vector to other fish of different species
