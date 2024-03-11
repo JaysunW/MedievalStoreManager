@@ -119,3 +119,5 @@ z_index = 15
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_ed46o")
 animation = &"Basic"
+
+[connection signal="timeout" from="ShowHealthTimer" to="." method="_on_show_health_timer_timeout"]

@@ -24,6 +24,10 @@ func take_damage(dmg):
 	health -= dmg
 	if health <= 0:
 		destroyed()
+	else:
+		$Back/Progress.value = health/float(max_health) * 100
+		$Back.visible = true
+		$ShowHealthTimer.start()
 		
 func update_sprite():
 	pass
@@ -40,3 +44,6 @@ func set_border_idx(value):
 func destroyed():
 	dropped.emit(to_global(position), border_idx, drop_type, $Sprite.sprite_frames.get_frame_texture($Sprite.animation, $Sprite.frame))
 	queue_free()
+
+func _on_show_health_timer_timeout():
+	$Back.visible = false

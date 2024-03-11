@@ -16,7 +16,6 @@ resource_local_to_scene = true
 radius = 160.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_70dxy"]
-load_path = "res://.godot/imported/Piranha.png-a98854fb50640834208fd2f302cab48f.ctex"
 
 [node name="Fish" type="RigidBody2D"]
 texture_filter = 1

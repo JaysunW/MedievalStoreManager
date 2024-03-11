@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c3d4vuyyy45hp"]
+[gd_scene load_steps=31 format=3 uid="uid://c3d4vuyyy45hp"]
 
 [ext_resource type="Texture2D" uid="uid://dwi2br4xuovgg" path="res://Assets/Shell/Shell5.png" id="2_5cfk4"]
 [ext_resource type="Script" path="res://Data/TileObjects/ShellObject.gd" id="2_o8n73"]
@@ -26,6 +26,8 @@
 [ext_resource type="Texture2D" uid="uid://bdhc8j3stkyeq" path="res://Assets/Shell/Shell2.png" id="24_jjbgt"]
 [ext_resource type="Texture2D" uid="uid://2bu2tkwql3b0" path="res://Assets/Shell/Shell3.png" id="25_nlily"]
 [ext_resource type="Texture2D" uid="uid://cornce2umi4pp" path="res://Assets/Shell/Shell4.png" id="26_1wlo4"]
+[ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="27_ydwfa"]
+[ext_resource type="Texture2D" uid="uid://i8v8oxawx1pw" path="res://Assets/UI/AirInO2Gaige.png" id="28_yg682"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3lf7e"]
 size = Vector2(13, 20)
@@ -145,3 +147,34 @@ z_index = 15
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_2fvse")
 animation = &"Basic"
+
+[node name="Back" type="TextureRect" parent="."]
+visible = false
+self_modulate = Color(0, 0, 0, 0.501961)
+z_index = 100
+texture_filter = 1
+offset_left = 8.0
+offset_top = -9.0
+offset_right = 11.0
+offset_bottom = 7.0
+rotation = 1.5708
+texture = ExtResource("27_ydwfa")
+expand_mode = 1
+
+[node name="Progress" type="TextureProgressBar" parent="Back"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_progress = ExtResource("28_yg682")
+
+[node name="ShowHealthTimer" type="Timer" parent="."]

@@ -6,7 +6,7 @@ extends Tool
 var damage = 10
 
 func _ready():
-	cooldown = 1
+	cooldown = 0.6
 	interactable_groups = ["FISH","CORAL","SHELL"]
 	sprite.flip_v = true
 	super()
