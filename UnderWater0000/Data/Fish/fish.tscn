@@ -22,35 +22,6 @@ gravity_scale = 0.0
 can_sleep = false
 script = ExtResource("1_b6k7i")
 
-[node name="Back" type="TextureRect" parent="."]
-visible = false
-self_modulate = Color(0, 0, 0, 0.501961)
-z_index = 100
-texture_filter = 1
-offset_left = 8.0
-offset_top = -9.0
-offset_right = 11.0
-offset_bottom = 7.0
-rotation = 1.5708
-texture = ExtResource("2_2glhr")
-expand_mode = 1
-
-[node name="Progress" type="TextureProgressBar" parent="Back"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = -1.0
-offset_bottom = -1.0
-grow_horizontal = 2
-grow_vertical = 2
-value = 100.0
-fill_mode = 3
-nine_patch_stretch = true
-texture_progress = ExtResource("3_rdpvk")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = -1.5708
 scale = Vector2(0.3, 0.3)
@@ -67,6 +38,35 @@ shape = SubResource("CircleShape2D_65ytg")
 position = Vector2(-2, 0)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_3d828")
+
+[node name="Back" type="TextureRect" parent="Sprite"]
+visible = false
+self_modulate = Color(0, 0, 0, 0.501961)
+z_index = 100
+texture_filter = 1
+offset_left = 25.0
+offset_top = -22.5
+offset_right = 28.0
+offset_bottom = -6.5
+rotation = 1.5708
+texture = ExtResource("2_2glhr")
+expand_mode = 1
+
+[node name="Progress" type="TextureProgressBar" parent="Sprite/Back"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_progress = ExtResource("3_rdpvk")
 
 [node name="StressTimer" type="Timer" parent="."]
 wait_time = 2.0

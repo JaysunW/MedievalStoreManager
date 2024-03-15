@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://4hdh1xuim5ly"]
+
+[ext_resource type="Script" path="res://Data/game.gd" id="1_2kf70"]
+[ext_resource type="PackedScene" uid="uid://c30jv2ovsm36" path="res://Data/GemContainer.tscn" id="2_wa3uk"]
+[ext_resource type="Script" path="res://Data/camera_movement.gd" id="3_rmbbd"]
+
+[node name="GameLoop" type="Node2D"]
+script = ExtResource("1_2kf70")
+container = ExtResource("2_wa3uk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_rmbbd")

@@ -80,8 +80,8 @@ func take_damage(damage):
 	if health < 0:
 		print("Dead")
 	else:
-		$Blood.emitting = true
-		$Back/Progress.value = health/float(max_health) * 100
+		$Sprite/Back.emitting = true
+		$Sprite/Back/Progress.value = health/float(max_health) * 100
 		stress_fish()
 		show_health_timer.start()
 		$Back.visible = true
