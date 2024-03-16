@@ -1,9 +1,12 @@
 extends Node2D
 
-enum GemType{
-	GREEN,
+enum ContentType{
 	BLUE,
-	RED,
-	PURPLE,
+	GREEN,
 	ORANGE,
+	PURPLE,
+	RED,
+	HORIZONTAL,
+	VERTICAL,
+	UNKNOWN,
 }

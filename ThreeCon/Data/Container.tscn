@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://c30jv2ovsm36"]
+
+[ext_resource type="Script" path="res://Data/container.gd" id="1_2r5dk"]
+[ext_resource type="Texture2D" uid="uid://6dv8lum4ba6p" path="res://Assets/container_background.png" id="2_8oauw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7nk2b"]
+
+[node name="Container" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_2r5dk")
+
+[node name="Back" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(1.90735e-06, -1.78814e-07)
+texture = ExtResource("2_8oauw")
+
+[node name="Button" type="Button" parent="Back"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7nk2b")
+flat = true
+icon_alignment = 1
+
+[connection signal="button_down" from="Back/Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Back/Button" to="." method="_on_button_button_up"]
