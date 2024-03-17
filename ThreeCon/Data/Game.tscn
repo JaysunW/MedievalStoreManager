@@ -16,10 +16,9 @@ script = ExtResource("3_rmbbd")
 script = ExtResource("1_pp086")
 container = ExtResource("2_xfuqi")
 content = ExtResource("5_hmxvi")
-normal_generation = false
 
 [node name="FillContainerTimer" type="Timer" parent="ContainerService"]
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [node name="DestroyConnectionsTimer" type="Timer" parent="ContainerService"]

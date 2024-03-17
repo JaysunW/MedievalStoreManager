@@ -24,6 +24,9 @@ func _process(_delta):
 			
 func set_content(_content):
 	content = _content
+
+func set_fill_direction(direction):
+	fill_direction = direction
 	
 func delete_content():
 	content.queue_free()

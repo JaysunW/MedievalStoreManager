@@ -7,7 +7,7 @@ func _process(delta):
 	if goal_position != Vector2(-32,-32):
 		var move_vec = goal_position - position
 		position += move_vec.normalized() * delta * 400
-		if move_vec.length() < 1:
+		if move_vec.length() < 2:
 			position = goal_position
 
 func set_goal_position(pos):

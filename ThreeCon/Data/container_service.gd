@@ -13,6 +13,7 @@ var all_container_full = true
 var _width = 0
 var _height = 0
 var content_list = ["blue", "green", "orange", "purple", "red"]
+var fill_direction_list = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 var rng = RandomNumberGenerator.new()
 var filling = false
 
@@ -60,8 +61,9 @@ func is_horizontal_connection(connection):
 
 func fill_empty_container():
 	all_container_full = true
+	var switch_dic = {}
 	for x in _width:
-		for y in range(_height):
+		for y in _height:
 			var grid_position = Vector2(x,y)
 			var current_container = map[grid_position]
 			if not current_container.has_content():
@@ -69,11 +71,14 @@ func fill_empty_container():
 				var fill_direction = current_container.get_fill_direction()
 				var other_position = grid_position + fill_direction
 				if is_position_in_grid(other_position):
-					switch_content(other_position, grid_position)
+					if map[other_position].has_content():
+						switch_dic[other_position] = grid_position
 				else:
 					var new_content = create_random_content(other_position)
 					current_container.set_content(new_content)
 					new_content.set_goal_position(current_container.position)
+	for key in switch_dic:
+		switch_content(key, switch_dic[key])
 		
 func setup_map(width, height):
 	_width = width
@@ -94,6 +99,9 @@ func create_container(grid_position):
 	add_child(new_container)
 	new_container.position = grid_position * 32
 	new_container.set_grid_position(grid_position)
+	if grid_position.x > 0 and grid_position.y > 3 and grid_position.y <=5:
+		new_container.set_fill_direction(Vector2.LEFT)
+		new_container.highlight(0,0,1)
 	new_container.get_content_moved_signal().connect(move_content)
 	return new_container
 
