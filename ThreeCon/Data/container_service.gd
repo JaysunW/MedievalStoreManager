@@ -35,7 +35,7 @@ func _process(_delta):
 			fill_empty_container()
 			pass
 			
-func delete_all_connections():
+func _delete_all_connections():
 	var list_of_connections = get_connections_in_map()
 	for connection in list_of_connections:
 		for pos in connection:
@@ -51,6 +51,64 @@ func delete_all_connections():
 	if list_of_connections.size() > 0:
 		all_container_full = false
 		$FillContainerTimer.start()
+		
+func delete_all_connections():
+	var list_of_connections = get_connections_in_map()
+	for connection in list_of_connections:
+		var special_content_position = null
+		var special_type = Enum.ContentType.UNKNOWN
+		if has_number_of_connections(connection, 5):
+			special_type = Enum.ContentType.SPECIAL
+			for moved_pos in moved_position_list:
+				if connection.has(moved_pos):
+					special_content_position = moved_pos
+			if not special_content_position:
+				special_content_position = connection[rng.randi_range(0,connection.size()-1)]
+			for pos in connection:
+				var current_container = map[pos]
+				current_container.delete_content()
+				if special_content_position == pos:
+					current_container.set_content(create_special_content(Enum.ContentType.SPECIAL, pos))
+		elif has_number_of_connections(connection, 4):
+			for moved_pos in moved_position_list:
+				if connection.has(moved_pos):
+					special_content_position = moved_pos
+			if not special_content_position:
+				special_content_position = connection[rng.randi_range(0,connection.size()-1)]
+			for pos in connection:
+				var current_container = map[pos]
+				current_container.delete_content()
+				if special_content_position == pos:
+					if is_horizontal_connection(connection):
+						current_container.set_content(create_special_content(Enum.ContentType.VERTICAL, pos))
+					else:
+						current_container.set_content(create_special_content(Enum.ContentType.HORIZONTAL, pos))
+		else:
+			for pos in connection:
+				var current_container = map[pos]
+				current_container.delete_content()
+	if list_of_connections.size() > 0:
+		all_container_full = false
+		$FillContainerTimer.start()
+
+func has_number_of_connections(list, number):
+	var list_of_vert_hor_connections = []
+	var vertical_list = []
+	var horizontal_list = []
+	for start in list:
+		for pos in list:
+			if start != pos:
+				if start.x == pos.x:
+					horizontal_list.append(pos)
+				if start.y == pos.y:
+					vertical_list.append(pos)
+		horizontal_list.append(start)
+		vertical_list.append(start)
+		if horizontal_list.size() >= number or vertical_list.size() >= number:
+			return true
+		horizontal_list.clear()
+		vertical_list.clear()
+	return false
 
 func is_horizontal_connection(connection):
 	var start_vec = connection[0]
@@ -174,10 +232,13 @@ func create_special_content(type, grid_position):
 	add_child(new_content)
 	new_content.position = grid_position * 32
 	var new_content_data = null
-	if type == "HORIZONTAL":
-		new_content_data = container_content.new(load("res://Assets/Content/content_special_horizontal.png"), Enum.ContentType.HORIZONTAL)
-	else:
-		new_content_data = container_content.new(load("res://Assets/Content/content_special_vertical.png"), Enum.ContentType.VERTICAL)
+	match type:
+		Enum.ContentType.HORIZONTAL:
+			new_content_data = container_content.new(load("res://Assets/Content/content_special_horizontal.png"), type)
+		Enum.ContentType.VERTICAL:
+			new_content_data = container_content.new(load("res://Assets/Content/content_special_vertical.png"), type)
+		Enum.ContentType.SPECIAL:
+			new_content_data = container_content.new(load("res://icon.svg"), type)
 	new_content.set_content_data(new_content_data)
 	return new_content
 

@@ -8,5 +8,6 @@ enum ContentType{
 	RED,
 	HORIZONTAL,
 	VERTICAL,
+	SPECIAL,
 	UNKNOWN,
 }
