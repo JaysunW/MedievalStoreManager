@@ -3,12 +3,12 @@ class_name container_content
 var texture = null
 var type = ""
 var special = false
-# var _special = null
 
-func _init(_texture, _type):
+func _init(_texture, _type, _special = false):
 	texture = _texture
 	type = _type
-	
+	special = _special
+		
 func change_content(_texture, _type, _special = false):
 	texture = _texture
 	type = _type

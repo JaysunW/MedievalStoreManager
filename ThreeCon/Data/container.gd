@@ -6,6 +6,12 @@ var content = null
 var fill_direction = Vector2.UP
 var mouse_position = Vector2.ZERO
 var pressed = false
+var contaminated = false
+var contamination_level = 0
+var content_obstructed = false
+var content_moveable = true
+
+signal special_destroyed(pos, type)
 
 signal content_moved(grid_position, move_dir)
 	
@@ -19,18 +25,34 @@ func _process(_delta):
 			else:
 				move_dir = Vector2(0, distance_vec.y).normalized()
 			$Back/Button.button_pressed = false
-			button_pressed(false)
 			content_moved.emit(grid_position, move_dir)
-			
+
+func set_contamination(count):
+	contaminated = true
+	contamination_level = count
+	$Contamination.visible = true
+	$Contamination/Label.text = str(contamination_level)
+
 func set_content(_content):
 	content = _content
+	if content:
+		content.is_pressed(false)
 
 func set_fill_direction(direction):
 	fill_direction = direction
 	
 func delete_content():
+	if contaminated:
+		contamination_level -= 1
+		$Contamination/Label.text = str(contamination_level)
+		if contamination_level == 0:
+			contaminated = false
+			$Contamination.visible = false
+	var temporary_content = content
 	content.queue_free()
 	content = null
+	if temporary_content.get_content_data().is_special():
+		special_destroyed.emit(grid_position, temporary_content.get_content_data().get_type())
 
 func set_grid_position(_grid_position):
 	grid_position = _grid_position
@@ -50,11 +72,20 @@ func get_fill_direction():
 func get_content_moved_signal():
 	return content_moved
 
+func get_special_destroyed_signal():
+	return special_destroyed
+	
 func has_content():
 	return content != null
 
+func is_special():
+	return content.get_content_data().is_special()
+	
 func get_content():
 	return content
+
+func get_content_type():
+	return content.get_content_data().get_type()
 
 func get_grid_position():
 	return grid_position

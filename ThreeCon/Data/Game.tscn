@@ -16,16 +16,17 @@ script = ExtResource("3_rmbbd")
 script = ExtResource("1_pp086")
 container = ExtResource("2_xfuqi")
 content = ExtResource("5_hmxvi")
+normal_generation = false
 
 [node name="FillContainerTimer" type="Timer" parent="ContainerService"]
-wait_time = 0.1
+wait_time = 0.5
 one_shot = true
 
-[node name="DestroyConnectionsTimer" type="Timer" parent="ContainerService"]
+[node name="DeleteConnectionsTimer" type="Timer" parent="ContainerService"]
 wait_time = 0.4
 one_shot = true
 
 [node name="Node2D" type="Node2D" parent="."]
 
 [connection signal="timeout" from="ContainerService/FillContainerTimer" to="ContainerService" method="_on_fill_container_timer_timeout"]
-[connection signal="timeout" from="ContainerService/DestroyConnectionsTimer" to="ContainerService" method="_on_destroy_connections_timer_timeout"]
+[connection signal="timeout" from="ContainerService/DeleteConnectionsTimer" to="ContainerService" method="_on_destroy_connections_timer_timeout"]

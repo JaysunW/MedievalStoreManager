@@ -2,13 +2,20 @@ extends Node2D
 
 var goal_position = Vector2(-32,-32)
 var content_data = null
+var start_speed = 400
+var speed = 0
 
+func _ready():
+	speed = start_speed
+	
 func _process(delta):
 	if goal_position != Vector2(-32,-32):
 		var move_vec = goal_position - position
-		position += move_vec.normalized() * delta * 400
-		if move_vec.length() < 2:
+		position += move_vec.normalized() * delta * speed
+		if move_vec.length() < 4:
 			position = goal_position
+			speed = start_speed
+		speed -= 1
 
 func set_goal_position(pos):
 	goal_position = pos

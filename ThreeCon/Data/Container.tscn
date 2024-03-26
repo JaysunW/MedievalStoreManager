@@ -1,9 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c30jv2ovsm36"]
+[gd_scene load_steps=7 format=3 uid="uid://c30jv2ovsm36"]
 
 [ext_resource type="Script" path="res://Data/container.gd" id="1_2r5dk"]
 [ext_resource type="Texture2D" uid="uid://6dv8lum4ba6p" path="res://Assets/container_background.png" id="2_8oauw"]
+[ext_resource type="Texture2D" uid="uid://bqk614wl6b48d" path="res://Assets/container_contminated.png" id="3_08qud"]
+[ext_resource type="FontFile" uid="uid://d1wrfqtna08vj" path="res://Assets/5×5.ttf" id="4_4qgr1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7nk2b"]
+
+[sub_resource type="Theme" id="Theme_2wxol"]
+default_font = ExtResource("4_4qgr1")
+default_font_size = 10
 
 [node name="Container" type="Node2D"]
 texture_filter = 1
@@ -27,6 +33,27 @@ grow_vertical = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7nk2b")
 flat = true
 icon_alignment = 1
+
+[node name="Contamination" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_08qud")
+
+[node name="Label" type="Label" parent="Contamination"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_2wxol")
+text = "0
+"
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [connection signal="button_down" from="Back/Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Back/Button" to="." method="_on_button_button_up"]
