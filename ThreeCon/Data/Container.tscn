@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c30jv2ovsm36"]
+[gd_scene load_steps=8 format=3 uid="uid://c30jv2ovsm36"]
 
 [ext_resource type="Script" path="res://Data/container.gd" id="1_2r5dk"]
 [ext_resource type="Texture2D" uid="uid://6dv8lum4ba6p" path="res://Assets/container_background.png" id="2_8oauw"]
+[ext_resource type="PackedScene" uid="uid://3h3fa3k73t1j" path="res://ContainerModifier.tscn" id="2_gs7mc"]
 [ext_resource type="Texture2D" uid="uid://bqk614wl6b48d" path="res://Assets/container_contminated.png" id="3_08qud"]
 [ext_resource type="FontFile" uid="uid://d1wrfqtna08vj" path="res://Assets/5×5.ttf" id="4_4qgr1"]
 
@@ -14,6 +15,7 @@ default_font_size = 10
 [node name="Container" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_2r5dk")
+modifier_scene = ExtResource("2_gs7mc")
 
 [node name="Back" type="Sprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)

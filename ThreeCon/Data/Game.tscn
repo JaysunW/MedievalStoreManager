@@ -19,7 +19,7 @@ content = ExtResource("5_hmxvi")
 normal_generation = false
 
 [node name="FillContainerTimer" type="Timer" parent="ContainerService"]
-wait_time = 0.5
+wait_time = 0.2
 one_shot = true
 
 [node name="DeleteConnectionsTimer" type="Timer" parent="ContainerService"]

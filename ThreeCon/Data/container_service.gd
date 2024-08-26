@@ -54,14 +54,14 @@ func create_container(grid_position):
 	add_child(new_container)
 	new_container.position = grid_position * 32
 	new_container.set_grid_position(grid_position)
-	if grid_position.x == 4 or grid_position.y == 6:
-		new_container.set_contamination(grid_position.x + grid_position.y)
-#	if int(grid_position.y) % 2 == 0 and grid_position.x > 0:
-#		new_container.set_fill_direction(Vector2.LEFT)
-#		new_container.highlight(0,1,0)
-#	elif int(grid_position.y) % 2 == 1 and grid_position.x < _width - 1:
-#		new_container.set_fill_direction(Vector2.RIGHT)
-#		new_container.highlight(0,0,1)
+#	if grid_position.x == 4 or grid_position.y == 6:
+#		new_container.set_contamination(grid_position.x + grid_position.y)
+	if int(grid_position.y) % 2 == 0 and grid_position.x > 0:
+		new_container.set_fill_direction(Vector2.LEFT)
+		new_container.highlight(0,1,0)
+	elif int(grid_position.y) % 2 == 1 and grid_position.x < _width - 1:
+		new_container.set_fill_direction(Vector2.RIGHT)
+		new_container.highlight(0,0,1)
 	new_container.get_content_moved_signal().connect(move_content)
 	new_container.get_special_destroyed_signal().connect(_special_effect)
 	return new_container

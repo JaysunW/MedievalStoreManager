@@ -1,15 +1,16 @@
 extends Node2D
 
+
+@export var modifier_scene : PackedScene
 var grid_position = Vector2.ZERO
 
 var content = null
 var fill_direction = Vector2.UP
 var mouse_position = Vector2.ZERO
 var pressed = false
-var contaminated = false
-var contamination_level = 0
-var content_obstructed = false
 var content_moveable = true
+
+var modifier_list = []
 
 signal special_destroyed(pos, type)
 
@@ -27,11 +28,10 @@ func _process(_delta):
 			$Back/Button.button_pressed = false
 			content_moved.emit(grid_position, move_dir)
 
-func set_contamination(count):
-	contaminated = true
-	contamination_level = count
-	$Contamination.visible = true
-	$Contamination/Label.text = str(contamination_level)
+func add_modification(modifier):
+	var new_modifier = modifier_scene.instantiate()
+	self.add_child(new_modifier)
+	modifier_list.append(new_modifier)
 
 func set_content(_content):
 	content = _content
@@ -42,12 +42,8 @@ func set_fill_direction(direction):
 	fill_direction = direction
 	
 func delete_content():
-	if contaminated:
-		contamination_level -= 1
-		$Contamination/Label.text = str(contamination_level)
-		if contamination_level == 0:
-			contaminated = false
-			$Contamination.visible = false
+	if modifier_list.size() > 0:
+		pass
 	var temporary_content = content
 	content.queue_free()
 	content = null
