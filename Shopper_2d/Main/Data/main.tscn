@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7naugsspfwbi"]
+
+[ext_resource type="PackedScene" uid="uid://df4ydop0drcb6" path="res://Main/Data/player.tscn" id="1_56qi7"]
+[ext_resource type="Texture2D" uid="uid://p5xb2weje3fk" path="res://Main/Asset/tile_set.png" id="2_tbcmp"]
+[ext_resource type="PackedScene" uid="uid://cegwshoue5lpb" path="res://Main/Data/shelf.tscn" id="3_kt1og"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dc5yc"]
+texture = ExtResource("2_tbcmp")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 8, 16, 8, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16, -16, -16)
+
+[sub_resource type="TileSet" id="TileSet_1vg1o"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_dc5yc")
+
+[node name="main" type="Node2D"]
+texture_filter = 1
+
+[node name="Player" parent="." instance=ExtResource("1_56qi7")]
+z_index = 1
+y_sort_enabled = true
+
+[node name="TileMap" type="TileMap" parent="."]
+y_sort_enabled = true
+texture_filter = 1
+tile_set = SubResource("TileSet_1vg1o")
+cell_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(131071, 0, 0, 131069, 0, 0, 131070, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, -196611, 65536, 0, -131075, 65536, 0, -65539, 65536, 0, -3, 65536, 0, 65533, 65536, 0, -196610, 65536, 0, -131074, 65536, 0, -65538, 65536, 0, -2, 65536, 0, 65534, 65536, 0, -196609, 65536, 0, -131073, 65536, 0, -65537, 65536, 0, -1, 65536, 0, 65535, 65536, 0, -262144, 65536, 0, -196608, 65536, 0, -131072, 65536, 0, -65536, 65536, 0, 0, 65536, 0, -262143, 65536, 0, -196607, 65536, 0, -131071, 65536, 0, -65535, 65536, 0, 1, 65536, 0, -262142, 65536, 0, -196606, 65536, 0, -131070, 65536, 0, -65534, 65536, 0, 2, 65536, 0, -262141, 131072, 0, -196605, 131072, 0, -131069, 131072, 0, -65533, 131072, 0, 3, 131072, 0, 65539, 131072, 0, -196612, 131072, 0, -131076, 131072, 0, -65540, 131072, 0, -4, 131072, 0, 65532, 131072, 0, 131068, 131072, 0, 196604, 131072, 0, 196605, 131072, 0, 196606, 131072, 0, 196607, 131072, 0, 131072, 131072, 0, 131073, 131072, 0, 131074, 131072, 0, 131075, 131072, 0, -262148, 131072, 0, -262147, 131072, 0, -262146, 131072, 0, -262145, 131072, 0, -327680, 131072, 0, -327679, 131072, 0, -327678, 131072, 0, -327677, 131072, 0)
+
+[node name="Shelf" parent="." instance=ExtResource("3_kt1og")]
+position = Vector2(-16, -112)
+
+[node name="Shelf2" parent="." instance=ExtResource("3_kt1og")]
+y_sort_enabled = true
+position = Vector2(48.0147, -111.266)

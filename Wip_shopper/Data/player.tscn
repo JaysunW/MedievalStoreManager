@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr0ths01cdfy3"]
+
+[ext_resource type="Script" path="res://Data/player.gd" id="1_v8ptw"]
+[ext_resource type="Texture2D" uid="uid://bcdk36s1gxftl" path="res://Asset/wip_player.png" id="2_777rm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8awj4"]
+radius = 7.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+y_sort_enabled = true
+texture_filter = 1
+script = ExtResource("1_v8ptw")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+scale = Vector2(1, 0.4)
+shape = SubResource("CircleShape2D_8awj4")
+
+[node name="Skin" type="Sprite2D" parent="."]
+modulate = Color(0.678431, 0.92549, 0.976471, 1)
+texture = ExtResource("2_777rm")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)

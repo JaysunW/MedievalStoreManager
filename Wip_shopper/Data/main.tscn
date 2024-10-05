@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://br82f4tfd5n2n"]
+
+[ext_resource type="PackedScene" uid="uid://b84tnt0upe50w" path="res://Data/ground_tile.tscn" id="2_g0i0e"]
+[ext_resource type="Script" path="res://Data/world_service.gd" id="2_xq5ux"]
+[ext_resource type="PackedScene" uid="uid://dr0ths01cdfy3" path="res://Data/player.tscn" id="3_816qx"]
+[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="3_gm0tx"]
+[ext_resource type="Texture2D" uid="uid://dwj5morybha6x" path="res://Asset/tile_set.png" id="5_nmh5m"]
+[ext_resource type="PackedScene" uid="uid://kljhgcdpau1a" path="res://Data/shelf.tscn" id="6_yymd3"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hk21a"]
+texture = ExtResource("5_nmh5m")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/y_sort_origin = 1
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16.25, 7.75, 0.176776, 15.5563, -16.25, 8, -0.25, -1.25)
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_mky2u"]
+tile_shape = 1
+tile_layout = 5
+tile_offset_axis = 1
+tile_size = Vector2i(32, 16)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_hk21a")
+
+[node name="Main" type="Node2D"]
+
+[node name="FreeCam" parent="." instance=ExtResource("3_gm0tx")]
+position = Vector2(-29, -60)
+
+[node name="world_service" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("2_xq5ux")
+ground_tile_scene = ExtResource("2_g0i0e")
+player_scene = ExtResource("3_816qx")
+
+[node name="TileMap" type="TileMap" parent="world_service"]
+y_sort_enabled = true
+texture_filter = 1
+tile_set = SubResource("TileSet_mky2u")
+format = 2
+layer_0/name = "Ground"
+layer_0/y_sort_enabled = true
+layer_0/tile_data = PackedInt32Array(-65542, 0, 0, -6, 0, 0, 65530, 0, 0, 131066, 0, 0, 196602, 0, 0, 262138, 0, 0, 327674, 0, 0, 393210, 0, 0, -65541, 0, 0, -5, 0, 0, 65531, 0, 0, 131067, 0, 0, 196603, 0, 0, 262139, 0, 0, 327675, 0, 0, 393211, 0, 0, -65540, 0, 0, -4, 0, 0, 65532, 0, 0, 131068, 0, 0, 196604, 0, 0, 262140, 0, 0, 327676, 0, 0, 393212, 0, 0, -65539, 0, 0, -3, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, 262141, 0, 0, 327677, 0, 0, 393213, 0, 0, -65538, 0, 0, -2, 0, 0, 65534, 0, 0, 131070, 0, 0, 196606, 0, 0, 262142, 0, 0, 327678, 0, 0, 393214, 0, 0, -65537, 0, 0, -1, 0, 0, 65535, 0, 0, 131071, 0, 0, 196607, 0, 0, 262143, 0, 0, 327679, 0, 0, 393215, 0, 0, -131072, 0, 0, -65536, 0, 0, 0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, -131071, 0, 0, -65535, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, -131070, 0, 0, -65534, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, -131069, 0, 0, -65533, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, -131068, 0, 0, -65532, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0)
+layer_1/name = "Object"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = true
+layer_1/y_sort_origin = 0
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array(327673, 65536, 0, 262137, 65536, 0, 196601, 65536, 0, 131065, 65536, 0, 65529, 65536, 0, -7, 65536, 0, -65543, 65536, 0, -131079, 65536, 0, -131078, 65536, 0, -131077, 65536, 0, -131076, 65536, 0, -131075, 65536, 0, -131074, 65536, 0, -131073, 65536, 0, -196608, 65536, 0, -196607, 65536, 0, -196606, 65536, 0, -196605, 65536, 0, 327674, 65536, 0, 327675, 65536, 0, 327676, 65536, 0, 327677, 65536, 0, 327678, 65536, 0, 327679, 65536, 0, 262144, 65536, 0, 262145, 65536, 0, 262146, 65536, 0, 262147, 65536, 0, 196611, 65536, 0, 131075, 65536, 0, 65539, 65536, 0, 3, 65536, 0, -65533, 65536, 0, -131069, 65536, 0)
+
+[node name="CharacterBody2D" parent="world_service" instance=ExtResource("3_816qx")]
+z_index = 1
+
+[node name="Shelf2" parent="world_service" instance=ExtResource("6_yymd3")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(16, -24)
