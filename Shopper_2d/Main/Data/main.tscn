@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=10 format=3 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="PackedScene" uid="uid://df4ydop0drcb6" path="res://Main/Data/player.tscn" id="1_56qi7"]
 [ext_resource type="Texture2D" uid="uid://p5xb2weje3fk" path="res://Main/Asset/tile_set.png" id="2_tbcmp"]
-[ext_resource type="PackedScene" uid="uid://cegwshoue5lpb" path="res://Main/Data/shelf.tscn" id="3_kt1og"]
+[ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/shelf.tscn" id="3_kt1og"]
 [ext_resource type="Script" path="res://Main/Data/BuildService.gd" id="3_vooum"]
+[ext_resource type="Texture2D" uid="uid://ok4vbkiaqjf0" path="res://Main/Asset/build_back.png" id="4_4hcuv"]
+[ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/package.tscn" id="6_5qldv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dc5yc"]
 texture = ExtResource("2_tbcmp")
@@ -18,7 +20,15 @@ texture_region_size = Vector2i(32, 32)
 2:0/0 = 0
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16, -16, -16)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -16, 16, 16, -16, 16, -16, -16)
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -1.25, 16, -1, 16, 16, -16, 16)
+4:0/0 = 0
+4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSet" id="TileSet_1vg1o"]
 tile_size = Vector2i(32, 32)
@@ -31,28 +41,61 @@ size = Vector2(192, 96)
 [node name="main" type="Node2D"]
 texture_filter = 1
 
-[node name="Player" parent="." instance=ExtResource("1_56qi7")]
-z_index = 1
-y_sort_enabled = true
-position = Vector2(143, 105)
-
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
 texture_filter = 1
 tile_set = SubResource("TileSet_1vg1o")
 cell_quadrant_size = 32
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 131072, 0, 65536, 131072, 0, 131072, 131072, 0, 1, 131072, 0, 65537, 65536, 0, 131073, 65536, 0, 2, 131072, 0, 65538, 65536, 0, 131074, 65536, 0, 3, 131072, 0, 65539, 65536, 0, 131075, 65536, 0, 4, 131072, 0, 65540, 65536, 0, 5, 131072, 0, 65541, 65536, 0, 6, 131072, 0, 65542, 65536, 0, 196608, 131072, 0, 262144, 131072, 0, 327680, 131072, 0, 393216, 131072, 0, 458752, 131072, 0, 196609, 65536, 0, 262145, 65536, 0, 327681, 65536, 0, 393217, 0, 0, 458753, 131072, 0, 196610, 65536, 0, 262146, 65536, 0, 327682, 65536, 0, 393218, 0, 0, 458754, 131072, 0, 196611, 65536, 0, 262147, 65536, 0, 327683, 65536, 0, 393219, 0, 0, 458755, 131072, 0, 131076, 65536, 0, 196612, 65536, 0, 262148, 65536, 0, 327684, 65536, 0, 393220, 0, 0, 458756, 131072, 0, 131077, 65536, 0, 196613, 65536, 0, 262149, 65536, 0, 327685, 65536, 0, 393221, 0, 0, 458757, 131072, 0, 131078, 65536, 0, 196614, 65536, 0, 262150, 65536, 0, 327686, 65536, 0, 393222, 0, 0, 458758, 131072, 0, 7, 131072, 0, 65543, 65536, 0, 131079, 65536, 0, 196615, 65536, 0, 262151, 65536, 0, 327687, 65536, 0, 393223, 65536, 0, 458759, 131072, 0, 8, 131072, 0, 65544, 65536, 0, 131080, 65536, 0, 196616, 65536, 0, 262152, 65536, 0, 327688, 65536, 0, 393224, 65536, 0, 9, 131072, 0, 65545, 65536, 0, 131081, 65536, 0, 196617, 65536, 0, 262153, 65536, 0, 327689, 65536, 0, 393225, 65536, 0, 10, 131072, 0, 65546, 65536, 0, 131082, 65536, 0, 196618, 65536, 0, 262154, 65536, 0, 327690, 65536, 0, 393226, 65536, 0, 11, 131072, 0, 65547, 65536, 0, 131083, 65536, 0, 196619, 65536, 0, 12, 131072, 0, 65548, 65536, 0, 131084, 65536, 0, 196620, 65536, 0, 13, 131072, 0, 65549, 65536, 0, 131085, 65536, 0, 196621, 65536, 0, 14, 131072, 0, 65550, 65536, 0, 131086, 65536, 0, 196622, 65536, 0, 15, 131072, 0, 65551, 65536, 0, 131087, 65536, 0, 196623, 65536, 0, 16, 131072, 0, 65552, 65536, 0, 131088, 65536, 0, 196624, 65536, 0, 17, 131072, 0, 65553, 131072, 0, 131089, 131072, 0, 196625, 131072, 0, 262161, 131072, 0)
+layer_0/name = "Ground"
+layer_0/z_index = -1
+layer_0/tile_data = PackedInt32Array(65537, 65536, 0, 131073, 65536, 0, 65538, 65536, 0, 131074, 65536, 0, 65539, 65536, 0, 131075, 65536, 0, 65540, 65536, 0, 65541, 65536, 0, 65542, 65536, 0, 196609, 65536, 0, 262145, 65536, 0, 327681, 65536, 0, 393217, 65536, 0, 196610, 65536, 0, 262146, 65536, 0, 327682, 65536, 0, 393218, 0, 0, 196611, 65536, 0, 262147, 65536, 0, 327683, 65536, 0, 393219, 0, 0, 131076, 65536, 0, 196612, 65536, 0, 262148, 65536, 0, 327684, 65536, 0, 393220, 0, 0, 131077, 65536, 0, 196613, 65536, 0, 327685, 65536, 0, 393221, 0, 0, 131078, 65536, 0, 196614, 65536, 0, 327686, 65536, 0, 393222, 0, 0, 65543, 65536, 0, 131079, 65536, 0, 196615, 65536, 0, 327687, 65536, 0, 393223, 65536, 0, 65544, 65536, 0, 131080, 65536, 0, 196616, 65536, 0, 65545, 65536, 0, 131081, 65536, 0, 196617, 65536, 0, 262153, 65536, 0, 327689, 65536, 0, 393225, 65536, 0, 65546, 65536, 0, 131082, 65536, 0, 196618, 65536, 0, 262154, 65536, 0, 327690, 65536, 0, 393226, 65536, 0, 65547, 65536, 0, 131083, 65536, 0, 196619, 65536, 0, 65548, 65536, 0, 131084, 65536, 0, 196620, 65536, 0, 65549, 65536, 0, 131085, 65536, 0, 196621, 65536, 0, 65550, 65536, 0, 131086, 65536, 0, 196622, 65536, 0, 65551, 65536, 0, 131087, 65536, 0, 196623, 65536, 0, 65552, 65536, 0, 131088, 65536, 0, 196624, 65536, 0, 393227, 65536, 0, 393228, 65536, 0, 393229, 65536, 0, 393230, 65536, 0, 393231, 65536, 0, 393232, 65536, 0, 262155, 65536, 0, 262156, 65536, 0, 262157, 65536, 0, 262158, 65536, 0, 262159, 65536, 0, 262160, 65536, 0, 327691, 65536, 0, 327692, 65536, 0, 327693, 65536, 0, 327694, 65536, 0, 327695, 65536, 0, 327696, 65536, 0)
+layer_1/name = "Object"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = true
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array(1, 196608, 0, 2, 196608, 0, 3, 196608, 0, 4, 196608, 0, 5, 196608, 0, 6, 196608, 0, 7, 196608, 0, 8, 196608, 0, 9, 196608, 0, 10, 196608, 0, 11, 196608, 0, 12, 196608, 0, 13, 196608, 0, 14, 196608, 0, 15, 196608, 0, 16, 196608, 0, 262150, 196608, 0, 262151, 196608, 0, 458753, 196608, 0, 458754, 196608, 0, 458755, 196608, 0, 458756, 196608, 0, 458757, 196608, 0, 458758, 196608, 0, 458759, 196608, 0, 458752, 262144, 0, 458760, 262144, 0, 458769, 262144, 0, 262149, 262144, 0, 262152, 131072, 0, 327688, 131072, 0, 393224, 131072, 0, 0, 131072, 0, 65536, 131072, 0, 131072, 131072, 0, 196608, 131072, 0, 262144, 131072, 0, 327680, 131072, 0, 393216, 131072, 0, 17, 131072, 0, 65553, 131072, 0, 131089, 131072, 0, 196625, 131072, 0, 262161, 131072, 0, 327697, 131072, 0, 393233, 131072, 0)
+layer_2/name = "High"
+layer_2/enabled = true
+layer_2/modulate = Color(1, 1, 1, 1)
+layer_2/y_sort_enabled = false
+layer_2/y_sort_origin = 0
+layer_2/z_index = 1
+layer_2/tile_data = PackedInt32Array()
 
-[node name="BuildService" type="Node2D" parent="."]
+[node name="Package" parent="TileMap" instance=ExtResource("6_5qldv")]
+position = Vector2(240, 90)
+
+[node name="Player" parent="TileMap" instance=ExtResource("1_56qi7")]
+y_sort_enabled = false
+position = Vector2(176, 106)
+
+[node name="Package2" parent="TileMap" instance=ExtResource("6_5qldv")]
+position = Vector2(252, 98)
+
+[node name="BuildService" type="Node2D" parent="." node_paths=PackedStringArray("tile_node")]
+y_sort_enabled = true
 script = ExtResource("3_vooum")
+tile_node = NodePath("../TileMap")
 shelf_scene = ExtResource("3_kt1og")
+placement_color = [Color(1, 1, 1, 0.784314), Color(0.815686, 0.243137, 0.164706, 0.784314)]
 
-[node name="Area2D" type="Area2D" parent="BuildService"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildService/Area2D"]
+[node name="BuildArea" type="Sprite2D" parent="BuildService"]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
 position = Vector2(448, 80)
-shape = SubResource("RectangleShape2D_eoule")
+scale = Vector2(6, 3)
+texture = ExtResource("4_4hcuv")
 
-[connection signal="mouse_entered" from="BuildService/Area2D" to="BuildService" method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="BuildService/Area2D" to="BuildService" method="_on_area_2d_mouse_exited"]
+[node name="Area2D" type="Area2D" parent="BuildService/BuildArea"]
+scale = Vector2(0.166667, 0.333333)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildService/BuildArea/Area2D"]
+shape = SubResource("RectangleShape2D_eoule")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[connection signal="mouse_entered" from="BuildService/BuildArea/Area2D" to="BuildService" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="BuildService/BuildArea/Area2D" to="BuildService" method="_on_area_2d_mouse_exited"]

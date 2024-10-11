@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://df4ydop0drcb6"]
 
+[ext_resource type="Script" path="res://Main/Data/player.gd" id="1_jxek3"]
 [ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Main/Asset/player.png" id="2_ijekl"]
 [ext_resource type="Script" path="res://Main/Data/DetectObject.gd" id="3_braq7"]
 [ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Main/Asset/shelf.png" id="3_mw8yb"]
-[ext_resource type="PackedScene" uid="uid://b2jmi67en200t" path="res://Component/interaction_component.tscn" id="4_qjjmn"]
-[ext_resource type="Script" path="res://Main/Data/movePlayer.gd" id="5_d51ro"]
+[ext_resource type="PackedScene" uid="uid://b2jmi67en200t" path="res://Main/Component/interaction_component.tscn" id="4_qjjmn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqcdq"]
 size = Vector2(20, 12)
@@ -15,39 +15,35 @@ size = Vector2(22, 13)
 [node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
 texture_filter = 1
-
-[node name="MovePlayer" type="Node2D" parent="."]
-script = ExtResource("5_d51ro")
+script = ExtResource("1_jxek3")
 
 [node name="Skin" type="Sprite2D" parent="."]
 y_sort_enabled = true
+position = Vector2(0, -2)
 texture = ExtResource("2_ijekl")
-offset = Vector2(0, -16)
 
 [node name="Collision" type="CollisionShape2D" parent="." groups=["Player"]]
-position = Vector2(0, -6)
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_oqcdq")
 
-[node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("interactionComponent", "player")]
-position = Vector2(0, -14)
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("holding_point", "interactionComponent")]
 script = ExtResource("3_braq7")
+holding_point = NodePath("../InteractionComponent/HoldingPoint")
 interactionComponent = NodePath("../InteractionComponent")
-player = NodePath("..")
 
 [node name="InteractionComponent" parent="." instance=ExtResource("4_qjjmn")]
-position = Vector2(0, -14)
-collision_mask = 192
 
 [node name="test" type="Sprite2D" parent="InteractionComponent"]
-modulate = Color(1, 1, 1, 0.392157)
 position = Vector2(19, 0)
 scale = Vector2(0.6875, 0.40625)
 texture = ExtResource("3_mw8yb")
 
+[node name="HoldingPoint" type="Node2D" parent="InteractionComponent"]
+position = Vector2(20, 20)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionComponent"]
 position = Vector2(19, 0)
 shape = SubResource("RectangleShape2D_eetes")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -14)
-zoom = Vector2(2, 2)

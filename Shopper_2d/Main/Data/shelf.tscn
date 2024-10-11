@@ -1,17 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://cegwshoue5lpb"]
+[gd_scene load_steps=6 format=3 uid="uid://cpj5rtpiq5d5i"]
 
-[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Main/Asset/shelf.png" id="1_bmy84"]
+[ext_resource type="Script" path="res://Main/Data/shelf.gd" id="1_tt1ec"]
+[ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="2_a1sh0"]
+[ext_resource type="PackedScene" uid="uid://wi17fl4xuvp" path="res://Component/sprite_component.tscn" id="3_6ppfl"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bksrl"]
-size = Vector2(32, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qj36x"]
+size = Vector2(32, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h400x"]
+size = Vector2(32, 32)
 
 [node name="Shelf" type="StaticBody2D"]
 texture_filter = 1
+script = ExtResource("1_tt1ec")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-y_sort_enabled = true
-texture = ExtResource("1_bmy84")
+[node name="SpriteComponent" parent="." instance=ExtResource("3_6ppfl")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 8)
-shape = SubResource("RectangleShape2D_bksrl")
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_qj36x")
+
+[node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Stand"] instance=ExtResource("2_a1sh0")]
+position = Vector2(0, -16)
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+main_object = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionObjectComponent"]
+shape = SubResource("RectangleShape2D_h400x")
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
