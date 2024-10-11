@@ -1,9 +1,9 @@
 extends Node2D
 
 @export var tile_node : TileMap
-@export var shelf_scene : PackedScene
-@export var building = false
 @export var placement_color = [Color(1,1,1,0.8), Color(1,0.4,0.4,1)]
+@export var stand_scenes : Array[PackedScene]
+@export var building = false
 
 var object = null
 
@@ -42,7 +42,8 @@ func _process(_delta):
 				create_placeable_object()
 		
 func create_placeable_object():
-	object = shelf_scene.instantiate()
+	object = stand_scenes[0].instantiate()
+	object.tile_map_reference = tile_node
 	tile_node.add_child(object)
 	
 func change_build_mode(input):

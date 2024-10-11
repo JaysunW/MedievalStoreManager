@@ -1,10 +1,12 @@
 extends StaticBody2D
 
+@onready var skin = $Skin
+@export var content_type = Utils.ContentType.EMPTY
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Collision.set_deferred("disabled", true)
+	#$Collision.set_deferred("disabled", true)
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

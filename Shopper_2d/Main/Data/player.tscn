@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://df4ydop0drcb6"]
 
 [ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Main/Asset/player.png" id="2_ijekl"]
-[ext_resource type="Script" path="res://Main/Data/DetectObject.gd" id="3_braq7"]
+[ext_resource type="Script" path="res://Main/Data/objectInteraction.gd" id="3_h1xf6"]
 [ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Main/Asset/shelf.png" id="3_mw8yb"]
 [ext_resource type="PackedScene" uid="uid://b2jmi67en200t" path="res://Component/interaction_component.tscn" id="4_qjjmn"]
 [ext_resource type="Script" path="res://Main/Data/movePlayer.gd" id="5_d51ro"]
@@ -28,11 +28,11 @@ offset = Vector2(0, -16)
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_oqcdq")
 
-[node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("interactionComponent", "player")]
+[node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("interactionComponent", "moveComponent")]
 position = Vector2(0, -14)
-script = ExtResource("3_braq7")
+script = ExtResource("3_h1xf6")
 interactionComponent = NodePath("../InteractionComponent")
-player = NodePath("..")
+moveComponent = NodePath("../MovePlayer")
 
 [node name="InteractionComponent" parent="." instance=ExtResource("4_qjjmn")]
 position = Vector2(0, -14)
