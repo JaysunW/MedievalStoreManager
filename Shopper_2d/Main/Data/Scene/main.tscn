@@ -1,14 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=16 format=3 uid="uid://c7naugsspfwbi"]
 
-[ext_resource type="PackedScene" uid="uid://df4ydop0drcb6" path="res://Main/Data/player.tscn" id="1_56qi7"]
-[ext_resource type="Texture2D" uid="uid://p5xb2weje3fk" path="res://Main/Asset/tile_set.png" id="2_tbcmp"]
-[ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/shelf.tscn" id="3_kt1og"]
-[ext_resource type="Script" path="res://Main/Data/BuildService.gd" id="3_vooum"]
-[ext_resource type="Texture2D" uid="uid://ok4vbkiaqjf0" path="res://Main/Asset/build_back.png" id="4_4hcuv"]
-[ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/package.tscn" id="6_5qldv"]
+[ext_resource type="PackedScene" uid="uid://df4ydop0drcb6" path="res://Main/Data/Scene/player.tscn" id="1_56qi7"]
+[ext_resource type="Texture2D" uid="uid://p5xb2weje3fk" path="res://Asset/tile_set.png" id="1_xakbw"]
+[ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/Scene/shelf.tscn" id="3_kt1og"]
+[ext_resource type="Script" path="res://Main/Data/Script/BuildService.gd" id="4_6s3ha"]
+[ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/Scene/package.tscn" id="6_5qldv"]
+[ext_resource type="PackedScene" uid="uid://bepg6438562it" path="res://Main/Data/Scene/stand.tscn" id="6_fx1jw"]
+[ext_resource type="Texture2D" uid="uid://ok4vbkiaqjf0" path="res://Asset/build_back.png" id="6_ly1i0"]
+[ext_resource type="Script" path="res://Main/Data/Script/BuildMenu.gd" id="7_q3omt"]
+[ext_resource type="PackedScene" uid="uid://b2pf0srht2hr4" path="res://Main/Data/Scene/hanger.tscn" id="7_u08aj"]
+[ext_resource type="Theme" uid="uid://cyx5vjugx1lim" path="res://Theme/our_theme.tres" id="7_ykg55"]
+[ext_resource type="PackedScene" uid="uid://csc1vxhhtes3a" path="res://UI/BuildObjectContainer.tscn" id="9_2nmlh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dc5yc"]
-texture = ExtResource("2_tbcmp")
+texture = ExtResource("1_xakbw")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/y_sort_origin = 15
@@ -43,6 +48,8 @@ sources/0 = SubResource("TileSetAtlasSource_dc5yc")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eoule"]
 size = Vector2(192, 96)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nls4t"]
+
 [node name="main" type="Node2D"]
 texture_filter = 1
 
@@ -69,32 +76,37 @@ layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array()
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="TileMap" instance=ExtResource("1_56qi7")]
 y_sort_enabled = false
 position = Vector2(176, 106)
 
 [node name="Package2" parent="TileMap" instance=ExtResource("6_5qldv")]
-position = Vector2(334, 154)
+position = Vector2(299, 115)
 content_type = 2
 
 [node name="Package" parent="TileMap" instance=ExtResource("6_5qldv")]
-position = Vector2(240, 90)
+position = Vector2(257, 98)
 content_type = 1
 
 [node name="BuildService" type="Node2D" parent="." node_paths=PackedStringArray("tile_node")]
 y_sort_enabled = true
-script = ExtResource("3_vooum")
+script = ExtResource("4_6s3ha")
 tile_node = NodePath("../TileMap")
 placement_color = [Color(1, 1, 1, 0.784314), Color(0.815686, 0.243137, 0.164706, 0.784314)]
-stand_scenes = Array[PackedScene]([ExtResource("3_kt1og")])
+stand_scenes = {
+"Hanger": ExtResource("7_u08aj"),
+"Shelf": ExtResource("3_kt1og"),
+"Stand": ExtResource("6_fx1jw")
+}
 
 [node name="BuildArea" type="Sprite2D" parent="BuildService"]
 modulate = Color(1, 1, 1, 0.498039)
 z_index = -1
-position = Vector2(448, 80)
-scale = Vector2(6, 3)
-texture = ExtResource("4_4hcuv")
+position = Vector2(416, 128)
+scale = Vector2(7.96875, 5.96875)
+texture = ExtResource("6_ly1i0")
 
 [node name="Area2D" type="Area2D" parent="BuildService/BuildArea"]
 scale = Vector2(0.166667, 0.333333)
@@ -104,5 +116,93 @@ collision_mask = 0
 shape = SubResource("RectangleShape2D_eoule")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
+[node name="BuildMenu" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("7_q3omt")
+
+[node name="PanelContainer" type="PanelContainer" parent="BuildMenu"]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -463.0
+offset_top = -476.0
+offset_right = 442.0
+offset_bottom = 483.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nls4t")
+
+[node name="Panel" type="Panel" parent="BuildMenu/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("7_ykg55")
+
+[node name="MarginContainer" type="MarginContainer" parent="BuildMenu/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BuildMenu/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HeaderContainer" type="MarginContainer" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer2" type="Control" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer/HeaderContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Cost" type="Label" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer/HeaderContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Cost:"
+
+[node name="Spacer3" type="Control" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer/HeaderContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Cost3" type="Label" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer/HeaderContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Name:"
+
+[node name="Spacer4" type="Control" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer/HeaderContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BuildObjectContainer" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("9_2nmlh")]
+layout_mode = 2
+
+[node name="BuildObjectContainer2" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("9_2nmlh")]
+layout_mode = 2
+
+[node name="BuildObjectContainer3" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("9_2nmlh")]
+layout_mode = 2
+
+[node name="BuildObjectContainer4" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("9_2nmlh")]
+layout_mode = 2
+
+[node name="BuildObjectContainer5" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("9_2nmlh")]
+layout_mode = 2
+
+[node name="BuildObjectContainer6" parent="BuildMenu/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("9_2nmlh")]
+layout_mode = 2
+
 [connection signal="mouse_entered" from="BuildService/BuildArea/Area2D" to="BuildService" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="BuildService/BuildArea/Area2D" to="BuildService" method="_on_area_2d_mouse_exited"]
+[connection signal="chose_building_option" from="BuildMenu" to="BuildService" method="_on_build_menu_chose_building_option"]

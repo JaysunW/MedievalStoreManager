@@ -1,4 +1,5 @@
 extends StaticBody2D
+class_name StandClass
 
 @export var package_scene : PackedScene
 
@@ -7,7 +8,6 @@ extends StaticBody2D
 
 var tile_map_reference = null
 var content_type = Utils.ContentType.EMPTY
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,6 +44,7 @@ func take_content():
 func get_content():
 	var content = package_scene.instantiate()
 	content.content_type = content_type
+	content.position = global_position
 	tile_map_reference.add_child(content)
 	return content
 

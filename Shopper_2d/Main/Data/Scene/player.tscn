@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://df4ydop0drcb6"]
 
-[ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Main/Asset/player.png" id="2_ijekl"]
-[ext_resource type="Script" path="res://Main/Data/objectInteraction.gd" id="3_h1xf6"]
-[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Main/Asset/shelf.png" id="3_mw8yb"]
+[ext_resource type="Script" path="res://Main/Data/Script/movePlayer.gd" id="1_v1oiv"]
+[ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Asset/player.png" id="2_1r2sm"]
+[ext_resource type="Script" path="res://Main/Data/Script/objectInteraction.gd" id="3_1o8v2"]
 [ext_resource type="PackedScene" uid="uid://b2jmi67en200t" path="res://Component/interaction_component.tscn" id="4_qjjmn"]
-[ext_resource type="Script" path="res://Main/Data/movePlayer.gd" id="5_d51ro"]
+[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/shelf.png" id="5_k64db"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqcdq"]
 size = Vector2(20, 12)
@@ -17,11 +17,11 @@ y_sort_enabled = true
 texture_filter = 1
 
 [node name="MovePlayer" type="Node2D" parent="."]
-script = ExtResource("5_d51ro")
+script = ExtResource("1_v1oiv")
 
 [node name="Skin" type="Sprite2D" parent="."]
 y_sort_enabled = true
-texture = ExtResource("2_ijekl")
+texture = ExtResource("2_1r2sm")
 offset = Vector2(0, -16)
 
 [node name="Collision" type="CollisionShape2D" parent="." groups=["Player"]]
@@ -30,7 +30,7 @@ shape = SubResource("RectangleShape2D_oqcdq")
 
 [node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("interactionComponent", "moveComponent")]
 position = Vector2(0, -14)
-script = ExtResource("3_h1xf6")
+script = ExtResource("3_1o8v2")
 interactionComponent = NodePath("../InteractionComponent")
 moveComponent = NodePath("../MovePlayer")
 
@@ -42,7 +42,7 @@ collision_mask = 192
 modulate = Color(1, 1, 1, 0.392157)
 position = Vector2(19, 0)
 scale = Vector2(0.6875, 0.40625)
-texture = ExtResource("3_mw8yb")
+texture = ExtResource("5_k64db")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionComponent"]
 position = Vector2(19, 0)

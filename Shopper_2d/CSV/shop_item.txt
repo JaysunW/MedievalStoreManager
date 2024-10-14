@@ -1,0 +1,5 @@
+id	name	type	store_area	value	average_value	unlocked						
+0	Cracker	food	stand	60	74	1						
+1	Water	food	stand	50	62	1						
+2	Sword	weapon	stand	100	123	1						
+3	Shield	armour	stand	80	98	1						

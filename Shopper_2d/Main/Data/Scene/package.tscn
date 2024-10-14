@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ciyfid66c5ied"]
 
-[ext_resource type="Script" path="res://Main/Data/package.gd" id="1_ee4mg"]
-[ext_resource type="Texture2D" uid="uid://sltl4wwjqvee" path="res://Main/Asset/package.png" id="1_pdlex"]
+[ext_resource type="Script" path="res://Main/Data/Script/package.gd" id="1_0xmao"]
+[ext_resource type="Texture2D" uid="uid://sltl4wwjqvee" path="res://Asset/package.png" id="2_k5mws"]
 [ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="3_h5d2g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3f1i"]
@@ -12,7 +12,7 @@ size = Vector2(18, 19)
 
 [node name="Package" type="StaticBody2D"]
 texture_filter = 1
-script = ExtResource("1_ee4mg")
+script = ExtResource("1_0xmao")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -20,7 +20,7 @@ position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_f3f1i")
 
 [node name="Skin" type="Sprite2D" parent="."]
-texture = ExtResource("1_pdlex")
+texture = ExtResource("2_k5mws")
 offset = Vector2(0, -16)
 
 [node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Content"] instance=ExtResource("3_h5d2g")]

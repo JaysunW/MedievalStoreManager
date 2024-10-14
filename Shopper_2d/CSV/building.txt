@@ -1,0 +1,4 @@
+id	name	type	value	sprite_path	unlocked
+0	Shelf	shelf	300	res://Asset/shelf.png	1
+1	Stand	stand	250	res://Asset/stand.png	1
+2	Hanger	line	200	res://Asset/hang.png	1
