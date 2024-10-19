@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://cpj5rtpiq5d5i"]
+
+[ext_resource type="Script" path="res://Main/Data/Script/Building/stand_class.gd" id="1_nlceu"]
+[ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/Scene/package.tscn" id="2_13km2"]
+[ext_resource type="PackedScene" uid="uid://wi17fl4xuvp" path="res://Component/sprite_component.tscn" id="3_355td"]
+[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/shelf.png" id="4_f6567"]
+[ext_resource type="Texture2D" uid="uid://d37crr5faqbhg" path="res://Asset/filled_shelf.png" id="5_gxfyp"]
+[ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="6_e73qv"]
+[ext_resource type="Texture2D" uid="uid://bhff6vdh1dp4k" path="res://Asset/UI/stand_fill_under.png" id="7_0drwp"]
+[ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_154de"]
+[ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_bxwc5"]
+[ext_resource type="Texture2D" uid="uid://k0vhp18yjf7o" path="res://Asset/ShopItem/Bread.png" id="10_2f18m"]
+
+[node name="Shelf" type="StaticBody2D"]
+texture_filter = 1
+script = ExtResource("1_nlceu")
+package_scene = ExtResource("2_13km2")
+
+[node name="SpriteComponent" parent="." instance=ExtResource("3_355td")]
+position = Vector2(0, -16)
+texture = ExtResource("4_f6567")
+sprites = Array[Texture2D]([ExtResource("4_f6567"), ExtResource("5_gxfyp")])
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+
+[node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Stand"] instance=ExtResource("6_e73qv")]
+position = Vector2(0, -16)
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+main_object = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionObjectComponent"]
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
+
+[node name="FillProgressbar" type="TextureProgressBar" parent="."]
+visible = false
+texture_filter = 1
+offset_left = -19.0
+offset_top = -44.0
+offset_right = 19.0
+offset_bottom = -33.0
+max_value = 15.0
+value = 15.0
+nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 4
+stretch_margin_right = 4
+stretch_margin_bottom = 4
+texture_under = ExtResource("7_0drwp")
+texture_over = ExtResource("8_154de")
+texture_progress = ExtResource("9_bxwc5")
+
+[node name="ShowProgressTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="ShowContentIcon" type="Sprite2D" parent="."]
+position = Vector2(-11, -27)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("10_2f18m")
+
+[node name="ChangeColorTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]
+[connection signal="timeout" from="ChangeColorTimer" to="." method="_on_change_color_timer_timeout"]

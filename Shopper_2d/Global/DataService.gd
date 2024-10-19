@@ -8,7 +8,6 @@ var player_data_file_path = "res://JSON/player_data.json"
 
 func _ready():
 	player_data = load_json_file(player_data_file_path)
-	print(player_data)
 
 func load_json_file(file_path):
 	if FileAccess.file_exists(file_path):
@@ -27,7 +26,6 @@ func get_data_dictionary():
 	return dic
 
 func distribute_dictionary(dic):
-	print(dic)
 	if dic:
 		player_data = dic["PLAYER"]
 		item_data = dic["ITEM"]

@@ -7,7 +7,6 @@ var buildings = {}
 var txt_file_path = "res://CSV/building.txt"
 
 func _ready():
-	# Load the tab-delimited data
 	import_shop_item_data()
 	Data.building_data = buildings
 #	print_every_item()
@@ -33,22 +32,20 @@ func import_shop_item_data():
 			var id = int(item_data[0])
 			var build_name = item_data[1]
 			var type = item_data[2]
-			var value = item_data[3]
+			var value = int(item_data[3])
 			var sprite_path = item_data[4]
-			var unlocked = item_data[5]
+			var unlocked = bool(int(item_data[5]))
 			
 			# Store the item data in the dictionary
 			buildings[id] = {
+				"id": id,
 				"name": build_name,
 				"type": type,
 				"value": value,
 				"sprite_path": sprite_path,
 				"unlocked": unlocked,
 			}
-	
-	# Close the file
 	file_content.close()
-	print("Buildings loaded from tab-delimited file!")
 
 func load_from_file(path):
 	var file = FileAccess.open(path, FileAccess.READ)
