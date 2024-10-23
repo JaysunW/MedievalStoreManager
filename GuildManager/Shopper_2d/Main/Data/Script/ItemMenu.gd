@@ -16,11 +16,14 @@ func show_building_options(input):
 
 func fill_container():
 	var item_data = Data.item_data
+	print(item_data.keys())
 	for i in range(len(item_data)):
-			var new_container = item_container.instantiate()
-			parent_v_container.add_child(new_container)
-			new_container.get_pressed_signal().connect(chosen_container)
-			new_container.set_container_info(i, item_data[i])
+			print(i)
+			if item_data[i]["unlocked"]:
+				var new_container = item_container.instantiate()
+				parent_v_container.add_child(new_container)
+				new_container.get_pressed_signal().connect(chosen_container)
+				new_container.set_container_info(i, item_data[i])
 
 func chosen_container(pressed_container):
 	show_building_options(false)

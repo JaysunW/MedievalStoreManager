@@ -7,7 +7,6 @@ var shop_items = {}
 var txt_file_path = "res://CSV/shop_item.txt"
 
 func _ready():
-	# Load the tab-delimited data
 	import_shop_item_data()
 	Data.item_data = shop_items
 #	print_every_item()

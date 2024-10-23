@@ -65,7 +65,7 @@ func fill_shelf(content, input_amount):
 		content_data = input_data
 		content_data["amount"] = input_amount
 		skin.change_sprite(1)
-		show_content_icon.texture = load(content_data["sprite_path"])
+		show_content_icon.texture = Loader.texture(content_data["sprite_path"])
 		show_content_icon.visible = true
 		update_fill_progress(content_data)
 		return true

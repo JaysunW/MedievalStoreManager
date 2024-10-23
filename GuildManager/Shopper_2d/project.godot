@@ -23,6 +23,7 @@ BuildData="*res://Global/BuildDataLoader.gd"
 ItemData="*res://Global/ItemDataLoader.gd"
 Data="*res://Global/DataService.gd"
 Gold="*res://Global/GoldService.gd"
+Loader="*res://Global/LoadTexture.gd"
 
 [debug]
 

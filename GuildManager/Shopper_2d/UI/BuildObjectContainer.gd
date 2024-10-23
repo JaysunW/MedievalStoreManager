@@ -1,8 +1,7 @@
 extends MarginContainer
 
-@onready var item_icon_label = $MarginContainer/HBoxContainer/ItemIconLabel
-@onready var item_name_label = $MarginContainer/HBoxContainer/ItemNameLabel
-@onready var item_amount_label = $MarginContainer/HBoxContainer/ItemAmountLabel
+@onready var icon = $MarginContainer/HBoxContainer/Icon
+@onready var name_label = $MarginContainer/HBoxContainer/Name
 
 @onready var gold_icon = $MarginContainer/HBoxContainer/ValueGrid/GoldIcon
 @onready var gold_value_label = $MarginContainer/HBoxContainer/ValueGrid/GoldValueLabel
@@ -11,20 +10,20 @@ extends MarginContainer
 @onready var copper_icon = $MarginContainer/HBoxContainer/ValueGrid/CopperIcon
 @onready var copper_value_label = $MarginContainer/HBoxContainer/ValueGrid/CopperValueLabel
 
-@onready var item_object_container = $"."
+@onready var build_object_container = $"."
+
 
 var content_data
 var id
 signal pressed_button(MarginContainer)
 
 func set_container_info(input_id, data):
-	set_value(data["average_value"] * data["amount"])
 	id = input_id
 	content_data = data
-	item_icon_label.texture = load(data["sprite_path"])
-	item_name_label.text = data["name"]
-	item_amount_label.text = str(data["amount"]) + "x"
-	item_object_container.visible = true
+	icon.texture = Loader.texture(data["sprite_path"])
+	set_value(data["value"])
+	name_label.text = data["name"]
+	build_object_container.visible = true
 
 func set_value(value):
 	var copper_value = value % 1000
