@@ -1,0 +1,21 @@
+id	name	type	store_area	value	average_value	unlocked	sprite_path	amount	max_amount			
+0	Loaf of Bread	Food	Bakery	5	4	1	res://Asset/ShopItem/Bread.png	20	50			
+1	Bottle of Mead	Drink	Beverages	10	12	1	res://Asset/ShopItem/flask.png	15	30			
+2	Fresh Apple	Food	Produce	3	2	1	res://Asset/ShopItem/test1.png	50	100			
+3	Goat Cheese	Food	Dairy	8	9	1	res://Asset/ShopItem/test2.png	10	20			
+4	Leather Boots	Clothing	Apparel	30	28	0		5	10			
+5	Iron Sword	Weapon	Weapons	120	110	0		2	5			
+6	Herbal Potion	Medicine	Pharmacy	25	23	0		8	15			
+7	Spool of Wool	Material	Crafts	7	6	0		40	80			
+8	Wooden Shield	Armor	Armory	50	48	0		4	7			
+9	Honeycomb	Food	Produce	12	11	0		25	40			
+10	Clay Mug	Tool	Crafts	4	3	0		40	60			
+11	Dried Fish	Food	Bakery	9	8	0		30	60			
+12	Salted Meat	Food	Bakery	15	14	0		10	20			
+13	Magic Scroll	Craft	Crafts	50	52	0		5	10			
+14	Candle	Tool	Crafts	5	6	0		60	100			
+15	Fur Coat	Clothing	Apparel	80	75	0		3	7			
+16	Silver Ring	Craft	Crafts	30	28	0		8	15			
+17	Herbs	Medicine	Pharmacy	8	9	0		30	50			
+18	Flint	Tool	Crafts	12	11	0		20	40			
+19	Wheat Flour	Food	Bakery	5	4	0		50	100			

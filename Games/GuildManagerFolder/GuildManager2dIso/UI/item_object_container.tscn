@@ -1,0 +1,155 @@
+[gd_scene load_steps=7 format=3 uid="uid://xpw4hvu00bc2"]
+
+[ext_resource type="Theme" uid="uid://cyx5vjugx1lim" path="res://Theme/our_theme.tres" id="1_0jljd"]
+[ext_resource type="Script" path="res://UI/item_object_container.gd" id="1_kdh3a"]
+[ext_resource type="Texture2D" uid="uid://k0vhp18yjf7o" path="res://Asset/ShopItem/Bread.png" id="1_tr2il"]
+[ext_resource type="Texture2D" uid="uid://df160aemdaqim" path="res://Asset/UI/ui_value_gold.png" id="3_m3ch2"]
+[ext_resource type="Texture2D" uid="uid://bwkmwhg7gn8yi" path="res://Asset/UI/ui_value_silver.png" id="4_j7emg"]
+[ext_resource type="Texture2D" uid="uid://di0q3sninmdyc" path="res://Asset/UI/ui_value_copper.png" id="5_b6qi6"]
+
+[node name="ItemObjectContainer" type="MarginContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+script = ExtResource("1_kdh3a")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="ItemIconLabel" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_tr2il")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="ItemNameLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_0jljd")
+theme_override_font_sizes/font_size = 32
+text = "Bread"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="ItemAmountLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_0jljd")
+theme_override_font_sizes/font_size = 32
+text = "10x
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="ValueGrid" type="GridContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 0
+columns = 2
+
+[node name="GoldIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/ValueGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("3_m3ch2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GoldValueLabel" type="Label" parent="MarginContainer/HBoxContainer/ValueGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SilverIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/ValueGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_j7emg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SilverValueLabel" type="Label" parent="MarginContainer/HBoxContainer/ValueGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CopperIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/ValueGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_b6qi6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CopperValueLabel" type="Label" parent="MarginContainer/HBoxContainer/ValueGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_0jljd")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed" flags=18]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://df4ydop0drcb6"]
+
+[ext_resource type="Script" path="res://Main/Data/player.gd" id="1_jxek3"]
+[ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Main/Asset/player.png" id="2_ijekl"]
+[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Main/Asset/shelf.png" id="3_mw8yb"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_greso"]
+radius = 9.0
+height = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hw5ml"]
+size = Vector2(16, 2)
+
+[node name="Player" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_jxek3")
+
+[node name="Skin" type="Sprite2D" parent="."]
+texture = ExtResource("2_ijekl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_greso")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 2)
+zoom = Vector2(2, 2)
+
+[node name="DetectShelf" type="Area2D" parent="."]
+position = Vector2(0, 7)
+
+[node name="Sprite2D" type="Sprite2D" parent="DetectShelf"]
+position = Vector2(16, 1)
+scale = Vector2(0.5, 0.06)
+texture = ExtResource("3_mw8yb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectShelf"]
+position = Vector2(15.8, 1.176)
+shape = SubResource("RectangleShape2D_hw5ml")

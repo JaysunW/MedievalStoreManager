@@ -1,0 +1,31 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cyx5vjugx1lim"]
+
+[ext_resource type="Texture2D" uid="uid://dgpsa2pa4ykdk" path="res://Asset/UI/back.png" id="1_4uv2m"]
+[ext_resource type="FontFile" uid="uid://cs6su17sbp8a5" path="res://Font/public-pixel-font/PublicPixel-rv0pA.ttf" id="1_imilp"]
+[ext_resource type="Texture2D" uid="uid://dbyb3pkehpgwp" path="res://Asset/UI/button_background.png" id="1_rrt12"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ttsgj"]
+texture = ExtResource("1_rrt12")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ffgij"]
+texture = ExtResource("1_4uv2m")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ele0h"]
+texture = ExtResource("1_4uv2m")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[resource]
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("1_imilp")
+Button/styles/normal = SubResource("StyleBoxTexture_ttsgj")
+Label/font_sizes/font_size = 20
+Label/fonts/font = ExtResource("1_imilp")
+Panel/styles/panel = SubResource("StyleBoxTexture_ffgij")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_ele0h")

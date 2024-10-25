@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://df4ydop0drcb6"]
+
+[ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Main/Asset/player.png" id="2_ijekl"]
+[ext_resource type="Script" path="res://Main/Data/DetectObject.gd" id="3_braq7"]
+[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Main/Asset/shelf.png" id="3_mw8yb"]
+[ext_resource type="PackedScene" uid="uid://b2jmi67en200t" path="res://Main/Component/interaction_component.tscn" id="4_qjjmn"]
+[ext_resource type="Script" path="res://Main/Data/movePlayer.gd" id="5_d51ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oqcdq"]
+size = Vector2(20, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eetes"]
+size = Vector2(22, 13)
+
+[node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="MovePlayer" type="Node2D" parent="."]
+script = ExtResource("5_d51ro")
+
+[node name="Skin" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture = ExtResource("2_ijekl")
+offset = Vector2(0, -16)
+
+[node name="Collision" type="CollisionShape2D" parent="." groups=["Player"]]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_oqcdq")
+
+[node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("interactionComponent")]
+position = Vector2(0, -14)
+script = ExtResource("3_braq7")
+interactionComponent = NodePath("../InteractionComponent")
+
+[node name="InteractionComponent" parent="." instance=ExtResource("4_qjjmn")]
+position = Vector2(0, -14)
+collision_mask = 192
+
+[node name="test" type="Sprite2D" parent="InteractionComponent"]
+position = Vector2(19, 0)
+scale = Vector2(0.6875, 0.40625)
+texture = ExtResource("3_mw8yb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionComponent"]
+position = Vector2(19, 0)
+shape = SubResource("RectangleShape2D_eetes")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -14)
+zoom = Vector2(2, 2)
