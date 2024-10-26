@@ -1,0 +1,30 @@
+Just open the game with UnderWater0000.console.exe and if anything unusual happens ("Dead" is a normal message in the console) tell me xD have fun
+and please send me the questionaire when you're done.
+
+Hey ho, 
+
+thanks for testing my game so I have an idea whether to continue working on it or try to put what I've learned into a better project.
+
+I don't have a tutorial or something similar so here are the controls:
+
+WASD / Arrow_keys = Movement
+O = direct change to store
+Q/E / Mouse Wheel = change tool
+Z / Y = delete save
+
+Some other info: 
+
+The idea of the game is that you are a diver trying to get as deep as possible to the bottom of the earth.
+On the way you have your trusty tools with you. 
+	1. your laser, which only destroys non-living matter in order to get deeper and deeper.
+	2. your knife to open shells, farm corals and weaken fish to catch them more easily with the net
+	3. your net to catch fish. The weaker they are, the easier it will be to catch them.
+
+Store: 
+There you can save and set off for the sea again. To see more tools, use the green and red buttons on the right.
+
+Goals that are not yet in the game, but are still there as an idea:
+More creatures to catch, your own aquarium to build, an encyclopedia with achivements, small missions with tasks, treasures and boss fights (giant calamari, giant shark).
+
+
+Thanks again for taking the time.

@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckatwb5xmwui7"]
+
+[ext_resource type="Script" path="res://Data/Player/Tools/net.gd" id="1_bipas"]
+[ext_resource type="Texture2D" uid="uid://k5ur2hsdgui3" path="res://Assets/Tools/Net/netmk1.png" id="2_kw7ba"]
+
+[node name="Net" type="Node2D"]
+script = ExtResource("1_bipas")
+
+[node name="RotationPoint" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="RotationPoint"]
+z_index = 45
+texture_filter = 1
+position = Vector2(-24, 24)
+rotation = 2.35619
+texture = ExtResource("2_kw7ba")
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="."]
+texture_filter = 1
+
+[node name="CollisionShape2D2" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2(24, 0)
+scale = Vector2(1, 1.125)
+polygon = PackedVector2Array(-10, 0, -12, 16, 8, 10, 15, 0, 8, -10, -12, -16)
+
+[node name="Cooldown" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]

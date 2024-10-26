@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://cuxyvumhpleil"]
+
+[ext_resource type="PackedScene" uid="uid://c5gi5yrtpkf61" path="res://Data/TileObjects/Alge_Object.tscn" id="1_fylm4"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="2_7gqhm"]
+[ext_resource type="PackedScene" uid="uid://dekafhbm1b1n5" path="res://Data/Player/character.tscn" id="4_k1b4t"]
+[ext_resource type="PackedScene" uid="uid://ix330rakblo1" path="res://Demo/FishDemo/Fish/special_fish.tscn" id="5_75q46"]
+[ext_resource type="Script" path="res://Demo/test.gd" id="5_pequy"]
+
+[node name="AlgeDemo" type="Node2D"]
+
+[node name="Alge" parent="." instance=ExtResource("1_fylm4")]
+position = Vector2(2, 0)
+
+[node name="Tile2" parent="." instance=ExtResource("2_7gqhm")]
+position = Vector2(172, 150)
+
+[node name="Character" parent="." instance=ExtResource("4_k1b4t")]
+position = Vector2(170, 88)
+start_underwater = true
+
+[node name="Tile3" parent="." instance=ExtResource("2_7gqhm")]
+position = Vector2(85, 134)
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("5_pequy")
+alge_scene = ExtResource("1_fylm4")
+special_fish_scene = ExtResource("5_75q46")
+
+[node name="Tile4" parent="." instance=ExtResource("2_7gqhm")]
+position = Vector2(32, 96)

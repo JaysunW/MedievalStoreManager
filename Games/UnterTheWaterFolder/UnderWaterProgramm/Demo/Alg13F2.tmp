@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuxyvumhpleil"]
+
+[ext_resource type="Script" path="res://Demo/AlgeDemo.gd" id="1_an8bp"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="2_7gqhm"]
+[ext_resource type="PackedScene" uid="uid://bchmogf0qba8j" path="res://Demo/AlgePart.tscn" id="2_khv32"]
+[ext_resource type="PackedScene" uid="uid://dekafhbm1b1n5" path="res://Data/Player/character.tscn" id="4_k1b4t"]
+[ext_resource type="Texture2D" uid="uid://cv38sx5410tnr" path="res://Assets/Alge1.png" id="4_x7rsn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ucxwq"]
+radius = 3.0
+height = 32.0
+
+[node name="AlgeDemo" type="Node2D"]
+
+[node name="Alge" type="Node2D" parent="."]
+script = ExtResource("1_an8bp")
+alge_scene = ExtResource("2_khv32")
+tile_scene = ExtResource("2_7gqhm")
+
+[node name="Tile2" parent="." instance=ExtResource("2_7gqhm")]
+position = Vector2(172, 150)
+
+[node name="Character" parent="." instance=ExtResource("4_k1b4t")]
+position = Vector2(170, 88)
+start_underwater = true
+
+[node name="Tile3" parent="." instance=ExtResource("2_7gqhm")]
+position = Vector2(85, 134)
+
+[node name="Part2" type="RigidBody2D" parent="."]
+texture_filter = 1
+position = Vector2(85, 105)
+gravity_scale = -0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Part2"]
+position = Vector2(0, 6.5)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CapsuleShape2D_ucxwq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Part2"]
+position = Vector2(0, 6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_x7rsn")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Part2"]
+position = Vector2(0, 14)
+node_a = NodePath("../../Part2")
+node_b = NodePath("../../Tile3")
+
+[node name="Part3" type="RigidBody2D" parent="."]
+texture_filter = 1
+position = Vector2(85, 89)
+gravity_scale = -0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Part3"]
+position = Vector2(0, 6.5)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CapsuleShape2D_ucxwq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Part3"]
+position = Vector2(0, 6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_x7rsn")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Part3"]
+position = Vector2(0, 14)
+node_a = NodePath("../../Part2")
+node_b = NodePath("..")
+
+[node name="Part4" type="RigidBody2D" parent="."]
+texture_filter = 1
+position = Vector2(85, 73)
+gravity_scale = -0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Part4"]
+position = Vector2(0, 6.5)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CapsuleShape2D_ucxwq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Part4"]
+position = Vector2(0, 6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_x7rsn")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Part4"]
+position = Vector2(0, 14)
+node_a = NodePath("../../Part3")
+node_b = NodePath("..")
+
+[node name="Part5" type="RigidBody2D" parent="."]
+texture_filter = 1
+position = Vector2(85, 57)
+gravity_scale = -1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Part5"]
+position = Vector2(0, 6.5)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CapsuleShape2D_ucxwq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Part5"]
+position = Vector2(0, 6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_x7rsn")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Part5"]
+position = Vector2(0, 14)
+node_a = NodePath("../../Part4")
+node_b = NodePath("..")

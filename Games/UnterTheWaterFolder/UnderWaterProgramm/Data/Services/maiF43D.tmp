@@ -1,0 +1,86 @@
+[gd_scene load_steps=14 format=3 uid="uid://c602dxf6mby3v"]
+
+[ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Data/Player/character.tscn" id="1_klg2i"]
+[ext_resource type="Script" path="res://Data/Services/GridService.gd" id="2_twuh3"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tile/tile.tscn" id="2_u78vr"]
+[ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="4_07dcn"]
+[ext_resource type="PackedScene" uid="uid://dy6r26f4dtep5" path="res://Data/TileObjects/coral_object.tscn" id="4_cy2t2"]
+[ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_g2ntc"]
+[ext_resource type="Script" path="res://Data/Services/DropService/DropService.gd" id="6_ngjs8"]
+[ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="6_rdp0a"]
+[ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Data/Services/DropService/drop.tscn" id="7_6kn8i"]
+[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Data/QualityOfLife/free_cam.tscn" id="10_bpfgd"]
+[ext_resource type="Script" path="res://Global/enums.gd" id="10_tj3ap"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewxhn"]
+size = Vector2(32, 24)
+
+[node name="Main" type="Node2D"]
+
+[node name="Character" parent="." instance=ExtResource("1_klg2i")]
+position = Vector2(32, 0)
+
+[node name="GridService" type="Node2D" parent="."]
+script = ExtResource("2_twuh3")
+tile = ExtResource("2_u78vr")
+coral_scene = ExtResource("4_cy2t2")
+
+[node name="AirBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -4
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("4_07dcn")
+
+[node name="AirArea" type="Area2D" parent="GridService/AirBackground"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridService/AirBackground/AirArea"]
+shape = SubResource("RectangleShape2D_28h5b")
+
+[node name="UpperWaterBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+texture = ExtResource("4_g2ntc")
+
+[node name="WaterArea" type="Area2D" parent="GridService/UpperWaterBackground"]
+monitorable = false
+
+[node name="collision" type="CollisionShape2D" parent="GridService/UpperWaterBackground/WaterArea"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ewxhn")
+
+[node name="WaterBackground" type="Sprite2D" parent="GridService"]
+z_index = -4
+texture_filter = 1
+position = Vector2(0, 32)
+texture = ExtResource("4_g2ntc")
+
+[node name="ChunkPerimeter" type="Line2D" parent="GridService"]
+width = 5.0
+
+[node name="DarknesService" type="CanvasModulate" parent="."]
+visible = false
+texture_filter = 1
+script = ExtResource("6_rdp0a")
+light_offset = 4
+
+[node name="DropService" type="Node2D" parent="."]
+script = ExtResource("6_ngjs8")
+drop_scene = ExtResource("7_6kn8i")
+
+[node name="Enums" type="Node2D" parent="."]
+script = ExtResource("10_tj3ap")
+
+[node name="FreeCam" parent="." instance=ExtResource("10_bpfgd")]
+zoom = Vector2(0.3, 0.3)
+
+[connection signal="drop_at_pos" from="GridService" to="DropService" method="_on_grid_service_drop_at_pos"]
+[connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
+[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]
+[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="DropService" method="_on_water_area_body_entered"]
+[connection signal="child_exiting_tree" from="DropService" to="DropService" method="_on_child_exiting_tree"]

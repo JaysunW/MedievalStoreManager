@@ -1,31 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://fvle76aosgsx"]
+[gd_scene load_steps=5 format=3 uid="uid://fvle76aosgsx"]
 
 [ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/Scene/Building/main_stand.tscn" id="1_q38e0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwi86"]
-size = Vector2(32, 9)
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_6u5e7"]
+points = PackedVector2Array(0, 0, 16, 8, 0, 16, -16, 8)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rkoq"]
-size = Vector2(32, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_yd7x5"]
+radius = 16.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ufca0"]
-
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_nmni0"]
-points = PackedVector2Array(0, 0, 16, 8, 0, 16, -16, 8)
 
 [node name="Shelf" instance=ExtResource("1_q38e0")]
 
 [node name="Collision" parent="." index="1"]
-position = Vector2(0, -4.5)
-shape = SubResource("RectangleShape2D_uwi86")
+position = Vector2(0, -16)
+shape = SubResource("ConvexPolygonShape2D_6u5e7")
 
 [node name="CollisionShape2D" parent="InteractionObjectComponent" index="0"]
-shape = SubResource("RectangleShape2D_0rkoq")
+shape = SubResource("CircleShape2D_yd7x5")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="7"]
 position = Vector2(1, 45)
 texture = SubResource("CompressedTexture2D_ufca0")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="8"]
-position = Vector2(1, 45)
-shape = SubResource("ConvexPolygonShape2D_nmni0")

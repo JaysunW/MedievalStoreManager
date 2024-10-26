@@ -1,0 +1,102 @@
+[gd_scene load_steps=17 format=3 uid="uid://c602dxf6mby3v"]
+
+[ext_resource type="PackedScene" uid="uid://dekafhbm1b1n5" path="res://Data/Player/character.tscn" id="1_8j5xq"]
+[ext_resource type="Script" path="res://Data/Services/GridService.gd" id="2_drna8"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="3_1e0hx"]
+[ext_resource type="PackedScene" uid="uid://bpn6b7t822f3q" path="res://Data/TileObjects/CoralObject.tscn" id="4_ur48h"]
+[ext_resource type="PackedScene" uid="uid://c3d4vuyyy45hp" path="res://Data/TileObjects/ShellObject.tscn" id="5_53wkk"]
+[ext_resource type="Texture2D" uid="uid://bol5of6lqrnsa" path="res://Assets/Shell/Shell1.png" id="6_8r24h"]
+[ext_resource type="PackedScene" uid="uid://c5gi5yrtpkf61" path="res://Data/TileObjects/Alge_Object.tscn" id="6_nj0je"]
+[ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="7_as42b"]
+[ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="8_tou7g"]
+[ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="9_fr8l2"]
+[ext_resource type="Script" path="res://Global/enums.gd" id="10_r583f"]
+[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="11_4mook"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cntie"]
+
+[sub_resource type="PackedScene" id="PackedScene_gtapn"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("RigidBody2D", "RigidBody2D", "CollisionShape2D", "CollisionShape2D", "shape", "Sprite2D", "Sprite2D", "texture"),
+"node_count": 3,
+"node_paths": [NodePath("."), NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 0, 0, 1073741824, 0, 3, 2, -1, 1, 4, 0, 0, 1073741825, 0, 6, 5, -1, 1, 7, 1, 0),
+"variants": [SubResource("RectangleShape2D_cntie"), ExtResource("6_8r24h")],
+"version": 3
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewxhn"]
+size = Vector2(32, 24)
+
+[node name="Main" type="Node2D"]
+
+[node name="Character" parent="." instance=ExtResource("1_8j5xq")]
+position = Vector2(32, 0)
+free_cam_active = true
+
+[node name="GridService" type="Node2D" parent="."]
+script = ExtResource("2_drna8")
+tile_scene = ExtResource("3_1e0hx")
+coral_scene = ExtResource("4_ur48h")
+shell_scene = ExtResource("5_53wkk")
+alge_scene = ExtResource("6_nj0je")
+test_scene = SubResource("PackedScene_gtapn")
+width = 50
+height = 100
+show_every_tile = true
+
+[node name="AirBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -4
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("7_as42b")
+
+[node name="AirArea" type="Area2D" parent="GridService/AirBackground"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridService/AirBackground/AirArea"]
+shape = SubResource("RectangleShape2D_28h5b")
+
+[node name="UpperWaterBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+texture = ExtResource("8_tou7g")
+
+[node name="WaterArea" type="Area2D" parent="GridService/UpperWaterBackground"]
+monitorable = false
+
+[node name="collision" type="CollisionShape2D" parent="GridService/UpperWaterBackground/WaterArea"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ewxhn")
+
+[node name="WaterBackground" type="Sprite2D" parent="GridService"]
+z_index = -4
+texture_filter = 1
+position = Vector2(0, 32)
+texture = ExtResource("8_tou7g")
+
+[node name="ChunkPerimeter" type="Line2D" parent="GridService"]
+width = 5.0
+
+[node name="DarknesService" type="CanvasModulate" parent="."]
+process_mode = 4
+texture_filter = 1
+script = ExtResource("9_fr8l2")
+light_offset = 4
+
+[node name="Enums" type="Node2D" parent="."]
+script = ExtResource("10_r583f")
+
+[node name="FreeCam" parent="." instance=ExtResource("11_4mook")]
+zoom = Vector2(0.2, 0.2)
+
+[connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
+[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]

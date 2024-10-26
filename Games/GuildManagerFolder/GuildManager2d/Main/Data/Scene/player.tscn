@@ -66,11 +66,12 @@ modulate = Color(1, 1, 1, 0.392157)
 scale = Vector2(0.6875, 0.8125)
 texture = ExtResource("5_2l4kb")
 
-[node name="InteractShelfTimer" type="Timer" parent="."]
+[node name="InteractTimer" type="Timer" parent="."]
 wait_time = 0.25
 one_shot = true
 
 [node name="FixedUIHeldObject" type="CanvasLayer" parent="." node_paths=PackedStringArray("item_icon", "item_current_amount", "item_amount")]
+layer = 0
 script = ExtResource("6_dthbu")
 item_icon = NodePath("DisplayContainer/Display/HBoxContainer/ItemIcon")
 item_current_amount = NodePath("DisplayContainer/Display/HBoxContainer/VBoxContainer/ItemCurrentAmount")
@@ -164,6 +165,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 
 [node name="FixedUIGold" type="CanvasLayer" parent="." node_paths=PackedStringArray("gold_label", "silver_label", "copper_label", "color_flash_timer")]
+layer = 0
 script = ExtResource("10_bko3j")
 gold_label = NodePath("GoldUI/MarginContainer/GridContainer/GoldValue")
 silver_label = NodePath("GoldUI/MarginContainer/GridContainer/SilverValue")
@@ -265,6 +267,7 @@ vertical_alignment = 1
 [node name="ColorFlashTimer" type="Timer" parent="FixedUIGold"]
 
 [node name="UIStandInfo" type="CanvasLayer" parent="." node_paths=PackedStringArray("buildNameLabel", "itemNameLabel", "marketValueLabel", "currentValueLabel")]
+layer = 0
 visible = false
 script = ExtResource("14_4wo3i")
 buildNameLabel = NodePath("InfoContainer/MarginContainer/VBoxContainer/BuildNameLayer/BuildName")
@@ -442,7 +445,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[connection signal="timeout" from="InteractShelfTimer" to="HandleObject" method="_on_fill_shelf_timer_timeout" flags=18]
+[connection signal="timeout" from="InteractTimer" to="HandleObject" method="_on_fill_shelf_timer_timeout" flags=18]
 [connection signal="timeout" from="FixedUIGold/ColorFlashTimer" to="FixedUIGold" method="_on_color_flash_timer_timeout"]
 [connection signal="closed_stand_info" from="UIStandInfo" to="MovePlayer" method="_on_ui_stand_info_closed_stand_info"]
 [connection signal="opened_stand_info" from="UIStandInfo" to="MovePlayer" method="_on_ui_stand_info_opened_stand_info"]

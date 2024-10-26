@@ -5,7 +5,7 @@ extends Node2D
 @export var interaction_component : Area2D 
 @export var move_component : Node2D
 
-@onready var interact_shelf_timer = $"../InteractShelfTimer"
+@onready var interact_timer = $"../InteractTimer"
 
 var last_move_direction = Vector2.ZERO
 var object_distance = Vector2(20,20)
@@ -27,6 +27,8 @@ func _process(_delta):
 	if not is_holding_object:
 		if Input.is_action_just_pressed("e"):
 			interact_with_object()
+		if Input.is_action_pressed("e"):
+			work_checkout()
 	else:
 		held_object.position = global_position + object_distance * last_move_direction + held_object_offset
 		if Input.is_action_just_pressed("e"):
@@ -36,12 +38,17 @@ func interact_with_object():
 	var objects = interaction_component.get_interactable_object()
 	var found_package_list = []
 	var found_stand_list = []
+	var found_interface = null
 	for object in objects:
 		if object.is_in_group("Content"):
 			found_package_list.append(object.get_main_object())
 		elif object.is_in_group("Stand"):
 			found_stand_list.append(object.get_main_object())
-	if not found_package_list.is_empty():
+		elif object.is_in_group("ItemInterface"):
+			found_interface = object.get_main_object()
+	if found_interface:
+		found_interface.open_item_store()
+	elif not found_package_list.is_empty():
 		hold_object(find_nearest_object(found_package_list))
 	elif not found_stand_list.is_empty():
 		var filled_stand_list = []
@@ -53,10 +60,19 @@ func interact_with_object():
 				UI.is_free(false)
 				var nearest_stand = find_nearest_object(filled_stand_list)
 				stand_info_ui.set_stand_info(nearest_stand.data, nearest_stand.content_data["id"])
-			
+
+func work_checkout():
+	var objects = interaction_component.get_interactable_object()
+	var found_checkout_list = []
+	for object in objects:
+		if object.is_in_group("Checkout"):
+			found_checkout_list.append(object.get_main_object())
+	if not found_checkout_list.is_empty():
+		find_nearest_object(found_checkout_list).work_on_queue()
+	
 
 func take_from_shelf():
-	if interact_shelf_timer.is_stopped():
+	if interact_timer.is_stopped():
 		var objects = interaction_component.get_interactable_object()
 		var found_stand_list = []
 		for object in objects:
@@ -73,13 +89,13 @@ func take_from_shelf():
 					var new_object = stand.get_content_instance()
 					new_object.data["amount"] = 1
 					hold_object(new_object)
-					interact_shelf_timer.start()
+					interact_timer.start()
 					stand.take_from_shelf(1)
 				elif held_object.data["id"] == stand.content_data["id"] and held_object.data["amount"] != held_object.data["max_amount"]:
 					stand.take_from_shelf(1)
 					held_object.data["amount"] += 1
 					held_object_ui.set_held_object_data(held_object.data)
-					interact_shelf_timer.start()
+					interact_timer.start()
 			
 func held_object_and_interact():
 	var objects = interaction_component.get_interactable_object()
@@ -93,11 +109,11 @@ func held_object_and_interact():
 		drop_object()
 	
 func fill_shelf(found_stand_list):
-	if interact_shelf_timer.is_stopped():
+	if interact_timer.is_stopped():
 		var stand = find_nearest_object(found_stand_list)
 		var filled_stand = stand.fill_shelf(held_object, 1,)
 		if filled_stand:
-			interact_shelf_timer.start()
+			interact_timer.start()
 			held_object.data["amount"] -= 1
 			if held_object.data["amount"] <= 0:
 				drop_object(false)
@@ -109,7 +125,9 @@ func hold_object(object):
 	held_object = object
 	held_object_ui.set_held_object_data(held_object.data)
 	object.change_hold_mode(true)
-		
+
+
+
 func drop_object(is_not_stored=true):
 	is_holding_object = false
 	held_object.position = global_position + object_distance * last_move_direction + Vector2(0, 16)

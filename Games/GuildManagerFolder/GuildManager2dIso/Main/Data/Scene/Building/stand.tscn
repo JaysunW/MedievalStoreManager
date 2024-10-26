@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bjajhnqhdyvjf" path="res://Asset/Building/stand.png" id="2_y7ktg"]
 [ext_resource type="Texture2D" uid="uid://d37crr5faqbhg" path="res://Asset/filled_shelf.png" id="3_t880w"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wcxh"]
-size = Vector2(20, 9)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nspww"]
+radius = 6.0
+height = 20.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x74ds"]
 
@@ -16,8 +17,9 @@ texture = ExtResource("2_y7ktg")
 sprites = Array[Texture2D]([ExtResource("2_y7ktg"), ExtResource("3_t880w")])
 
 [node name="Collision" parent="." index="1"]
-position = Vector2(0, -4.5)
-shape = SubResource("RectangleShape2D_4wcxh")
+position = Vector2(0, -7)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_nspww")
 
 [node name="CollisionShape2D" parent="InteractionObjectComponent" index="0"]
 position = Vector2(0, 6)

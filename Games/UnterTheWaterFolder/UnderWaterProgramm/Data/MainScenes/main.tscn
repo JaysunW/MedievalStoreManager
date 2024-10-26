@@ -1,0 +1,135 @@
+[gd_scene load_steps=22 format=3 uid="uid://c602dxf6mby3v"]
+
+[ext_resource type="PackedScene" uid="uid://dekafhbm1b1n5" path="res://Data/Player/character.tscn" id="1_8j5xq"]
+[ext_resource type="Script" path="res://Data/Services/grid_service.gd" id="2_gab70"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Data/Tiles/tile.tscn" id="3_1e0hx"]
+[ext_resource type="PackedScene" uid="uid://bpn6b7t822f3q" path="res://Data/TileObjects/CoralObject.tscn" id="4_ur48h"]
+[ext_resource type="PackedScene" uid="uid://c3d4vuyyy45hp" path="res://Data/TileObjects/ShellObject.tscn" id="5_53wkk"]
+[ext_resource type="Texture2D" uid="uid://bol5of6lqrnsa" path="res://Assets/Shell/Shell1.png" id="6_8r24h"]
+[ext_resource type="PackedScene" uid="uid://c5gi5yrtpkf61" path="res://Data/TileObjects/Alge_Object.tscn" id="6_nj0je"]
+[ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="7_as42b"]
+[ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="8_tou7g"]
+[ext_resource type="Script" path="res://Data/Services/DarknesService.gd" id="9_fr8l2"]
+[ext_resource type="Script" path="res://Global/enums.gd" id="10_r583f"]
+[ext_resource type="PackedScene" uid="uid://cge4uvg2muk3s" path="res://Debug/free_cam.tscn" id="11_4mook"]
+[ext_resource type="Script" path="res://Data/Services/FishService.gd" id="13_d7xu8"]
+[ext_resource type="PackedScene" uid="uid://cy1hmipt4g5ar" path="res://Data/Fish/fish.tscn" id="14_y6u34"]
+[ext_resource type="PackedScene" uid="uid://g1y668ftpdlu" path="res://Data/Fish/predator_fish.tscn" id="15_dvjsy"]
+[ext_resource type="PackedScene" uid="uid://ix330rakblo1" path="res://Data/Fish/debug_fish.tscn" id="16_2m68w"]
+[ext_resource type="PackedScene" uid="uid://bohfgh7o00pg6" path="res://Data/Fish/debug_predator_fish.tscn" id="17_ih1nr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cntie"]
+
+[sub_resource type="PackedScene" id="PackedScene_gtapn"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("RigidBody2D", "RigidBody2D", "CollisionShape2D", "CollisionShape2D", "shape", "Sprite2D", "Sprite2D", "texture"),
+"node_count": 3,
+"node_paths": [NodePath("."), NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 0, 0, 1073741824, 0, 3, 2, -1, 1, 4, 0, 0, 1073741825, 0, 6, 5, -1, 1, 7, 1, 0),
+"variants": [SubResource("RectangleShape2D_cntie"), ExtResource("6_8r24h")],
+"version": 3
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewxhn"]
+size = Vector2(32, 24)
+
+[node name="Main" type="Node2D"]
+
+[node name="Character" parent="." groups=["OBSTACLE"] instance=ExtResource("1_8j5xq")]
+position = Vector2(32, 0)
+
+[node name="GridService" type="Node2D" parent="."]
+script = ExtResource("2_gab70")
+tile_scene = ExtResource("3_1e0hx")
+coral_scene = ExtResource("4_ur48h")
+shell_scene = ExtResource("5_53wkk")
+alge_scene = ExtResource("6_nj0je")
+test_scene = SubResource("PackedScene_gtapn")
+width = 80
+chunk_width = 15
+chunk_height = 15
+show_chunks = false
+show_fish_placement = false
+
+[node name="AirBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -4
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("7_as42b")
+
+[node name="AirArea" type="Area2D" parent="GridService/AirBackground"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridService/AirBackground/AirArea"]
+shape = SubResource("RectangleShape2D_28h5b")
+
+[node name="UpperWaterBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+texture = ExtResource("8_tou7g")
+
+[node name="WaterArea" type="Area2D" parent="GridService/UpperWaterBackground"]
+monitorable = false
+
+[node name="collision" type="CollisionShape2D" parent="GridService/UpperWaterBackground/WaterArea"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ewxhn")
+
+[node name="WaterBackground" type="Sprite2D" parent="GridService"]
+z_index = -4
+texture_filter = 1
+position = Vector2(0, 32)
+texture = ExtResource("8_tou7g")
+
+[node name="ChunkPerimeter" type="Line2D" parent="GridService"]
+width = 5.0
+
+[node name="Test" type="Line2D" parent="GridService"]
+z_index = 100
+width = 3.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="BorderArea" type="Line2D" parent="GridService"]
+z_index = 2000
+default_color = Color(0.827451, 0, 1, 1)
+
+[node name="DarknesService" type="CanvasModulate" parent="."]
+texture_filter = 1
+color = Color(0.564706, 0.564706, 0.564706, 1)
+script = ExtResource("9_fr8l2")
+light_offset = 4
+
+[node name="Enums" type="Node2D" parent="."]
+script = ExtResource("10_r583f")
+
+[node name="FreeCam" parent="." instance=ExtResource("11_4mook")]
+modulate = Color(0, 0, 0, 1)
+zoom = Vector2(0.2, 0.2)
+
+[node name="FishService" type="Node2D" parent="."]
+script = ExtResource("13_d7xu8")
+fish_scene = ExtResource("14_y6u34")
+predator_scene = ExtResource("15_dvjsy")
+special_fish_scene = ExtResource("16_2m68w")
+special_predator_scene = ExtResource("17_ih1nr")
+
+[node name="FishSpawnTimer" type="Timer" parent="FishService"]
+wait_time = 0.5
+autostart = true
+
+[node name="FishDespawnTimer" type="Timer" parent="FishService"]
+wait_time = 10.0
+autostart = true
+
+[connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
+[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]
+[connection signal="timeout" from="FishService/FishSpawnTimer" to="FishService" method="_on_fish_spawn_timer_timeout"]
+[connection signal="timeout" from="FishService/FishDespawnTimer" to="FishService" method="_on_fish_despawn_timer_timeout"]

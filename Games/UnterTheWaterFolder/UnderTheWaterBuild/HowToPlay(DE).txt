@@ -1,0 +1,30 @@
+Just open the game with UnderWater0000.console.exe and if anything unusual happens ("Dead" is a normal message in the console) tell me xD have fun
+and please send me the questionaire when you're done.
+
+Hey ho, 
+
+danke, dass du mein Spiel testest damit ich ne Idee davon habe, ob ich daran weiterarbeite oder versuche das Gelernte in einer besseres Projekt zu stecken.
+
+Ich hab bis jetzt kein Tutorial oder ähnliches deswegen hier erstmal die Controls:
+
+WASD / Arrow_keys = Movement
+O = direct change to shop
+Q/E / Mouse Wheel = change tool
+Z / Y = delete save
+
+Sonst noch paar Infos: 
+
+Der Gedanke des Games ist, dass du ein Taucher bist der versucht so tief wie möglich zum Grund der Erde zu kommen.
+Auf dem Weg hast du deine Werkzeuge des Vertrauens dabei. 
+	1. Deinen Laser, welcher nur nicht lebende Materie zerstört, um immer tiefer zu kommen.
+	2. Dein Messer zum öffnen von Muscheln, farmen von Corallen und schwächen von Fischen, um sie mit dem Netz einfacher zu fangen
+	3. Dein Netz um Fische zu fangen. So schwächer sie sind um so einfacher wird es sie zu fangen.
+
+Shop: 
+Dort kannst du speichern und auch wieder zum Meer aufbrechen. Um mehr werkzeuge zu sehen nutze die grünen und roten Knöpfe rechts.
+
+Ziele welche noch nicht im Game sind, aber noch als Idee da sind:
+Mehr Lebewesen zum fangen, ein eigenes Aquarium zum aufbauen, ein Lexikon mit Achivements, kleine Mission mit Aufgaben, Schätze und Bosskämpfe ( Riesen Kalamaris, Riesen Hai)
+
+
+Vielen dank nochmal dafür das du dir die Zeit nimmst.

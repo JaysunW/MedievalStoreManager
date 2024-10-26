@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://bohfgh7o00pg6"]
+
+[ext_resource type="Script" path="res://Data/Fish/debug_predator_fish.gd" id="1_qfeag"]
+[ext_resource type="PackedScene" uid="uid://g1y668ftpdlu" path="res://Data/Fish/predator_fish.tscn" id="1_tip6p"]
+
+[node name="Fish" instance=ExtResource("1_tip6p")]
+script = ExtResource("1_qfeag")
+
+[node name="LineToNearFish" type="Line2D" parent="." index="7"]
+width = 2.0
+
+[node name="CenterOfFish" type="Line2D" parent="." index="8"]
+width = 2.0
+default_color = Color(0, 1, 1, 1)
+
+[node name="Separation" type="Line2D" parent="." index="9"]
+width = 2.0
+default_color = Color(1, 0, 0.0156863, 1)
+
+[node name="Aligment" type="Line2D" parent="." index="10"]
+width = 2.0
+default_color = Color(0.0627451, 0, 0.960784, 1)
+
+[node name="Direction" type="Line2D" parent="." index="11"]
+width = 2.0
+default_color = Color(0.0823529, 1, 0.427451, 1)
+
+[node name="Obstacle" type="Line2D" parent="." index="12"]
+width = 1.0
+default_color = Color(0.447059, 0, 0.960784, 1)
+
+[node name="Target" type="Line2D" parent="." index="13"]
+width = 1.0
+default_color = Color(1, 0, 0.960784, 1)
+
+[node name="Bite" type="Line2D" parent="." index="14"]
+width = 1.0
+default_color = Color(0.788235, 0.576471, 0.00784314, 1)

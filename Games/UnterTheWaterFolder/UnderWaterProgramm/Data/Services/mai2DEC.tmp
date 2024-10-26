@@ -1,0 +1,126 @@
+[gd_scene load_steps=12 format=3 uid="uid://c602dxf6mby3v"]
+
+[ext_resource type="PackedScene" uid="uid://cj3qcpwgq17ov" path="res://Scenes/character.tscn" id="1_klg2i"]
+[ext_resource type="Script" path="res://Scripts/GridService.gd" id="2_twuh3"]
+[ext_resource type="PackedScene" uid="uid://cg528oaldf8sw" path="res://Scenes/tile.tscn" id="2_u78vr"]
+[ext_resource type="Texture2D" uid="uid://krxkmxjhalhm" path="res://Assets/Air_Back.png" id="4_07dcn"]
+[ext_resource type="Texture2D" uid="uid://2t0dg3c8h3hn" path="res://Assets/Water_Back.png" id="4_g2ntc"]
+[ext_resource type="Script" path="res://Scripts/ChunkDemo.gd" id="5_6qjot"]
+[ext_resource type="Script" path="res://Scripts/DropService.gd" id="6_ngjs8"]
+[ext_resource type="PackedScene" uid="uid://d28qtts1580g6" path="res://Scenes/drop.tscn" id="7_6kn8i"]
+[ext_resource type="Script" path="res://Scripts/enums.gd" id="8_n5caj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_28h5b"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewxhn"]
+size = Vector2(32, 24)
+
+[node name="Main" type="Node2D"]
+
+[node name="Character" parent="." instance=ExtResource("1_klg2i")]
+position = Vector2(32, 0)
+
+[node name="ChunkDemo" type="Node2D" parent="."]
+script = ExtResource("5_6qjot")
+tile = ExtResource("2_u78vr")
+width = 600
+height = 400
+
+[node name="AirBackground" type="Sprite2D" parent="ChunkDemo"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -4
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("4_07dcn")
+
+[node name="AirArea" type="Area2D" parent="ChunkDemo/AirBackground"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkDemo/AirBackground/AirArea"]
+shape = SubResource("RectangleShape2D_28h5b")
+
+[node name="UpperWaterBackground" type="Sprite2D" parent="ChunkDemo"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+texture = ExtResource("4_g2ntc")
+
+[node name="WaterArea" type="Area2D" parent="ChunkDemo/UpperWaterBackground"]
+monitorable = false
+
+[node name="collision" type="CollisionShape2D" parent="ChunkDemo/UpperWaterBackground/WaterArea"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ewxhn")
+
+[node name="WaterBackground" type="Sprite2D" parent="ChunkDemo"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+position = Vector2(0, 32)
+texture = ExtResource("4_g2ntc")
+
+[node name="GridService" type="Node2D" parent="."]
+process_mode = 4
+visible = false
+script = ExtResource("2_twuh3")
+tile = ExtResource("2_u78vr")
+width = 80
+height = 250
+chunk_width = null
+chunk_height = null
+noise_seed = null
+
+[node name="AirBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.498039)
+z_index = -4
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("4_07dcn")
+
+[node name="AirArea" type="Area2D" parent="GridService/AirBackground"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GridService/AirBackground/AirArea"]
+shape = SubResource("RectangleShape2D_28h5b")
+
+[node name="UpperWaterBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+texture = ExtResource("4_g2ntc")
+
+[node name="WaterArea" type="Area2D" parent="GridService/UpperWaterBackground"]
+monitorable = false
+
+[node name="collision" type="CollisionShape2D" parent="GridService/UpperWaterBackground/WaterArea"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ewxhn")
+
+[node name="WaterBackground" type="Sprite2D" parent="GridService"]
+self_modulate = Color(1, 1, 1, 0.470588)
+z_index = -4
+texture_filter = 1
+position = Vector2(0, 32)
+texture = ExtResource("4_g2ntc")
+
+[node name="Darkness" type="CanvasModulate" parent="."]
+texture_filter = 1
+
+[node name="DropService" type="Node2D" parent="."]
+script = ExtResource("6_ngjs8")
+drop_scene = ExtResource("7_6kn8i")
+
+[node name="Enums" type="Node2D" parent="."]
+script = ExtResource("8_n5caj")
+
+[connection signal="child_exiting_tree" from="ChunkDemo" to="ChunkDemo" method="_on_child_exiting_tree"]
+[connection signal="body_entered" from="ChunkDemo/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
+[connection signal="body_entered" from="ChunkDemo/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]
+[connection signal="body_entered" from="ChunkDemo/UpperWaterBackground/WaterArea" to="DropService" method="_on_water_area_body_entered"]
+[connection signal="child_exiting_tree" from="GridService" to="GridService" method="_on_child_exiting_tree"]
+[connection signal="drop_at_pos" from="GridService" to="DropService" method="_on_grid_service_drop_at_pos"]
+[connection signal="body_entered" from="GridService/AirBackground/AirArea" to="Character" method="_on_air_area_body_entered"]
+[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="Character" method="_on_water_area_body_entered"]
+[connection signal="body_entered" from="GridService/UpperWaterBackground/WaterArea" to="DropService" method="_on_water_area_body_entered"]
+[connection signal="child_exiting_tree" from="DropService" to="DropService" method="_on_child_exiting_tree"]

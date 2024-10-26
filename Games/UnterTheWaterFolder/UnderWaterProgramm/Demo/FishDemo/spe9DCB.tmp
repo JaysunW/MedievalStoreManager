@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://buv04q324dya1"]
+
+[ext_resource type="PackedScene" uid="uid://d05piednn1a83" path="res://Scenes/Demo/Fish_demo/fish.tscn" id="1_8j0di"]
+[ext_resource type="Script" path="res://Scripts/special_fish.gd" id="2_yqulw"]
+[ext_resource type="Texture2D" uid="uid://p8oe5kcawhbn" path="res://Assets/Fish/clownfish.png" id="3_p5vor"]
+
+[node name="Fish" instance=ExtResource("1_8j0di")]
+script = ExtResource("2_yqulw")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("3_p5vor")
+
+[node name="Line2D" type="Line2D" parent="." index="4"]

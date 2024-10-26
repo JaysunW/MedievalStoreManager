@@ -3,6 +3,13 @@ extends Node
 signal changed_gold_amount
 signal flash(Color)
 
+func has_enough_gold(value):
+	var current_gold = Data.player_data["gold"]
+	var new_gold = current_gold - value
+	if new_gold < 0:
+		return false
+	return true
+
 func pay(value):
 	var current_gold = Data.player_data["gold"]
 	var new_gold = current_gold - value

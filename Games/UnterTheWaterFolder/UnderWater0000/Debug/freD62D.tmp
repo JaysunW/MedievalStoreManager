@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cge4uvg2muk3s"]
-
-[ext_resource type="Script" path="res://Scripts/FreeCam.gd" id="1_xwkpx"]
-
-[node name="FreeCam" type="Camera2D"]
-zoom = Vector2(0.5, 0.5)
-script = ExtResource("1_xwkpx")

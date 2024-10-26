@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://g1y668ftpdlu"]
+
+[ext_resource type="Script" path="res://Scripts/Demo/FishDemo/predator_fish.gd" id="1_vjev5"]
+[ext_resource type="Texture2D" uid="uid://b5ybidwpwk8a4" path="res://Assets/Fish/Piranha.png" id="2_2cj47"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtnho"]
+radius = 8.0
+height = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_65ytg"]
+radius = 64.0
+
+[node name="Fish" type="RigidBody2D"]
+texture_filter = 1
+position = Vector2(64, 64)
+gravity_scale = 0.0
+can_sleep = false
+script = ExtResource("1_vjev5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.4, 0.4)
+shape = SubResource("CapsuleShape2D_mtnho")
+
+[node name="DetectFish" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectFish"]
+shape = SubResource("CircleShape2D_65ytg")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_2cj47")
+
+[node name="OutOfRangeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="DetectFish" to="." method="_on_detect_fish_area_entered"]
+[connection signal="area_exited" from="DetectFish" to="." method="_on_detect_fish_area_exited"]
+[connection signal="body_entered" from="DetectFish" to="." method="_on_detect_fish_body_entered"]
+[connection signal="body_exited" from="DetectFish" to="." method="_on_detect_fish_body_exited"]
+[connection signal="timeout" from="OutOfRangeTimer" to="." method="_on_out_of_range_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]

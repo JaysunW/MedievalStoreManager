@@ -6,7 +6,7 @@ extends Node2D
 @export var placement_color = [Color(1,1,1,0.8), Color(1,0.4,0.4,1)]
 @export var stand_scenes : Dictionary
 
-var mouse_grid_offset = Vector2i(16,16)
+var mouse_grid_offset = Vector2i(16,8)
 var is_build_menu_open = false
 var is_building = false
 
@@ -30,11 +30,12 @@ func _process(_delta):
 		elif is_build_menu_open:
 			change_build_mode(false)
 			
+	var mouse_pos = get_global_mouse_position()
+	var tile_mouse_pos : Vector2i = build_map.local_to_map(mouse_pos)
+	var mouse_grid_pos = Vector2i(tile_mouse_pos.x * 16 + tile_mouse_pos.y * 16, - tile_mouse_pos.x * 8 + tile_mouse_pos.y * 8)
+	var tile_data : TileData = build_map.get_cell_tile_data(1, tile_mouse_pos)
+	print(mouse_grid_pos)
 	if is_build_menu_open:
-		var mouse_pos = get_global_mouse_position()
-		var tile_mouse_pos : Vector2i = build_map.local_to_map(mouse_pos)
-		var mouse_grid_pos = tile_mouse_pos * 32 + mouse_grid_offset
-		var tile_data : TileData = build_map.get_cell_tile_data(1, tile_mouse_pos)
 		if tile_data and tile_data.get_custom_data("is_building_area"):
 			if current_build_object:
 				current_build_object.change_color(Color.WHITE)

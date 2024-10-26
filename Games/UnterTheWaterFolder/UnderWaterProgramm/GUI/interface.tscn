@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://rgfx8okryh76"]
+
+[ext_resource type="Script" path="res://GUI/interface.gd" id="1_jnq2u"]
+[ext_resource type="PackedScene" uid="uid://bl6g3o626sm1v" path="res://GUI/Bar/o2_bar.tscn" id="2_bppad"]
+[ext_resource type="PackedScene" uid="uid://dclyp55c47aka" path="res://GUI/Counter/coin_counter.tscn" id="3_473ao"]
+
+[node name="Interface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jnq2u")
+
+[node name="O2_bar" parent="." instance=ExtResource("2_bppad")]
+layout_mode = 1
+
+[node name="Coin_counter" parent="." instance=ExtResource("3_473ao")]
+layout_mode = 1
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = -1.0
