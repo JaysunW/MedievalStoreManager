@@ -18,7 +18,7 @@ var id
 signal pressed_button(MarginContainer)
 
 func set_container_info(input_id, data):
-	set_value(data["average_value"] * data["amount"])
+	set_value(data["market_value"] * data["amount"])
 	id = input_id
 	content_data = data
 	item_icon_label.texture = Loader.texture(data["sprite_path"])

@@ -70,7 +70,6 @@ func work_checkout():
 	if not found_checkout_list.is_empty():
 		find_nearest_object(found_checkout_list).work_on_queue()
 	
-
 func take_from_shelf():
 	if interact_timer.is_stopped():
 		var objects = interaction_component.get_interactable_object()
@@ -91,11 +90,13 @@ func take_from_shelf():
 					hold_object(new_object)
 					interact_timer.start()
 					stand.take_from_shelf(1)
-				elif held_object.data["id"] == stand.content_data["id"] and held_object.data["amount"] != held_object.data["max_amount"]:
+				elif held_object.data["id"] == stand.content_data["id"] and held_object.data["amount"] < held_object.data["carry_max"]:
 					stand.take_from_shelf(1)
 					held_object.data["amount"] += 1
 					held_object_ui.set_held_object_data(held_object.data)
 					interact_timer.start()
+				else:
+					held_object_ui.flash_color(Color.FIREBRICK)
 			
 func held_object_and_interact():
 	var objects = interaction_component.get_interactable_object()
@@ -126,11 +127,9 @@ func hold_object(object):
 	held_object_ui.set_held_object_data(held_object.data)
 	object.change_hold_mode(true)
 
-
-
 func drop_object(is_not_stored=true):
 	is_holding_object = false
-	held_object.position = global_position + object_distance * last_move_direction + Vector2(0, 16)
+	held_object.position = global_position + object_distance * last_move_direction
 	held_object.change_hold_mode(false)
 	held_object_ui.dropped_object()
 	if is_not_stored:

@@ -3,6 +3,13 @@ extends CanvasLayer
 @onready var item_store_parent = $ItemStore/MarginContainer/VBoxContainer/ItemStoreParent
 @onready var checkout_parent = $ItemCheckout/VBoxContainer/MarginContainer/ScrollContainer/CheckoutParent
 
+@onready var gold_icon = $ItemCheckout/VBoxContainer/ValueGrid/GoldIcon
+@onready var gold_value_label = $ItemCheckout/VBoxContainer/ValueGrid/GoldValueLabel
+@onready var silver_icon = $ItemCheckout/VBoxContainer/ValueGrid/SilverIcon
+@onready var silver_value_label = $ItemCheckout/VBoxContainer/ValueGrid/SilverValueLabel
+@onready var copper_icon = $ItemCheckout/VBoxContainer/ValueGrid/CopperIcon
+@onready var copper_value_label = $ItemCheckout/VBoxContainer/ValueGrid/CopperValueLabel
+
 @export var item_container : PackedScene
 @export var item_checkout_container : PackedScene
 
@@ -27,6 +34,7 @@ func fill_container():
 				new_container.set_container_info(i, item_data[i])
 
 func clear_checkout():
+	set_checkout_value(0)
 	checkout_list = {}
 	for container in container_list:
 		container.queue_free()
@@ -34,36 +42,35 @@ func clear_checkout():
 
 func chosen_container(pressed_container):
 	var id = pressed_container.id
-	if id in checkout_list.keys():
-		if Gold.has_enough_gold(checkout_gold_total(pressed_container.content_data)):
-			print("enough")
+	var checkout_prize = checkout_gold_total(pressed_container.content_data)
+	if Gold.has_enough_gold(checkout_prize):
+		if id in checkout_list.keys():
 			checkout_list[id] += 1
 			for container in container_list:
 				if container.id == id:
 					container.add_amount(1)
-	else:
-		if Gold.has_enough_gold(checkout_gold_total(pressed_container.content_data)):
-			print("enough")
+		else:
 			var new_checkout_container = item_checkout_container.instantiate()
 			checkout_parent.add_child(new_checkout_container)
 			container_list.append(new_checkout_container)
 			checkout_list[id] = 1
-			new_checkout_container.get_pressed_signal().connect(containter_amount_check)
+			new_checkout_container.get_pressed_signal().connect(delete_checkout_item)
 			new_checkout_container.set_container_info(id,pressed_container.content_data)
-		
+		set_checkout_value(checkout_prize)
+				
 func checkout_gold_total(container_data= null):
 	var item_data = Data.item_data
 	var checkout_value = 0
 	for key in checkout_list.keys():
-		checkout_value += item_data[key]["average_value"] * item_data[key]["amount"]* checkout_list[key]
+		checkout_value += item_data[key]["market_value"] * item_data[key]["amount"]* checkout_list[key]
 	if container_data:
-		checkout_value += container_data["average_value"] * container_data["amount"]
+		checkout_value += container_data["market_value"] * container_data["amount"]
 	return checkout_value
 		
-func containter_amount_check(pressed_container):
+func delete_checkout_item(pressed_container):
 	var id = pressed_container.id
 	checkout_list[id] -= 1
-	checkout_gold_total()
+	set_checkout_value(checkout_gold_total())
 	if checkout_list[id] <= 0:
 		checkout_list.erase(id)
 		for container in container_list:
@@ -72,6 +79,32 @@ func containter_amount_check(pressed_container):
 				container_list.erase(container)
 				return
 			
+func set_checkout_value(value):
+	var copper_value = value % 1000
+	if copper_value == 0:
+		copper_icon.visible = false
+		copper_value_label.visible = false
+	else:
+		copper_value_label.text = str(copper_value)
+		copper_icon.visible = true
+		copper_value_label.visible = true
+	var silver_value = (value - copper_value) % 1000000
+	if silver_value == 0:
+		silver_icon.visible = false
+		silver_value_label.visible = false
+	else:
+		silver_value_label.text = str(silver_value/1000)
+		silver_icon.visible = true
+		silver_value_label.visible = true
+	var gold_value = (value - copper_value - silver_value) % 1000000000
+	if gold_value == 0:
+		gold_icon.visible = false
+		gold_value_label.visible = false
+	else:
+		gold_value_label.text = str(gold_value/1000000) 
+		gold_icon.visible = true
+		gold_value_label.visible = true
+
 func _on_buy_button_down():
 	if Gold.pay(checkout_gold_total()):
 		spawn_bought_items.emit(checkout_list)

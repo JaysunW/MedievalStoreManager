@@ -17,7 +17,7 @@ var amount = 1
 signal pressed_button(MarginContainer)
 
 func set_container_info(input_id, data):
-	set_value(data["average_value"] * data["amount"])
+	set_value(data["market_value"] * data["amount"])
 	id = input_id
 	content_data = data
 	item_icon_label.texture = Loader.texture(data["sprite_path"])
@@ -60,7 +60,7 @@ func disable():
 	pass
 
 func update_amount():
-	set_value(content_data["average_value"] * content_data["amount"] * amount)
+	set_value(content_data["market_value"] * content_data["amount"] * amount)
 	item_amount_label.text = str(amount)
 
 func add_amount(input):

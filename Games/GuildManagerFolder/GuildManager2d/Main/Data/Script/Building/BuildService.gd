@@ -30,6 +30,9 @@ func _process(_delta):
 		elif is_build_menu_open:
 			change_build_mode(false)
 			
+	if Input.is_action_just_pressed("c"):
+		Stock.print_current_stock()		
+	
 	if is_build_menu_open:
 		var mouse_pos = get_global_mouse_position()
 		var tile_mouse_pos : Vector2i = build_map.local_to_map(mouse_pos)

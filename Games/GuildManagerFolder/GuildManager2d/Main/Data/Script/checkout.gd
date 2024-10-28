@@ -47,14 +47,12 @@ func set_progress_bar(shopping_list):
 	work_progress_bar.value = shopping_size
 	work_progress_bar.visible = true
 	show_progress_timer.start()
-	
 
 func update_progress_bar():
 	work_progress_bar.value -= 1
 	work_progress_bar.visible = true
 	show_progress_timer.start()
 	
-
 func _on_work_timer_timeout():
 	in_work_cooldown = false
 

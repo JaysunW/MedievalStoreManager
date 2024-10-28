@@ -29,6 +29,8 @@ size = Vector2(22, 26)
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 0
+collision_mask = 224
 
 [node name="MovePlayer" type="Node2D" parent="." node_paths=PackedStringArray("player", "skin")]
 script = ExtResource("1_eyjuj")
@@ -68,6 +70,10 @@ texture = ExtResource("5_2l4kb")
 
 [node name="InteractTimer" type="Timer" parent="."]
 wait_time = 0.25
+one_shot = true
+
+[node name="FlashHeldObjectUITimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 
 [node name="FixedUIHeldObject" type="CanvasLayer" parent="." node_paths=PackedStringArray("item_icon", "item_current_amount", "item_amount")]
@@ -446,6 +452,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
 [connection signal="timeout" from="InteractTimer" to="HandleObject" method="_on_fill_shelf_timer_timeout" flags=18]
+[connection signal="timeout" from="FlashHeldObjectUITimer" to="FixedUIHeldObject" method="_on_flash_held_object_ui_timer_timeout"]
 [connection signal="timeout" from="FixedUIGold/ColorFlashTimer" to="FixedUIGold" method="_on_color_flash_timer_timeout"]
 [connection signal="closed_stand_info" from="UIStandInfo" to="MovePlayer" method="_on_ui_stand_info_closed_stand_info"]
 [connection signal="opened_stand_info" from="UIStandInfo" to="MovePlayer" method="_on_ui_stand_info_opened_stand_info"]

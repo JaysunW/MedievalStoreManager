@@ -68,6 +68,7 @@ func fill_shelf(content, input_amount):
 		show_content_icon.texture = Loader.texture(content_data["sprite_path"])
 		show_content_icon.visible = true
 		update_fill_progress(content_data)
+		Stock.add_to_stock(content_data["id"])
 		return true
 	elif content_data["id"] != input_data["id"]:
 		flash_color(Color.FIREBRICK)
@@ -80,20 +81,23 @@ func fill_shelf(content, input_amount):
 	else:
 		update_fill_progress(content_data)
 		skin.change_sprite(1)
+		Stock.add_to_stock(content_data["id"])
 		return true
 
 func take_from_shelf(input_amount):
 	content_data["amount"] -= input_amount
 	if content_data["amount"] <= 0:
-		empty_content()
 		show_fill_progress(false)
 		show_content_icon.visible = true
 		show_content_icon.texture = null
+		Stock.take_from_stock(content_data["id"])
+		empty_content()
 		return content_data
 	else:
 		#Depending on fill scale:
 		skin.change_sprite(1)
 		update_fill_progress(content_data)
+		Stock.take_from_stock(content_data["id"])
 		return content_data
 	
 func get_content_instance():

@@ -18,7 +18,7 @@ func set_stand_info(stand_data, item_id):
 	buildNameLabel.text = stand_data["name"]
 	var item_data = Data.item_data[item_id]
 	itemNameLabel.text = item_data["name"]
-	marketValueLabel.text = str(item_data["average_value"])
+	marketValueLabel.text = str(item_data["market_value"])
 	currentValueLabel.text = str(item_data["value"])
 	opened_stand_info.emit()
 	visible = true
@@ -44,7 +44,7 @@ func _on_one_less_button_down():
 	update_stand_info()
 
 func _on_market_prize_reset_button_down():
-	Data.item_data[current_item_id]["value"] = Data.item_data[current_item_id]["average_value"] 
+	Data.item_data[current_item_id]["value"] = Data.item_data[current_item_id]["market_value"] 
 	if Data.item_data[current_item_id]["value"] <= 0:
 		print_debug("Market value equal or less than 0")
 	update_stand_info()
@@ -52,8 +52,8 @@ func _on_market_prize_reset_button_down():
 func _on_one_more_button_down():
 	var item_data = Data.item_data[current_item_id]
 	item_data["value"] += 1
-	if item_data["value"] > Data.item_data[current_item_id]["average_value"] * 5:
-		item_data["value"] = Data.item_data[current_item_id]["average_value"] * 5
+	if item_data["value"] > Data.item_data[current_item_id]["market_value"] * 5:
+		item_data["value"] = Data.item_data[current_item_id]["market_value"] * 5
 		Data.item_data[current_item_id] = item_data
 	update_stand_info()
 	update_stand_info()
@@ -61,8 +61,8 @@ func _on_one_more_button_down():
 func _on_ten_more_button_down():
 	var item_data = Data.item_data[current_item_id]
 	item_data["value"] += int(item_data["value"] * 0.1)
-	if item_data["value"] > Data.item_data[current_item_id]["average_value"] * 5:
-		item_data["value"] = Data.item_data[current_item_id]["average_value"] * 5
+	if item_data["value"] > Data.item_data[current_item_id]["market_value"] * 5:
+		item_data["value"] = Data.item_data[current_item_id]["market_value"] * 5
 		Data.item_data[current_item_id] = item_data
 	update_stand_info()
 
