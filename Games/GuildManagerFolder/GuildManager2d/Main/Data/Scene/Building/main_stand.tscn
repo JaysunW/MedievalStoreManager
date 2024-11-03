@@ -67,5 +67,8 @@ texture = ExtResource("10_2f18m")
 wait_time = 0.1
 one_shot = true
 
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, 8)
+
 [connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]
 [connection signal="timeout" from="ChangeColorTimer" to="." method="_on_change_color_timer_timeout"]

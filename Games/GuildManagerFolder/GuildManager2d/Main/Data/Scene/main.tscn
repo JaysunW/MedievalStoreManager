@@ -289,8 +289,18 @@ position = Vector2(1482, 979)
 [node name="SpawnPoint2" type="Marker2D" parent="Main/WorlMap"]
 position = Vector2(727, 975)
 
-[node name="SpawnPoint3" type="Marker2D" parent="Main/WorlMap"]
-position = Vector2(1231, 632)
+[node name="EntrancePoint" type="Marker2D" parent="Main/WorlMap"]
+position = Vector2(993, 960)
+
+[node name="NPCService" type="Node2D" parent="Main" node_paths=PackedStringArray("world_map", "spawn_point_1", "spawn_point_2", "entrance_point")]
+script = ExtResource("27_n8scl")
+customer = ExtResource("14_y5x34")
+world_map = NodePath("../WorlMap")
+spawn_point_1 = NodePath("../WorlMap/SpawnPoint1")
+spawn_point_2 = NodePath("../WorlMap/SpawnPoint2")
+entrance_point = NodePath("../WorlMap/EntrancePoint")
+
+[node name="SpawnTimer" type="Timer" parent="Main/NPCService"]
 
 [node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_build_menu", "world_map", "build_map")]
 y_sort_enabled = true
@@ -629,15 +639,8 @@ text = "100
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NPCService" type="Node2D" parent="Main" node_paths=PackedStringArray("world_map", "spawn_point_1", "spawn_point_2", "spawn_point_3")]
-script = ExtResource("27_n8scl")
-customer = ExtResource("14_y5x34")
-world_map = NodePath("../WorlMap")
-spawn_point_1 = NodePath("../WorlMap/SpawnPoint1")
-spawn_point_2 = NodePath("../WorlMap/SpawnPoint2")
-spawn_point_3 = NodePath("../WorlMap/SpawnPoint3")
-
 [connection signal="open_item_ui" from="Main/WorlMap/ItemInterface" to="Main/UIItemMenu" method="_on_item_interface_open_item_ui"]
+[connection signal="timeout" from="Main/NPCService/SpawnTimer" to="Main/NPCService" method="_on_spawn_timer_timeout"]
 [connection signal="chose_building_option" from="Main/UIBuildMenu" to="Main/BuildService" method="_on_build_menu_chose_building_option"]
 [connection signal="spawn_bought_items" from="Main/UIItemMenu" to="Main/WorlMap/ItemInterface" method="_on_ui_item_menu_spawn_bought_items"]
 [connection signal="button_down" from="Main/UIItemMenu/ItemStore/MarginContainer/VBoxContainer/HBoxContainer/Buy" to="Main/UIItemMenu" method="_on_buy_button_down"]
