@@ -1,7 +1,7 @@
 extends Node
 class_name State
 
-signal Transitioned
+signal transitioned
 
 func Enter():
 	pass
@@ -14,3 +14,6 @@ func Update(_delta):
 	
 func Physics_process(delta):
 	pass
+
+func get_random_vector(range):
+	return Vector2(Global.rng.randi_range(-range,range),Global.rng.randi_range(-range,range)) 

@@ -34,10 +34,13 @@ func spawn_customer(new_position = null):
 		new_customer.global_position = new_position
 	new_customer.prepare_customer(self)
 	world_map.add_child(new_customer)
+	customer_list.append(new_customer)
 
 func _process(_delta):
 	if Input.is_action_just_pressed("c"):
 		change_customer_cycle(not is_spawning_customer)
+	if Input.is_action_just_pressed("v"):
+		customer_list.pick_random().change_state()
 
 func _on_spawn_timer_timeout():
 	spawn_customer()

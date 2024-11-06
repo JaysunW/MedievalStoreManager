@@ -12,6 +12,9 @@ var store_entry : Node2D
 
 var entrance_marker : Marker2D
 
+func change_state():
+	state_machine.on_child_transition(state_machine.states["idle"], "walking")
+
 func prepare_customer(reference):
 	npc_service_reference = reference
 	get_random_shopping_list()

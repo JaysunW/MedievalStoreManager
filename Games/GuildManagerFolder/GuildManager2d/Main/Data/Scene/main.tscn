@@ -288,6 +288,7 @@ customer = ExtResource("14_y5x34")
 world_map = NodePath("../WorlMap")
 idle_point_list = [NodePath("SpawnPoint1"), NodePath("SpawnPoint2"), NodePath("SpawnPoint3"), NodePath("SpawnPoint4")]
 entrance_point = NodePath("EntrancePoint")
+spawn_timer_time = 10.0
 
 [node name="SpawnTimer" type="Timer" parent="Main/NPCService"]
 
@@ -304,7 +305,7 @@ position = Vector2(1451, 1216)
 position = Vector2(719, 1214)
 
 [node name="EntrancePoint" type="Marker2D" parent="Main/NPCService"]
-position = Vector2(993, 960)
+position = Vector2(994, 991)
 
 [node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_build_menu", "world_map", "build_map")]
 y_sort_enabled = true

@@ -14,10 +14,9 @@ height = 18.0
 
 [node name="NPC" type="CharacterBody2D" node_paths=PackedStringArray("state_machine")]
 collision_layer = 8
-collision_mask = 96
+collision_mask = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
-safe_margin = 1.0
 script = ExtResource("1_5bhep")
 state_machine = NodePath("StateMachine")
 
@@ -36,15 +35,15 @@ shape = SubResource("CapsuleShape2D_kahc5")
 script = ExtResource("3_5ettv")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer", "navigation_agent")]
+[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer", "navigation_agent", "make_path_timer")]
 script = ExtResource("3_s46ix")
 customer = NodePath("../..")
 navigation_agent = NodePath("../NavigationAgent")
+make_path_timer = NodePath("../MakePathTimer")
 
-[node name="Walking" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer", "navigation_agent")]
+[node name="Walking" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer")]
 script = ExtResource("4_057mh")
 customer = NodePath("../..")
-navigation_agent = NodePath("../NavigationAgent")
 
 [node name="Searching" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer")]
 script = ExtResource("5_3bmm0")
@@ -57,7 +56,7 @@ customer = NodePath("../..")
 [node name="MakePathTimer" type="Timer" parent="StateMachine"]
 
 [node name="NavigationAgent" type="NavigationAgent2D" parent="StateMachine"]
-path_desired_distance = 32.0
+path_desired_distance = 16.0
 target_desired_distance = 16.0
 navigation_layers = 8
 path_postprocessing = 1
