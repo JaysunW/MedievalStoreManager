@@ -13,14 +13,14 @@ extends MarginContainer
 
 @onready var item_object_container = $"."
 
-var content_data
+var container_data
 var id
 signal pressed_button(MarginContainer)
 
 func set_container_info(input_id, data):
 	set_value(data["market_value"] * data["amount"])
 	id = input_id
-	content_data = data
+	container_data = data
 	item_icon_label.texture = Loader.texture(data["sprite_path"])
 	item_name_label.text = data["name"]
 	item_amount_label.text = str(data["amount"]) + "x"

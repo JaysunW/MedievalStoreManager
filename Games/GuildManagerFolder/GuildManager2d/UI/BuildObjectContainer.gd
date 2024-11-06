@@ -12,14 +12,13 @@ extends MarginContainer
 
 @onready var build_object_container = $"."
 
-
-var content_data
+var container_data
 var id
 signal pressed_button(MarginContainer)
 
 func set_container_info(input_id, data):
 	id = input_id
-	content_data = data
+	container_data = data
 	icon.texture = Loader.texture(data["sprite_path"])
 	set_value(data["value"])
 	name_label.text = data["name"]

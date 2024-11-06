@@ -24,4 +24,4 @@ func fill_container():
 
 func chosen_container(pressed_container):
 	show_building_options(false)
-	chose_building_option.emit(pressed_container.content_data)
+	chose_building_option.emit(pressed_container.container_data)

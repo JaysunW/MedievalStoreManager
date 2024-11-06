@@ -14,6 +14,7 @@ class_name StandClass
 @export var debug = false
 @export var tile_map_reference : TileMap
 @export var data = {}
+@export var npc_marker : Marker2D
 
 var is_flashing_color = false
 
@@ -28,6 +29,13 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
+	
+func get_content_data():
+	content_data["value"] = Data.item_data[content_data["id"]]["value"]
+	return content_data
+	
+func get_npc_interaction_position():
+	return npc_marker.global_position
 
 func prepare_stand(should_prepare=true):
 	if should_prepare:
@@ -59,11 +67,11 @@ func get_content_amount():
 		return 0
 	return content_data["amount"]
 
-func fill_shelf(content, input_amount):
+func fill_shelf(content):
 	var input_data = content.data.duplicate()
 	if content_data.is_empty():
 		content_data = input_data
-		content_data["amount"] = input_amount
+		content_data["amount"] = 1
 		skin.change_sprite(1)
 		show_content_icon.texture = Loader.texture(content_data["sprite_path"])
 		show_content_icon.visible = true
@@ -73,7 +81,7 @@ func fill_shelf(content, input_amount):
 	elif content_data["id"] != input_data["id"]:
 		flash_color(Color.FIREBRICK)
 		return false
-	content_data["amount"] += input_amount
+	content_data["amount"] += 1
 	if content_data["amount"] > content_data["max_amount"]:
 		content_data["amount"] = content_data["max_amount"]
 		flash_color(Color.FIREBRICK)
@@ -84,25 +92,23 @@ func fill_shelf(content, input_amount):
 		Stock.add_to_stock(content_data["id"], self)
 		return true
 
-func take_from_shelf(input_amount):
-	content_data["amount"] -= input_amount
+func take_from_shelf():
+	content_data["amount"] -= 1
 	if content_data["amount"] <= 0:
 		show_fill_progress(false)
 		show_content_icon.visible = true
 		show_content_icon.texture = null
 		Stock.take_from_stock(content_data["id"], self, true)
 		empty_content()
-		return content_data
 	else:
 		#Depending on fill scale:
 		skin.change_sprite(1)
 		update_fill_progress(content_data)
 		Stock.take_from_stock(content_data["id"], self)
-		return content_data
 	
 func get_content_instance():
 	var content = package_scene.instantiate()
-	content.data = content_data.duplicate()
+	content.data = get_content_data().duplicate()
 	content.position = global_position
 	tile_map_reference.add_child(content)
 	return content

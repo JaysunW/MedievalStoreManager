@@ -282,30 +282,41 @@ debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 [node name="PackageSpawnPosition" type="Marker2D" parent="Main/WorlMap/ItemInterface"]
 position = Vector2(80, 169)
 
-[node name="NPCService" type="Node2D" parent="Main" node_paths=PackedStringArray("world_map", "idle_point_list", "entrance_point")]
+[node name="NPCService" type="Node2D" parent="Main" node_paths=PackedStringArray("world_map", "idle_point_list", "entrance_point", "poi_list")]
 script = ExtResource("27_n8scl")
 customer = ExtResource("14_y5x34")
 world_map = NodePath("../WorlMap")
-idle_point_list = [NodePath("SpawnPoint1"), NodePath("SpawnPoint2"), NodePath("SpawnPoint3"), NodePath("SpawnPoint4")]
-entrance_point = NodePath("EntrancePoint")
+idle_point_list = [NodePath("SpawnPoints/SpawnPoint1"), NodePath("SpawnPoints/SpawnPoint2"), NodePath("SpawnPoints/SpawnPoint3"), NodePath("SpawnPoints/SpawnPoint4")]
+entrance_point = NodePath("StorePoints/EntrancePoint")
+poi_list = [NodePath("StorePoints/PointOfInterest1"), NodePath("StorePoints/PointOfInterest2")]
 spawn_timer_time = 10.0
 
 [node name="SpawnTimer" type="Timer" parent="Main/NPCService"]
 
-[node name="SpawnPoint1" type="Marker2D" parent="Main/NPCService"]
+[node name="SpawnPoints" type="Node2D" parent="Main/NPCService"]
+
+[node name="SpawnPoint1" type="Marker2D" parent="Main/NPCService/SpawnPoints"]
 position = Vector2(718, 991)
 
-[node name="SpawnPoint2" type="Marker2D" parent="Main/NPCService"]
+[node name="SpawnPoint2" type="Marker2D" parent="Main/NPCService/SpawnPoints"]
 position = Vector2(1451, 991)
 
-[node name="SpawnPoint3" type="Marker2D" parent="Main/NPCService"]
+[node name="SpawnPoint3" type="Marker2D" parent="Main/NPCService/SpawnPoints"]
 position = Vector2(1451, 1216)
 
-[node name="SpawnPoint4" type="Marker2D" parent="Main/NPCService"]
+[node name="SpawnPoint4" type="Marker2D" parent="Main/NPCService/SpawnPoints"]
 position = Vector2(719, 1214)
 
-[node name="EntrancePoint" type="Marker2D" parent="Main/NPCService"]
+[node name="StorePoints" type="Node2D" parent="Main/NPCService"]
+
+[node name="EntrancePoint" type="Marker2D" parent="Main/NPCService/StorePoints"]
 position = Vector2(994, 991)
+
+[node name="PointOfInterest1" type="Marker2D" parent="Main/NPCService/StorePoints"]
+position = Vector2(928, 880)
+
+[node name="PointOfInterest2" type="Marker2D" parent="Main/NPCService/StorePoints"]
+position = Vector2(1056, 880)
 
 [node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_build_menu", "world_map", "build_map")]
 y_sort_enabled = true
@@ -322,7 +333,6 @@ stand_scenes = {
 metadata/_edit_lock_ = true
 
 [node name="UIBuildMenu" type="CanvasLayer" parent="Main"]
-visible = false
 script = ExtResource("11_us1ic")
 build_container = ExtResource("9_2nmlh")
 

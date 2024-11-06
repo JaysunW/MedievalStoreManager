@@ -42,7 +42,7 @@ func clear_checkout():
 
 func chosen_container(pressed_container):
 	var id = pressed_container.id
-	var checkout_prize = checkout_gold_total(pressed_container.content_data)
+	var checkout_prize = checkout_gold_total(pressed_container.container_data)
 	if Gold.has_enough_gold(checkout_prize):
 		if id in checkout_list.keys():
 			checkout_list[id] += 1
@@ -55,7 +55,7 @@ func chosen_container(pressed_container):
 			container_list.append(new_checkout_container)
 			checkout_list[id] = 1
 			new_checkout_container.get_pressed_signal().connect(delete_checkout_item)
-			new_checkout_container.set_container_info(id,pressed_container.content_data)
+			new_checkout_container.set_container_info(id,pressed_container.container_data)
 		set_checkout_value(checkout_prize)
 				
 func checkout_gold_total(container_data= null):

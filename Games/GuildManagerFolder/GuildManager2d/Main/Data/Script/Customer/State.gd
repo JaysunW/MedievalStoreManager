@@ -12,8 +12,8 @@ func Exit():
 func Update(_delta):
 	pass
 	
-func Physics_process(delta):
+func Physics_process(_delta):
 	pass
 
-func get_random_vector(range):
-	return Vector2(Global.rng.randi_range(-range,range),Global.rng.randi_range(-range,range)) 
+func get_random_vector(distance):
+	return Vector2(Global.rng.randi_range(-distance,distance),Global.rng.randi_range(-distance,distance)) 

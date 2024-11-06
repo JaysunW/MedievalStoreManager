@@ -14,10 +14,6 @@ var held_object_offset = Vector2(0,-8)
 var is_holding_object = false
 var held_object = null
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	last_move_direction = move_component.last_move_direction.normalized()
@@ -59,7 +55,7 @@ func interact_with_object():
 			if UI.is_ui_free():
 				UI.is_free(false)
 				var nearest_stand = find_nearest_object(filled_stand_list)
-				stand_info_ui.set_stand_info(nearest_stand.data, nearest_stand.content_data["id"])
+				stand_info_ui.set_stand_info(nearest_stand.data, nearest_stand.get_content_data()["id"])
 
 func work_checkout():
 	var objects = interaction_component.get_interactable_object()
@@ -77,26 +73,28 @@ func take_from_shelf():
 		for object in objects:
 			if object.is_in_group("Stand"):
 				found_stand_list.append(object.get_main_object())
-		if not found_stand_list.is_empty():
-			var filled_shelf_list = []
-			for stand in found_stand_list:
-				if not stand.is_empty():
-					filled_shelf_list.append(stand)
-			if not filled_shelf_list.is_empty():
-				var stand = find_nearest_object(filled_shelf_list)
-				if not held_object:
-					var new_object = stand.get_content_instance()
-					new_object.data["amount"] = 1
-					hold_object(new_object)
-					interact_timer.start()
-					stand.take_from_shelf(1)
-				elif held_object.data["id"] == stand.content_data["id"] and held_object.data["amount"] < held_object.data["carry_max"]:
-					stand.take_from_shelf(1)
-					held_object.data["amount"] += 1
-					held_object_ui.set_held_object_data(held_object.data)
-					interact_timer.start()
-				else:
-					held_object_ui.flash_color(Color.FIREBRICK)
+		if found_stand_list.is_empty():
+			return
+		var filled_shelf_list = []
+		for stand in found_stand_list:
+			if not stand.is_empty():
+				filled_shelf_list.append(stand)
+		if filled_shelf_list.is_empty():
+			return
+		var stand = find_nearest_object(filled_shelf_list)
+		if not held_object:
+			var new_object = stand.get_content_instance()
+			new_object.data["amount"] = 1
+			hold_object(new_object)
+			interact_timer.start()
+			stand.take_from_shelf()
+		elif held_object.data["id"] == stand.get_content_data()["id"] and held_object.data["amount"] < held_object.data["carry_max"]:
+			stand.take_from_shelf()
+			held_object.data["amount"] += 1
+			held_object_ui.set_held_object_data(held_object.data)
+			interact_timer.start()
+		else:
+			held_object_ui.flash_color(Color.FIREBRICK)
 			
 func held_object_and_interact():
 	var objects = interaction_component.get_interactable_object()
@@ -112,7 +110,7 @@ func held_object_and_interact():
 func fill_shelf(found_stand_list):
 	if interact_timer.is_stopped():
 		var stand = find_nearest_object(found_stand_list)
-		var filled_stand = stand.fill_shelf(held_object, 1,)
+		var filled_stand = stand.fill_shelf(held_object,)
 		if filled_stand:
 			interact_timer.start()
 			held_object.data["amount"] -= 1

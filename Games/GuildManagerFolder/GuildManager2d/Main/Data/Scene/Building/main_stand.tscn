@@ -11,12 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_bxwc5"]
 [ext_resource type="Texture2D" uid="uid://k0vhp18yjf7o" path="res://Asset/ShopItem/Bread.png" id="10_2f18m"]
 
-[node name="Shelf" type="StaticBody2D"]
+[node name="Shelf" type="StaticBody2D" node_paths=PackedStringArray("npc_marker")]
 texture_filter = 1
 collision_layer = 65
 collision_mask = 64
 script = ExtResource("1_nlceu")
 package_scene = ExtResource("2_13km2")
+npc_marker = NodePath("InteractionMarker")
 
 [node name="SpriteComponent" parent="." instance=ExtResource("3_355td")]
 position = Vector2(0, -16)
@@ -67,8 +68,7 @@ texture = ExtResource("10_2f18m")
 wait_time = 0.1
 one_shot = true
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(0, 8)
+[node name="InteractionMarker" type="Marker2D" parent="."]
 
 [connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]
 [connection signal="timeout" from="ChangeColorTimer" to="." method="_on_change_color_timer_timeout"]

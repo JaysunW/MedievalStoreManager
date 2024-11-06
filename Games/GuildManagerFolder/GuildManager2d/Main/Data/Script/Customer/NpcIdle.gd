@@ -21,15 +21,15 @@ func Enter():
 	constant_offset = get_random_vector(16)
 	make_path()
 
-func Update(delta):
+func Update(_delta):
 	pass
 		
-func Physics_process(delta):
+func Physics_process(_delta):
 	if idle_point_list:
 		if not navigation_agent.is_navigation_finished():
 			var next_position = navigation_agent.get_next_path_position()
 			var dir = (next_position + constant_offset - customer.global_position).normalized()
-			customer.velocity = dir * speed * delta
+			customer.velocity = dir * speed * _delta
 			customer.move_and_slide()
 		else:
 			idle_counter = (idle_counter + 1) % len(idle_point_list)

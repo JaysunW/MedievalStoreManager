@@ -7,6 +7,7 @@ extends Node2D
 
 @export var idle_point_list : Array[Marker2D]
 @export var entrance_point : Marker2D
+@export var poi_list : Array[Marker2D]
 
 @export var spawn_timer_time = 0.1
 var spawn_timer_offset_min_max = 0.1

@@ -46,9 +46,15 @@ script = ExtResource("4_057mh")
 customer = NodePath("../..")
 navigation_agent = NodePath("../NavigationAgent")
 
-[node name="Searching" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer")]
+[node name="Searching" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer", "navigation_agent")]
 script = ExtResource("5_3bmm0")
 customer = NodePath("../..")
+navigation_agent = NodePath("../NavigationAgent")
+
+[node name="WaitTimer" type="Timer" parent="StateMachine/Searching"]
+one_shot = true
+
+[node name="InteractTimer" type="Timer" parent="StateMachine/Searching"]
 
 [node name="Buying" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer")]
 script = ExtResource("6_ut8hy")
@@ -66,3 +72,6 @@ radius = 16.0
 neighbor_distance = 96.0
 max_neighbors = 5
 debug_enabled = true
+
+[connection signal="timeout" from="StateMachine/Searching/WaitTimer" to="StateMachine/Searching" method="_on_wait_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Searching/InteractTimer" to="StateMachine/Searching" method="_on_interaction_timer_timeout"]

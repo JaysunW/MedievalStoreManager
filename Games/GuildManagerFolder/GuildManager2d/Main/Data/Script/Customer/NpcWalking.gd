@@ -1,7 +1,5 @@
 extends State
 
-class_name NpcWalking
-
 const speed = 12000
 
 @export var customer : CharacterBody2D
@@ -19,17 +17,18 @@ func Enter():
 	constant_offset = get_random_vector(16)
 	make_path()
 
-func Update(delta):
+func Update(_delta):
 	pass
 		
-func Physics_process(delta):
+func Physics_process(_delta):
 	if not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
 		var dir = (next_position + constant_offset - customer.global_position).normalized()
-		customer.velocity = dir * speed * delta
+		customer.velocity = dir * speed * _delta
 		customer.move_and_slide()
 	else:
-		transitioned.emit(self, "idle")
+		customer.get_random_shopping_list()
+		transitioned.emit(self, "searching")
 			
 func make_path():
 	navigation_agent.target_position = target_position + get_random_vector(16)
