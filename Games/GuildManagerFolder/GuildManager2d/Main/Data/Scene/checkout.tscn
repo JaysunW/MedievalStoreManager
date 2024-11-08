@@ -17,7 +17,7 @@ size = Vector2(64, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_so47g"]
 size = Vector2(64, 32)
 
-[node name="Counter" type="StaticBody2D" node_paths=PackedStringArray("work_progress_bar")]
+[node name="Checkout" type="StaticBody2D" node_paths=PackedStringArray("work_progress_bar")]
 texture_filter = 1
 collision_layer = 64
 collision_mask = 0
@@ -72,10 +72,10 @@ one_shot = true
 wait_time = 0.8
 one_shot = true
 
-[node name="CheckoutPosition" type="Marker2D" parent="." groups=["CheckoutPosition"]]
+[node name="CheckoutMarker" type="Marker2D" parent="." groups=["CheckoutPosition"]]
 position = Vector2(0, 16)
 
-[node name="Sprite2D" type="Sprite2D" parent="CheckoutPosition"]
+[node name="Sprite2D" type="Sprite2D" parent="CheckoutMarker"]
 modulate = Color(1, 1, 1, 0.47451)
 texture_filter = 1
 scale = Vector2(0.4, 0.4)

@@ -9,7 +9,7 @@ extends Node2D
 
 var last_move_direction = Vector2.ZERO
 var object_distance = Vector2(20,20)
-var held_object_offset = Vector2(0,-8)
+var held_object_offset = Vector2(0,0)
 
 var is_holding_object = false
 var held_object = null
@@ -127,7 +127,7 @@ func hold_object(object):
 
 func drop_object(is_not_stored=true):
 	is_holding_object = false
-	held_object.position = global_position + object_distance * last_move_direction
+	held_object.position = global_position + object_distance * last_move_direction + Vector2(0,8)
 	held_object.change_hold_mode(false)
 	held_object_ui.dropped_object()
 	if is_not_stored:

@@ -15,6 +15,7 @@ func _ready():
 
 func set_stand_info(stand_data, item_id):
 	current_item_id = item_id
+	print(stand_data)
 	buildNameLabel.text = stand_data["name"]
 	var item_data = Data.item_data[item_id]
 	itemNameLabel.text = item_data["name"]

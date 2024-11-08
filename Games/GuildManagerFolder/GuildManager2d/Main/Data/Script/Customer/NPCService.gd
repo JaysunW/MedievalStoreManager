@@ -15,6 +15,9 @@ var spawn_timer_offset_min_max = 0.1
 var customer_list = []
 var is_spawning_customer = false
 
+func get_current_checkouts():
+	return world_map.checkout_list
+
 func change_customer_cycle(should_start):
 	is_spawning_customer = should_start
 	if should_start:

@@ -217,7 +217,7 @@ layer_1/y_sort_origin = 0
 layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array(1441827, 0, 0, 1507363, 0, 0, 1572899, 0, 0, 1638435, 0, 0, 1703971, 0, 0, 1441828, 0, 0, 1507364, 0, 0, 1572900, 0, 0, 1638436, 0, 0, 1703972, 0, 0, 1441829, 0, 0, 1507365, 0, 0, 1572901, 0, 0, 1638437, 0, 0, 1703973, 0, 0, 1441830, 0, 0, 1507366, 0, 0, 1572902, 0, 0, 1638438, 0, 0, 1703974, 0, 0, 1441831, 0, 0, 1507367, 0, 0, 1572903, 0, 0, 1638439, 0, 0, 1703975, 0, 0, 1507368, 0, 0, 1572904, 0, 0, 1638440, 0, 0, 1703976, 0, 0, 1507369, 0, 0, 1572905, 0, 0, 1638441, 0, 0, 1703977, 0, 0, 1572906, 0, 0, 1638442, 0, 0, 1703978, 0, 0)
 
-[node name="WorlMap" type="TileMap" parent="Main" node_paths=PackedStringArray("start_checkout")]
+[node name="WorlMap" type="TileMap" parent="Main"]
 y_sort_enabled = true
 texture_filter = 1
 tile_set = SubResource("TileSet_m7omx")
@@ -234,11 +234,19 @@ layer_1/y_sort_origin = 0
 layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("5_l1qj5")
-start_checkout = NodePath("Checkout")
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="Main/WorlMap" instance=ExtResource("3_oikkr")]
 position = Vector2(979, 844)
+
+[node name="Shelf" parent="Main/WorlMap" node_paths=PackedStringArray("tile_map_reference") instance=ExtResource("6_1nfi5")]
+position = Vector2(1168, 817)
+collision_layer = 64
+debug = true
+tile_map_reference = NodePath("..")
+data = {
+"name": "SHelly"
+}
 
 [node name="Checkout" parent="Main/WorlMap" instance=ExtResource("6_t4ys1")]
 position = Vector2(992, 752)
@@ -312,7 +320,7 @@ position = Vector2(928, 880)
 [node name="PointOfInterest2" type="Marker2D" parent="Main/NPCService/StorePoints"]
 position = Vector2(1056, 880)
 
-[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_build_menu", "world_map", "build_map", "debug_marker")]
+[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_build_menu", "world_map", "build_map")]
 y_sort_enabled = true
 script = ExtResource("5_sdoag")
 ui_build_menu = NodePath("../UIBuildMenu")
@@ -324,13 +332,7 @@ stand_scenes = {
 "Shelf": ExtResource("6_1nfi5"),
 "Stand": ExtResource("7_hso44")
 }
-debug = true
-debug_marker = NodePath("DebugMarker")
-debug_stand_name = "Shelf"
 metadata/_edit_lock_ = true
-
-[node name="DebugMarker" type="Marker2D" parent="Main/BuildService"]
-position = Vector2(1169, 737)
 
 [node name="UIBuildMenu" type="CanvasLayer" parent="Main"]
 visible = false

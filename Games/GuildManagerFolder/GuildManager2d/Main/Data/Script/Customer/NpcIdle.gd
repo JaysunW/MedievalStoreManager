@@ -1,7 +1,5 @@
 extends State
 
-const speed = 12000
-
 @export var customer : CharacterBody2D
 @export var navigation_agent : NavigationAgent2D
 @export var target_position : Vector2
@@ -9,8 +7,10 @@ const speed = 12000
 var idle_point_list = null
 var idle_counter = 0
 var constant_offset : Vector2
+var speed : int
 
 func _ready():
+	speed = customer.speed
 	idle_point_list = customer.npc_service_reference.idle_point_list
 
 func Enter():

@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://drl0elvrqhdoa"]
 
-[ext_resource type="Script" path="res://Main/Data/Script/Customer.gd" id="1_5bhep"]
+[ext_resource type="Script" path="res://Main/Data/Script/Customer/Npc.gd" id="1_5bhep"]
 [ext_resource type="Texture2D" uid="uid://th8y4cjy1nr1" path="res://Asset/Npc/npc4.png" id="2_10268"]
-[ext_resource type="Script" path="res://Main/Data/Script/Customer/StateMachine.gd" id="3_5ettv"]
+[ext_resource type="Script" path="res://StateMachine/StateMachine.gd" id="3_5ettv"]
 [ext_resource type="Script" path="res://Main/Data/Script/Customer/NpcIdle.gd" id="3_s46ix"]
 [ext_resource type="Script" path="res://Main/Data/Script/Customer/NpcWalking.gd" id="4_057mh"]
 [ext_resource type="Script" path="res://Main/Data/Script/Customer/NpcSearching.gd" id="5_3bmm0"]
@@ -51,14 +51,18 @@ script = ExtResource("5_3bmm0")
 customer = NodePath("../..")
 navigation_agent = NodePath("../NavigationAgent")
 
-[node name="WaitTimer" type="Timer" parent="StateMachine/Searching"]
+[node name="ThinkTimer" type="Timer" parent="StateMachine/Searching"]
 one_shot = true
 
 [node name="InteractTimer" type="Timer" parent="StateMachine/Searching"]
 
-[node name="Buying" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer")]
+[node name="Buying" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer", "navigation_agent")]
 script = ExtResource("6_ut8hy")
 customer = NodePath("../..")
+navigation_agent = NodePath("../NavigationAgent")
+
+[node name="WaitTimer" type="Timer" parent="StateMachine/Buying"]
+wait_time = 0.5
 
 [node name="MakePathTimer" type="Timer" parent="StateMachine"]
 
@@ -73,5 +77,6 @@ neighbor_distance = 96.0
 max_neighbors = 5
 debug_enabled = true
 
-[connection signal="timeout" from="StateMachine/Searching/WaitTimer" to="StateMachine/Searching" method="_on_wait_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Searching/ThinkTimer" to="StateMachine/Searching" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Searching/InteractTimer" to="StateMachine/Searching" method="_on_interaction_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Buying/WaitTimer" to="StateMachine/Buying" method="_on_wait_timer_timeout"]

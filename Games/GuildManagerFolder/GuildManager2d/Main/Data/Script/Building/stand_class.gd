@@ -11,7 +11,6 @@ class_name StandClass
 
 @export var package_scene : PackedScene
 @export var content_data = {}
-@export var debug = false
 @export var tile_map_reference : TileMap
 @export var data = {}
 @export var npc_marker : Marker2D
@@ -22,8 +21,6 @@ var is_flashing_color = false
 func _ready():
 	fill_progressbar.visible = false
 	show_content_icon.visible = false
-	if not debug:
-		prepare_stand(false)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

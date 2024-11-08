@@ -3,40 +3,46 @@ extends StaticBody2D
 @onready var work_timer = $WorkTimer
 @onready var flash_timer = $FlashTimer
 @onready var show_progress_timer = $ShowProgressTimer
+@onready var checkout_marker = $CheckoutMarker
 
 @export var work_progress_bar : TextureProgressBar
 
-
-var next_shopper_queue = []
-
-var current_shopping_list = [1,2,3,4,5,6,7,8]
+var shopper_queue = []
+var current_shopping_list = []
 var whole_shopping_amount = 0
 var in_work_cooldown = false
+var checkout_queue_max = 7
 
 func _ready():
-	set_progress_bar(current_shopping_list)
+	pass
+
+func is_full():
+	return len(shopper_queue) >= 7
+
+func get_marker():
+	return checkout_marker
+
+func get_queue_size():
+	return len(shopper_queue)
 
 func add_shopper(shopper):
-	next_shopper_queue.append(shopper)
+	shopper_queue.append(shopper)
 	
 func work_on_queue():
-	if current_shopping_list.is_empty():
-		work_progress_bar.visible = false
-		print("Next Shopper")
-		#Take next shopper:
-		#TODO: 
-		pass
-	else:
-		if not in_work_cooldown:
-			#Take shopped_items from shopper:
-				#TODO: 
-			work_timer.start()
-			in_work_cooldown = true
-			current_shopping_list[0] -= 1
-			update_progress_bar()
-			if current_shopping_list[0] == 0:
-				current_shopping_list.remove_at(0)
-			print(current_shopping_list)
+	if shopper_queue.is_empty():
+		return
+	current_shopping_list = shopper_queue[0].get_basket_items()
+	if current_shopping_list.is_empty() or in_work_cooldown:
+		return
+		#Take shopped_items from shopper:
+			#TODO: 
+	work_timer.start()
+	in_work_cooldown = true
+	current_shopping_list[0] -= 1
+	update_progress_bar()
+	if current_shopping_list[0] == 0:
+		current_shopping_list.remove_at(0)
+	print(current_shopping_list)
 
 func set_progress_bar(shopping_list):
 	var shopping_size = 0
@@ -55,7 +61,6 @@ func update_progress_bar():
 	
 func _on_work_timer_timeout():
 	in_work_cooldown = false
-
 
 func _on_show_progress_timer_timeout():
 	work_progress_bar.visible = false

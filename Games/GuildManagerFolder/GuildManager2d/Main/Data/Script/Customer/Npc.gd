@@ -5,10 +5,15 @@ extends CharacterBody2D
 var npc_service_reference = null
 
 var shopping_dictionary : Dictionary
-var shopping_time = 1
+var basket_items : Array
 
-var state = Utils.NpcState.IDLE
-var store_entry : Node2D
+var speed = 12000
+
+var patience = 6
+var has_been_billed = false
+
+func get_basket_items():
+	return basket_items
 
 func change_state():
 	state_machine.on_child_transition(state_machine.states["idle"], "walking")

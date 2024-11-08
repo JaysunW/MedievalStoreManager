@@ -1,12 +1,10 @@
 extends State
 
-const speed = 12000
-
 @export var customer : CharacterBody2D
 @export var navigation_agent : NavigationAgent2D
 @export var target_position : Vector2
 
-@onready var wait_timer = $WaitTimer
+@onready var think_timer = $ThinkTimer
 @onready var interact_timer = $InteractTimer
 
 var shopping_dictionary : Dictionary
@@ -18,10 +16,12 @@ var found_item_list : Array
 
 var searching_for_item = true
 var in_interact_cooldown = false
+var speed : int
 
 func _ready():
+	speed = customer.speed
 	poi_list = customer.npc_service_reference.poi_list
-	wait_timer.wait_time = Global.rng.randf_range(2, 4)
+	think_timer.wait_time = Global.rng.randf_range(2, 4)
 
 func Enter():
 	var stock_stand_list = Stock.stock_stand_list
@@ -34,8 +34,9 @@ func Enter():
 		if found_item_list:
 			print("Found item go to checkout")
 			print("Found_item_list: ", found_item_list)
+			Change_state("buying")
 		else:
-			transitioned.emit(self, "idle")
+			Change_state("idle")
 		return 
 		
 	current_search_id = id_list.pick_random()
@@ -48,37 +49,43 @@ func Enter():
 		make_path()
 	else:
 		shopping_dictionary.erase(current_search_id)
-		wait_timer.start()
-		wait_timer.wait_time = Global.rng.randf_range(2, 4)
+		think_timer.start()
+		think_timer.wait_time = Global.rng.randf_range(2, 4)
 		print("Couldn't find item with id: ", current_search_id)
 		
+func Exit():
+	searching_for_item = true
+	in_interact_cooldown = false
+	current_search_stand = null
+
 func Update(_delta):
-	if navigation_agent.is_navigation_finished():
-		if searching_for_item or in_interact_cooldown:
-			print("on interation cooldown or waiting for search")
-			return 
-		if not current_search_stand or current_search_stand.is_empty():
-			print("current_stand empty or not there")
-			searching_for_item = true
-			Enter()
-			return
+	if not navigation_agent.is_navigation_finished():
+		return
 		
-		if current_search_stand.get_content_data()["id"] == current_search_id:
-			in_interact_cooldown = true
-			interact_timer.start()
-			
-			# Decide whether to buy it or not!
-			
-			var stand_content = current_search_stand.get_content_data().duplicate()
-			stand_content["amount"] = 1
-			found_item_list.append(stand_content)
-			current_search_stand.take_from_shelf()
-			shopping_dictionary[current_search_id] -= 1
-			if shopping_dictionary[current_search_id] <= 0:
-				shopping_dictionary.erase(current_search_id)
-				Enter()
-				searching_for_item = true
-			print("Found item with ID: ", current_search_id)
+	if searching_for_item or in_interact_cooldown:
+		return 
+	if not current_search_stand or current_search_stand.is_empty():
+		print("current_stand empty or not there")
+		searching_for_item = true
+		Enter()
+		return
+	
+	if current_search_stand.get_content_data()["id"] == current_search_id:
+		in_interact_cooldown = true
+		interact_timer.start()
+		
+		# Decide whether to buy it or not!
+		
+		var stand_content = current_search_stand.get_content_data().duplicate()
+		stand_content["amount"] = 1
+		found_item_list.append(stand_content)
+		current_search_stand.take_from_shelf()
+		shopping_dictionary[current_search_id] -= 1
+		if shopping_dictionary[current_search_id] <= 0:
+			shopping_dictionary.erase(current_search_id)
+			Enter()
+			searching_for_item = true
+		print("Found item with ID: ", current_search_id)
 		
 func Physics_process(_delta):
 	if not navigation_agent.is_navigation_finished():

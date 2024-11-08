@@ -1,15 +1,16 @@
 extends State
 
-const speed = 12000
-
 @export var customer : CharacterBody2D
 @export var navigation_agent : NavigationAgent2D
 @export var target_position : Vector2
 
-var entrance_point = null
+var entrance_point : Marker2D
 var constant_offset : Vector2
 
+var speed : int
+
 func _ready():
+	speed = customer.speed
 	entrance_point = customer.npc_service_reference.entrance_point
 
 func Enter():
@@ -28,7 +29,7 @@ func Physics_process(_delta):
 		customer.move_and_slide()
 	else:
 		customer.get_random_shopping_list()
-		transitioned.emit(self, "searching")
+		Change_state("searching")
 			
 func make_path():
 	navigation_agent.target_position = target_position + get_random_vector(16)
