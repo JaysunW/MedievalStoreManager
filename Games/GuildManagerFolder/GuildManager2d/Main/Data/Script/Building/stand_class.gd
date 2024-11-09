@@ -11,7 +11,7 @@ class_name StandClass
 
 @export var package_scene : PackedScene
 @export var content_data = {}
-@export var tile_map_reference : TileMap
+@export var tile_layer_ref : Node2D
 @export var data = {}
 @export var npc_marker : Marker2D
 
@@ -107,7 +107,7 @@ func get_content_instance():
 	var content = package_scene.instantiate()
 	content.data = get_content_data().duplicate()
 	content.position = global_position
-	tile_map_reference.add_child(content)
+	tile_layer_ref.add_child(content)
 	return content
 
 func empty_content():

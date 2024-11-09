@@ -5,15 +5,19 @@ extends CharacterBody2D
 var npc_service_reference = null
 
 var shopping_dictionary : Dictionary
-var basket_items : Array
+var basket_list : Array
 
 var speed = 12000
 
 var patience = 6
 var has_been_billed = false
 
-func get_basket_items():
-	return basket_items
+func get_basket_list():
+	return basket_list
+
+func bought_basket():
+	has_been_billed = true
+	basket_list = []
 
 func change_state():
 	state_machine.on_child_transition(state_machine.states["idle"], "walking")

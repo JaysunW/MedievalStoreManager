@@ -8,7 +8,6 @@ extends State
 @onready var interact_timer = $InteractTimer
 
 var shopping_dictionary : Dictionary
-var poi_list : Array[Marker2D]
 
 var current_search_id : int
 var current_search_stand = null
@@ -20,7 +19,6 @@ var speed : int
 
 func _ready():
 	speed = customer.speed
-	poi_list = customer.npc_service_reference.poi_list
 	think_timer.wait_time = Global.rng.randf_range(2, 4)
 
 func Enter():
@@ -34,6 +32,7 @@ func Enter():
 		if found_item_list:
 			print("Found item go to checkout")
 			print("Found_item_list: ", found_item_list)
+			customer.basket_list = found_item_list
 			Change_state("buying")
 		else:
 			Change_state("idle")

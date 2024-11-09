@@ -13,7 +13,6 @@ extends CanvasLayer
 @export var item_container : PackedScene
 @export var item_checkout_container : PackedScene
 
-signal chose_item_option(String)
 signal spawn_bought_items(Dictionary)
 
 var container_list = []

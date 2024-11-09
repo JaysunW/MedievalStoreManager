@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bi4fn4o63lr4e"]
+[gd_scene load_steps=12 format=3 uid="uid://bi4fn4o63lr4e"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/checkout.gd" id="1_ie8xw"]
 [ext_resource type="PackedScene" uid="uid://wi17fl4xuvp" path="res://Component/sprite_component.tscn" id="2_el15e"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bhff6vdh1dp4k" path="res://Asset/UI/stand_fill_under.png" id="7_emm2i"]
 [ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_d7oje"]
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_dxxwc"]
-[ext_resource type="Texture2D" uid="uid://dx3dgt6ub6k0t" path="res://Asset/32x32white.png" id="10_4y308"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erayf"]
 size = Vector2(64, 16)
@@ -50,8 +49,6 @@ offset_left = -19.0
 offset_top = -44.0
 offset_right = 19.0
 offset_bottom = -33.0
-max_value = 15.0
-value = 5.0
 nine_patch_stretch = true
 stretch_margin_left = 4
 stretch_margin_top = 4
@@ -62,7 +59,6 @@ texture_over = ExtResource("8_d7oje")
 texture_progress = ExtResource("9_dxxwc")
 
 [node name="WorkTimer" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 
 [node name="FlashTimer" type="Timer" parent="."]
@@ -72,14 +68,8 @@ one_shot = true
 wait_time = 0.8
 one_shot = true
 
-[node name="CheckoutMarker" type="Marker2D" parent="." groups=["CheckoutPosition"]]
+[node name="CheckoutMarker" type="Marker2D" parent="."]
 position = Vector2(0, 16)
-
-[node name="Sprite2D" type="Sprite2D" parent="CheckoutMarker"]
-modulate = Color(1, 1, 1, 0.47451)
-texture_filter = 1
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("10_4y308")
 
 [connection signal="timeout" from="WorkTimer" to="." method="_on_work_timer_timeout"]
 [connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]

@@ -451,7 +451,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[connection signal="timeout" from="InteractTimer" to="HandleObject" method="_on_fill_shelf_timer_timeout" flags=18]
+[connection signal="timeout" from="InteractTimer" to="HandleObject" method="_on_fill_shelf_timer_timeout"]
 [connection signal="timeout" from="FlashHeldObjectUITimer" to="FixedUIHeldObject" method="_on_flash_held_object_ui_timer_timeout"]
 [connection signal="timeout" from="FixedUIGold/ColorFlashTimer" to="FixedUIGold" method="_on_color_flash_timer_timeout"]
 [connection signal="closed_stand_info" from="UIStandInfo" to="MovePlayer" method="_on_ui_stand_info_closed_stand_info"]

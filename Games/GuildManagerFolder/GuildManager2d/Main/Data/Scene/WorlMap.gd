@@ -1,4 +1,4 @@
-extends TileMap
+extends Node2D
 
 @export var checkout_list : Array
 @export var start_checkout : Node2D

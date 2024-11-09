@@ -3,7 +3,7 @@ extends Node2D
 @onready var package_spawn_position = $PackageSpawnPosition
 
 @export var ui_item_menu : CanvasLayer
-@export var world_map : TileMap
+@export var world_map : Node2D
 @export var package_scene : PackedScene
 @export var spawn_offset_min_max = Vector2(-32, 32)
 

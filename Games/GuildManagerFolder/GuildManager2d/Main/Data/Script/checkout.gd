@@ -19,43 +19,42 @@ func _ready():
 func is_full():
 	return len(shopper_queue) >= 7
 
-func get_marker():
-	return checkout_marker
-
 func get_queue_size():
 	return len(shopper_queue)
+	
+func get_marker():
+	return checkout_marker
 
 func add_shopper(shopper):
 	shopper_queue.append(shopper)
 	
 func work_on_queue():
-	if shopper_queue.is_empty():
+	if shopper_queue.is_empty() or in_work_cooldown:
 		return
-	current_shopping_list = shopper_queue[0].get_basket_items()
-	if current_shopping_list.is_empty() or in_work_cooldown:
-		return
-		#Take shopped_items from shopper:
-			#TODO: 
+	if current_shopping_list.is_empty():
+		current_shopping_list = shopper_queue[0].get_basket_list()
+		set_progress_bar(current_shopping_list)
+	
+	Gold.add_gold(current_shopping_list[0]["value"])
 	work_timer.start()
 	in_work_cooldown = true
-	current_shopping_list[0] -= 1
-	update_progress_bar()
-	if current_shopping_list[0] == 0:
-		current_shopping_list.remove_at(0)
+	current_shopping_list.remove_at(0)
+	update_progress_bar(current_shopping_list)
+	if current_shopping_list.is_empty():
+		shopper_queue[0].bought_basket()
+		shopper_queue.remove_at(0)
 	print(current_shopping_list)
 
 func set_progress_bar(shopping_list):
-	var shopping_size = 0
-	for item in shopping_list:
-		shopping_size += item
+	var shopping_size = len(shopping_list)
 	work_progress_bar.min_value = 0
 	work_progress_bar.max_value = shopping_size
 	work_progress_bar.value = shopping_size
 	work_progress_bar.visible = true
 	show_progress_timer.start()
 
-func update_progress_bar():
-	work_progress_bar.value -= 1
+func update_progress_bar(list):
+	work_progress_bar.value = len(list)
 	work_progress_bar.visible = true
 	show_progress_timer.start()
 	
