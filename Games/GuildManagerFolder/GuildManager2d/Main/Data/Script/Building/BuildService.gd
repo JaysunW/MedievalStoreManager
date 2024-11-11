@@ -1,9 +1,9 @@
 extends Node2D
 
+@export var navigation_region : NavigationRegion2D
 @export var ui_build_menu : CanvasLayer
 @export var world_map : Node2D
 @export var store_area : TileMapLayer
-@export var placement_color = [Color(1,1,1,0.8), Color(1,0.4,0.4,1)]
 @export var stand_scenes : Dictionary
 
 @export var debug = false
@@ -30,7 +30,7 @@ func spawn_debug_shelf():
 	var debug_stand = stand_scenes[debug_stand_name].instantiate()
 	var tile_pos : Vector2i = store_area.local_to_map(debug_marker.global_position)
 	var grid_tile_pos = tile_pos * 32 + mouse_grid_offset
-	debug_stand.position = grid_tile_pos + Vector2i(0, -8)
+	debug_stand.position = grid_tile_pos + Vector2i(0, 0)
 	world_map.add_child(debug_stand)
 	var build_data = Data.building_data
 	for data in build_data:
@@ -46,13 +46,16 @@ func _process(_delta):
 			change_build_mode(true)
 		elif is_build_menu_open:
 			change_build_mode(false)
-			
 	if Input.is_action_just_pressed("c"):
 		Stock.print_current_stock()		
 	
-	if not is_build_menu_open:
+	if not (is_build_menu_open and is_building):
 		return
+	
+	build_objects()
+	
 		
+func build_objects():
 	var mouse_pos = get_global_mouse_position() + Vector2( 0, 16)
 	var mouse_tile_pos : Vector2i = store_area.local_to_map(mouse_pos)
 	var mouse_grid_pos = mouse_tile_pos * 32 + mouse_grid_offset
@@ -66,9 +69,6 @@ func _process(_delta):
 			current_build_object.change_color(Color.FIREBRICK)
 		in_build_area = false
 		
-	if not is_building:
-		return 
-		
 	current_build_object.position = mouse_grid_pos
 	if in_build_area:
 		if Input.is_action_pressed("left_mouse"):
@@ -77,6 +77,7 @@ func _process(_delta):
 				world_map.object_dict[mouse_grid_pos] = current_build_object
 				store_area.set_cell(mouse_tile_pos, 0, Vector2i(1,0))
 				create_placeable_object()
+				navigation_region.bake_navigation_polygon()
 			else:
 				current_build_object.flash_color(Color.FIREBRICK, 0.1)
 	if Input.is_action_pressed("right_mouse"):
@@ -85,15 +86,16 @@ func _process(_delta):
 			current_build_object = null
 		is_building = false
 		ui_build_menu.visible = true
-			
+		
 func create_placeable_object():
 	current_build_object = stand_scenes[current_build_data["name"]].instantiate()
 	var mouse_pos = get_global_mouse_position()
 	var tile_mouse_pos : Vector2i = store_area.local_to_map(mouse_pos)
 	current_build_object.position = tile_mouse_pos * 32 + mouse_grid_offset
 	world_map.add_child(current_build_object)
+	current_build_object.prepare_stand(false)
 	current_build_object.data = current_build_data
-	current_build_object.tile_map_reference = world_map
+	current_build_object.tile_layer_ref = world_map
 	
 func change_build_mode(input):
 	store_area.visible = input

@@ -14,6 +14,7 @@ var in_work_cooldown = false
 var checkout_queue_max = 7
 
 func _ready():
+	work_progress_bar.visible = false
 	pass
 
 func is_full():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cpj5rtpiq5d5i"]
+[gd_scene load_steps=12 format=3 uid="uid://cpj5rtpiq5d5i"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/Building/stand_class.gd" id="1_nlceu"]
 [ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/Scene/package.tscn" id="2_13km2"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_154de"]
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_bxwc5"]
 [ext_resource type="Texture2D" uid="uid://k0vhp18yjf7o" path="res://Asset/ShopItem/Bread.png" id="10_2f18m"]
+[ext_resource type="Script" path="res://Main/Data/Scene/Building/fill_progressbar.gd" id="10_eks2w"]
 
 [node name="Shelf" type="StaticBody2D" node_paths=PackedStringArray("npc_marker") groups=["NavigationBlock"]]
 texture_filter = 1
@@ -54,8 +55,9 @@ stretch_margin_bottom = 4
 texture_under = ExtResource("7_0drwp")
 texture_over = ExtResource("8_154de")
 texture_progress = ExtResource("9_bxwc5")
+script = ExtResource("10_eks2w")
 
-[node name="ShowProgressTimer" type="Timer" parent="."]
+[node name="ShowProgressTimer" type="Timer" parent="FillProgressbar"]
 wait_time = 1.5
 one_shot = true
 
@@ -69,6 +71,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="InteractionMarker" type="Marker2D" parent="."]
+position = Vector2(0, 8)
 
-[connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]
+[connection signal="timeout" from="FillProgressbar/ShowProgressTimer" to="FillProgressbar" method="_on_show_progress_timer_timeout"]
 [connection signal="timeout" from="ChangeColorTimer" to="." method="_on_change_color_timer_timeout"]

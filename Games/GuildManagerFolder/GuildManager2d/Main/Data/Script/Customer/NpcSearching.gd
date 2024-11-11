@@ -85,11 +85,12 @@ func Update(_delta):
 			Enter()
 			searching_for_item = true
 		print("Found item with ID: ", current_search_id)
-		
+
 func Physics_process(_delta):
 	if not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
 		var dir = (next_position - customer.global_position).normalized()
+		customer.change_animation(dir)
 		customer.velocity = dir * speed * _delta
 		customer.move_and_slide()
 	

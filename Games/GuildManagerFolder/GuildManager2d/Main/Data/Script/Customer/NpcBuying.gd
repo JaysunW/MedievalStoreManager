@@ -1,5 +1,6 @@
 extends State
 
+
 @export var customer : CharacterBody2D
 @export var navigation_agent : NavigationAgent2D
 @export var target_position : Vector2
@@ -58,6 +59,7 @@ func Physics_process(_delta):
 	if not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
 		var dir = (next_position - customer.global_position).normalized()
+		customer.change_animation(dir)
 		customer.velocity = dir * speed * _delta
 		customer.move_and_slide()
 	elif not is_waiting_open_checkout:

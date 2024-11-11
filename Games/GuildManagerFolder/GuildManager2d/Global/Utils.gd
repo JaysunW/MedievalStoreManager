@@ -9,3 +9,10 @@ enum NpcState {
 	BUYING,
 	LEAVING	
 }
+
+enum Orientation {
+	SOUTH,
+	EAST,
+	WEST,
+	NORTH
+}

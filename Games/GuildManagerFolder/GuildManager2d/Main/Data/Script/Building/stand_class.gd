@@ -5,7 +5,6 @@ class_name StandClass
 @onready var collision = $Collision
 @onready var interaction_object_component = $InteractionObjectComponent
 @onready var fill_progressbar = $FillProgressbar
-@onready var show_progress_timer = $ShowProgressTimer
 @onready var show_content_icon = $ShowContentIcon
 @onready var change_color_timer = $ChangeColorTimer
 
@@ -15,10 +14,14 @@ class_name StandClass
 @export var data = {}
 @export var npc_marker : Marker2D
 
+@export var tile_size = Vector2i(1, 1)
+var orientation = Utils.Orientation.SOUTH
+
 var is_flashing_color = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	fill_progressbar.visible = false
 	show_content_icon.visible = false
 	pass # Replace with function body.
@@ -38,23 +41,16 @@ func prepare_stand(should_prepare=true):
 	if should_prepare:
 		skin.modulate = Color(1,1,1,1)
 	else:
-		skin.modulate = Color(1,1,1,0.8)
+		skin.modulate = Color(1,1,1,0.6)
 	collision.set_deferred("disabled", not should_prepare)
 	interaction_object_component.set_deferred("monitorable", should_prepare)
 	
-func update_fill_progress(input_content_data):
-	show_progress_timer.start()
-	fill_progressbar.min_value = 0
-	fill_progressbar.max_value = input_content_data["max_amount"]
-	fill_progressbar.value = input_content_data["amount"]
-	show_fill_progress(true)
-		
-func show_fill_progress(is_showing):
-	fill_progressbar.visible = is_showing
-	
-func change_color(color):
+func change_color(color, change_alpha = false):
 	if not is_flashing_color:
-		skin.modulate = color
+		if change_alpha:
+			skin.modulate = color
+		else:
+			skin.modulate = Color(color.r,color.g,color.b, skin.modulate.a)
 
 func rotate_object():
 	rotation_degrees = (int(rotation_degrees) + 90) % 360
@@ -72,7 +68,7 @@ func fill_shelf(content):
 		skin.change_sprite(1)
 		show_content_icon.texture = Loader.texture(content_data["sprite_path"])
 		show_content_icon.visible = true
-		update_fill_progress(content_data)
+		fill_progressbar.update_fill_progress(content_data)
 		Stock.add_to_stock(content_data["id"], self)
 		return true
 	elif content_data["id"] != input_data["id"]:
@@ -84,7 +80,7 @@ func fill_shelf(content):
 		flash_color(Color.FIREBRICK)
 		return false
 	else:
-		update_fill_progress(content_data)
+		fill_progressbar.update_fill_progress(content_data)
 		skin.change_sprite(1)
 		Stock.add_to_stock(content_data["id"], self)
 		return true
@@ -92,7 +88,7 @@ func fill_shelf(content):
 func take_from_shelf():
 	content_data["amount"] -= 1
 	if content_data["amount"] <= 0:
-		show_fill_progress(false)
+		fill_progressbar.visible = false
 		show_content_icon.visible = true
 		show_content_icon.texture = null
 		Stock.take_from_stock(content_data["id"], self, true)
@@ -100,7 +96,7 @@ func take_from_shelf():
 	else:
 		#Depending on fill scale:
 		skin.change_sprite(1)
-		update_fill_progress(content_data)
+		fill_progressbar.update_fill_progress(content_data)
 		Stock.take_from_stock(content_data["id"], self)
 	
 func get_content_instance():
@@ -116,17 +112,17 @@ func empty_content():
 	content_data = {}
 	skin.change_sprite(0)
 
-func flash_color(color, flash_time = 0.1):
+func flash_color(color, flash_time = 0.1, change_alpha = false):
 	if not is_flashing_color:
 		is_flashing_color = true
-		skin.modulate = color
+		if change_alpha:
+			skin.modulate = color
+		else:
+			skin.modulate = Color(color.r,color.g,color.b, skin.modulate.a)
 		change_color_timer.start(flash_time)
 
 func is_empty():
 	return content_data.is_empty()
-
-func _on_show_progress_timer_timeout():
-	fill_progressbar.visible = false
 
 func _on_change_color_timer_timeout():
 	is_flashing_color = false

@@ -23,5 +23,5 @@ shape = SubResource("RectangleShape2D_4wcxh")
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_x74ds")
 
-[node name="ShowContentIcon" parent="." index="5"]
+[node name="ShowContentIcon" parent="." index="4"]
 position = Vector2(-6, -16)
