@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://g4q00bhdlk1l" path="res://Asset/TileSet/tile_set_ground.png" id="2_gua6h"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
 [ext_resource type="PackedScene" uid="uid://df4ydop0drcb6" path="res://Main/Data/Scene/player.tscn" id="3_oikkr"]
-[ext_resource type="Script" path="res://Main/Data/Scene/shop_area_map.gd" id="4_ly0ui"]
-[ext_resource type="Script" path="res://Main/Data/Scene/WorlMap.gd" id="5_l1qj5"]
+[ext_resource type="Script" path="res://Main/Data/Script/shop_area_map.gd" id="4_ly0ui"]
+[ext_resource type="Script" path="res://Main/Data/Script/WorlMap.gd" id="5_l1qj5"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/BuildService.gd" id="5_sdoag"]
 [ext_resource type="PackedScene" uid="uid://0euevr2c17v6" path="res://Main/Data/Scene/Building/hanger.tscn" id="5_ufjdo"]
 [ext_resource type="PackedScene" uid="uid://fvle76aosgsx" path="res://Main/Data/Scene/Building/shelf.tscn" id="6_1nfi5"]
@@ -17,11 +17,11 @@
 [ext_resource type="Theme" uid="uid://cyx5vjugx1lim" path="res://Theme/our_theme.tres" id="7_ykg55"]
 [ext_resource type="PackedScene" uid="uid://wi17fl4xuvp" path="res://Component/sprite_component.tscn" id="8_3qdpo"]
 [ext_resource type="PackedScene" uid="uid://csc1vxhhtes3a" path="res://UI/BuildObjectContainer.tscn" id="9_2nmlh"]
-[ext_resource type="Texture2D" uid="uid://dfjl2am5x2jo0" path="res://Asset/ItemShop.png" id="9_khcw7"]
 [ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/shelf.png" id="10_o4rgv"]
 [ext_resource type="Texture2D" uid="uid://d37crr5faqbhg" path="res://Asset/filled_shelf.png" id="11_m0jyt"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/BuildMenu.gd" id="11_us1ic"]
 [ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="12_1jmpg"]
+[ext_resource type="Texture2D" uid="uid://b1ojqbmk0vfoh" path="res://Asset/shop_interface.png" id="12_gohio"]
 [ext_resource type="PackedScene" uid="uid://xpw4hvu00bc2" path="res://UI/item_object_container.tscn" id="14_oy5h6"]
 [ext_resource type="PackedScene" uid="uid://drl0elvrqhdoa" path="res://Main/Data/Scene/customer.tscn" id="14_y5x34"]
 [ext_resource type="Script" path="res://Main/Data/Script/Customer/NPCService.gd" id="15_qbfgx"]
@@ -278,7 +278,7 @@ package_scene = ExtResource("6_5qldv")
 
 [node name="SpriteComponent" parent="Main/WorlMap/ItemInterface" instance=ExtResource("8_3qdpo")]
 position = Vector2(0, -16)
-texture = ExtResource("9_khcw7")
+texture = ExtResource("12_gohio")
 sprites = Array[Texture2D]([ExtResource("10_o4rgv"), ExtResource("11_m0jyt")])
 
 [node name="Collision" type="CollisionShape2D" parent="Main/WorlMap/ItemInterface"]

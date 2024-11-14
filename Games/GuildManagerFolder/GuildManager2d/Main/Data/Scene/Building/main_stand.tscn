@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_154de"]
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_bxwc5"]
 [ext_resource type="Texture2D" uid="uid://k0vhp18yjf7o" path="res://Asset/ShopItem/Bread.png" id="10_2f18m"]
-[ext_resource type="Script" path="res://Main/Data/Scene/Building/fill_progressbar.gd" id="10_eks2w"]
+[ext_resource type="Script" path="res://Main/Data/Script/fill_progressbar.gd" id="10_eks2w"]
 
 [node name="Shelf" type="StaticBody2D" node_paths=PackedStringArray("npc_marker") groups=["NavigationBlock"]]
 texture_filter = 1

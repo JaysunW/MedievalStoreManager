@@ -15,13 +15,14 @@ class_name StandClass
 @export var npc_marker : Marker2D
 
 @export var tile_size = Vector2i(1, 1)
+
+var need_space = true
 var orientation = Utils.Orientation.SOUTH
 
 var is_flashing_color = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	fill_progressbar.visible = false
 	show_content_icon.visible = false
 	pass # Replace with function body.
