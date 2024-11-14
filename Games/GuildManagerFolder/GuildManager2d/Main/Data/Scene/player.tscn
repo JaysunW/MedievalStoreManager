@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Main/Data/Script/Player/movePlayer.gd" id="1_eyjuj"]
 [ext_resource type="Script" path="res://Main/Data/Script/Player/objectInteraction.gd" id="3_xorse"]
 [ext_resource type="PackedScene" uid="uid://b2jmi67en200t" path="res://Component/interaction_component.tscn" id="4_3kgx7"]
-[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/shelf.png" id="5_2l4kb"]
+[ext_resource type="Texture2D" uid="uid://dx3dgt6ub6k0t" path="res://Asset/32x32white.png" id="4_ptfvr"]
 [ext_resource type="Script" path="res://UI/UIHeldObject.gd" id="6_dthbu"]
 [ext_resource type="Texture2D" uid="uid://dmf5862hccy1r" path="res://Asset/UI/object_show_back.png" id="7_acytv"]
 [ext_resource type="Texture2D" uid="uid://dggtxkxvk3056" path="res://Asset/ShopItem/flask.png" id="8_lyy63"]
@@ -295,7 +295,7 @@ shape = SubResource("RectangleShape2D_eetes")
 [node name="test" type="Sprite2D" parent="InteractionComponent/CollisionShape2D"]
 modulate = Color(1, 1, 1, 0.392157)
 scale = Vector2(0.6875, 0.8125)
-texture = ExtResource("5_2l4kb")
+texture = ExtResource("4_ptfvr")
 
 [node name="InteractTimer" type="Timer" parent="."]
 wait_time = 0.25

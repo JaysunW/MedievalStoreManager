@@ -1,32 +1,37 @@
-[gd_scene load_steps=12 format=3 uid="uid://cpj5rtpiq5d5i"]
+[gd_scene load_steps=10 format=3 uid="uid://cpj5rtpiq5d5i"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/Building/stand_class.gd" id="1_nlceu"]
 [ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/Scene/package.tscn" id="2_13km2"]
 [ext_resource type="PackedScene" uid="uid://wi17fl4xuvp" path="res://Component/sprite_component.tscn" id="3_355td"]
-[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/shelf.png" id="4_f6567"]
-[ext_resource type="Texture2D" uid="uid://d37crr5faqbhg" path="res://Asset/filled_shelf.png" id="5_gxfyp"]
 [ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="6_e73qv"]
 [ext_resource type="Texture2D" uid="uid://bhff6vdh1dp4k" path="res://Asset/UI/stand_fill_under.png" id="7_0drwp"]
 [ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_154de"]
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_bxwc5"]
-[ext_resource type="Texture2D" uid="uid://k0vhp18yjf7o" path="res://Asset/ShopItem/Bread.png" id="10_2f18m"]
 [ext_resource type="Script" path="res://Main/Data/Script/fill_progressbar.gd" id="10_eks2w"]
+[ext_resource type="Script" path="res://Main/Data/Scene/Building/orientation_component.gd" id="12_47ksi"]
 
-[node name="Shelf" type="StaticBody2D" node_paths=PackedStringArray("npc_marker") groups=["NavigationBlock"]]
+[node name="Shelf" type="StaticBody2D" node_paths=PackedStringArray("interaction_marker") groups=["NavigationBlock"]]
 texture_filter = 1
 collision_layer = 65
 collision_mask = 64
 script = ExtResource("1_nlceu")
 package_scene = ExtResource("2_13km2")
-npc_marker = NodePath("InteractionMarker")
+interaction_marker = NodePath("Skin/InteractionMarker")
 
-[node name="SpriteComponent" parent="." instance=ExtResource("3_355td")]
+[node name="Skin" parent="." instance=ExtResource("3_355td")]
 position = Vector2(0, -16)
-texture = ExtResource("4_f6567")
-sprites = Array[Texture2D]([ExtResource("4_f6567"), ExtResource("5_gxfyp")])
+hframes = 4
 
-[node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
+[node name="InteractionMarker" type="Marker2D" parent="Skin"]
+position = Vector2(0, 16)
+
+[node name="South" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
+
+[node name="East" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
+
+[node name="North" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
+
+[node name="West" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
 
 [node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Stand"] instance=ExtResource("6_e73qv")]
 position = Vector2(0, -16)
@@ -35,7 +40,16 @@ collision_mask = 0
 monitoring = false
 main_object = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionObjectComponent"]
+[node name="South" type="CollisionShape2D" parent="InteractionObjectComponent" groups=["orientation_collision"]]
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
+
+[node name="East" type="CollisionShape2D" parent="InteractionObjectComponent" groups=["orientation_collision"]]
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
+
+[node name="North" type="CollisionShape2D" parent="InteractionObjectComponent" groups=["orientation_collision"]]
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
+
+[node name="West" type="CollisionShape2D" parent="InteractionObjectComponent" groups=["orientation_collision"]]
 debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 
 [node name="FillProgressbar" type="TextureProgressBar" parent="."]
@@ -61,17 +75,16 @@ script = ExtResource("10_eks2w")
 wait_time = 1.5
 one_shot = true
 
-[node name="ShowContentIcon" type="Sprite2D" parent="."]
-position = Vector2(-11, -27)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("10_2f18m")
-
 [node name="ChangeColorTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
 
-[node name="InteractionMarker" type="Marker2D" parent="."]
-position = Vector2(0, 8)
+[node name="OrientationComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_component", "interaction_marker", "rotation_node_list")]
+script = ExtResource("12_47ksi")
+sprite_component = NodePath("../Skin")
+interaction_marker = NodePath("../Skin/InteractionMarker")
+rotation_node_list = [NodePath(".."), NodePath("../InteractionObjectComponent")]
+orientation_group_string = "orientation_collision"
 
 [connection signal="timeout" from="FillProgressbar/ShowProgressTimer" to="FillProgressbar" method="_on_show_progress_timer_timeout"]
 [connection signal="timeout" from="ChangeColorTimer" to="." method="_on_change_color_timer_timeout"]

@@ -10,7 +10,7 @@ extends Node2D
 @export var debug_marker : Marker2D
 @export var debug_stand_name : String
 
-var mouse_grid_offset = Vector2i(16,16)
+var mouse_grid_offset = Vector2i(16,32)
 var is_build_menu_open = false
 var is_building = false
 
@@ -37,6 +37,7 @@ func spawn_debug_shelf():
 		if build_data[data]["name"] == debug_stand_name:
 			debug_stand.data = build_data[data]
 	debug_stand.tile_layer_ref = world_map
+	debug_stand.prepare_stand(true)
 	world_map.object_dict[tile_pos] = current_build_object
 	store_area.set_cell(tile_pos, 0, Vector2i(1,0))
 	
@@ -54,9 +55,13 @@ func _process(_delta):
 	
 	build_objects()
 	
+	if Input.is_action_just_pressed("q"):
+		current_build_object.rotate_object(-1)
+	if Input.is_action_just_pressed("e"):
+		current_build_object.rotate_object(1)	
 		
 func build_objects():
-	var mouse_pos = get_global_mouse_position() + Vector2( 0, 16)
+	var mouse_pos = get_global_mouse_position()
 	var mouse_tile_pos : Vector2i = store_area.local_to_map(mouse_pos)
 	var mouse_grid_pos = mouse_tile_pos * 32 + mouse_grid_offset
 	var tile_data : TileData = store_area.get_cell_tile_data(mouse_tile_pos)
@@ -69,7 +74,7 @@ func build_objects():
 			current_build_object.change_color(Color.FIREBRICK)
 		in_build_area = false
 		
-	current_build_object.position = mouse_grid_pos
+	current_build_object.position = mouse_grid_pos + Vector2i(current_build_object.get_position_offset())
 	if in_build_area:
 		if Input.is_action_pressed("left_mouse"):
 			if mouse_grid_pos not in world_map.object_dict.keys() and Gold.pay(current_build_object.data["value"]):

@@ -13,6 +13,6 @@ enum NpcState {
 enum Orientation {
 	SOUTH,
 	EAST,
-	WEST,
-	NORTH
+	NORTH,
+	WEST
 }

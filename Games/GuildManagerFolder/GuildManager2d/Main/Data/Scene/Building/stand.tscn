@@ -1,27 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://jnldn6ayftnp"]
+[gd_scene load_steps=3 format=3 uid="uid://jnldn6ayftnp"]
 
 [ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/Scene/Building/main_stand.tscn" id="1_0v7nn"]
 [ext_resource type="Texture2D" uid="uid://bjajhnqhdyvjf" path="res://Asset/Building/stand.png" id="2_y7ktg"]
-[ext_resource type="Texture2D" uid="uid://d37crr5faqbhg" path="res://Asset/filled_shelf.png" id="3_t880w"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wcxh"]
-size = Vector2(20, 9)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x74ds"]
 
 [node name="Shelf" instance=ExtResource("1_0v7nn")]
 
-[node name="SpriteComponent" parent="." index="0"]
+[node name="Skin" parent="." index="0"]
 texture = ExtResource("2_y7ktg")
-sprites = Array[Texture2D]([ExtResource("2_y7ktg"), ExtResource("3_t880w")])
-
-[node name="Collision" parent="." index="1"]
-position = Vector2(0, -4.5)
-shape = SubResource("RectangleShape2D_4wcxh")
-
-[node name="CollisionShape2D" parent="InteractionObjectComponent" index="0"]
-position = Vector2(0, 6)
-shape = SubResource("RectangleShape2D_x74ds")
-
-[node name="ShowContentIcon" parent="." index="4"]
-position = Vector2(-6, -16)
+hframes = 1
