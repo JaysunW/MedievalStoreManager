@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctctcbfat7yrf"
-path="res://.godot/imported/shelf_side_left.png-f5f1cbbeed9a66edd14db019db1d4b66.ctex"
+uid="uid://b2j0w50fu1tv3"
+path="res://.godot/imported/tile_set_outside_ground.png-3565037578f580ebc8c6ec8b1c13ed75.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/Building/shelf_side_left.png"
-dest_files=["res://.godot/imported/shelf_side_left.png-f5f1cbbeed9a66edd14db019db1d4b66.ctex"]
+source_file="res://Asset/TileSet/tile_set_outside_ground.png"
+dest_files=["res://.godot/imported/tile_set_outside_ground.png-3565037578f580ebc8c6ec8b1c13ed75.ctex"]
 
 [params]
 

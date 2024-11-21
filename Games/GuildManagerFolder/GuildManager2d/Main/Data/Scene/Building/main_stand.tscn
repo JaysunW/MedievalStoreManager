@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpj5rtpiq5d5i"]
+[gd_scene load_steps=11 format=3 uid="uid://cpj5rtpiq5d5i"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/Building/stand_class.gd" id="1_nlceu"]
 [ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/Scene/package.tscn" id="2_13km2"]
@@ -8,22 +8,21 @@
 [ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_154de"]
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_bxwc5"]
 [ext_resource type="Script" path="res://Main/Data/Script/fill_progressbar.gd" id="10_eks2w"]
+[ext_resource type="Texture2D" uid="uid://dx3dgt6ub6k0t" path="res://Asset/32x32white.png" id="10_naxhi"]
 [ext_resource type="Script" path="res://Main/Data/Scene/Building/orientation_component.gd" id="12_47ksi"]
 
 [node name="Shelf" type="StaticBody2D" node_paths=PackedStringArray("interaction_marker") groups=["NavigationBlock"]]
+y_sort_enabled = true
 texture_filter = 1
 collision_layer = 65
 collision_mask = 64
 script = ExtResource("1_nlceu")
 package_scene = ExtResource("2_13km2")
-interaction_marker = NodePath("Skin/InteractionMarker")
+interaction_marker = NodePath("InteractionMarker")
 
 [node name="Skin" parent="." instance=ExtResource("3_355td")]
-position = Vector2(0, -16)
+offset = Vector2(0, -15)
 hframes = 4
-
-[node name="InteractionMarker" type="Marker2D" parent="Skin"]
-position = Vector2(0, 16)
 
 [node name="South" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
 
@@ -82,9 +81,16 @@ one_shot = true
 [node name="OrientationComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_component", "interaction_marker", "rotation_node_list")]
 script = ExtResource("12_47ksi")
 sprite_component = NodePath("../Skin")
-interaction_marker = NodePath("../Skin/InteractionMarker")
+interaction_marker = NodePath("../InteractionMarker")
 rotation_node_list = [NodePath(".."), NodePath("../InteractionObjectComponent")]
 orientation_group_string = "orientation_collision"
+
+[node name="InteractionMarker" type="Marker2D" parent="."]
+position = Vector2(0, 16)
+
+[node name="Sprite2D" type="Sprite2D" parent="InteractionMarker"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("10_naxhi")
 
 [connection signal="timeout" from="FillProgressbar/ShowProgressTimer" to="FillProgressbar" method="_on_show_progress_timer_timeout"]
 [connection signal="timeout" from="ChangeColorTimer" to="." method="_on_change_color_timer_timeout"]

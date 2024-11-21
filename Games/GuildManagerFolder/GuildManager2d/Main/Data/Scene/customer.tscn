@@ -14,10 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bk0hcwaukf0vi" path="res://Asset/Player/cloth_walk_back.png" id="12_ks7vq"]
 [ext_resource type="Texture2D" uid="uid://byvgq0h8vifn" path="res://Asset/Player/cloth_walk_right.png" id="13_nbraf"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kahc5"]
-radius = 5.0
-height = 18.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_y64r6"]
 atlas = ExtResource("8_41bmt")
 region = Rect2(0, 0, 32, 32)
@@ -246,6 +242,10 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kahc5"]
+radius = 3.0
+height = 10.0
+
 [node name="NPC" type="CharacterBody2D" node_paths=PackedStringArray("animation_component", "state_machine")]
 collision_layer = 8
 collision_mask = 96
@@ -255,11 +255,6 @@ safe_margin = 1.0
 script = ExtResource("1_5bhep")
 animation_component = NodePath("AnimationComponent")
 state_machine = NodePath("StateMachine")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -6)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_kahc5")
 
 [node name="ShoppingTimer" type="Timer" parent="."]
 
@@ -298,9 +293,10 @@ wait_time = 0.5
 [node name="MakePathTimer" type="Timer" parent="StateMachine"]
 
 [node name="NavigationAgent" type="NavigationAgent2D" parent="StateMachine"]
-path_desired_distance = 16.0
+path_desired_distance = 8.0
 target_desired_distance = 16.0
 navigation_layers = 9
+avoidance_enabled = true
 max_neighbors = 5
 debug_enabled = true
 
@@ -320,6 +316,11 @@ sprite_frames = SubResource("SpriteFrames_8sn3k")
 animation = &"walking"
 offset = Vector2(0, -15)
 flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_kahc5")
 
 [connection signal="timeout" from="StateMachine/Searching/ThinkTimer" to="StateMachine/Searching" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Searching/InteractTimer" to="StateMachine/Searching" method="_on_interaction_timer_timeout"]

@@ -36,6 +36,10 @@ func Enter():
 		is_waiting_open_checkout = false
 		target_position = current_checkout.get_marker().global_position
 		make_path()
+		if not navigation_agent.is_target_reachable():
+			print_debug("Couldn't get to checkout, stealing items")
+			target_position = self.global_position
+			make_path()
 	else:
 		print("Waiting")
 		wait_timer.start()

@@ -31,7 +31,6 @@ size = Vector2(16, 48)
 [node name="Shelf" instance=ExtResource("1_q38e0")]
 
 [node name="Skin" parent="." index="0"]
-position = Vector2(0, 0)
 texture = ExtResource("2_75pad")
 offset = Vector2(0, -16)
 sprites = Array[Texture2D]([ExtResource("2_75pad"), ExtResource("3_qj5r7")])

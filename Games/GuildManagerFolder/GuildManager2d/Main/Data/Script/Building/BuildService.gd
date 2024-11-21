@@ -24,13 +24,12 @@ func _ready():
 	store_area.visible = false
 	if debug:
 		spawn_debug_shelf()
-	pass # Replace with function body.
 
 func spawn_debug_shelf():
 	var debug_stand = stand_scenes[debug_stand_name].instantiate()
 	var tile_pos : Vector2i = store_area.local_to_map(debug_marker.global_position)
 	var grid_tile_pos = tile_pos * 32 + mouse_grid_offset
-	debug_stand.position = grid_tile_pos + Vector2i(0, 0)
+	debug_stand.position = grid_tile_pos + Vector2i(0, -16)
 	world_map.add_child(debug_stand)
 	var build_data = Data.building_data
 	for data in build_data:
@@ -50,39 +49,34 @@ func _process(_delta):
 	if Input.is_action_just_pressed("c"):
 		Stock.print_current_stock()		
 	
-	if not (is_build_menu_open and is_building):
+	if not (is_build_menu_open and is_building and current_build_object):
 		return
-	
-	build_objects()
-	
+		
 	if Input.is_action_just_pressed("q"):
 		current_build_object.rotate_object(-1)
 	if Input.is_action_just_pressed("e"):
 		current_build_object.rotate_object(1)	
-		
-func build_objects():
+	
 	var mouse_pos = get_global_mouse_position()
 	var mouse_tile_pos : Vector2i = store_area.local_to_map(mouse_pos)
 	var mouse_grid_pos = mouse_tile_pos * 32 + mouse_grid_offset
-	var tile_data : TileData = store_area.get_cell_tile_data(mouse_tile_pos)
-	if tile_data and tile_data.get_custom_data("is_building_area"):
-		if current_build_object:
-			current_build_object.change_color(Color.WHITE)
-		in_build_area = true
-	else:
-		if current_build_object:
-			current_build_object.change_color(Color.FIREBRICK)
-		in_build_area = false
-		
+	showing_buildable_area(mouse_tile_pos)
 	current_build_object.position = mouse_grid_pos + Vector2i(current_build_object.get_position_offset())
+	build_objects(mouse_tile_pos)
+	
+func showing_buildable_area(mouse_tile_pos):
+	in_build_area = store_area.is_buildable_area(mouse_tile_pos, current_build_object)
+	store_area.show_building_area(mouse_tile_pos, current_build_object)
+	
+func build_objects(mouse_tile_pos):
 	if in_build_area:
 		if Input.is_action_pressed("left_mouse"):
-			if mouse_grid_pos not in world_map.object_dict.keys() and Gold.pay(current_build_object.data["value"]):
+			if mouse_tile_pos not in world_map.object_dict.keys() and Gold.pay(current_build_object.data["value"]):
 				current_build_object.prepare_stand()
-				world_map.object_dict[mouse_grid_pos] = current_build_object
-				store_area.set_cell(mouse_tile_pos, 0, Vector2i(1,0))
+				world_map.object_dict[mouse_tile_pos] = current_build_object
+				store_area.place_object_at(mouse_tile_pos, current_build_object)
 				create_placeable_object()
-				navigation_region.bake_navigation_polygon()
+				navigation_region.call_deferred("bake_navigation_polygon")
 			else:
 				current_build_object.flash_color(Color.FIREBRICK, 0.1)
 	if Input.is_action_pressed("right_mouse"):

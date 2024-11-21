@@ -26,7 +26,6 @@ func _ready():
 	fill_progressbar.visible = false
 	pass # Replace with function body.
 
-	
 func prepare_stand(should_prepare=true):
 	if should_prepare:
 		skin.modulate = Color(1,1,1,1)
@@ -35,7 +34,19 @@ func prepare_stand(should_prepare=true):
 	for collision in orientation_component.current_collision_list:
 		collision.set_deferred("disabled", not should_prepare)
 	interaction_object_component.set_deferred("monitorable", should_prepare)
-	
+
+func get_space_vector():
+	var space_vector_list = [Vector2i.ZERO]
+	match current_orientation:
+		Utils.Orientation.SOUTH:
+			space_vector_list.append(Vector2i(0, 1))
+		Utils.Orientation.WEST:
+			space_vector_list.append(Vector2i(-1, 0))
+		Utils.Orientation.NORTH:
+			space_vector_list.append(Vector2i(0, -1))
+		Utils.Orientation.EAST:
+			space_vector_list.append(Vector2i(1, 0))
+	return space_vector_list
 	
 func get_npc_interaction_position():
 	return interaction_marker.global_position

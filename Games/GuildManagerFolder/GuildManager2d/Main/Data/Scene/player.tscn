@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://byvgq0h8vifn" path="res://Asset/Player/cloth_walk_right.png" id="20_ucn48"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ijf8t"]
-radius = 5.0
+radius = 4.0
 height = 20.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eetes"]
@@ -263,18 +263,18 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
-collision_layer = 0
+collision_layer = 2
 collision_mask = 224
-
-[node name="MovePlayer" type="Node2D" parent="." node_paths=PackedStringArray("player", "animation_component")]
-script = ExtResource("1_eyjuj")
-player = NodePath("..")
-animation_component = NodePath("../AnimationComponent")
 
 [node name="Collision" type="CollisionShape2D" parent="." groups=["Player"]]
 position = Vector2(0, -4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ijf8t")
+
+[node name="MovePlayer" type="Node2D" parent="." node_paths=PackedStringArray("player", "animation_component")]
+script = ExtResource("1_eyjuj")
+player = NodePath("..")
+animation_component = NodePath("../AnimationComponent")
 
 [node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("held_object_ui", "stand_info_ui", "interaction_component", "move_component")]
 position = Vector2(0, -14)
