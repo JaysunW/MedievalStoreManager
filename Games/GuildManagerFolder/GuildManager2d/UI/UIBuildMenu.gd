@@ -5,6 +5,7 @@ extends CanvasLayer
 @export var build_container : PackedScene
 
 signal chose_building_option(String)
+signal chose_expanding
 
 var container_list = []
 
@@ -22,6 +23,10 @@ func fill_container():
 			new_container.get_pressed_signal().connect(chosen_container)
 			new_container.set_container_info(i, building_data[i])
 
-func chosen_container(pressed_container):
+func chosen_container(pressed_container) -> void:
 	show_building_options(false)
 	chose_building_option.emit(pressed_container.container_data)
+
+func _on_expand_button_button_down() -> void:
+	show_building_options(false)
+	chose_expanding.emit()

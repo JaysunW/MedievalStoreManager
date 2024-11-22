@@ -6,6 +6,9 @@ var obstructed_area_atlas = Vector2i(1,0)
 var buildable_area_atlas = Vector2i(2,0)
 var building_space_area_atlas = Vector2i(3,0)
 
+func _ready() -> void:
+	visible = false
+
 func is_in_shop_area(mouse_tile_pos):
 	var atlas_coords = get_cell_atlas_coords(mouse_tile_pos)
 	return atlas_coords != Vector2i(-1,-1)
@@ -45,6 +48,9 @@ func show_building_area(mouse_tile_pos, building):
 		if is_in_shop_area(tile_position):
 			last_building_dicitonary[tile_position] = get_cell_atlas_coords(tile_position)
 			set_cell(tile_position, 0, change_atlas)
+
+func set_build_area_at(mouse_tile_pos):
+	set_cell(mouse_tile_pos, 0, build_area_atlas)
 
 func place_object_at(mouse_tile_pos, building):
 	last_building_dicitonary = {}

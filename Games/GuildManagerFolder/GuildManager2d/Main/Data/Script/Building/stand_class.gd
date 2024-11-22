@@ -64,7 +64,7 @@ func get_content_amount():
 	return content_data["amount"]
 
 func rotate_object(new_orentation):
-	current_orientation = posmod(current_orientation + new_orentation,4)
+	current_orientation = posmod(current_orientation + new_orentation, 4)
 	orientation_component.change_orientation_state(current_orientation)
 
 func fill_shelf(content):

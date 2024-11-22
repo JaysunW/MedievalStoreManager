@@ -695,8 +695,6 @@ flip_h = true
 [node name="ClothAnimation" type="AnimatedSprite2D" parent="AnimationComponent"]
 sprite_frames = SubResource("SpriteFrames_qq12i")
 animation = &"walking"
-frame = 3
-frame_progress = 0.215048
 offset = Vector2(0, -15)
 flip_h = true
 

@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_bxwc5"]
 [ext_resource type="Script" path="res://Main/Data/Script/fill_progressbar.gd" id="10_eks2w"]
 [ext_resource type="Texture2D" uid="uid://dx3dgt6ub6k0t" path="res://Asset/32x32white.png" id="10_naxhi"]
-[ext_resource type="Script" path="res://Main/Data/Scene/Building/orientation_component.gd" id="12_47ksi"]
+[ext_resource type="Script" path="res://Component/orientation_component.gd" id="12_47ksi"]
 
 [node name="Shelf" type="StaticBody2D" node_paths=PackedStringArray("interaction_marker") groups=["NavigationBlock"]]
 y_sort_enabled = true

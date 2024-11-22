@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dlfjevtir6k4b"]
 
-[ext_resource type="Script" path="res://Main/Data/Script/animation_component.gd" id="1_bkeen"]
+[ext_resource type="Script" path="res://Component/animation_component.gd" id="1_bkeen"]
 
 [node name="AnimationComponent" type="Node2D" node_paths=PackedStringArray("animation_player_list")]
 script = ExtResource("1_bkeen")

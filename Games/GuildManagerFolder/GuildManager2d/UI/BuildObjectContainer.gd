@@ -54,4 +54,5 @@ func disable():
 	pass
 
 func _on_button_pressed():
+	print_debug("Container")
 	pressed_button.emit(self)
