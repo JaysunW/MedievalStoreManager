@@ -49,7 +49,7 @@ func show_building_area(mouse_tile_pos, building):
 			last_building_dicitonary[tile_position] = get_cell_atlas_coords(tile_position)
 			set_cell(tile_position, 0, change_atlas)
 
-func set_build_area_at(mouse_tile_pos):
+func set_build_area(mouse_tile_pos):
 	set_cell(mouse_tile_pos, 0, build_area_atlas)
 
 func place_object_at(mouse_tile_pos, building):
