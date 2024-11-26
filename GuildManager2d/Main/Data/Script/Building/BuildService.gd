@@ -28,7 +28,6 @@ func update_navigation_region():
 	navigation_region.call_deferred("bake_navigation_polygon")	
 
 func change_build_mode(input):
-	print_debug("What")
 	ui_build_menu.visible = input
 	UI.is_free(not input)
 
