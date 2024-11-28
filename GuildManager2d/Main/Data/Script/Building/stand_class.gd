@@ -3,10 +3,9 @@ class_name StandClass
 
 @onready var interaction_object_component = $InteractionObjectComponent
 @onready var orientation_component: Node2D = $OrientationComponent
-
-@onready var skin = $Skin
+@onready var sprite_handler: Node2D = $SpriteHandler
 @onready var fill_progressbar = $FillProgressbar
-@onready var change_color_timer = $ChangeColorTimer
+
 
 @export var package_scene : PackedScene
 @export var interaction_marker : Marker2D
@@ -19,18 +18,13 @@ var tile_layer_ref : Node2D
 var need_space = true
 var current_orientation = Utils.Orientation.SOUTH
 
-var is_flashing_color = false
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	fill_progressbar.visible = false
 	pass # Replace with function body.
 
 func prepare_stand(should_prepare=true):
-	if should_prepare:
-		skin.modulate = Color(1,1,1,1)
-	else:
-		skin.modulate = Color(1,1,1,0.6)
+	sprite_handler.should_prepare_building(should_prepare)
 	for collision in orientation_component.current_collision_list:
 		collision.set_deferred("disabled", not should_prepare)
 	interaction_object_component.set_deferred("monitorable", should_prepare)
@@ -72,7 +66,7 @@ func fill_shelf(content):
 	if content_data.is_empty():
 		content_data = input_data
 		content_data["amount"] = 1
-		skin.change_sprite(1)
+		sprite_handler.show_filling_building(content_data)
 		fill_progressbar.update_fill_progress(content_data)
 		Stock.add_to_stock(content_data["id"], self)
 		return true
@@ -86,7 +80,7 @@ func fill_shelf(content):
 		return false
 	else:
 		fill_progressbar.update_fill_progress(content_data)
-		skin.change_sprite(1)
+		sprite_handler.show_filling_building(content_data)
 		Stock.add_to_stock(content_data["id"], self)
 		return true
 
@@ -98,7 +92,7 @@ func take_from_shelf():
 		empty_content()
 	else:
 		#Depending on fill scale:
-		skin.change_sprite(1)
+		sprite_handler.show_filling_building(content_data)
 		fill_progressbar.update_fill_progress(content_data)
 		Stock.take_from_stock(content_data["id"], self)
 	
@@ -113,27 +107,13 @@ func empty_content():
 	if content_data.is_empty():
 		print_debug("Error empied empty shelf")
 	content_data = {}
-	skin.change_sprite(0)
+	sprite_handler.is_being_emptied()
 
 func is_empty():
 	return content_data.is_empty()
 	
-func change_color(color, change_alpha = false):
-	if not is_flashing_color:
-		if change_alpha:
-			skin.modulate = color
-		else:
-			skin.modulate = Color(color.r,color.g,color.b, skin.modulate.a)
-			
+func change_color(color, change_alpha=false):
+	sprite_handler.change_color(color, change_alpha)
+	
 func flash_color(color, flash_time = 0.1, change_alpha = false):
-	if not is_flashing_color:
-		is_flashing_color = true
-		if change_alpha:
-			skin.modulate = color
-		else:
-			skin.modulate = Color(color.r,color.g,color.b, skin.modulate.a)
-		change_color_timer.start(flash_time)
-
-func _on_change_color_timer_timeout():
-	is_flashing_color = false
-	skin.modulate = Color(1,1,1)
+	sprite_handler.flash_color(color, flash_time, change_alpha)

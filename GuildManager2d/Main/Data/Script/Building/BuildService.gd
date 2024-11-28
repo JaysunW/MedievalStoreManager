@@ -37,8 +37,8 @@ func child_exit():
 
 func _on_ui_build_menu_chose_expanding() -> void:
 	child_is_active = true
-	expand_menu.call_deferred("Enter") 
+	expand_menu.Enter()
 
 func _on_ui_build_menu_chose_building_option(stand_data: Variant) -> void:
 	child_is_active = true
-	placing_menu.call_deferred("Enter", stand_data) 
+	placing_menu.Enter(stand_data) 

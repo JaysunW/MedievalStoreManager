@@ -24,7 +24,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ijf8t"]
 radius = 4.0
-height = 20.0
+height = 22.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eetes"]
 size = Vector2(22, 26)
@@ -687,8 +687,6 @@ is_default_color = true
 
 [node name="BodyAnimation" type="AnimatedSprite2D" parent="AnimationComponent"]
 sprite_frames = SubResource("SpriteFrames_cmb2v")
-animation = &"walking"
-frame_progress = 0.947517
 offset = Vector2(0, -15)
 flip_h = true
 

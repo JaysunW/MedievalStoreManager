@@ -17,18 +17,16 @@ func _physics_process(_delta):
 			if abs(direction.y) > abs(direction.x):
 				if direction.y > 0:
 					animation_component.set_animation("walking")
-					animation_component.set_color(Color.AQUA)
 				else:
 					animation_component.set_animation("walking_back")
-					animation_component.set_color(Color.AQUA)
 			else:
 				animation_component.set_animation("walking_horizontal")
 				animation_component.set_flip_h(direction.x < 0)
-				animation_component.set_color(Color.AQUA)
+			animation_component.play_animation()
 		else:
 			player.velocity = Vector2.ZERO
-			animation_component.set_animation("default")
-			animation_component.set_color(Color.AQUA)
+			animation_component.stop_animation()
+			#animation_component.set_animation("default")
 		player.move_and_slide()
 
 func _on_ui_stand_info_opened_stand_info():

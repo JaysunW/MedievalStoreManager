@@ -29,4 +29,5 @@ func chosen_container(pressed_container) -> void:
 
 func _on_expand_button_button_down() -> void:
 	show_building_options(false)
+	
 	chose_expanding.emit()

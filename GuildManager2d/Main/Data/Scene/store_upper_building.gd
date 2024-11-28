@@ -6,6 +6,13 @@ var auto_tiling_dictionary = {
 	[2,0,2,0,1,2,2,2] : Vector2i( 1, 0),
 	[2,0,2,1,1,2,2,2] : Vector2i( 2, 0),
 }
+
+func is_area(tile_pos):
+	var atlas_coordination = get_cell_atlas_coords(tile_pos)
+	return atlas_coordination != Vector2i(-1,-1)
+	
+func remove_tile(tile_position):
+	set_cell(tile_position, -1)
 	
 func set_upper_building( wall_position, bitmap):
 	var upper_building_atlas = get_auto_tiling_atlas(bitmap)

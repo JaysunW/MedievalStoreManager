@@ -1,7 +1,7 @@
-id	name	type	store_area	value	market_value	unlocked	sprite_path	amount	carry_max	max_amount		
-0	Loaf of Bread	Food	Bakery	5	6	1	res://Asset/ShopItem/Bread.png	20	20	50		
-1	Bottle of Mead	Drink	Beverages	10	12	1	res://Asset/ShopItem/flask.png	15	15	30		
-2	Fresh Apple	Food	Produce	3	4	1	res://Asset/ShopItem/test1.png	50	50	100		
+id	name	type	store_area	value	market_value	unlocked	sprite_path	amount	carry_max	max_amount	average_color	
+0	Loaf of Bread	Food	Bakery	5	6	1	res://Asset/ShopItem/Bread.png	20	20	50	160,104,73	
+1	Bottle of Mead	Drink	Beverages	10	12	1	res://Asset/ShopItem/flask.png	15	15	30	73,90,120	
+2	Fresh Apple	Food	Produce	3	4	1	res://Asset/ShopItem/test1.png	50	50	100	220,55,70	
 3	Goat Cheese	Food	Dairy	8	10	1	res://Asset/ShopItem/test2.png	10	10	20		
 4	Leather Boots	Clothing	Apparel	30	36	0		5	5	10		
 5	Iron Sword	Weapon	Weapons	120	144	0		2	2	5		

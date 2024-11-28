@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var sprite_component : Sprite2D
+@export var sprite_handler : Node2D
 @export var interaction_marker : Marker2D
 @export var rotation_node_list : Array[Node2D]
 @export var orientation_group_string : String
@@ -27,7 +27,7 @@ func change_orientation_state(new_orientation):
 	last_orientation = new_orientation
 	var child_name = ""
 	var pos_vec = Vector2.ZERO
-	sprite_component.rotate_sprite(new_orientation)
+	sprite_handler.rotate_sprite(new_orientation)
 	position_offset = Vector2.ZERO
 	match new_orientation:
 		Utils.Orientation.SOUTH:

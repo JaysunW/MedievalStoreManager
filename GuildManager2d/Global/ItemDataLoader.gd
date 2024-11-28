@@ -15,7 +15,7 @@ func print_every_item():
 	for id in shop_items:
 		print_debug("Item: ", shop_items[id]["name"], ", type: ", shop_items[id]["type"], ", store_area: ", shop_items[id]["store_area"],", value: ", shop_items[id]["value"],
 		 ", Average Value: ", shop_items[id]["market_value"], ", unlocked: ", shop_items[id]["unlocked"], ", sprite_path: ", shop_items[id]["sprite_path"],
-		 ", amount: ", shop_items[id]["amount"], ", carry_max: ", shop_items[id]["carry_max"], ", max_amount: ", shop_items[id]["max_amount"] )
+		 ", amount: ", shop_items[id]["amount"], ", carry_max: ", shop_items[id]["carry_max"], ", max_amount: ", shop_items[id]["max_amount"], ", average_color: ", shop_items[id]["average_color"] )
 
 func import_shop_item_data():
 	var file_content = load_from_file(txt_file_path)
@@ -38,6 +38,7 @@ func import_shop_item_data():
 			var amount = int(item_data[8])
 			var carry_max = int(item_data[9])
 			var max_amount = int(item_data[10])
+			var color_value_list = parse_average_color(item_data[11])
 			
 			shop_items[id] = {
 				"id": id,
@@ -50,9 +51,19 @@ func import_shop_item_data():
 				"sprite_path": sprite_path,
 				"amount": amount,
 				"carry_max": carry_max,
-				"max_amount":max_amount
+				"max_amount":max_amount,
+				"average_color": color_value_list
 			}
 	file_content.close()
+
+func parse_average_color(input):
+	var string_list = input.split(",")
+	print("string_list: ", string_list)
+	var color_value_list = []
+	for string in string_list:
+		color_value_list.append(float(string)/255)
+	print("color_list: ", color_value_list)
+	return color_value_list
 
 func load_from_file(path):
 	var file = FileAccess.open(path, FileAccess.READ)

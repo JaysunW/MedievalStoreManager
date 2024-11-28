@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/Scene/Building/main_stand.tscn" id="1_q38e0"]
 [ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/shelf.png" id="2_75pad"]
-[ext_resource type="Texture2D" uid="uid://d37crr5faqbhg" path="res://Asset/filled_shelf.png" id="3_qj5r7"]
+[ext_resource type="Texture2D" uid="uid://cdws7wa145xhk" path="res://Asset/Building/shelf_filling_1.png" id="4_7jh6b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qguiw"]
 size = Vector2(32, 12)
@@ -30,10 +30,15 @@ size = Vector2(16, 48)
 
 [node name="Shelf" instance=ExtResource("1_q38e0")]
 
-[node name="Skin" parent="." index="0"]
+[node name="BuildingSprite" parent="SpriteHandler" index="0"]
 texture = ExtResource("2_75pad")
 offset = Vector2(0, -16)
-sprites = Array[Texture2D]([ExtResource("2_75pad"), ExtResource("3_qj5r7")])
+hframes = 4
+
+[node name="FillStatus" parent="SpriteHandler" index="1"]
+texture = ExtResource("4_7jh6b")
+offset = Vector2(0, -16)
+hframes = 16
 
 [node name="South" parent="." index="1"]
 position = Vector2(0, -6)
