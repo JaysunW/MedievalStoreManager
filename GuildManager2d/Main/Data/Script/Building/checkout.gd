@@ -11,20 +11,24 @@ var shopper_queue = []
 var current_shopping_list = []
 var whole_shopping_amount = 0
 var in_work_cooldown = false
-var checkout_queue_max = 7
+var shopper_count = 0
+var checkout_queue_max = 2
 
 func _ready():
 	work_progress_bar.visible = false
 	pass
 
 func is_full():
-	return len(shopper_queue) >= 7
+	return shopper_count >= checkout_queue_max
 
 func get_queue_size():
 	return len(shopper_queue)
 	
 func get_marker():
 	return checkout_marker
+
+func reserve_spot():
+	shopper_count += 1
 
 func add_shopper(shopper):
 	shopper_queue.append(shopper)
@@ -44,6 +48,7 @@ func work_on_queue():
 	if current_shopping_list.is_empty():
 		shopper_queue[0].bought_basket()
 		shopper_queue.remove_at(0)
+		shopper_count -= 1
 	print(current_shopping_list)
 
 func set_progress_bar(shopping_list):

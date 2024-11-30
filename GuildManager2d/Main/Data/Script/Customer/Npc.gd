@@ -47,14 +47,16 @@ func get_random_shopping_list():
 #			shopping_dictionary[random_id] = 1
 
 func change_animation(move_direction):
-	if move_direction:
-		if abs(move_direction.y) > abs(move_direction.x):
-			if move_direction.y > 0:
-				animation_component.set_animation("walking")
-			else:
-				animation_component.set_animation("walking_back")
-		else:
-			animation_component.set_animation("walking_horizontal")
-			animation_component.set_flip_h(move_direction.x < 0)
-	else:
+	if not move_direction:
 		animation_component.set_animation("default")
+		return 
+	
+	if not abs(move_direction.y) > abs(move_direction.x):
+		animation_component.set_animation("walking_horizontal")
+		animation_component.set_flip_h(move_direction.x < 0)
+		return 
+	
+	if move_direction.y > 0:
+		animation_component.set_animation("walking")
+	else:
+		animation_component.set_animation("walking_back")

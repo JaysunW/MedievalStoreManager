@@ -106,6 +106,8 @@ func Physics_process(_delta):
 		customer.change_animation(dir)
 		customer.velocity = dir * speed * _delta
 		customer.move_and_slide()
+	else:
+		customer.change_animation(Vector2.ZERO)
 	
 func make_path():
 	navigation_agent.target_position = target_position
