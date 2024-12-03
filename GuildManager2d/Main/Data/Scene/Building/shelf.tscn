@@ -4,18 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/shelf.png" id="2_75pad"]
 [ext_resource type="Texture2D" uid="uid://cdws7wa145xhk" path="res://Asset/Building/shelf_filling_1.png" id="4_7jh6b"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qguiw"]
-size = Vector2(32, 12)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6cxj"]
-size = Vector2(16, 25)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ploky"]
-size = Vector2(32, 9)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wve1i"]
-size = Vector2(16, 25)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_324hr"]
 size = Vector2(32, 32)
 
@@ -28,6 +16,18 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwqws"]
 size = Vector2(16, 48)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qguiw"]
+size = Vector2(32, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6cxj"]
+size = Vector2(16, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ploky"]
+size = Vector2(32, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wve1i"]
+size = Vector2(16, 25)
+
 [node name="Shelf" instance=ExtResource("1_q38e0")]
 
 [node name="BuildingSprite" parent="SpriteHandler" index="0"]
@@ -39,22 +39,6 @@ hframes = 4
 texture = ExtResource("4_7jh6b")
 offset = Vector2(0, -16)
 hframes = 16
-
-[node name="South" parent="." index="1"]
-position = Vector2(0, -6)
-shape = SubResource("RectangleShape2D_qguiw")
-
-[node name="East" parent="." index="2"]
-position = Vector2(-8, -12.5)
-shape = SubResource("RectangleShape2D_j6cxj")
-
-[node name="North" parent="." index="3"]
-position = Vector2(0, -5)
-shape = SubResource("RectangleShape2D_ploky")
-
-[node name="West" parent="." index="4"]
-position = Vector2(8, -12.5)
-shape = SubResource("RectangleShape2D_wve1i")
 
 [node name="South" parent="InteractionObjectComponent" index="0"]
 visible = false
@@ -73,3 +57,19 @@ shape = SubResource("RectangleShape2D_mwxfj")
 visible = false
 position = Vector2(8, -8)
 shape = SubResource("RectangleShape2D_rwqws")
+
+[node name="South" parent="." index="5"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_qguiw")
+
+[node name="East" parent="." index="6"]
+position = Vector2(-8, -12.5)
+shape = SubResource("RectangleShape2D_j6cxj")
+
+[node name="North" parent="." index="7"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_ploky")
+
+[node name="West" parent="." index="8"]
+position = Vector2(8, -12.5)
+shape = SubResource("RectangleShape2D_wve1i")

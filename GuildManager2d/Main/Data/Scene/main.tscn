@@ -982,6 +982,8 @@ text = "100
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Node2D" type="Node2D" parent="Main"]
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
 z_index = 5

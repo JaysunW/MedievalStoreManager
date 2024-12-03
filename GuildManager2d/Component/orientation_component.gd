@@ -8,7 +8,7 @@ extends Node2D
 var position_offset = Vector2.ZERO
 var collision_node_dictionary = {}
 var current_collision_list = []
-var last_orientation = 0
+var current_orientation = 0
 
 func _ready() -> void:
 	add_rotation_objects()
@@ -24,7 +24,7 @@ func add_rotation_objects():
 				child.disabled = true
 				
 func change_orientation_state(new_orientation):
-	last_orientation = new_orientation
+	current_orientation = new_orientation
 	var child_name = ""
 	var pos_vec = Vector2.ZERO
 	sprite_handler.rotate_sprite(new_orientation)

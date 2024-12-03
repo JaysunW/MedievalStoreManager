@@ -281,6 +281,7 @@ navigation_agent = NodePath("../NavigationAgent")
 one_shot = true
 
 [node name="InteractTimer" type="Timer" parent="StateMachine/Searching"]
+autostart = true
 
 [node name="Buying" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer", "navigation_agent")]
 script = ExtResource("6_ut8hy")
@@ -288,7 +289,7 @@ customer = NodePath("../..")
 navigation_agent = NodePath("../NavigationAgent")
 
 [node name="WaitTimer" type="Timer" parent="StateMachine/Buying"]
-wait_time = 0.5
+one_shot = true
 
 [node name="MakePathTimer" type="Timer" parent="StateMachine"]
 

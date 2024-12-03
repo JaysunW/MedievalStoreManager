@@ -29,6 +29,9 @@ func find_open_checkout():
 	return output_checkout
 
 func Enter():
+	search_checkout()
+
+func search_checkout():
 	print("go to checkout")
 	current_checkout = find_open_checkout()
 	if current_checkout:
@@ -45,7 +48,7 @@ func Enter():
 		make_path()
 	is_waiting_open_checkout = true
 	wait_timer.start()
-		
+	
 func Exit():
 	patience_counter = 0 
 	is_waiting_for_billing = false
@@ -58,7 +61,7 @@ func Update(_delta):
 		Change_state("idle")
 		
 func Physics_process(_delta):	
-	if is_waiting_for_billing or is_waiting_open_checkout:
+	if is_waiting_open_checkout:
 		return
 		
 	if not navigation_agent.is_navigation_finished():
@@ -70,19 +73,24 @@ func Physics_process(_delta):
 		return
 	else:
 		customer.change_animation(Vector2.ZERO)
+	
+	if not is_waiting_for_billing:
+		current_checkout.add_shopper(customer)
+		is_waiting_for_billing = true
 		
-	current_checkout.add_shopper(customer)
-	is_waiting_for_billing = true
-		
-			
+func move_in_queue(new_position):
+	target_position = new_position
+	make_path()
+	pass
+
 func make_path():
-	navigation_agent.target_position = target_position + get_random_vector(16)
+	navigation_agent.target_position = target_position + get_random_vector(4)
 
 func _on_wait_timer_timeout():
 	if patience_counter < customer.patience:
-		print("Waiting: ", patience_counter)
+		print("Waiting: ", patience_counter + 1, "/", customer.patience)
 		patience_counter += 1
-		Enter()
+		search_checkout()
 	else: 
-		print("Customer was impatient and left without paying")
+		print_debug("Customer was impatient and left without paying")
 		Change_state("idle")

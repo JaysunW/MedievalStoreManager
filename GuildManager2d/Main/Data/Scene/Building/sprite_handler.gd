@@ -44,7 +44,6 @@ func show_filling_building(input_content_data):
 	var value = input_content_data["amount"]
 	var color_list = input_content_data["average_color"]
 	var average_item_color = Color.WHITE
-	print(color_list)
 	if len(color_list) == 3:
 		average_item_color = Color(color_list[0],color_list[1],color_list[2])
 	fill_sprite.modulate = average_item_color

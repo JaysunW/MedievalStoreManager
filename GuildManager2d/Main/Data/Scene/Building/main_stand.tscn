@@ -33,14 +33,6 @@ fill_sprite = NodePath("FillStatus")
 wait_time = 0.1
 one_shot = true
 
-[node name="South" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
-
-[node name="East" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
-
-[node name="North" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
-
-[node name="West" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
-
 [node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Stand"] instance=ExtResource("6_e73qv")]
 position = Vector2(0, -16)
 collision_layer = 64
@@ -96,6 +88,14 @@ position = Vector2(0, 16)
 [node name="Sprite2D" type="Sprite2D" parent="InteractionMarker"]
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("10_naxhi")
+
+[node name="South" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
+
+[node name="East" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
+
+[node name="North" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
+
+[node name="West" type="CollisionShape2D" parent="." groups=["orientation_collision"]]
 
 [connection signal="timeout" from="SpriteHandler/ChangeColorTimer" to="SpriteHandler" method="_on_change_color_timer_timeout"]
 [connection signal="timeout" from="FillProgressbar/ShowProgressTimer" to="FillProgressbar" method="_on_show_progress_timer_timeout"]

@@ -58,11 +58,9 @@ func import_shop_item_data():
 
 func parse_average_color(input):
 	var string_list = input.split(",")
-	print("string_list: ", string_list)
 	var color_value_list = []
 	for string in string_list:
 		color_value_list.append(float(string)/255)
-	print("color_list: ", color_value_list)
 	return color_value_list
 
 func load_from_file(path):

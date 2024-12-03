@@ -12,7 +12,7 @@ var current_shopping_list = []
 var whole_shopping_amount = 0
 var in_work_cooldown = false
 var shopper_count = 0
-var checkout_queue_max = 2
+var checkout_queue_max = 7
 
 func _ready():
 	work_progress_bar.visible = false

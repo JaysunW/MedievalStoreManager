@@ -47,7 +47,6 @@ func restart_search():
 		var stand_list_with_search_item = stock_stand_list[current_search_id]
 		current_search_stand = stand_list_with_search_item.pick_random()
 		target_position = current_search_stand.get_npc_interaction_position()
-	
 		make_path()
 		if not navigation_agent.is_target_reachable():
 			print_debug("Couldn't find target")

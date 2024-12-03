@@ -6,7 +6,6 @@ class_name StandClass
 @onready var sprite_handler: Node2D = $SpriteHandler
 @onready var fill_progressbar = $FillProgressbar
 
-
 @export var package_scene : PackedScene
 @export var interaction_marker : Marker2D
 @export var tile_size = Vector2i(1, 1)
@@ -43,7 +42,7 @@ func get_space_vector():
 	return space_vector_list
 	
 func get_npc_interaction_position():
-	return interaction_marker.global_position
+	return interaction_marker.global_position + Global.random_rotation_offset(orientation_component.current_orientation)
 
 func get_position_offset():
 	return orientation_component.position_offset
