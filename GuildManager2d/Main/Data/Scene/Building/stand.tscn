@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://jnldn6ayftnp"]
 
 [ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/Scene/Building/main_stand.tscn" id="1_0v7nn"]
-[ext_resource type="Texture2D" uid="uid://bjajhnqhdyvjf" path="res://Asset/Building/stand.png" id="2_y7ktg"]
+[ext_resource type="Texture2D" uid="uid://bjajhnqhdyvjf" path="res://Asset/Building/Stand/stand.png" id="2_y7ktg"]
 
 [node name="Shelf" instance=ExtResource("1_0v7nn")]
 

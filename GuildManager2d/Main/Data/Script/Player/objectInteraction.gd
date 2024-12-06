@@ -42,10 +42,10 @@ func interact_with_object():
 			found_stand_list.append(object.get_main_object())
 		elif object.is_in_group("ItemInterface"):
 			found_interface = object.get_main_object()
-	if found_interface:
-		found_interface.open_item_store()
-	elif not found_package_list.is_empty():
+	if not found_package_list.is_empty():
 		hold_object(find_nearest_object(found_package_list))
+	elif found_interface:
+		found_interface.open_item_store()
 	elif not found_stand_list.is_empty():
 		var filled_stand_list = []
 		for stand in found_stand_list:

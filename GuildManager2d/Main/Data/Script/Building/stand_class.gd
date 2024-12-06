@@ -65,7 +65,7 @@ func fill_shelf(content):
 	if content_data.is_empty():
 		content_data = input_data
 		content_data["amount"] = 1
-		sprite_handler.show_filling_building(content_data)
+		sprite_handler.prepare_filling_building(content_data)
 		fill_progressbar.update_fill_progress(content_data)
 		Stock.add_to_stock(content_data["id"], self)
 		return true

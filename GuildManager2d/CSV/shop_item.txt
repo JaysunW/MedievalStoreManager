@@ -1,15 +1,15 @@
-id	name	type	store_area	value	market_value	unlocked	sprite_path	amount	carry_max	max_amount	average_color	
-0	Loaf of Bread	Food	Bakery	5	6	1	res://Asset/ShopItem/Bread.png	20	20	50	160,104,73	
-1	Bottle of Mead	Drink	Beverages	10	12	1	res://Asset/ShopItem/flask.png	15	15	30	73,90,120	
-2	Fresh Apple	Food	Produce	3	4	1	res://Asset/ShopItem/test1.png	50	50	100	220,55,70	
-3	Goat Cheese	Food	Dairy	8	10	1	res://Asset/ShopItem/test2.png	10	10	20		
-4	Leather Boots	Clothing	Apparel	30	36	0		5	5	10		
-5	Iron Sword	Weapon	Weapons	120	144	0		2	2	5		
-6	Herbal Potion	Medicine	Pharmacy	25	30	0		8	8	15		
-7	Spool of Wool	Material	Crafts	7	8	0		40	40	80		
-8	Wooden Shield	Armor	Armory	50	60	0		4	4	7		
-9	Honeycomb	Food	Produce	12	14	0		25	25	40		
-10	Clay Mug	Tool	Crafts	4	5	0		40	40	60		
+id	name	type	store_area	value	market_value	unlocked	sprite_path	amount	carry_max	max_amount		
+0	Loaf of Bread	Food	Bakery	5	6	1	Bread	20	20	50		
+1	Bottle of Mead	Drink	Beverages	10	12	1	Mead	15	15	30		
+2	Fresh Apple	Food	Produce	3	4	1	Apple	50	50	100		
+3	Goat Cheese	Food	Dairy	8	10	1	Cheese	10	10	20		
+4	Leather Boots	Clothing	Apparel	30	36	1	BootsLeather	5	5	10		
+5	Iron Sword	Weapon	Weapons	120	144	1	SwordIron	2	2	5		
+6	Herbal Potion	Medicine	Pharmacy	25	30	1	PotionWideGreen	8	8	15		
+7	Spool of Wool	Material	Crafts	7	8	1	WoolWhite	40	40	80		
+8	Wooden Shield	Armor	Armory	50	60	1	ShieldWood	4	4	7		
+9	Honeycomb	Food	Produce	12	14	1	Honeycomb	25	25	40		
+10	Clay Mug	Tool	Crafts	4	5	1	MugClay	40	40	60		
 11	Dried Fish	Food	Bakery	9	11	0		30	30	60		
 12	Salted Meat	Food	Bakery	15	18	0		10	10	20		
 13	Magic Scroll	Craft	Crafts	50	60	0		5	5	10		

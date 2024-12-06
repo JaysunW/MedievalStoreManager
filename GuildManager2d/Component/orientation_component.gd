@@ -7,6 +7,7 @@ extends Node2D
 
 var position_offset = Vector2.ZERO
 var collision_node_dictionary = {}
+var collision_start_position = {}
 var current_collision_list = []
 var current_orientation = 0
 
@@ -18,35 +19,44 @@ func add_rotation_objects():
 	for node in rotation_node_list:
 		if node:
 			collision_node_dictionary[node] = {}
+			collision_start_position[node] = {}
 		for child in node.get_children():
 			if child.is_in_group(orientation_group_string):
 				collision_node_dictionary[node][child.name.to_lower()] = child
+				collision_start_position[node][child.name.to_lower()] = child.position
 				child.disabled = true
 				
 func change_orientation_state(new_orientation):
 	current_orientation = new_orientation
 	var child_name = ""
-	var pos_vec = Vector2.ZERO
-	sprite_handler.rotate_sprite(new_orientation)
+	var interaction_marker_offset = Vector2.ZERO
+	var collision_offset = Vector2.ZERO
 	position_offset = Vector2.ZERO
+	sprite_handler.rotate_sprite(new_orientation)
 	match new_orientation:
 		Utils.Orientation.SOUTH:
-			child_name = "SOUTH"
-			pos_vec = Vector2(0, 16)
+			child_name = "Frontal"
+			interaction_marker_offset = Vector2(0, 16)
 			position_offset = Vector2(0, -16)
 		Utils.Orientation.EAST:
-			child_name = "EAST"
-			pos_vec = Vector2(16, -16)
+			child_name = "Side"
+			interaction_marker_offset = Vector2(16, -16)
 		Utils.Orientation.NORTH:
-			child_name = "NORTH"
-			pos_vec = Vector2(0, -32)
+			child_name = "Frontal"
+			interaction_marker_offset = Vector2(0, -32)
 		Utils.Orientation.WEST:
-			child_name = "WEST"
-			pos_vec = Vector2(-16, -16)
-	interaction_marker.position = pos_vec
+			child_name = "Side"
+			interaction_marker_offset = Vector2(-16, -16)
+			collision_offset = Vector2(16, 0)
+	interaction_marker.position = interaction_marker_offset
 	current_collision_list = []
-	for key in collision_node_dictionary:
-		var collision_dictionary = collision_node_dictionary[key] 
+	for node in collision_node_dictionary:
+		var collision_dictionary = collision_node_dictionary[node] 
 		for child_key in collision_dictionary:
+			var current_collision_object = collision_dictionary[child_key]
 			if child_key == child_name.to_lower():
+				current_collision_object.visible = true
+				current_collision_object.position = collision_start_position[node][child_key] + collision_offset
 				current_collision_list.append(collision_dictionary[child_key])
+			else:
+				current_collision_object.visible = false

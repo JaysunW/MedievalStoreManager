@@ -20,7 +20,7 @@ func set_container_info(input_id, data):
 	set_value(data["market_value"] * data["amount"])
 	id = input_id
 	container_data = data
-	item_icon_label.texture = Loader.texture(data["sprite_path"])
+	item_icon_label.texture = Loader.shop_item_texture(data["sprite_path"])
 	item_amount_label.text = str(amount)
 	item_checkout_container.visible = true
 

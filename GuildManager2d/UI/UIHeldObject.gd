@@ -19,7 +19,7 @@ func dropped_object():
 	
 func set_held_object_data(data):
 	visible = true
-	item_icon.texture = Loader.texture(data["sprite_path"])
+	item_icon.texture = Loader.shop_item_texture(data["sprite_path"])
 	item_current_amount.text = str(data["amount"])
 	item_amount.text = "/" + str(data["carry_max"])
 
