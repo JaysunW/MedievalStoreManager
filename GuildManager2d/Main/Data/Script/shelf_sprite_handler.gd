@@ -41,10 +41,10 @@ func should_prepare_building(should_prepare):
 		match current_orientation:
 			Utils.Orientation.EAST:
 				for marker in marker_list:
-					marker.position = marker_start_position[marker] + Vector2(-4, -10)
+					marker.position = marker_start_position[marker] + Vector2(-6, -10)
 			Utils.Orientation.WEST:
 				for marker in marker_list:
-					marker.position = marker_start_position[marker] + Vector2(4, -10)
+					marker.position = marker_start_position[marker] + Vector2(6, -10)
 	else:
 		change_color(Color(1,1,1,0.6))
 		for sprite in shelf_sprite_list:
@@ -64,7 +64,6 @@ func offset_sprite(offset_vector):
 	
 func prepare_filling_building(input_content_data):
 	var max_value = input_content_data["max_amount"]
-	var value = input_content_data["amount"]
 	var sprite_path = input_content_data["sprite_path"]
 	
 	var top : int = floor(max_value / 3) + max_value % 3
@@ -77,7 +76,6 @@ func prepare_filling_building(input_content_data):
 	elif current_orientation == Utils.Orientation.EAST || current_orientation == Utils.Orientation.WEST:
 		placement_vector = Vector2( 0, 1)
 	var sprite_list = []
-	var top_marker = marker_list[0]
 	
 	top_list = create_shelf_filling(top, placement_vector, sprite_path)
 	middle_list = create_shelf_filling(middle, placement_vector, sprite_path)
@@ -88,27 +86,8 @@ func prepare_filling_building(input_content_data):
 	for i in range(len(shelf_list)):
 		for sprite in shelf_list[i]:
 			marker_list[i].add_child(sprite)
-	for list in shelf_list:
-		if current_orientation == Utils.Orientation.SOUTH || current_orientation == Utils.Orientation.NORTH:
-			list.sort_custom(sort_ascending_vector_x)
-		else:
-			list.sort_custom(sort_ascending_vector_y)
-		
+			
 	top_list[0].visible = true
-
-func sort_ascending_vector_x(a, b) -> bool:
-	var a_pos = a.position
-	var b_pos = b.position
-	if a_pos.x < b_pos.x:
-		return true
-	return false
-	
-func sort_ascending_vector_y(a, b) -> bool:
-	var a_pos = a.position
-	var b_pos = b.position
-	if a_pos.y < b_pos.y:
-		return true
-	return false
 	
 func show_filling_building(input_content_data):
 	var max_value = input_content_data["max_amount"]
@@ -116,39 +95,37 @@ func show_filling_building(input_content_data):
 	
 	var top : int = floor(max_value / 3) + max_value % 3
 	var middle : int = floor(max_value / 3)
-	var bottom : int = floor(max_value / 3)
 	
-	if value < top:
-		top_list[value].visible = true
-		if value + 1 == top:
+	if value <= top:
+		top_list[value - 1].visible = true
+		if value + 1 > top:
 			middle_list[0].visible = false
 		else:
-			top_list[value + 1].visible = false
-	elif value < top + middle:
-		middle_list[value - top].visible = true
-		if value + 1 == top + middle:
+			top_list[value].visible = false
+	elif value <= top + middle:
+		middle_list[value - top - 1].visible = true
+		if value + 1 > top + middle:
 			bottom_list[0].visible = false
 		else:
-			middle_list[value - top + 1].visible = false
-	elif value < max_value:
-		bottom_list[value - top - middle].visible = true
-		if value < max_value - 1:
-			bottom_list[value - top - middle + 1].visible = false
-
+			middle_list[value - top].visible = false
+	elif value <= max_value:
+		bottom_list[value - top - middle - 1].visible = true
+		if value != max_value:
+			bottom_list[value - top - middle].visible = false
 
 func create_shelf_filling(shelf_amount, placement_vector, sprite_path):
 	var sprite_list = []
 	for i in range(shelf_amount):
 		var sprite = Sprite2D.new()
 		sprite.visible = false
-		var start_position = - placement_vector * 12
-		var random_offset = Vector2( placement_vector.y, placement_vector.x) * Global.rng.randi_range(0, 4)
+		var start_offset = 10
+		var start_position = - placement_vector * start_offset
+		var random_offset = Vector2( placement_vector.y, placement_vector.x) * Global.rng.randi_range(1, 2)
 		if current_orientation == Utils.Orientation.WEST:
 			random_offset = random_offset * -1
 		sprite.texture = Loader.shop_item_texture(sprite_path, true)
-		sprite.position = start_position + placement_vector * ceil(remap(i, 0, shelf_amount, 0, 24-1)) - random_offset
+		sprite.position = start_position + placement_vector * int(remap(i, 0, shelf_amount-1, 0, start_offset * 2)) - random_offset
 		sprite_list.append(sprite)
-	sprite_list.shuffle()
 	return sprite_list
 
 func is_being_emptied():

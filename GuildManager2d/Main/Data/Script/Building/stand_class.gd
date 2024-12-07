@@ -4,7 +4,6 @@ class_name StandClass
 @onready var interaction_object_component = $InteractionObjectComponent
 @onready var orientation_component: Node2D = $OrientationComponent
 @onready var sprite_handler: Node2D = $SpriteHandler
-@onready var fill_progressbar = $FillProgressbar
 
 @export var package_scene : PackedScene
 @export var interaction_marker : Marker2D
@@ -19,7 +18,6 @@ var current_orientation = Utils.Orientation.SOUTH
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	fill_progressbar.visible = false
 	pass # Replace with function body.
 
 func prepare_stand(should_prepare=true):
@@ -66,7 +64,6 @@ func fill_shelf(content):
 		content_data = input_data
 		content_data["amount"] = 1
 		sprite_handler.prepare_filling_building(content_data)
-		fill_progressbar.update_fill_progress(content_data)
 		Stock.add_to_stock(content_data["id"], self)
 		return true
 	elif content_data["id"] != input_data["id"]:
@@ -78,7 +75,6 @@ func fill_shelf(content):
 		flash_color(Color.FIREBRICK)
 		return false
 	else:
-		fill_progressbar.update_fill_progress(content_data)
 		sprite_handler.show_filling_building(content_data)
 		Stock.add_to_stock(content_data["id"], self)
 		return true
@@ -86,13 +82,11 @@ func fill_shelf(content):
 func take_from_shelf():
 	content_data["amount"] -= 1
 	if content_data["amount"] <= 0:
-		fill_progressbar.visible = false
 		Stock.take_from_stock(content_data["id"], self, true)
 		empty_content()
 	else:
 		#Depending on fill scale:
 		sprite_handler.show_filling_building(content_data)
-		fill_progressbar.update_fill_progress(content_data)
 		Stock.take_from_stock(content_data["id"], self)
 	
 func get_content_instance():
