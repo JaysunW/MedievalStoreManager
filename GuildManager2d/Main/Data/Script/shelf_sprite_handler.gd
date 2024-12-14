@@ -75,8 +75,7 @@ func prepare_filling_building(input_content_data):
 		placement_vector = Vector2( 1, 0)
 	elif current_orientation == Utils.Orientation.EAST || current_orientation == Utils.Orientation.WEST:
 		placement_vector = Vector2( 0, 1)
-	var sprite_list = []
-	
+
 	top_list = create_shelf_filling(top, placement_vector, sprite_path)
 	middle_list = create_shelf_filling(middle, placement_vector, sprite_path)
 	bottom_list = create_shelf_filling(bottom, placement_vector, sprite_path)

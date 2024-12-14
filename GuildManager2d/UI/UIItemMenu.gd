@@ -104,15 +104,15 @@ func set_checkout_value(value):
 		gold_icon.visible = true
 		gold_value_label.visible = true
 
+func open_item_interface():
+	if UI.is_ui_free():
+			UI.is_free(false)
+			visible = true
+			
 func _on_buy_button_down():
 	if Gold.pay(checkout_gold_total()):
 		spawn_bought_items.emit(checkout_list)
 		clear_checkout()
-
-func _on_item_interface_open_item_ui():
-	if UI.is_ui_free():
-		UI.is_free(false)
-		visible = true
 
 func _on_return_button_down():
 	clear_checkout()

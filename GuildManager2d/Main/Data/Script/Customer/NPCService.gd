@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var spawn_timer = $SpawnTimer
+@onready var check_timer: Timer = $CheckTimer
 
 @export var customer : PackedScene
 @export var world_map : Node2D
@@ -9,6 +10,9 @@ extends Node2D
 @export var entrance_point : Marker2D
 
 @export var spawn_timer_time = 0.1
+
+signal store_emptied
+
 var spawn_timer_offset_min_max = 0.1
 
 var customer_list = []
@@ -45,5 +49,14 @@ func _process(_delta):
 	if Input.is_action_just_pressed("v"):
 		customer_list.pick_random().change_state()
 
+func check_for_empty_store():
+	check_timer.start()
+
 func _on_spawn_timer_timeout():
 	spawn_customer()
+
+func _on_check_timer_timeout() -> void:
+	if customer_list.is_empty():
+		store_emptied.emit()
+	else:
+		check_timer.start()

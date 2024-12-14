@@ -34,18 +34,25 @@ func interact_with_object():
 	var objects = interaction_component.get_interactable_object()
 	var found_package_list = []
 	var found_stand_list = []
-	var found_interface = null
+	var found_item_interface = null
+	var found_time_interface = null
+	print("Objects: ", objects)
 	for object in objects:
 		if object.is_in_group("Content"):
 			found_package_list.append(object.get_main_object())
 		elif object.is_in_group("Stand"):
 			found_stand_list.append(object.get_main_object())
 		elif object.is_in_group("ItemInterface"):
-			found_interface = object.get_main_object()
+			found_item_interface = object.get_main_object()
+		elif object.is_in_group("TimeInterface"):
+			found_time_interface = object.get_main_object()
 	if not found_package_list.is_empty():
 		hold_object(find_nearest_object(found_package_list))
-	elif found_interface:
-		found_interface.open_item_store()
+	elif found_item_interface:
+		found_item_interface.open_item_store()
+	elif found_time_interface:
+		print("Found Interface")
+		found_time_interface.interact()
 	elif not found_stand_list.is_empty():
 		var filled_stand_list = []
 		for stand in found_stand_list:

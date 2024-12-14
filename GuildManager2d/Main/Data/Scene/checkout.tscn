@@ -34,7 +34,7 @@ shape = SubResource("RectangleShape2D_erayf")
 
 [node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Checkout"] instance=ExtResource("6_xaefe")]
 position = Vector2(0, -16)
-collision_layer = 64
+collision_layer = 256
 collision_mask = 0
 monitoring = false
 main_object = NodePath("..")
