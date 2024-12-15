@@ -32,10 +32,10 @@ func Enter():
 	search_checkout()
 
 func search_checkout():
-	print("go to checkout")
+	#print("go to checkout")
 	current_checkout = find_open_checkout()
 	if current_checkout:
-		print("Found a checkout")
+		#print("Found a checkout")
 		target_position = current_checkout.get_marker().global_position
 		make_path()
 		is_waiting_open_checkout = false
@@ -43,7 +43,7 @@ func search_checkout():
 			current_checkout.reserve_spot()
 			return
 		
-		print_debug("Couldn't get to checkout, wait until reachable or steal")
+		#print_debug("Couldn't get to checkout, wait until reachable or steal")
 		target_position = self.global_position
 		make_path()
 	is_waiting_open_checkout = true
@@ -57,7 +57,7 @@ func Exit():
 
 func Update(_delta):
 	if customer.has_been_billed:
-		print("Paid for items and is leaving")
+		#print("Paid for items and is leaving")
 		Change_state("idle")
 		
 func Physics_process(_delta):	
@@ -88,9 +88,9 @@ func make_path():
 
 func _on_wait_timer_timeout():
 	if patience_counter < customer.patience:
-		print("Waiting: ", patience_counter + 1, "/", customer.patience)
+		#print("Waiting: ", patience_counter + 1, "/", customer.patience)
 		patience_counter += 1
 		search_checkout()
 	else: 
-		print_debug("Customer was impatient and left without paying")
+		#print_debug("Customer was impatient and left without paying")
 		Change_state("idle")

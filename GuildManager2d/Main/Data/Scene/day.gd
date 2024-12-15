@@ -4,9 +4,6 @@ extends State
 
 @onready var day_timer: Timer = $DayTimer
 
-var current_time = 0
-
-var total_customer : float = 25
 var customer_schedule = []
 
 var sin_offset = 0
@@ -15,17 +12,17 @@ var gaussian_width = 4
 
 func Enter():	
 	sin_offset = Global.rng.randf_range(0, PI)
-	create_customer_schedule(12, total_customer)
+	customer_schedule = create_customer_schedule(12, time_service.total_customer)
+	time_service.send_customer_schedule(customer_schedule)
 	day_timer.start()
 
 func Exit():
 	day_timer.stop()
-	current_time = 0
 
 func create_customer_schedule(day_range, total_customers):
 	var hours_in_day = day_range
 	var customers_remaining = total_customers
-	var customer_schedule = []
+	var created_schedule = []
 
 	var integral_diffision = gaussian_integral(0, hours_in_day, hours_in_day)
 	for hour in range(0, hours_in_day):
@@ -36,14 +33,10 @@ func create_customer_schedule(day_range, total_customers):
 			var hourly_customers = round(mixed_distribution * total_customers)
 			
 			hourly_customers = min(hourly_customers, customers_remaining)
-			customer_schedule.append(hourly_customers)
+			created_schedule.append(hourly_customers)
 			customers_remaining -= hourly_customers
 		else:
-			customer_schedule.append(0)
-	var customer_count = 0
-	for count in customer_schedule:
-		customer_count += count
-	#print("Customer schedule: " + str(customer_schedule) + " Total: " + str(customer_count))
+			created_schedule.append(0)
 	return customer_schedule
 
 func sin_distribution(x, offset = 0):
@@ -64,10 +57,10 @@ func gaussian_integral(start, end, graniolarity) -> float:
 		sum += gaussian_disstribution(x_i, gaussian_middle, gaussian_width)
 	return sum * step_size
 	
+func wait_till_change():
+	print("Day timer stopped")
+	day_timer.stop()
+	
 func _on_day_timer_timeout() -> void:
-	current_time += 1
-	var minutes = current_time % 60
-	var hours = int((current_time - minutes) / 60) + 8
-	time_service.change_time(current_time)
-	if hours >= time_service.close_time:
-		time_service.close_shop()
+	time_service.increase_time()
+	

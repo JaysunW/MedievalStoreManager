@@ -483,7 +483,7 @@ idle_point_list = [NodePath("SpawnPoints/SpawnPoint1"), NodePath("SpawnPoints/Sp
 entrance_point = NodePath("StorePoints/EntrancePoint")
 
 [node name="SpawnTimer" type="Timer" parent="Main/CustomerService"]
-wait_time = 0.1
+one_shot = true
 
 [node name="CheckTimer" type="Timer" parent="Main/CustomerService"]
 one_shot = true
@@ -663,6 +663,7 @@ script = ExtResource("47_wvbqb")
 time_service = NodePath("../..")
 
 [node name="DayTimer" type="Timer" parent="Main/TimeService/StateMachine/Day"]
+wait_time = 0.25
 
 [node name="Evening" type="Node2D" parent="Main/TimeService/StateMachine"]
 script = ExtResource("48_6ers7")

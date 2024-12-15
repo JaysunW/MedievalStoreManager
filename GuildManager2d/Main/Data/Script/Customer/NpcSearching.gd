@@ -27,14 +27,12 @@ func Enter():
 func restart_search():	
 	var stock_stand_list = Stock.stock_stand_list
 	shopping_dictionary = customer.shopping_dictionary
-	print_debug("Stand_list: ",stock_stand_list)
-	print_debug("Shopping: ", shopping_dictionary)
+	#print_debug("Stand_list: ",stock_stand_list, " Shopping: ", shopping_dictionary)
 	var id_list = shopping_dictionary.keys()
 	
 	if not id_list:
 		if found_item_list:
-			print_debug("Found item go to checkout")
-			print_debug("Found_item_list: ", found_item_list)
+			#print_debug("Found item go to checkout Found_item_list: ", found_item_list)
 			customer.basket_list = found_item_list
 			Change_state("buying")
 		else:
@@ -42,14 +40,14 @@ func restart_search():
 		return 
 		
 	current_search_id = id_list.pick_random()
-	print_debug("Current_id: ", current_search_id)
+	#print_debug("Current_id: ", current_search_id)
 	if current_search_id in stock_stand_list:
 		var stand_list_with_search_item = stock_stand_list[current_search_id]
 		current_search_stand = stand_list_with_search_item.pick_random()
 		target_position = current_search_stand.get_npc_interaction_position()
 		make_path()
 		if not navigation_agent.is_target_reachable():
-			print_debug("Couldn't find target")
+			#print_debug("Couldn't find target")
 			target_position = self.global_position
 			make_path()
 			shopping_dictionary.erase(current_search_id)
@@ -61,7 +59,7 @@ func restart_search():
 		shopping_dictionary.erase(current_search_id)
 		think_timer.start()
 		think_timer.wait_time = Global.rng.randf_range(2, 4)
-		print_debug("Couldn't find item with id: ", current_search_id)
+		#print_debug("Couldn't find item with id: ", current_search_id)
 		
 func Exit():
 	searching_for_item = true
@@ -76,7 +74,7 @@ func Update(_delta):
 		return 
 		
 	if not current_search_stand or current_search_stand.is_empty():
-		print_debug("current_stand empty or not there")
+		#print_debug("current_stand empty or not there")
 		searching_for_item = true
 		restart_search()
 		return
@@ -96,7 +94,7 @@ func Update(_delta):
 			shopping_dictionary.erase(current_search_id)
 			restart_search()
 			searching_for_item = true
-		print_debug("Found item with ID: ", current_search_id)
+		#print_debug("Found item with ID: ", current_search_id)
 
 func Physics_process(_delta):
 	if not navigation_agent.is_navigation_finished():

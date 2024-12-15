@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var animation_component : Node2D
 @export var state_machine : Node2D
 
+@export var id = 0
+
 var npc_service_reference = null
 
 var shopping_dictionary : Dictionary
@@ -23,11 +25,12 @@ func bought_basket():
 func change_state():
 	state_machine.on_child_transition(state_machine.states["idle"], "walking")
 
-func prepare_customer(reference):
+func prepare_customer(reference, new_id):
 	npc_service_reference = reference
+	id = new_id
 	var col = [Global.rng.randf_range(0,1),Global.rng.randf_range(0,1),Global.rng.randf_range(0,1)]
 	if (col[0] + col[1] + col[2]) < 0.2:
-		var minpos = col.index(col.min())
+		var minpos = col.find(col.min())
 		col[minpos] += 0.2
 	animation_component.cloth_color = Color(col[0], col[1], col[2])
 	
