@@ -26,6 +26,7 @@ Gold="*res://Global/GoldService.gd"
 Loader="*res://Global/LoadTexture.gd"
 Stock="*res://Global/StockService.gd"
 Global="*res://Global/Global.gd"
+SignalService="*res://Global/SignalService.gd"
 
 [debug]
 

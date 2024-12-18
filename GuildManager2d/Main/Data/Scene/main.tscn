@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=79 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://drl0elvrqhdoa" path="res://Main/Data/Scene/customer.tscn" id="14_y5x34"]
 [ext_resource type="Script" path="res://Main/Data/Script/Customer/NPCService.gd" id="15_qbfgx"]
 [ext_resource type="Script" path="res://UI/UIItemMenu.gd" id="16_08pc5"]
+[ext_resource type="Texture2D" uid="uid://dgpstkqmlslvp" path="res://Asset/open_sign.png" id="20_pjl6e"]
 [ext_resource type="PackedScene" uid="uid://chn7nvwnulve" path="res://UI/item_checkout_container.tscn" id="21_ncbhu"]
 [ext_resource type="Texture2D" uid="uid://df160aemdaqim" path="res://Asset/UI/ui_value_gold.png" id="23_eejlt"]
 [ext_resource type="Texture2D" uid="uid://bwkmwhg7gn8yi" path="res://Asset/UI/ui_value_silver.png" id="24_7giq3"]
@@ -52,6 +53,11 @@
 [ext_resource type="Script" path="res://Main/Data/Scene/morning.gd" id="46_p5adg"]
 [ext_resource type="Script" path="res://Main/Data/Scene/day.gd" id="47_wvbqb"]
 [ext_resource type="Script" path="res://Main/Data/Scene/evening.gd" id="48_6ers7"]
+[ext_resource type="Script" path="res://Main/Data/Scene/ui_license_menu.gd" id="54_68k68"]
+[ext_resource type="Texture2D" uid="uid://b1lpfm0yci1dp" path="res://Asset/UI/License/LicenseUINormal.png" id="54_qi1b4"]
+[ext_resource type="PackedScene" uid="uid://ciufelrkb6e2w" path="res://UI/unlock_button.tscn" id="54_vxv3a"]
+[ext_resource type="Texture2D" uid="uid://c5fmnxpvnfyle" path="res://Asset/UI/License/LicenseUIPressed.png" id="55_5hqg4"]
+[ext_resource type="Texture2D" uid="uid://jfnwev3b0y35" path="res://Asset/UI/License/LicenseUIHover.png" id="56_7nx1s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dfgxd"]
 texture = ExtResource("3_bw1q4")
@@ -420,15 +426,16 @@ sprites = Array[Texture2D]([ExtResource("11_thsmy"), ExtResource("12_05nau")])
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_tqkde")
 
-[node name="OpenCloseSign" type="Node2D" parent="Main/WorlMap" node_paths=PackedStringArray("time_service")]
+[node name="OpenCloseSign" type="Node2D" parent="Main/WorlMap" node_paths=PackedStringArray("time_service", "sprite_component")]
 position = Vector2(1059, 959)
 script = ExtResource("25_2f0pk")
 time_service = NodePath("../../TimeService")
+sprite_component = NodePath("SpriteComponent")
 
-[node name="Sprite2D" type="Sprite2D" parent="Main/WorlMap/OpenCloseSign"]
+[node name="SpriteComponent" parent="Main/WorlMap/OpenCloseSign" instance=ExtResource("8_3qdpo")]
 texture = ExtResource("26_xxuyu")
 offset = Vector2(0, -16)
-metadata/_edit_lock_ = true
+sprites = Array[Texture2D]([ExtResource("26_xxuyu"), ExtResource("20_pjl6e")])
 
 [node name="InteractableObjectComponent" parent="Main/WorlMap/OpenCloseSign" node_paths=PackedStringArray("main_object") groups=["TimeInterface"] instance=ExtResource("12_1jmpg")]
 collision_layer = 256
@@ -673,7 +680,6 @@ stretch_mode = 5
 
 [node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_time", "state_machine", "customer_service")]
 script = ExtResource("44_ge64k")
-open_time = 12
 ui_time = NodePath("../../UI/UITime")
 state_machine = NodePath("StateMachine")
 customer_service = NodePath("../CustomerService")
@@ -1148,6 +1154,198 @@ horizontal_alignment = 1
 [node name="Space3" type="Control" parent="UI/UITime/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="UILicenseMenu" type="CanvasLayer" parent="UI"]
+script = ExtResource("54_68k68")
+
+[node name="Panel" type="Panel" parent="UI/UILicenseMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MenuBackground" type="PanelContainer" parent="UI/UILicenseMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -704.0
+offset_top = -410.0
+offset_right = 448.0
+offset_bottom = 423.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("7_ykg55")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UILicenseMenu/MenuBackground"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="Label" type="Label" parent="UI/UILicenseMenu/MenuBackground/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 32
+text = "License Upgrades"
+horizontal_alignment = 1
+
+[node name="LicenseMenu" type="Control" parent="UI/UILicenseMenu/MenuBackground"]
+layout_mode = 2
+
+[node name="1" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = 28.5
+offset_right = -384.0
+offset_bottom = 92.5
+grow_horizontal = 2
+grow_vertical = 2
+description_text = "Apple, Leather Boots  ... Your mum"
+
+[node name="2" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = 157.5
+offset_right = -256.0
+offset_bottom = 221.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="3" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -106.5
+offset_right = -256.0
+offset_bottom = -42.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="515" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 570.0
+offset_right = 446.0
+offset_bottom = 634.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="516" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 441.0
+offset_right = 444.0
+offset_bottom = 505.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="517" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 186.0
+offset_right = 446.0
+offset_bottom = 250.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="518" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 634.0
+offset_right = 571.0
+offset_bottom = 698.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="519" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 508.0
+offset_top = 506.0
+offset_right = 572.0
+offset_bottom = 570.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="520" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 636.0
+offset_top = 634.0
+offset_right = 700.0
+offset_bottom = 698.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="521" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 636.0
+offset_top = 442.0
+offset_right = 700.0
+offset_bottom = 506.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="522" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 508.0
+offset_top = 314.0
+offset_right = 572.0
+offset_bottom = 378.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="523" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
+layout_mode = 0
+offset_left = 764.0
+offset_top = 314.0
+offset_right = 828.0
+offset_bottom = 378.0
+texture_normal = ExtResource("54_qi1b4")
+texture_pressed = ExtResource("55_5hqg4")
+texture_hover = ExtResource("56_7nx1s")
+
+[node name="UpgradeTypes" type="PanelContainer" parent="UI/UILicenseMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 440.0
+offset_top = -410.0
+offset_right = 814.0
+offset_bottom = 423.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("7_ykg55")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false

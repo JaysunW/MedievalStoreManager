@@ -31,6 +31,7 @@ func send_customer_schedule(new_schedule):
 	customer_service.structure_customer_schedule(new_schedule)
 	
 func close_shop():
+	SignalService.ending_work_day.emit()
 	customer_service.close_store()
 	state_machine.on_child_transition(state_machine.states["day"], "evening")
 
