@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=73 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
@@ -30,7 +30,6 @@
 [ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="12_1jmpg"]
 [ext_resource type="Texture2D" uid="uid://b7k7nhf4jtrc4" path="res://Asset/doors_open.png" id="12_05nau"]
 [ext_resource type="Script" path="res://Main/Data/Script/TileMapLayer/store_upper_building.gd" id="12_7sybr"]
-[ext_resource type="Texture2D" uid="uid://b1ojqbmk0vfoh" path="res://Asset/shop_interface.png" id="12_gohio"]
 [ext_resource type="PackedScene" uid="uid://xpw4hvu00bc2" path="res://UI/item_object_container.tscn" id="14_oy5h6"]
 [ext_resource type="PackedScene" uid="uid://drl0elvrqhdoa" path="res://Main/Data/Scene/customer.tscn" id="14_y5x34"]
 [ext_resource type="Script" path="res://Main/Data/Script/Customer/NPCService.gd" id="15_qbfgx"]
@@ -38,9 +37,11 @@
 [ext_resource type="PackedScene" uid="uid://chn7nvwnulve" path="res://UI/item_checkout_container.tscn" id="21_ncbhu"]
 [ext_resource type="Texture2D" uid="uid://df160aemdaqim" path="res://Asset/UI/ui_value_gold.png" id="23_eejlt"]
 [ext_resource type="Texture2D" uid="uid://bwkmwhg7gn8yi" path="res://Asset/UI/ui_value_silver.png" id="24_7giq3"]
+[ext_resource type="Texture2D" uid="uid://btsjrg6oddmno" path="res://Asset/item_interface.png" id="24_hwrx5"]
 [ext_resource type="Texture2D" uid="uid://di0q3sninmdyc" path="res://Asset/UI/ui_value_copper.png" id="25_0sma6"]
 [ext_resource type="Script" path="res://Main/Data/Scene/open_close_sign.gd" id="25_2f0pk"]
 [ext_resource type="Texture2D" uid="uid://cxmm8e73vcba4" path="res://Asset/closed_sign.png" id="26_xxuyu"]
+[ext_resource type="Texture2D" uid="uid://b8cnm2sacv6te" path="res://Asset/license_interface.png" id="27_i5r6l"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/ExpandStore.gd" id="28_28bqr"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/PlaceBuild.gd" id="30_ne60k"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/ui_expansion_value.gd" id="34_ps4vx"]
@@ -291,17 +292,17 @@ physics_layer_0/collision_layer = 32
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_p1l4b")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqkde"]
+size = Vector2(64, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbc3p"]
+size = Vector2(25, 11)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2yjs2"]
 size = Vector2(32, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3m47s"]
 size = Vector2(32, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbc3p"]
-size = Vector2(25, 11)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqkde"]
-size = Vector2(64, 48)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b7b73"]
 
@@ -339,6 +340,9 @@ texture_filter = 1
 script = ExtResource("5_l1qj5")
 start_checkout = NodePath("Checkout")
 metadata/_edit_lock_ = true
+
+[node name="Player" parent="Main/WorlMap" instance=ExtResource("3_oikkr")]
+position = Vector2(979, 844)
 
 [node name="TileLayer" type="Node2D" parent="Main/WorlMap"]
 y_sort_enabled = true
@@ -399,15 +403,49 @@ tile_map_data = PackedByteArray("AAAlABwAAAAAAAAAAAAmABwAAAAAAAAAAAAnABwAAAAAAAA
 tile_set = SubResource("TileSet_2tx3j")
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="Main/WorlMap" instance=ExtResource("3_oikkr")]
-position = Vector2(979, 844)
+[node name="Door" type="Area2D" parent="Main/WorlMap" node_paths=PackedStringArray("sprite_component")]
+position = Vector2(992, 952)
+collision_layer = 0
+collision_mask = 10
+monitorable = false
+script = ExtResource("10_fvpeq")
+sprite_component = NodePath("SpriteComponent")
+
+[node name="SpriteComponent" parent="Main/WorlMap/Door" instance=ExtResource("8_3qdpo")]
+texture = ExtResource("11_thsmy")
+offset = Vector2(0, -16)
+sprites = Array[Texture2D]([ExtResource("11_thsmy"), ExtResource("12_05nau")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/WorlMap/Door"]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_tqkde")
+
+[node name="OpenCloseSign" type="Node2D" parent="Main/WorlMap" node_paths=PackedStringArray("time_service")]
+position = Vector2(1059, 959)
+script = ExtResource("25_2f0pk")
+time_service = NodePath("../../TimeService")
+
+[node name="Sprite2D" type="Sprite2D" parent="Main/WorlMap/OpenCloseSign"]
+texture = ExtResource("26_xxuyu")
+offset = Vector2(0, -16)
+metadata/_edit_lock_ = true
+
+[node name="InteractableObjectComponent" parent="Main/WorlMap/OpenCloseSign" node_paths=PackedStringArray("main_object") groups=["TimeInterface"] instance=ExtResource("12_1jmpg")]
+collision_layer = 256
+collision_mask = 0
+monitoring = false
+main_object = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/WorlMap/OpenCloseSign/InteractableObjectComponent"]
+position = Vector2(0.5, -9.5)
+shape = SubResource("RectangleShape2D_hbc3p")
 
 [node name="Checkout" parent="Main/WorlMap" groups=["NavigationBlock"] instance=ExtResource("6_t4ys1")]
 position = Vector2(928, 704)
 
 [node name="ItemInterface" type="StaticBody2D" parent="Main/WorlMap" node_paths=PackedStringArray("ui_item_menu", "world_map") groups=["NavigationBlock"]]
 texture_filter = 1
-position = Vector2(880, 768)
+position = Vector2(752, 543)
 collision_layer = 64
 collision_mask = 64
 script = ExtResource("7_7xygn")
@@ -417,7 +455,7 @@ package_scene = ExtResource("6_5qldv")
 
 [node name="SpriteComponent" parent="Main/WorlMap/ItemInterface" instance=ExtResource("8_3qdpo")]
 position = Vector2(0, -16)
-texture = ExtResource("12_gohio")
+texture = ExtResource("24_hwrx5")
 sprites = Array[Texture2D]([ExtResource("10_o4rgv"), ExtResource("11_m0jyt")])
 
 [node name="Collision" type="CollisionShape2D" parent="Main/WorlMap/ItemInterface"]
@@ -436,44 +474,33 @@ shape = SubResource("RectangleShape2D_3m47s")
 debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 
 [node name="PackageSpawnPosition" type="Marker2D" parent="Main/WorlMap/ItemInterface"]
-position = Vector2(96, -14)
+position = Vector2(259, 216)
 
-[node name="OpenCloseSign" type="Node2D" parent="Main/WorlMap" node_paths=PackedStringArray("timeService")]
-position = Vector2(1059, 959)
-script = ExtResource("25_2f0pk")
-timeService = NodePath("../../TimeService")
+[node name="LicenseInterface" type="StaticBody2D" parent="Main/WorlMap" groups=["NavigationBlock"]]
+texture_filter = 1
+position = Vector2(784, 543)
+collision_layer = 64
+collision_mask = 64
 
-[node name="Sprite2D" type="Sprite2D" parent="Main/WorlMap/OpenCloseSign"]
-texture = ExtResource("26_xxuyu")
-offset = Vector2(0, -16)
-metadata/_edit_lock_ = true
+[node name="SpriteComponent" parent="Main/WorlMap/LicenseInterface" instance=ExtResource("8_3qdpo")]
+position = Vector2(0, -16)
+texture = ExtResource("27_i5r6l")
+sprites = Array[Texture2D]([ExtResource("10_o4rgv"), ExtResource("11_m0jyt")])
 
-[node name="InteractableObjectComponent" parent="Main/WorlMap/OpenCloseSign" node_paths=PackedStringArray("main_object") groups=["TimeInterface"] instance=ExtResource("12_1jmpg")]
+[node name="Collision" type="CollisionShape2D" parent="Main/WorlMap/LicenseInterface"]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_2yjs2")
+
+[node name="InteractionObjectComponent" parent="Main/WorlMap/LicenseInterface" node_paths=PackedStringArray("main_object") groups=["LicenseInterface"] instance=ExtResource("12_1jmpg")]
+position = Vector2(0, -16)
 collision_layer = 256
 collision_mask = 0
 monitoring = false
 main_object = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/WorlMap/OpenCloseSign/InteractableObjectComponent"]
-position = Vector2(0.5, -9.5)
-shape = SubResource("RectangleShape2D_hbc3p")
-
-[node name="Door" type="Area2D" parent="Main/WorlMap" node_paths=PackedStringArray("sprite_component")]
-position = Vector2(992, 952)
-collision_layer = 0
-collision_mask = 10
-monitorable = false
-script = ExtResource("10_fvpeq")
-sprite_component = NodePath("SpriteComponent")
-
-[node name="SpriteComponent" parent="Main/WorlMap/Door" instance=ExtResource("8_3qdpo")]
-texture = ExtResource("11_thsmy")
-offset = Vector2(0, -16)
-sprites = Array[Texture2D]([ExtResource("11_thsmy"), ExtResource("12_05nau")])
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/WorlMap/Door"]
-position = Vector2(0, -11)
-shape = SubResource("RectangleShape2D_tqkde")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/WorlMap/LicenseInterface/InteractionObjectComponent"]
+shape = SubResource("RectangleShape2D_3m47s")
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 
 [node name="CustomerService" type="Node2D" parent="Main" node_paths=PackedStringArray("world_map", "idle_point_list", "entrance_point")]
 script = ExtResource("15_qbfgx")
@@ -646,6 +673,7 @@ stretch_mode = 5
 
 [node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_time", "state_machine", "customer_service")]
 script = ExtResource("44_ge64k")
+open_time = 12
 ui_time = NodePath("../../UI/UITime")
 state_machine = NodePath("StateMachine")
 customer_service = NodePath("../CustomerService")
@@ -665,8 +693,9 @@ time_service = NodePath("../..")
 [node name="DayTimer" type="Timer" parent="Main/TimeService/StateMachine/Day"]
 wait_time = 0.25
 
-[node name="Evening" type="Node2D" parent="Main/TimeService/StateMachine"]
+[node name="Evening" type="Node2D" parent="Main/TimeService/StateMachine" node_paths=PackedStringArray("time_service")]
 script = ExtResource("48_6ers7")
+time_service = NodePath("../..")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -678,6 +707,15 @@ offset_bottom = 40.0
 visible = false
 script = ExtResource("11_us1ic")
 build_container = ExtResource("9_2nmlh")
+
+[node name="Panel" type="Panel" parent="UI/UIBuildMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="UI/UIBuildMenu"]
 texture_filter = 1
@@ -804,6 +842,15 @@ script = ExtResource("16_08pc5")
 item_container = ExtResource("14_oy5h6")
 item_checkout_container = ExtResource("21_ncbhu")
 
+[node name="Panel" type="Panel" parent="UI/UIItemMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="ItemStore" type="PanelContainer" parent="UI/UIItemMenu"]
 texture_filter = 1
 anchors_preset = 8
@@ -811,10 +858,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -628.0
-offset_top = -472.0
-offset_right = 372.0
-offset_bottom = 478.0
+offset_left = -672.0
+offset_top = -428.0
+offset_right = 192.0
+offset_bottom = 421.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -929,10 +976,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 450.0
-offset_top = -472.0
-offset_right = 885.0
-offset_bottom = 478.0
+offset_left = 260.0
+offset_top = -428.0
+offset_right = 802.0
+offset_bottom = 421.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -1057,10 +1104,10 @@ time_label = NodePath("PanelContainer/VBoxContainer/Time")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -359.0
-offset_top = 27.0
-offset_right = -27.0
-offset_bottom = 152.0
+offset_left = -304.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 106.0
 grow_horizontal = 0
 theme = ExtResource("7_ykg55")
 

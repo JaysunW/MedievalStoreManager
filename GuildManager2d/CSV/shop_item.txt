@@ -1,21 +1,21 @@
-id	name	type	store_area	value	market_value	unlocked	sprite_path	amount	carry_max	max_amount		
-0	Loaf of Bread	Food	Bakery	5	6	1	Bread	20	20	12		
-1	Bottle of Mead	Drink	Beverages	10	12	1	Mead	15	15	30		
-2	Fresh Apple	Food	Produce	3	4	1	Apple	50	50	100		
-3	Goat Cheese	Food	Dairy	8	10	1	Cheese	10	10	20		
-4	Leather Boots	Clothing	Apparel	30	36	1	BootsLeather	5	5	10		
-5	Iron Sword	Weapon	Weapons	120	144	1	SwordIron	2	2	5		
-6	Herbal Potion	Medicine	Pharmacy	25	30	1	PotionWideGreen	8	8	15		
-7	Spool of Wool	Material	Crafts	7	8	1	WoolWhite	40	40	80		
-8	Wooden Shield	Armor	Armory	50	60	1	ShieldWood	4	4	7		
-9	Honeycomb	Food	Produce	12	14	1	Honeycomb	25	25	40		
-10	Clay Mug	Tool	Crafts	4	5	1	MugClay	40	40	60		
-11	Dried Fish	Food	Bakery	9	11	0		30	30	60		
-12	Salted Meat	Food	Bakery	15	18	0		10	10	20		
-13	Magic Scroll	Craft	Crafts	50	60	0		5	5	10		
-14	Candle	Tool	Crafts	5	6	0		60	60	100		
-15	Fur Coat	Clothing	Apparel	80	96	0		3	3	7		
-16	Silver Ring	Craft	Crafts	30	36	0		8	8	15		
-17	Herbs	Medicine	Pharmacy	8	10	0		30	30	50		
-18	Flint	Tool	Crafts	12	14	0		20	20	40		
-19	Wheat Flour	Food	Bakery	5	6	0		50	50	100		
+id	name	type	store_area	value	market_value	unlocked	sprite_path	amount	carry_max	max_amount	license	
+0	Bottle of Mead	Drink	Beverages	10	12	1	Mead	15	15	30	0	
+2	Fresh Apple	Food	Produce	3	4	1	Apple	50	50	100	0	
+3	Loaf of Bread	Food	Bakery	5	6	1	Bread	20	20	50	0	
+4	Goat Cheese	Food	Dairy	8	10	1	Cheese	10	10	20	1	
+5	Iron Sword	Weapon	Weapons	120	144	1	SwordIron	2	2	5	1	
+6	Leather Boots	Clothing	Apparel	30	36	1	BootsLeather	5	5	10	1	
+7	Herbal Potion	Medicine	Pharmacy	25	30	1	PotionWideGreen	8	8	15	2	
+8	Spool of Wool	Material	Crafts	7	8	1	WoolWhite	40	40	80	2	
+9	Wooden Shield	Armor	Armory	50	60	1	ShieldWood	4	4	7	2	
+10	Candle Blue	Tool	Crafts	5	6	0	CandleBlue	60	60	100	3	
+11	Clay Mug	Tool	Crafts	4	5	1	MugClay	40	40	60	3	
+12	Honeycomb	Food	Produce	12	14	1	Honeycomb	25	25	40	3	
+13	Silver Ring	Craft	Crafts	30	36	0	RingSilber	8	8	15	4	
+14	Wheat Flour	Food	Bakery	5	6	0	Flour	50	50	100	4	
+15	Dried Fish	Food	Bakery	9	11	0		30	30	60		
+16	Flint	Tool	Crafts	12	14	0		20	20	40		
+17	Fur Coat	Clothing	Apparel	80	96	0		3	3	7		
+18	Herbs	Medicine	Pharmacy	8	10	0		30	30	50		
+19	Magic Scroll	Craft	Crafts	50	60	0		5	5	10		
+20	Salted Meat	Food	Bakery	15	18	0		10	10	20		

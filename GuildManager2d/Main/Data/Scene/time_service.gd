@@ -2,15 +2,15 @@ extends Node2D
 
 class_name TimeService
 
+@export var total_customer : float = 30
+@export var start_time = 8
+@export var open_time = 1
+@export var current_time = 0
+
+@export_group("Exports")
 @export var ui_time : CanvasLayer 
 @export var state_machine : Node2D
 @export var customer_service : Node2D
-
-var total_customer : float = 30
-
-var start_time = 8
-var close_time = 1
-var current_time = 0
 
 func _ready() -> void:
 	customer_service.store_emptied.connect(close_shop)
@@ -18,22 +18,23 @@ func _ready() -> void:
 func show_time():
 	ui_time.set_time(get_current_minute(), get_current_hour() + start_time)
 	
-func start_day():
-	ui_time.set_time_mode("Day")
+func show_time_mode(time_mode):
+	ui_time.set_time_mode(time_mode)
+	
+func start_new_day():
+	state_machine.on_child_transition(state_machine.states["evening"], "morning")
+	
+func start_work_day():
 	state_machine.on_child_transition(state_machine.initial_state, "day")
 
 func send_customer_schedule(new_schedule):
 	customer_service.structure_customer_schedule(new_schedule)
-
-func check_for_empty_store():
-	customer_service.check_for_empty_store()
 	
 func close_shop():
-	ui_time.set_time_mode("Evening")
 	customer_service.close_store()
 	state_machine.on_child_transition(state_machine.states["day"], "evening")
 
-func check_before_closing():
+func try_closing_store():
 	state_machine.current_state.wait_till_change()
 	customer_service.check_for_empty_store()
 	
@@ -41,9 +42,9 @@ func increase_time():
 	current_time += 1
 	ui_time.set_time(get_current_minute(), get_current_hour() + start_time)
 	customer_service.try_spawning_customer(get_current_minute(), get_current_hour())
-	if get_current_hour() >= close_time:
+	if get_current_hour() >= open_time:
 		print("End day")
-		check_before_closing()
+		try_closing_store()
 
 func get_current_minute():
 	var minute = current_time % 60

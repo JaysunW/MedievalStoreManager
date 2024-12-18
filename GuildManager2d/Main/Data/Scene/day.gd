@@ -11,8 +11,9 @@ var gaussian_middle = 8
 var gaussian_width = 4
 
 func Enter():	
+	time_service.show_time_mode("Day")
 	sin_offset = Global.rng.randf_range(0, PI)
-	customer_schedule = create_customer_schedule(12, time_service.total_customer)
+	customer_schedule = create_customer_schedule(time_service.open_time, time_service.total_customer)
 	time_service.send_customer_schedule(customer_schedule)
 	day_timer.start()
 
@@ -37,7 +38,7 @@ func create_customer_schedule(day_range, total_customers):
 			customers_remaining -= hourly_customers
 		else:
 			created_schedule.append(0)
-	return customer_schedule
+	return created_schedule
 
 func sin_distribution(x, offset = 0):
 	var sin_at_x = (sin(x * 10 + offset) + 2 * 2) / 2 * 0.5
@@ -58,7 +59,6 @@ func gaussian_integral(start, end, graniolarity) -> float:
 	return sum * step_size
 	
 func wait_till_change():
-	print("Day timer stopped")
 	day_timer.stop()
 	
 func _on_day_timer_timeout() -> void:

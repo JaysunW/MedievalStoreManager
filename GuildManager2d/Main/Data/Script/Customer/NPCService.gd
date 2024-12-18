@@ -47,12 +47,13 @@ func customer_to_npc(new_npc):
 
 func try_spawning_customer(minute, hour):
 	if last_hour != hour:
-		next_hour_schedule.fill(0)
 		last_hour = hour
-		var average_customer = daily_customer_schedule[hour]
-		for i in range(average_customer):
-			var random_index = Global.rng.randi_range(0, len(next_hour_schedule)-1)
-			next_hour_schedule[random_index] += 1
+		if hour < len(daily_customer_schedule):
+			next_hour_schedule.fill(0)
+			var average_customer = daily_customer_schedule[hour]
+			for i in range(average_customer):
+				var random_index = Global.rng.randi_range(0, len(next_hour_schedule)-1)
+				next_hour_schedule[random_index] += 1
 	var next_customer_amount = next_hour_schedule[minute]
 	for i in range(next_customer_amount):
 		if len(npc_list) - 5 < next_customer_amount:
@@ -95,6 +96,5 @@ func _on_check_timer_timeout() -> void:
 		print("Store empty")
 		store_emptied.emit()
 	else:
-		print("Store has customer")
-		print("customercount: ", len(customer_dictionary))
+		print("Store has customer customercount: ", len(customer_dictionary))
 		check_timer.start()

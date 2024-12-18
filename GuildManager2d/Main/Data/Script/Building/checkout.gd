@@ -49,7 +49,6 @@ func work_on_queue():
 		shopper_queue[0].bought_basket()
 		shopper_queue.remove_at(0)
 		shopper_count -= 1
-	print(current_shopping_list)
 
 func set_progress_bar(shopping_list):
 	var shopping_size = len(shopping_list)
