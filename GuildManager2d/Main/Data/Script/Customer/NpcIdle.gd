@@ -15,6 +15,7 @@ func _ready():
 
 func Enter():
 	customer.npc_service_reference.customer_to_npc(customer)
+	customer.id = 0
 	for i in range(len(idle_point_list)):
 		if customer.global_position == idle_point_list[i].global_position:
 			idle_counter = (i + 1) % len(idle_point_list)

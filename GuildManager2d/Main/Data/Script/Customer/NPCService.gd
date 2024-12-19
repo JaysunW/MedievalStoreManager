@@ -43,9 +43,13 @@ func structure_customer_schedule(new_schedule):
 	next_hour_schedule.fill(0)
 
 func customer_to_npc(new_npc):
+	if new_npc.id == 0:
+		return
 	if new_npc.id in customer_dictionary:
+		#print("Trying to removing id: ", new_npc.id, " From dic: ", customer_dictionary.keys())
 		customer_dictionary.erase(new_npc.id)
 		npc_list.append(new_npc)
+		#print("Removed")
 
 func try_spawning_customer(minute, hour):
 	if last_hour != hour:
@@ -63,8 +67,10 @@ func try_spawning_customer(minute, hour):
 		var random_index = Global.rng.randi_range(0, len(npc_list)-1)
 		var npc = npc_list[random_index]
 		npc_list.remove_at(random_index)
-		npc.change_state()
+		customer_id_counter += 1
+		npc.change_state(customer_id_counter)
 		customer_dictionary[npc.id] = npc
+		#print("Added id: ", npc.id, " to dictionary: ", customer_dictionary.keys())
 	
 func spawn_npc(new_position = null):
 	var new_npc = customer.instantiate()
@@ -76,8 +82,7 @@ func spawn_npc(new_position = null):
 			new_npc.global_position = idle_point_list[1].global_position
 	else:
 		new_npc.global_position = new_position
-	customer_id_counter += 1
-	new_npc.prepare_customer(self, customer_id_counter)
+	new_npc.prepare_customer(self)
 	world_map.add_child(new_npc)
 	npc_list.append(new_npc)
 
@@ -92,8 +97,9 @@ func _on_spawn_timer_timeout():
 		spawn_timer.start()
 	
 func _on_check_timer_timeout() -> void:
+	print("Customer_dic: ", customer_dictionary.keys())
 	if customer_dictionary.is_empty():
-		print("Store empty")
+		#print("Store empty")
 		SignalService.all_customer_left.emit()
 	else:
 		print("Store has customer customercount: ", len(customer_dictionary))

@@ -3,6 +3,7 @@ extends Node
 var player_data : Dictionary = {}
 var item_data : Dictionary = {}
 var building_data : Dictionary = {}
+var license_data : Dictionary = {}
 
 var player_data_file_path : String = "res://JSON/player_data.json"
 
@@ -23,6 +24,7 @@ func load_json_file(file_path : String):
 func get_data_dictionary():
 	var dic = {}
 	dic["PLAYER"] = player_data
+	dic["ITEM"] = item_data
 	return dic
 
 func distribute_dictionary(dic):
@@ -30,6 +32,7 @@ func distribute_dictionary(dic):
 		player_data = dic["PLAYER"]
 		item_data = dic["ITEM"]
 		building_data = dic["BUILDING"]
+		license_data = dic["LICENSE"]
 		
 func load_save():
 	distribute_dictionary(Save.read_save())

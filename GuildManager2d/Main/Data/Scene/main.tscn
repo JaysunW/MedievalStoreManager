@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=84 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
@@ -44,6 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://cxmm8e73vcba4" path="res://Asset/closed_sign.png" id="26_xxuyu"]
 [ext_resource type="Texture2D" uid="uid://b8cnm2sacv6te" path="res://Asset/license_interface.png" id="27_i5r6l"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/ExpandStore.gd" id="28_28bqr"]
+[ext_resource type="Script" path="res://Main/Data/Scene/license_interface.gd" id="28_w0ups"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/PlaceBuild.gd" id="30_ne60k"]
 [ext_resource type="Script" path="res://Main/Data/Script/Building/ui_expansion_value.gd" id="34_ps4vx"]
 [ext_resource type="Texture2D" uid="uid://dmf5862hccy1r" path="res://Asset/UI/object_show_back.png" id="34_ub5vc"]
@@ -54,10 +55,7 @@
 [ext_resource type="Script" path="res://Main/Data/Scene/day.gd" id="47_wvbqb"]
 [ext_resource type="Script" path="res://Main/Data/Scene/evening.gd" id="48_6ers7"]
 [ext_resource type="Script" path="res://Main/Data/Scene/ui_license_menu.gd" id="54_68k68"]
-[ext_resource type="Texture2D" uid="uid://b1lpfm0yci1dp" path="res://Asset/UI/License/LicenseUINormal.png" id="54_qi1b4"]
 [ext_resource type="PackedScene" uid="uid://ciufelrkb6e2w" path="res://UI/unlock_button.tscn" id="54_vxv3a"]
-[ext_resource type="Texture2D" uid="uid://c5fmnxpvnfyle" path="res://Asset/UI/License/LicenseUIPressed.png" id="55_5hqg4"]
-[ext_resource type="Texture2D" uid="uid://jfnwev3b0y35" path="res://Asset/UI/License/LicenseUIHover.png" id="56_7nx1s"]
 [ext_resource type="Script" path="res://UI/UIHeldObject.gd" id="59_pvuk1"]
 [ext_resource type="Texture2D" uid="uid://dggtxkxvk3056" path="res://Asset/ShopItem/flask.png" id="60_6vfma"]
 [ext_resource type="Script" path="res://UI/UIGold.gd" id="61_fw8fx"]
@@ -435,6 +433,9 @@ sprites = Array[Texture2D]([ExtResource("11_thsmy"), ExtResource("12_05nau")])
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_tqkde")
 
+[node name="Checkout" parent="Main/WorlMap" groups=["NavigationBlock"] instance=ExtResource("6_t4ys1")]
+position = Vector2(928, 704)
+
 [node name="OpenCloseSign" type="Node2D" parent="Main/WorlMap" node_paths=PackedStringArray("time_service", "sprite_component")]
 position = Vector2(1059, 959)
 script = ExtResource("25_2f0pk")
@@ -446,7 +447,7 @@ texture = ExtResource("26_xxuyu")
 offset = Vector2(0, -16)
 sprites = Array[Texture2D]([ExtResource("26_xxuyu"), ExtResource("20_pjl6e")])
 
-[node name="InteractableObjectComponent" parent="Main/WorlMap/OpenCloseSign" node_paths=PackedStringArray("main_object") groups=["TimeInterface"] instance=ExtResource("12_1jmpg")]
+[node name="InteractableObjectComponent" parent="Main/WorlMap/OpenCloseSign" node_paths=PackedStringArray("main_object") groups=["Interface"] instance=ExtResource("12_1jmpg")]
 collision_layer = 256
 collision_mask = 0
 monitoring = false
@@ -455,9 +456,6 @@ main_object = NodePath("..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Main/WorlMap/OpenCloseSign/InteractableObjectComponent"]
 position = Vector2(0.5, -9.5)
 shape = SubResource("RectangleShape2D_hbc3p")
-
-[node name="Checkout" parent="Main/WorlMap" groups=["NavigationBlock"] instance=ExtResource("6_t4ys1")]
-position = Vector2(928, 704)
 
 [node name="ItemInterface" type="StaticBody2D" parent="Main/WorlMap" node_paths=PackedStringArray("ui_item_menu", "world_map") groups=["NavigationBlock"]]
 texture_filter = 1
@@ -478,7 +476,7 @@ sprites = Array[Texture2D]([ExtResource("10_o4rgv"), ExtResource("11_m0jyt")])
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_2yjs2")
 
-[node name="InteractionObjectComponent" parent="Main/WorlMap/ItemInterface" node_paths=PackedStringArray("main_object") groups=["ItemInterface"] instance=ExtResource("12_1jmpg")]
+[node name="InteractionObjectComponent" parent="Main/WorlMap/ItemInterface" node_paths=PackedStringArray("main_object") groups=["Interface"] instance=ExtResource("12_1jmpg")]
 position = Vector2(0, -16)
 collision_layer = 256
 collision_mask = 0
@@ -492,11 +490,12 @@ debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 [node name="PackageSpawnPosition" type="Marker2D" parent="Main/WorlMap/ItemInterface"]
 position = Vector2(140, -31)
 
-[node name="LicenseInterface" type="StaticBody2D" parent="Main/WorlMap" groups=["NavigationBlock"]]
+[node name="LicenseInterface" type="StaticBody2D" parent="Main/WorlMap" groups=["Interface", "NavigationBlock"]]
 texture_filter = 1
 position = Vector2(912, 768)
 collision_layer = 64
 collision_mask = 64
+script = ExtResource("28_w0ups")
 
 [node name="SpriteComponent" parent="Main/WorlMap/LicenseInterface" instance=ExtResource("8_3qdpo")]
 position = Vector2(0, -16)
@@ -507,7 +506,7 @@ sprites = Array[Texture2D]([ExtResource("10_o4rgv"), ExtResource("11_m0jyt")])
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_2yjs2")
 
-[node name="InteractionObjectComponent" parent="Main/WorlMap/LicenseInterface" node_paths=PackedStringArray("main_object") groups=["LicenseInterface"] instance=ExtResource("12_1jmpg")]
+[node name="InteractionObjectComponent" parent="Main/WorlMap/LicenseInterface" node_paths=PackedStringArray("main_object") groups=["Interface"] instance=ExtResource("12_1jmpg")]
 position = Vector2(0, -16)
 collision_layer = 256
 collision_mask = 0
@@ -590,6 +589,7 @@ one_shot = true
 
 [node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("state_machine")]
 script = ExtResource("44_ge64k")
+total_customer = 1.0
 state_machine = NodePath("StateMachine")
 
 [node name="StateMachine" type="Node2D" parent="Main/TimeService" node_paths=PackedStringArray("initial_state")]
@@ -1365,9 +1365,9 @@ text = "100
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="UILicenseMenu" type="CanvasLayer" parent="UI"]
-visible = false
+[node name="UILicenseMenu" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("license_menu_parent")]
 script = ExtResource("54_68k68")
+license_menu_parent = NodePath("MenuBackground/VBoxContainer/LicenseMenu")
 
 [node name="Panel" type="Panel" parent="UI/UILicenseMenu"]
 anchors_preset = 15
@@ -1406,10 +1406,15 @@ theme_override_font_sizes/font_size = 32
 text = "License Upgrades"
 horizontal_alignment = 1
 
-[node name="LicenseMenu" type="Control" parent="UI/UILicenseMenu/MenuBackground"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UILicenseMenu/MenuBackground"]
 layout_mode = 2
 
-[node name="1" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu" instance=ExtResource("54_vxv3a")]
+[node name="LicenseMenu" type="Control" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+
+[node name="1" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1417,14 +1422,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -448.0
-offset_top = 28.5
+offset_top = 8.0
 offset_right = -384.0
-offset_bottom = 92.5
+offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
-description_text = "Apple, Leather Boots  ... Your mum"
 
-[node name="2" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu" instance=ExtResource("54_vxv3a")]
+[node name="2" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1432,13 +1436,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -320.0
-offset_top = 157.5
+offset_top = 137.0
 offset_right = -256.0
-offset_bottom = 221.5
+offset_bottom = 201.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="3" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu" instance=ExtResource("54_vxv3a")]
+[node name="3" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1446,101 +1450,163 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -320.0
-offset_top = -106.5
+offset_top = -127.0
 offset_right = -256.0
-offset_bottom = -42.5
+offset_bottom = -63.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="515" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 382.0
-offset_top = 570.0
-offset_right = 446.0
-offset_bottom = 634.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="4" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = 201.0
+offset_right = -126.0
+offset_bottom = 265.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="516" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 380.0
-offset_top = 441.0
-offset_right = 444.0
-offset_bottom = 505.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="5" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = 72.0
+offset_right = -128.0
+offset_bottom = 136.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="517" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 382.0
-offset_top = 186.0
-offset_right = 446.0
-offset_bottom = 250.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="6" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -183.0
+offset_right = -128.0
+offset_bottom = -119.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="518" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 507.0
-offset_top = 634.0
-offset_right = 571.0
-offset_bottom = 698.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="7" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = 266.0
+offset_right = -8.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="519" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 508.0
-offset_top = 506.0
-offset_right = 572.0
-offset_bottom = 570.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="8" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = 137.0
+offset_right = 0.0
+offset_bottom = 201.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="520" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 636.0
-offset_top = 634.0
-offset_right = 700.0
-offset_bottom = 698.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="9" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = -54.0
+offset_right = -1.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="521" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 636.0
-offset_top = 442.0
-offset_right = 700.0
-offset_bottom = 506.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="10" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = 266.0
+offset_right = 128.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="522" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 508.0
-offset_top = 314.0
-offset_right = 572.0
-offset_bottom = 378.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="11" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = 70.0
+offset_right = 128.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="523" type="TextureButton" parent="UI/UILicenseMenu/MenuBackground/LicenseMenu"]
-layout_mode = 0
-offset_left = 764.0
-offset_top = 314.0
-offset_right = 828.0
-offset_bottom = 378.0
-texture_normal = ExtResource("54_qi1b4")
-texture_pressed = ExtResource("55_5hqg4")
-texture_hover = ExtResource("56_7nx1s")
+[node name="12" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/LicenseMenu" instance=ExtResource("54_vxv3a")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 191.0
+offset_top = -55.0
+offset_right = 255.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Space3" type="Control" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_constants/margin_bottom = 20
+
+[node name="Return" type="Button" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Return
+"
+
+[node name="Space2" type="Control" parent="UI/UILicenseMenu/MenuBackground/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="UpgradeTypes" type="PanelContainer" parent="UI/UILicenseMenu"]
 anchors_preset = 8
@@ -1793,6 +1859,7 @@ navigation_polygon = SubResource("NavigationPolygon_u7hq3")
 [connection signal="spawn_bought_items" from="UI/UIItemMenu" to="Main/WorlMap/ItemInterface" method="_on_ui_item_menu_spawn_bought_items"]
 [connection signal="button_down" from="UI/UIItemMenu/ItemStore/MarginContainer/VBoxContainer/HBoxContainer/Buy" to="UI/UIItemMenu" method="_on_buy_button_down"]
 [connection signal="button_down" from="UI/UIItemMenu/ItemStore/MarginContainer/VBoxContainer/HBoxContainer/Return" to="UI/UIItemMenu" method="_on_return_button_down"]
+[connection signal="button_down" from="UI/UILicenseMenu/MenuBackground/VBoxContainer/HBoxContainer/MarginContainer/Return" to="UI/UILicenseMenu" method="_on_return_button_down"]
 [connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/TenLess" to="UI/UIStandInfo" method="_on_ten_less_button_down"]
 [connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/OneLess" to="UI/UIStandInfo" method="_on_one_less_button_down"]
 [connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/MarketPrizeReset" to="UI/UIStandInfo" method="_on_market_prize_reset_button_down"]

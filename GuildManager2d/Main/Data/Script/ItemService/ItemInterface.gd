@@ -9,7 +9,7 @@ extends Node2D
 
 var checkout_list = []
 	
-func open_item_store():
+func interact():
 	ui_item_menu.open_item_interface()
 	
 func _on_ui_item_menu_spawn_bought_items(checkout_items):

@@ -4,11 +4,13 @@ extends Node2D
 @export var sprite_component : Sprite2D
 
 func _ready() -> void:
-	SignalService.ending_work_day.connect(reset_sign)
+	SignalService.ending_work_day.connect(sign_show_open)
 
 func interact():
-	sprite_component.change_sprite(1)
-	time_service.start_work_day()
+	SignalService.try_starting_work_day.emit(self)
 
-func reset_sign():
-	sprite_component.change_sprite(0)
+func sign_show_open(is_open = false):
+	if is_open:
+		sprite_component.change_sprite(1)
+	else:
+		sprite_component.change_sprite(0)

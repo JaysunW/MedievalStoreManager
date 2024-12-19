@@ -1,5 +1,6 @@
 extends Node
 
+signal try_starting_work_day
 signal starting_work_day
 signal ending_work_day
 

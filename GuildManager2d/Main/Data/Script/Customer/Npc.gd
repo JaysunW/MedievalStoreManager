@@ -22,12 +22,12 @@ func bought_basket():
 	has_been_billed = true
 	basket_list = []
 
-func change_state():
+func change_state(new_id):
+	id = new_id
 	state_machine.on_child_transition(state_machine.states["idle"], "walking")
 
-func prepare_customer(reference, new_id):
+func prepare_customer(reference):
 	npc_service_reference = reference
-	id = new_id
 	var col = [Global.rng.randf_range(0,1),Global.rng.randf_range(0,1),Global.rng.randf_range(0,1)]
 	if (col[0] + col[1] + col[2]) < 0.2:
 		var minpos = col.find(col.min())

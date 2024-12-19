@@ -11,8 +11,9 @@ class_name TimeService
 @export var state_machine : Node2D
 
 func _ready() -> void:
+	SignalService.try_starting_work_day.connect(start_work_day)
 	SignalService.all_customer_left.connect(close_shop)
-
+	
 func show_time():
 	UI.set_ui_time.emit(get_current_minute(), get_current_hour() + start_time)
 	
@@ -22,9 +23,11 @@ func show_time_mode(time_mode):
 func start_new_day():
 	state_machine.on_child_transition(state_machine.states["evening"], "morning")
 	
-func start_work_day():
-	SignalService.starting_work_day.emit()
-	state_machine.on_child_transition(state_machine.initial_state, "day")
+func start_work_day(open_close_sign):
+	if state_machine.current_state == state_machine.initial_state:
+		open_close_sign.sign_show_open(true)
+		SignalService.starting_work_day.emit()
+		state_machine.on_child_transition(state_machine.initial_state, "day")
 
 func send_customer_schedule(new_schedule):
 	SignalService.send_customer_schedule.emit(new_schedule)

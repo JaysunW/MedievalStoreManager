@@ -262,10 +262,9 @@ script = ExtResource("1_eyjuj")
 player = NodePath("..")
 animation_component = NodePath("../AnimationComponent")
 
-[node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("stand_info_ui", "interaction_component", "move_component")]
+[node name="HandleObject" type="Node2D" parent="." node_paths=PackedStringArray("interaction_component", "move_component")]
 position = Vector2(0, -14)
 script = ExtResource("3_xorse")
-stand_info_ui = NodePath("")
 interaction_component = NodePath("../InteractionComponent")
 move_component = NodePath("../MovePlayer")
 
