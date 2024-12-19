@@ -9,7 +9,9 @@ signal chose_expanding
 
 var container_list = []
 
-func _ready():
+func _ready() -> void:
+	visible = false
+	UI.open_build_UI.connect(show_building_options)
 	fill_container()
 
 func show_building_options(input):

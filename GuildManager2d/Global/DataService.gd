@@ -16,10 +16,8 @@ func load_json_file(file_path : String):
 		if parsed_result is Dictionary:
 			return parsed_result
 		else:
-			return ""
 			print_debug("Error reading file : " + file_path)
 	else:
-		return ""
 		print_debug("File doesn't exist! : " + file_path)
 
 func get_data_dictionary():

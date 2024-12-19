@@ -12,8 +12,6 @@ extends Node2D
 @export var spawn_timer_time = 0.1
 var spawn_timer_offset_min_max = 0.1
 
-signal store_emptied
-
 var maximum_npc = 30
 
 var npc_list = []
@@ -27,6 +25,9 @@ var last_hour = -1
 func _ready():
 	if len(npc_list) < maximum_npc:
 		spawn_timer.start()
+	SignalService.check_for_customer_left.connect(start_checking_for_customer_left)
+	SignalService.try_spawning_customer.connect(try_spawning_customer)
+	SignalService.send_customer_schedule.connect(structure_customer_schedule)
 		
 func _process(_delta):
 	if Input.is_action_just_pressed("v"):
@@ -36,6 +37,7 @@ func get_current_checkouts():
 	return world_map.checkout_list
 
 func structure_customer_schedule(new_schedule):
+	print("New Schedule: ", new_schedule)
 	daily_customer_schedule = new_schedule
 	next_hour_schedule.resize(60)
 	next_hour_schedule.fill(0)
@@ -79,11 +81,9 @@ func spawn_npc(new_position = null):
 	world_map.add_child(new_npc)
 	npc_list.append(new_npc)
 
-func check_for_empty_store():
+func start_checking_for_customer_left():
 	print("check for empty store")
 	check_timer.start()
-	
-func close_store():
 	customer_id_counter = 0
 
 func _on_spawn_timer_timeout():
@@ -94,7 +94,7 @@ func _on_spawn_timer_timeout():
 func _on_check_timer_timeout() -> void:
 	if customer_dictionary.is_empty():
 		print("Store empty")
-		store_emptied.emit()
+		SignalService.all_customer_left.emit()
 	else:
 		print("Store has customer customercount: ", len(customer_dictionary))
 		check_timer.start()

@@ -1,31 +1,35 @@
 extends CanvasLayer
 
-@export var buildNameLabel : Label
-@export var itemNameLabel : Label
-@export var marketValueLabel : Label
-@export var currentValueLabel : Label
+@export var build_name_label : Label
+@export var item_name_label : Label
+@export var market_value_label : Label
+@export var current_value_label : Label
 
-signal opened_stand_info
-signal closed_stand_info
+@export var fill_amount_label : Label
 
 var current_item_id = null
 
 func _ready():
 	visible = false
-
-func set_stand_info(stand_data, item_id):
+	UI.open_stand_info_UI.connect(set_stand_info)
+	
+func set_stand_info(stand):
+	var stand_data : Dictionary = stand.data
+	var item_id : int = stand.get_content_data()["id"]
 	current_item_id = item_id
-	buildNameLabel.text = stand_data["name"]
+	build_name_label.text = stand_data["name"]
 	var item_data = Data.item_data[item_id]
-	itemNameLabel.text = item_data["name"]
-	marketValueLabel.text = str(item_data["market_value"])
-	currentValueLabel.text = str(item_data["value"])
-	opened_stand_info.emit()
+	item_name_label.text = item_data["name"]
+	market_value_label.text = str(item_data["market_value"])
+	current_value_label.text = str(item_data["value"])
+	var amount = stand.get_content_data()["amount"]
+	var max_amount = item_data["max_amount"]
+	fill_amount_label.text = str(amount) + "/" + str(max_amount)
 	visible = true
 
 func update_stand_info():
 	var item_data = Data.item_data[current_item_id]
-	currentValueLabel.text = str(item_data["value"])
+	current_value_label.text = str(item_data["value"])
 
 func _on_ten_less_button_down():
 	var item_data = Data.item_data[current_item_id]
@@ -68,7 +72,6 @@ func _on_ten_more_button_down():
 
 func close_info():
 	visible = false
-	closed_stand_info.emit()
 
 func _on_close_button_down():
 	close_info()

@@ -27,9 +27,3 @@ func set_gold(value):
 func add_gold(value):
 	Data.player_data["gold"] += value
 	changed_gold_amount.emit()
-
-func get_change_gold_signal():
-	return changed_gold_amount
-	
-func get_flash_signal():
-	return flash

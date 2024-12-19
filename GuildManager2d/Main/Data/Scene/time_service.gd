@@ -8,41 +8,39 @@ class_name TimeService
 @export var current_time = 0
 
 @export_group("Exports")
-@export var ui_time : CanvasLayer 
 @export var state_machine : Node2D
-@export var customer_service : Node2D
 
 func _ready() -> void:
-	customer_service.store_emptied.connect(close_shop)
+	SignalService.all_customer_left.connect(close_shop)
 
 func show_time():
-	ui_time.set_time(get_current_minute(), get_current_hour() + start_time)
+	UI.set_ui_time.emit(get_current_minute(), get_current_hour() + start_time)
 	
 func show_time_mode(time_mode):
-	ui_time.set_time_mode(time_mode)
+	UI.set_ui_time_mode.emit(time_mode)
 	
 func start_new_day():
 	state_machine.on_child_transition(state_machine.states["evening"], "morning")
 	
 func start_work_day():
+	SignalService.starting_work_day.emit()
 	state_machine.on_child_transition(state_machine.initial_state, "day")
 
 func send_customer_schedule(new_schedule):
-	customer_service.structure_customer_schedule(new_schedule)
+	SignalService.send_customer_schedule.emit(new_schedule)
 	
 func close_shop():
 	SignalService.ending_work_day.emit()
-	customer_service.close_store()
 	state_machine.on_child_transition(state_machine.states["day"], "evening")
 
 func try_closing_store():
 	state_machine.current_state.wait_till_change()
-	customer_service.check_for_empty_store()
+	SignalService.check_for_customer_left.emit()
 	
 func increase_time():
 	current_time += 1
-	ui_time.set_time(get_current_minute(), get_current_hour() + start_time)
-	customer_service.try_spawning_customer(get_current_minute(), get_current_hour())
+	show_time()
+	SignalService.try_spawning_customer.emit(get_current_minute(), get_current_hour())
 	if get_current_hour() >= open_time:
 		print("End day")
 		try_closing_store()

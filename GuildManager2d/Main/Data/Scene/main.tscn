@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=86 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Script/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
@@ -58,6 +58,11 @@
 [ext_resource type="PackedScene" uid="uid://ciufelrkb6e2w" path="res://UI/unlock_button.tscn" id="54_vxv3a"]
 [ext_resource type="Texture2D" uid="uid://c5fmnxpvnfyle" path="res://Asset/UI/License/LicenseUIPressed.png" id="55_5hqg4"]
 [ext_resource type="Texture2D" uid="uid://jfnwev3b0y35" path="res://Asset/UI/License/LicenseUIHover.png" id="56_7nx1s"]
+[ext_resource type="Script" path="res://UI/UIHeldObject.gd" id="59_pvuk1"]
+[ext_resource type="Texture2D" uid="uid://dggtxkxvk3056" path="res://Asset/ShopItem/flask.png" id="60_6vfma"]
+[ext_resource type="Script" path="res://UI/UIGold.gd" id="61_fw8fx"]
+[ext_resource type="Texture2D" uid="uid://c58uj22u770w1" path="res://Asset/UI/ui_gold_back_side.png" id="62_w7ynh"]
+[ext_resource type="Script" path="res://UI/UIStandInfo.gd" id="63_7o3w4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dfgxd"]
 texture = ExtResource("3_bw1q4")
@@ -310,6 +315,10 @@ size = Vector2(32, 18)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3m47s"]
 size = Vector2(32, 32)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wxlfv"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e4muq"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b7b73"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_u7hq3"]
@@ -452,7 +461,7 @@ position = Vector2(928, 704)
 
 [node name="ItemInterface" type="StaticBody2D" parent="Main/WorlMap" node_paths=PackedStringArray("ui_item_menu", "world_map") groups=["NavigationBlock"]]
 texture_filter = 1
-position = Vector2(752, 543)
+position = Vector2(880, 768)
 collision_layer = 64
 collision_mask = 64
 script = ExtResource("7_7xygn")
@@ -481,11 +490,11 @@ shape = SubResource("RectangleShape2D_3m47s")
 debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 
 [node name="PackageSpawnPosition" type="Marker2D" parent="Main/WorlMap/ItemInterface"]
-position = Vector2(259, 216)
+position = Vector2(140, -31)
 
 [node name="LicenseInterface" type="StaticBody2D" parent="Main/WorlMap" groups=["NavigationBlock"]]
 texture_filter = 1
-position = Vector2(784, 543)
+position = Vector2(912, 768)
 collision_layer = 64
 collision_mask = 64
 
@@ -548,11 +557,10 @@ position = Vector2(928, 880)
 [node name="PointOfInterest2" type="Marker2D" parent="Main/CustomerService/StorePoints"]
 position = Vector2(1056, 880)
 
-[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("navigation_region", "ui_build_menu", "placing_menu", "expand_menu")]
+[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("navigation_region", "placing_menu", "expand_menu")]
 z_index = 10
 script = ExtResource("5_sdoag")
 navigation_region = NodePath("../../NavigationRegion2D")
-ui_build_menu = NodePath("../../UI/UIBuildMenu")
 placing_menu = NodePath("PlaceBuild")
 expand_menu = NodePath("ExpandStore")
 
@@ -567,10 +575,9 @@ debug_marker = NodePath("DebugMarker")
 [node name="DebugMarker" type="Marker2D" parent="Main/BuildService/PlaceBuild"]
 position = Vector2(1169, 737)
 
-[node name="ExpandStore" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "ui_expansion_value", "store_area", "store_ground", "store_building", "store_upper_building", "store_expansion_area")]
+[node name="ExpandStore" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "store_area", "store_ground", "store_building", "store_upper_building", "store_expansion_area")]
 script = ExtResource("28_28bqr")
 build_service = NodePath("..")
-ui_expansion_value = NodePath("UIExpansionValue")
 store_area = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/StoreArea")
 store_ground = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/StoreGround")
 store_building = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/StoreBuilding")
@@ -581,108 +588,9 @@ store_expansion_area = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/Expa
 wait_time = 0.1
 one_shot = true
 
-[node name="UIExpansionValue" type="CanvasLayer" parent="Main/BuildService/ExpandStore" node_paths=PackedStringArray("item_current_amount")]
-script = ExtResource("34_ps4vx")
-item_current_amount = NodePath("DisplayContainer/Display/HBoxContainer/VBoxContainer/ItemCurrentAmount")
-
-[node name="DisplayContainer" type="PanelContainer" parent="Main/BuildService/ExpandStore/UIExpansionValue"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -320.0
-offset_top = -128.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxTexture_b7b73")
-
-[node name="Background" type="TextureRect" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("34_ub5vc")
-flip_h = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer"]
-layout_mode = 2
-
-[node name="Space2" type="Control" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-
-[node name="MarginContainer" type="MarginContainer" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 30
-
-[node name="Label" type="Label" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-theme = ExtResource("7_ykg55")
-theme_override_font_sizes/font_size = 16
-text = "Expansion Cost:"
-horizontal_alignment = 2
-
-[node name="Space" type="Control" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Display" type="MarginContainer" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 45
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/Display"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/Display/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Control" type="Control" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ItemCurrentAmount" type="Label" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("7_ykg55")
-theme_override_colors/font_outline_color = Color(0.243137, 0.537255, 0.282353, 1)
-theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 48
-text = "48
-"
-horizontal_alignment = 2
-
-[node name="Control2" type="Control" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-
-[node name="ItemIcon" type="TextureRect" parent="Main/BuildService/ExpandStore/UIExpansionValue/DisplayContainer/Display/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-texture = ExtResource("25_0sma6")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("ui_time", "state_machine", "customer_service")]
+[node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("state_machine")]
 script = ExtResource("44_ge64k")
-ui_time = NodePath("../../UI/UITime")
 state_machine = NodePath("StateMachine")
-customer_service = NodePath("../CustomerService")
 
 [node name="StateMachine" type="Node2D" parent="Main/TimeService" node_paths=PackedStringArray("initial_state")]
 script = ExtResource("45_2bqcg")
@@ -708,6 +616,362 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="PlayerUI" type="Control" parent="UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="UITime" type="CanvasLayer" parent="UI/PlayerUI" node_paths=PackedStringArray("time_mode_label", "time_label")]
+script = ExtResource("44_0ffnh")
+time_mode_label = NodePath("PanelContainer/VBoxContainer/HBoxContainer/TimeMode")
+time_label = NodePath("PanelContainer/VBoxContainer/Time")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/PlayerUI/UITime"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -304.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 106.0
+grow_horizontal = 0
+theme = ExtResource("7_ykg55")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PlayerUI/UITime/PanelContainer"]
+layout_mode = 2
+
+[node name="Space" type="Control" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "Time: "
+horizontal_alignment = 1
+
+[node name="TimeMode" type="Label" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "Morning"
+horizontal_alignment = 1
+
+[node name="Space2" type="Control" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Time" type="Label" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "8:00"
+horizontal_alignment = 1
+
+[node name="Space3" type="Control" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UIGold" type="CanvasLayer" parent="UI/PlayerUI" node_paths=PackedStringArray("gold_label", "silver_label", "copper_label", "color_flash_timer")]
+layer = 0
+script = ExtResource("61_fw8fx")
+gold_label = NodePath("GoldUI/MarginContainer/GridContainer/GoldValue")
+silver_label = NodePath("GoldUI/MarginContainer/GridContainer/SilverValue")
+copper_label = NodePath("GoldUI/MarginContainer/GridContainer/CopperValue")
+color_flash_timer = NodePath("ColorFlashTimer")
+
+[node name="GoldUI" type="PanelContainer" parent="UI/PlayerUI/UIGold"]
+offset_left = 32.0
+offset_top = -96.0
+offset_right = 272.0
+offset_bottom = 384.0
+theme = ExtResource("7_ykg55")
+theme_override_styles/panel = SubResource("StyleBoxTexture_wxlfv")
+
+[node name="Back" type="TextureRect" parent="UI/PlayerUI/UIGold/GoldUI"]
+layout_mode = 2
+texture = ExtResource("62_w7ynh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PlayerUI/UIGold/GoldUI"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 192
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="GridContainer" type="GridContainer" parent="UI/PlayerUI/UIGold/GoldUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+columns = 2
+
+[node name="GoldIcon" type="TextureRect" parent="UI/PlayerUI/UIGold/GoldUI/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("23_eejlt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GoldValue" type="Label" parent="UI/PlayerUI/UIGold/GoldUI/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "110"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverIcon" type="TextureRect" parent="UI/PlayerUI/UIGold/GoldUI/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("24_7giq3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SilverValue" type="Label" parent="UI/PlayerUI/UIGold/GoldUI/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "199"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperIcon" type="TextureRect" parent="UI/PlayerUI/UIGold/GoldUI/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("25_0sma6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CopperValue" type="Label" parent="UI/PlayerUI/UIGold/GoldUI/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "99"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ColorFlashTimer" type="Timer" parent="UI/PlayerUI/UIGold"]
+
+[node name="UIHeldObject" type="CanvasLayer" parent="UI/PlayerUI" node_paths=PackedStringArray("item_icon", "item_current_amount", "item_amount", "flash_timer")]
+layer = 0
+script = ExtResource("59_pvuk1")
+item_icon = NodePath("DisplayContainer/Display/HBoxContainer/ItemIcon")
+item_current_amount = NodePath("DisplayContainer/Display/HBoxContainer/VBoxContainer/ItemCurrentAmount")
+item_amount = NodePath("DisplayContainer/Display/HBoxContainer/VBoxContainer2/ItemAmount")
+flash_timer = NodePath("FlashTimer")
+
+[node name="FlashTimer" type="Timer" parent="UI/PlayerUI/UIHeldObject"]
+one_shot = true
+
+[node name="DisplayContainer" type="PanelContainer" parent="UI/PlayerUI/UIHeldObject"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -128.0
+offset_right = 320.0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_e4muq")
+
+[node name="Background" type="TextureRect" parent="UI/PlayerUI/UIHeldObject/DisplayContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("34_ub5vc")
+
+[node name="Display" type="MarginContainer" parent="UI/PlayerUI/UIHeldObject/DisplayContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemIcon" type="TextureRect" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("60_6vfma")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemCurrentAmount" type="Label" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("7_ykg55")
+theme_override_colors/font_outline_color = Color(0.243137, 0.537255, 0.282353, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 40
+text = "48
+"
+horizontal_alignment = 2
+
+[node name="Control2" type="Control" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemAmount" type="Label" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("7_ykg55")
+theme_override_colors/font_outline_color = Color(0.243137, 0.537255, 0.282353, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 40
+text = "/48
+"
+
+[node name="Control2" type="Control" parent="UI/PlayerUI/UIHeldObject/DisplayContainer/Display/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="UIExpansionValue" type="CanvasLayer" parent="UI/PlayerUI" node_paths=PackedStringArray("item_current_amount")]
+script = ExtResource("34_ps4vx")
+item_current_amount = NodePath("DisplayContainer/Display/HBoxContainer/VBoxContainer/ItemCurrentAmount")
+
+[node name="DisplayContainer" type="PanelContainer" parent="UI/PlayerUI/UIExpansionValue"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_b7b73")
+
+[node name="Background" type="TextureRect" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("34_ub5vc")
+flip_h = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer"]
+layout_mode = 2
+
+[node name="Space2" type="Control" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+
+[node name="Label" type="Label" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 16
+text = "Expansion Cost:"
+horizontal_alignment = 2
+
+[node name="Space" type="Control" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Display" type="MarginContainer" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 45
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/Display"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/Display/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemCurrentAmount" type="Label" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("7_ykg55")
+theme_override_colors/font_outline_color = Color(0.243137, 0.537255, 0.282353, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 48
+text = "48
+"
+horizontal_alignment = 2
+
+[node name="Control2" type="Control" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/Display/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ItemIcon" type="TextureRect" parent="UI/PlayerUI/UIExpansionValue/DisplayContainer/Display/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+texture = ExtResource("25_0sma6")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="UIBuildMenu" type="CanvasLayer" parent="UI"]
 visible = false
@@ -1101,61 +1365,8 @@ text = "100
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="UITime" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("time_mode_label", "time_label")]
-script = ExtResource("44_0ffnh")
-time_mode_label = NodePath("PanelContainer/VBoxContainer/HBoxContainer/TimeMode")
-time_label = NodePath("PanelContainer/VBoxContainer/Time")
-
-[node name="PanelContainer" type="PanelContainer" parent="UI/UITime"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -304.0
-offset_top = 16.0
-offset_right = -20.0
-offset_bottom = 106.0
-grow_horizontal = 0
-theme = ExtResource("7_ykg55")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/UITime/PanelContainer"]
-layout_mode = 2
-
-[node name="Space" type="Control" parent="UI/UITime/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UITime/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/UITime/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-text = "Time: "
-horizontal_alignment = 1
-
-[node name="TimeMode" type="Label" parent="UI/UITime/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-text = "Morning"
-horizontal_alignment = 1
-
-[node name="Space2" type="Control" parent="UI/UITime/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Time" type="Label" parent="UI/UITime/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-text = "8:00"
-horizontal_alignment = 1
-
-[node name="Space3" type="Control" parent="UI/UITime/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
 [node name="UILicenseMenu" type="CanvasLayer" parent="UI"]
+visible = false
 script = ExtResource("54_68k68")
 
 [node name="Panel" type="Panel" parent="UI/UILicenseMenu"]
@@ -1347,6 +1558,222 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("7_ykg55")
 
+[node name="UIStandInfo" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("build_name_label", "item_name_label", "market_value_label", "current_value_label", "fill_amount_label")]
+layer = 0
+visible = false
+script = ExtResource("63_7o3w4")
+build_name_label = NodePath("InfoContainer/MarginContainer/VBoxContainer/BuildNameLayer/BuildName")
+item_name_label = NodePath("InfoContainer/MarginContainer/VBoxContainer/ItemNameLayer/ItemName")
+market_value_label = NodePath("InfoContainer/MarginContainer/VBoxContainer/MarketValueLayer/MarketValue")
+current_value_label = NodePath("InfoContainer/MarginContainer/VBoxContainer/CurrentValueLayer/CurrentValue")
+fill_amount_label = NodePath("InfoContainer/MarginContainer/VBoxContainer/ItemNameLayer2/FillAmount")
+
+[node name="Panel" type="Panel" parent="UI/UIStandInfo"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InfoContainer" type="PanelContainer" parent="UI/UIStandInfo"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -244.0
+offset_right = 285.0
+offset_bottom = 244.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("7_ykg55")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UIStandInfo/InfoContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="BuildNameLayer" type="HBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Des" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/BuildNameLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+size_flags_stretch_ratio = 2.0
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 24
+text = "Building Type:
+"
+horizontal_alignment = 2
+
+[node name="BuildName" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/BuildNameLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 24
+text = "Stand"
+
+[node name="ItemNameLayer" type="HBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Des" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ItemNameLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+size_flags_stretch_ratio = 2.0
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 24
+text = "Current Item:
+"
+horizontal_alignment = 2
+
+[node name="ItemName" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ItemNameLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 24
+text = "Water
+"
+
+[node name="Space" type="Control" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemNameLayer2" type="HBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Fill" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ItemNameLayer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 24
+text = "Fill:
+"
+horizontal_alignment = 2
+
+[node name="FillAmount" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ItemNameLayer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme = ExtResource("7_ykg55")
+theme_override_font_sizes/font_size = 24
+text = "Water
+"
+
+[node name="Space4" type="Control" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarketValueLayer" type="HBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Des" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/MarketValueLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Market Prize:"
+horizontal_alignment = 1
+
+[node name="MarketValue" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/MarketValueLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "70"
+horizontal_alignment = 1
+
+[node name="CurrentValueLayer" type="HBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Des" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/CurrentValueLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Current Prize:"
+horizontal_alignment = 1
+
+[node name="CurrentValue" type="Label" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/CurrentValueLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "70"
+horizontal_alignment = 1
+
+[node name="Space2" type="Control" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ButtonLayer" type="HBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TenLess" type="Button" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-10%"
+
+[node name="OneLess" type="Button" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-1
+"
+
+[node name="MarketPrizeReset" type="Button" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset
+"
+
+[node name="OneMore" type="Button" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+1
+"
+
+[node name="TenMore" type="Button" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+10%"
+
+[node name="Space3" type="Control" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CloseLayer" type="HBoxContainer" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Space" type="Control" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/CloseLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="Close" type="Button" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/CloseLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "Close
+"
+
+[node name="Space2" type="Control" parent="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/CloseLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
 z_index = 5
@@ -1354,14 +1781,21 @@ navigation_polygon = SubResource("NavigationPolygon_u7hq3")
 
 [connection signal="body_entered" from="Main/WorlMap/Door" to="Main/WorlMap/Door" method="_on_body_entered"]
 [connection signal="body_exited" from="Main/WorlMap/Door" to="Main/WorlMap/Door" method="_on_body_exited"]
-[connection signal="store_emptied" from="Main/CustomerService" to="Main/TimeService" method="_on_npc_service_store_emptied"]
 [connection signal="timeout" from="Main/CustomerService/SpawnTimer" to="Main/CustomerService" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="Main/CustomerService/CheckTimer" to="Main/CustomerService" method="_on_check_timer_timeout"]
 [connection signal="timeout" from="Main/BuildService/ExpandStore/WaitTimer" to="Main/BuildService/ExpandStore" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="Main/TimeService/StateMachine/Day/DayTimer" to="Main/TimeService/StateMachine/Day" method="_on_day_timer_timeout"]
+[connection signal="timeout" from="UI/PlayerUI/UIGold/ColorFlashTimer" to="UI/PlayerUI/UIGold" method="_on_color_flash_timer_timeout"]
+[connection signal="timeout" from="UI/PlayerUI/UIHeldObject/FlashTimer" to="UI/PlayerUI/UIHeldObject" method="_on_flash_timer_timeout"]
 [connection signal="chose_building_option" from="UI/UIBuildMenu" to="Main/BuildService" method="_on_ui_build_menu_chose_building_option"]
 [connection signal="chose_expanding" from="UI/UIBuildMenu" to="Main/BuildService" method="_on_ui_build_menu_chose_expanding"]
 [connection signal="button_down" from="UI/UIBuildMenu/ExpandAreaContainer/MarginContainer/ParentVContainer/MarginContainer/HeaderContainer/ExpandButton" to="UI/UIBuildMenu" method="_on_expand_button_button_down"]
 [connection signal="spawn_bought_items" from="UI/UIItemMenu" to="Main/WorlMap/ItemInterface" method="_on_ui_item_menu_spawn_bought_items"]
 [connection signal="button_down" from="UI/UIItemMenu/ItemStore/MarginContainer/VBoxContainer/HBoxContainer/Buy" to="UI/UIItemMenu" method="_on_buy_button_down"]
 [connection signal="button_down" from="UI/UIItemMenu/ItemStore/MarginContainer/VBoxContainer/HBoxContainer/Return" to="UI/UIItemMenu" method="_on_return_button_down"]
+[connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/TenLess" to="UI/UIStandInfo" method="_on_ten_less_button_down"]
+[connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/OneLess" to="UI/UIStandInfo" method="_on_one_less_button_down"]
+[connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/MarketPrizeReset" to="UI/UIStandInfo" method="_on_market_prize_reset_button_down"]
+[connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/OneMore" to="UI/UIStandInfo" method="_on_one_more_button_down"]
+[connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/TenMore" to="UI/UIStandInfo" method="_on_ten_more_button_down"]
+[connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/CloseLayer/Close" to="UI/UIStandInfo" method="_on_close_button_down"]

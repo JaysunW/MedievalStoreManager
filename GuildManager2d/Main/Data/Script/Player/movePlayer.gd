@@ -6,7 +6,10 @@ extends Node2D
 const SPEED = 25000.0
 var last_move_direction = Vector2.DOWN
 
-var can_move = true
+var can_move : bool = true
+
+func _ready() -> void:
+	UI.can_player_move.connect(change_moving)
 
 func _physics_process(_delta):
 	if can_move:
@@ -29,8 +32,5 @@ func _physics_process(_delta):
 			#animation_component.set_animation("default")
 		player.move_and_slide()
 
-func _on_ui_stand_info_opened_stand_info():
-	can_move = false
-
-func _on_ui_stand_info_closed_stand_info():
-	can_move = true
+func change_moving(input : bool):
+	can_move = input

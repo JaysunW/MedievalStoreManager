@@ -7,8 +7,8 @@ extends CanvasLayer
 @export var color_flash_timer : Timer
 
 func _ready():
-	Gold.get_change_gold_signal().connect(set_gold_display)
-	Gold.get_flash_signal().connect(flash_display)
+	Gold.changed_gold_amount.connect(set_gold_display)
+	Gold.flash.connect(flash_display)
 	set_gold_display()
 
 func set_gold_display():

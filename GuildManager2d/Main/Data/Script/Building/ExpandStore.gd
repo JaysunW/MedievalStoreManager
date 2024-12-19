@@ -3,7 +3,6 @@ extends Node2D
 @onready var wait_timer: Timer = $WaitTimer
 
 @export var build_service : Node2D
-@export var ui_expansion_value : CanvasLayer
 
 @export var store_area : TileMapLayer
 @export var store_ground : TileMapLayer
@@ -17,18 +16,16 @@ var is_expanding_store = false
 
 func _ready() -> void:
 	store_expansion_area.visible = false
-	ui_expansion_value.visible = false
 
 func Enter():
 	store_expansion_area.visible = true
-	ui_expansion_value.set_value(next_expansion_price)
-	ui_expansion_value.visible = true
+	UI.open_expansion_UI.emit(next_expansion_price)
 	wait_timer.start()
 
 func Exit():
 	is_expanding_store = false
 	store_expansion_area.visible = false
-	ui_expansion_value.visible = false
+	UI.open_expansion_UI.emit(0, false)
 	build_service.child_exit()
 
 func _process(_delta: float) -> void:

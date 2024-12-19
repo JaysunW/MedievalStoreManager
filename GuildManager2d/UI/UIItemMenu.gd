@@ -20,8 +20,8 @@ var container_list = []
 var checkout_list = {}
 
 func _ready():
-	fill_container()
 	visible = false
+	fill_container()
 
 func fill_container():
 	var item_data = Data.item_data
@@ -106,9 +106,8 @@ func set_checkout_value(value):
 		gold_value_label.visible = true
 
 func open_item_interface():
-	if UI.is_ui_free():
-			UI.is_free(false)
-			visible = true
+	if UI.get_set_ui_free():
+		visible = true
 			
 func _on_buy_button_down():
 	if Gold.pay(checkout_gold_total()):

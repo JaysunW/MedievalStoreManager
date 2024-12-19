@@ -1,6 +1,5 @@
 extends Node2D
 
-@export var held_object_ui : CanvasLayer
 @export var stand_info_ui : CanvasLayer
 @export var interaction_component : Area2D 
 @export var move_component : Node2D
@@ -45,6 +44,8 @@ func interact_with_object():
 			found_item_interface = object.get_main_object()
 		elif object.is_in_group("TimeInterface"):
 			found_time_interface = object.get_main_object()
+		elif object.is_in_group("Interface"):
+			found_time_interface = object.get_main_object()
 	if not found_package_list.is_empty():
 		hold_object(find_nearest_object(found_package_list))
 	elif found_item_interface:
@@ -57,10 +58,9 @@ func interact_with_object():
 			if not stand.is_empty():
 				filled_stand_list.append(stand)
 		if not filled_stand_list.is_empty():
-			if UI.is_ui_free():
-				UI.is_free(false)
+			if UI.get_set_ui_free():
 				var nearest_stand = find_nearest_object(filled_stand_list)
-				stand_info_ui.set_stand_info(nearest_stand.data, nearest_stand.get_content_data()["id"])
+				UI.open_stand_info_UI.emit(nearest_stand)
 
 func work_checkout():
 	var objects = interaction_component.get_interactable_object()
@@ -96,10 +96,10 @@ func take_from_shelf():
 		elif held_object.data["id"] == stand.get_content_data()["id"] and held_object.data["amount"] < held_object.data["carry_max"]:
 			stand.take_from_shelf()
 			held_object.data["amount"] += 1
-			held_object_ui.set_held_object_data(held_object.data)
+			UI.picked_up_package.emit(held_object.data, true)
 			interact_timer.start()
 		else:
-			held_object_ui.flash_color(Color.FIREBRICK)
+			UI.flash_held_object.emit(Color.FIREBRICK)
 			
 func held_object_and_interact():
 	var objects = interaction_component.get_interactable_object()
@@ -122,19 +122,19 @@ func fill_shelf(found_stand_list):
 			if held_object.data["amount"] <= 0:
 				drop_object(false)
 			else:
-				held_object_ui.set_held_object_data(held_object.data)
+				UI.picked_up_package.emit(held_object.data, true)
 				
 func hold_object(object):
 	is_holding_object = true
 	held_object = object
-	held_object_ui.set_held_object_data(held_object.data)
+	UI.picked_up_package.emit(held_object.data, true)
 	object.change_hold_mode(true)
 
 func drop_object(is_not_stored=true):
 	is_holding_object = false
 	held_object.position = global_position + object_distance * last_move_direction + Vector2(0,8)
 	held_object.change_hold_mode(false)
-	held_object_ui.dropped_object()
+	UI.picked_up_package.emit({}, false)
 	if is_not_stored:
 		held_object = null
 	else:
