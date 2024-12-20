@@ -1,10 +1,10 @@
 id	name	unlocked_by	value	description	sprite_path							
 0	Beverages		1000	License to sell...brewed drinks and meads.	MugWood							
-1	Bakery	Beverages	1000	License to sell...bread, cakes, and pastries.	Bread							
-2	Weapons	Beverages	1000	License for selling...swords, axes, and combat gear.	SwordIron							
-3	Dairy	Bakery	1000	License for...milk, cheese, and other dairy goods.	Cheese							
-4	Produce	Bakery	1000	License to trade...fresh fruits and vegetables.	Apple							
-5	Armory	Weapons	1000	License to trade...shields, armor, and protective gear.	ShieldWood							
-6	Pharmacy	Dairy	1000	License fo...herbal remedies, tonics, and potions.	PotionWideBlue							
-7	Crafts	Dairy,Produce	1000	License to sell...handmade goods and trinkets.	RingSilver							
-8	Apparel	Armory,Produce	1000	License to trade...garments, cloaks, and attire.	BootsLeather							
+1	Bakery	Beverages	2000	License to sell...bread, cakes, and pastries.	Bread							
+2	Weapons	Beverages	2000	License for selling...swords, axes, and combat gear.	SwordIron							
+3	Dairy	Bakery	3000	License for...milk, cheese, and other dairy goods.	Cheese							
+4	Produce	Bakery	3000	License to trade...fresh fruits and vegetables.	Apple							
+5	Armory	Weapons	3000	License to trade...shields, armor, and protective gear.	ShieldWood							
+6	Pharmacy	Dairy	4000	License fo...herbal remedies, tonics, and potions.	PotionWideBlue							
+7	Crafts	Dairy,Produce	4000	License to sell...handmade goods and trinkets.	RingSilver							
+8	Apparel	Armory,Produce	4000	License to trade...garments, cloaks, and attire.	BootsLeather							

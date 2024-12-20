@@ -8,7 +8,7 @@ extends CanvasLayer
 
 func _ready():
 	Gold.changed_gold_amount.connect(set_gold_display)
-	Gold.flash.connect(flash_display)
+	Gold.gold_flash.connect(flash_display)
 	set_gold_display()
 
 func set_gold_display():

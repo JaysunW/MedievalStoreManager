@@ -21,13 +21,24 @@ var checkout_list = {}
 
 func _ready():
 	visible = false
-	fill_container()
+	SignalService.new_license_bought.connect(fill_container)
+	fill_container_with_unlocked_item()
 
-func fill_container():
+func fill_container_with_unlocked_item():
 	var item_data = Data.item_data
 	for i in range(len(item_data)):
 		i = item_data.keys()[i]
-		if item_data[i]["unlocked"]:
+		if Global.is_license_unlocked([item_data[i]["store_area"]]):
+			var new_container = item_container.instantiate()
+			item_store_parent.add_child(new_container)
+			new_container.get_pressed_signal().connect(chosen_container)
+			new_container.set_container_info(i, item_data[i])
+
+func fill_container(new_license):
+	var item_data = Data.item_data
+	for i in range(len(item_data)):
+		i = item_data.keys()[i]
+		if item_data[i]["store_area"] == new_license:
 			var new_container = item_container.instantiate()
 			item_store_parent.add_child(new_container)
 			new_container.get_pressed_signal().connect(chosen_container)

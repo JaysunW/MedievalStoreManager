@@ -1,0 +1,105 @@
+[gd_scene load_steps=6 format=3 uid="uid://ixhg3a46g0o0"]
+
+[ext_resource type="Theme" uid="uid://cyx5vjugx1lim" path="res://Theme/our_theme.tres" id="1_pa7nj"]
+[ext_resource type="Script" path="res://UI/show_price_component.gd" id="2_c72ho"]
+[ext_resource type="Texture2D" uid="uid://df160aemdaqim" path="res://Asset/UI/ui_value_gold.png" id="3_jujry"]
+[ext_resource type="Texture2D" uid="uid://bwkmwhg7gn8yi" path="res://Asset/UI/ui_value_silver.png" id="4_jnjs3"]
+[ext_resource type="Texture2D" uid="uid://di0q3sninmdyc" path="res://Asset/UI/ui_value_copper.png" id="5_yfe8i"]
+
+[node name="ShowPriceComponent" type="Control" node_paths=PackedStringArray("copper_icon", "silver_icon", "gold_icon", "copper_value_label", "silver_value_label", "gold_value_label")]
+z_index = 2
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("2_c72ho")
+copper_icon = NodePath("PanelContainer/HBoxContainer/CopperIcon")
+silver_icon = NodePath("PanelContainer/HBoxContainer/SilverIcon")
+gold_icon = NodePath("PanelContainer/HBoxContainer/GoldIcon")
+copper_value_label = NodePath("PanelContainer/HBoxContainer/CopperValueLabel")
+silver_value_label = NodePath("PanelContainer/HBoxContainer/SilverValueLabel")
+gold_value_label = NodePath("PanelContainer/HBoxContainer/GoldValueLabel")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_pa7nj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="GoldIcon" type="TextureRect" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("3_jujry")
+stretch_mode = 5
+
+[node name="GoldValueLabel" type="Label" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SilverIcon" type="TextureRect" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_jnjs3")
+stretch_mode = 5
+
+[node name="SilverValueLabel" type="Label" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CopperIcon" type="TextureRect" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_yfe8i")
+stretch_mode = 5
+
+[node name="CopperValueLabel" type="Label" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -12,10 +12,13 @@ func _ready():
 	#print_every_item()
 
 func print_every_item():
-	# Test by printing the items
 	for id in licenses:
-		print_debug("Item: ", licenses[id]["name"], ", unlocked_by: ", licenses[id]["unlocked_by"], ", value: ", licenses[id]["value"],", description: ", licenses[id]["description"], ", sprite_path: ", licenses[id]["sprite_path"])
-
+		var to_print = str(id) + " : {"
+		for key in licenses[id]:
+			to_print += key + ": " + str(licenses[id][key]) + ", "
+		to_print += "},"
+		print(to_print)
+		
 # Function to load tab-delimited data from the file
 func import_shop_item_data():
 	var file_content = load_from_file(txt_file_path)
@@ -31,7 +34,7 @@ func import_shop_item_data():
 			
 			var id = int(item_data[0])
 			var license_name = item_data[1]
-			var unlocked_by = item_data[2]
+			var unlocked_by = parse_license_unlocked_by(item_data[2])
 			var value = int(item_data[3])
 			var description = item_data[4]
 			var sprite_path = item_data[5]
@@ -46,6 +49,12 @@ func import_shop_item_data():
 				"sprite_path": sprite_path
 			}
 	file_content.close()
+
+func parse_license_unlocked_by(input):
+	var output = input.split(",")
+	if output[0] == "":
+		return []
+	return output
 
 func load_from_file(path):
 	var file = FileAccess.open(path, FileAccess.READ)

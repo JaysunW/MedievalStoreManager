@@ -30,7 +30,7 @@ func change_orientation_state(new_orientation):
 	current_orientation = new_orientation
 	var child_name = ""
 	var interaction_marker_offset = Vector2.ZERO
-	var collision_offset = Vector2.ZERO
+	var collision_offset = Vector2.ONE
 	position_offset = Vector2.ZERO
 	sprite_handler.rotate_sprite(new_orientation)
 	match new_orientation:
@@ -47,7 +47,7 @@ func change_orientation_state(new_orientation):
 		Utils.Orientation.WEST:
 			child_name = "Side"
 			interaction_marker_offset = Vector2(-16, -16)
-			collision_offset = Vector2(16, 0)
+			collision_offset = Vector2(-1, 1)
 	interaction_marker.position = interaction_marker_offset
 	current_collision_list = []
 	for node in collision_node_dictionary:
@@ -56,7 +56,7 @@ func change_orientation_state(new_orientation):
 			var current_collision_object = collision_dictionary[child_key]
 			if child_key == child_name.to_lower():
 				current_collision_object.visible = true
-				current_collision_object.position = collision_start_position[node][child_key] + collision_offset
+				current_collision_object.position = collision_start_position[node][child_key] * collision_offset
 				current_collision_list.append(collision_dictionary[child_key])
 			else:
 				current_collision_object.visible = false
