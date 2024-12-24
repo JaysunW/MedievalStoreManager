@@ -11,8 +11,7 @@ signal open_item_menu_UI
 signal open_license_menu_UI
 signal open_stand_info_UI
 signal open_expansion_UI
-
-signal can_player_move(bool)
+signal change_checkout_UI
 
 signal picked_up_package(Dictionary)
 signal flash_held_object(Color)

@@ -45,3 +45,4 @@ func show_license_menu():
 func _on_return_button_down() -> void:
 	UI.is_free(true)
 	visible = false
+	SignalService.restrict_player(false, false)

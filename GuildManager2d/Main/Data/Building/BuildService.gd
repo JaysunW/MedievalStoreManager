@@ -19,11 +19,13 @@ func _process(_delta):
 		if UI.get_set_ui_free():
 			UI.open_build_UI.emit(true)
 			opened_menu = true
+			SignalService.restrict_player(true, false)
 		else:
 			if opened_menu:
 				opened_menu = false
 				UI.is_free(true)
 				UI.open_build_UI.emit(false)
+				SignalService.restrict_player(false, false)
 	
 func update_navigation_region():
 	navigation_region.call_deferred("bake_navigation_polygon")	

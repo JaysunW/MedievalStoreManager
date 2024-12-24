@@ -1,6 +1,5 @@
 extends Node2D
 
-@export var time_service : Node2D
 @export var sprite_component : Sprite2D
 
 func _ready() -> void:

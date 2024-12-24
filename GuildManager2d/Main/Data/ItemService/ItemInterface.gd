@@ -2,7 +2,6 @@ extends Node2D
 
 @onready var package_spawn_position = $PackageSpawnPosition
 
-@export var ui_item_menu : CanvasLayer
 @export var world_map : Node2D
 @export var package_scene : PackedScene
 @export var spawn_offset_min_max = Vector2(-32, 32)
@@ -10,7 +9,8 @@ extends Node2D
 var checkout_list = []
 	
 func interact():
-	ui_item_menu.open_item_interface()
+	UI.open_item_menu_UI.emit()
+	SignalService.restrict_player()
 	
 func _on_ui_item_menu_spawn_bought_items(checkout_items):
 	var item_data = Data.item_data

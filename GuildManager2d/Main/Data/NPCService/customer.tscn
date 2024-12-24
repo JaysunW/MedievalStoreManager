@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://drl0elvrqhdoa"]
+[gd_scene load_steps=47 format=3 uid="uid://drl0elvrqhdoa"]
 
 [ext_resource type="Script" path="res://Main/Data/NPCService/Npc.gd" id="1_5bhep"]
 [ext_resource type="Script" path="res://StateMachine/StateMachine.gd" id="3_5ettv"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cn0m705m0n0j8" path="res://Asset/Player/cloth_walk_front.png" id="11_3cafy"]
 [ext_resource type="Texture2D" uid="uid://bk0hcwaukf0vi" path="res://Asset/Player/cloth_walk_back.png" id="12_ks7vq"]
 [ext_resource type="Texture2D" uid="uid://byvgq0h8vifn" path="res://Asset/Player/cloth_walk_right.png" id="13_nbraf"]
+[ext_resource type="Script" path="res://Main/Data/NPCService/view_component.gd" id="14_6ywpm"]
+[ext_resource type="Texture2D" uid="uid://dx3dgt6ub6k0t" path="res://Asset/32x32white.png" id="14_hb4lp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y64r6"]
 atlas = ExtResource("8_41bmt")
@@ -246,6 +248,12 @@ animations = [{
 radius = 3.0
 height = 10.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8757"]
+size = Vector2(17, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sfacd"]
+size = Vector2(2, 53)
+
 [node name="NPC" type="CharacterBody2D" node_paths=PackedStringArray("animation_component", "state_machine")]
 collision_layer = 8
 collision_mask = 96
@@ -287,6 +295,7 @@ autostart = true
 script = ExtResource("6_ut8hy")
 customer = NodePath("../..")
 navigation_agent = NodePath("../NavigationAgent")
+target_position = null
 
 [node name="WaitTimer" type="Timer" parent="StateMachine/Buying"]
 one_shot = true
@@ -322,6 +331,68 @@ flip_h = true
 position = Vector2(0, -3)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_kahc5")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+position = Vector2(-0.5, -13.5)
+shape = SubResource("RectangleShape2D_a8757")
+debug_color = Color(0.411765, 1, 0.254902, 0.419608)
+
+[node name="ViewComponent" type="Node2D" parent="."]
+script = ExtResource("14_6ywpm")
+
+[node name="ViewPoint" type="Node2D" parent="ViewComponent"]
+position = Vector2(0, -19)
+
+[node name="left" type="Area2D" parent="ViewComponent/ViewPoint"]
+rotation = -0.349066
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="Sprite2D" type="Sprite2D" parent="ViewComponent/ViewPoint/left"]
+modulate = Color(1, 1, 1, 0.439216)
+position = Vector2(0, 26)
+scale = Vector2(0.0625, 1.5625)
+texture = ExtResource("14_hb4lp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ViewComponent/ViewPoint/left"]
+position = Vector2(0, 24.5)
+shape = SubResource("RectangleShape2D_sfacd")
+
+[node name="middle" type="Area2D" parent="ViewComponent/ViewPoint"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="Sprite2D" type="Sprite2D" parent="ViewComponent/ViewPoint/middle"]
+modulate = Color(1, 1, 1, 0.439216)
+position = Vector2(0, 26)
+scale = Vector2(0.0625, 1.5625)
+texture = ExtResource("14_hb4lp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ViewComponent/ViewPoint/middle"]
+position = Vector2(0, 24.5)
+shape = SubResource("RectangleShape2D_sfacd")
+
+[node name="right" type="Area2D" parent="ViewComponent/ViewPoint"]
+rotation = 0.349066
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="Sprite2D" type="Sprite2D" parent="ViewComponent/ViewPoint/right"]
+modulate = Color(1, 1, 1, 0.439216)
+position = Vector2(0, 26)
+scale = Vector2(0.0625, 1.5625)
+texture = ExtResource("14_hb4lp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ViewComponent/ViewPoint/right"]
+position = Vector2(0, 24.5)
+shape = SubResource("RectangleShape2D_sfacd")
 
 [connection signal="timeout" from="StateMachine/Searching/ThinkTimer" to="StateMachine/Searching" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Searching/InteractTimer" to="StateMachine/Searching" method="_on_interaction_timer_timeout"]

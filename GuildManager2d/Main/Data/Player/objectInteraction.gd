@@ -13,10 +13,26 @@ var held_object_offset = Vector2(0,0)
 var is_holding_object = false
 var held_object = null
 
+var restrict_interact = false
+
+func _ready() -> void:
+	SignalService.restrict_player_interaction.connect(set_interaction)
+	
+func set_interaction(input):
+	restrict_interact = input
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	last_move_direction = move_component.last_move_direction.normalized()
 	interaction_component.look_at(to_global(last_move_direction))
+	if is_holding_object:
+		var target_position = global_position + object_distance * last_move_direction + held_object_offset
+		var dif_vec = target_position - held_object.position
+		held_object.position += dif_vec.normalized() * dif_vec.length() * 20 * _delta
+	
+	if restrict_interact:
+		return
+		
 	if Input.is_action_just_pressed("q"):
 		take_from_shelf()
 	if not is_holding_object:
@@ -25,7 +41,6 @@ func _process(_delta):
 		if Input.is_action_pressed("e"):
 			work_checkout()
 	else:
-		held_object.position = global_position + object_distance * last_move_direction + held_object_offset
 		if Input.is_action_just_pressed("e"):
 			held_object_and_interact()
 

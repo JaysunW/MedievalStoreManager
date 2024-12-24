@@ -1,15 +1,14 @@
-extends MarginContainer
+extends Control
 
-@onready var item_icon_label = $MarginContainer/HBoxContainer/ItemIconLabel
-@onready var item_amount_label = $MarginContainer/HBoxContainer/ItemAmountLabel
+@export var item_icon : TextureRect
+@export var item_amount_label : Label
 
-@onready var item_checkout_container = $"."
-@onready var gold_icon = $MarginContainer/HBoxContainer/ValueGrid/GoldIcon
-@onready var gold_value_label = $MarginContainer/HBoxContainer/ValueGrid/GoldValueLabel
-@onready var silver_icon = $MarginContainer/HBoxContainer/ValueGrid/SilverIcon
-@onready var silver_value_label = $MarginContainer/HBoxContainer/ValueGrid/SilverValueLabel
-@onready var copper_icon = $MarginContainer/HBoxContainer/ValueGrid/CopperIcon
-@onready var copper_value_label = $MarginContainer/HBoxContainer/ValueGrid/CopperValueLabel
+@export var gold_icon : TextureRect
+@export var gold_value_label : Label 
+@export var silver_icon : TextureRect 
+@export var silver_value_label : Label
+@export var copper_icon : TextureRect 
+@export var copper_value_label : Label
 
 var container_data
 var id
@@ -20,9 +19,9 @@ func set_container_info(input_id, data):
 	set_value(data["market_value"] * data["amount"])
 	id = input_id
 	container_data = data
-	item_icon_label.texture = Loader.shop_item_texture(data["sprite_path"])
+	item_icon.texture = Loader.shop_item_texture(data["sprite_path"])
 	item_amount_label.text = str(amount)
-	item_checkout_container.visible = true
+	visible = true
 
 func set_value(value):
 	var copper_value = value % 1000
@@ -66,8 +65,8 @@ func update_amount():
 func add_amount(input):
 	amount += input 
 	update_amount()
-
-func _on_delete_button_down():
+	
+func _on_delete_button_up() -> void:
 	amount -= 1 
 	update_amount()
 	pressed_button.emit(self)

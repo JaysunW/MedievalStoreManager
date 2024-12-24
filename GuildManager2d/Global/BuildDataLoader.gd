@@ -9,7 +9,7 @@ var txt_file_path = "res://CSV/building.txt"
 func _ready():
 	import_shop_item_data()
 	Data.building_data = buildings
-	print_every_item()
+	#print_every_item()
 
 func print_every_item():
 	for id in buildings:

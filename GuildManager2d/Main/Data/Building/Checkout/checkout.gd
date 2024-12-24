@@ -7,12 +7,13 @@ extends StaticBody2D
 
 @export var work_progress_bar : TextureProgressBar
 
-var shopper_queue = []
-var current_shopping_list = []
-var whole_shopping_amount = 0
-var in_work_cooldown = false
-var shopper_count = 0
-var checkout_queue_max = 7
+var is_working : bool = false
+var shopper_queue : Array = []
+var current_shopping_list : Array = []
+var whole_shopping_amount : int = 0
+var in_work_cooldown : bool = false
+var shopper_count : int = 0
+var checkout_queue_max : int= 7
 
 func _ready():
 	work_progress_bar.visible = false
@@ -29,10 +30,27 @@ func get_marker():
 
 func reserve_spot():
 	shopper_count += 1
+	return shopper_count - 1
 
 func add_shopper(shopper):
 	shopper_queue.append(shopper)
 	
+func interact():
+	if UI.get_set_ui_free():
+		change_work_mode()
+	
+func change_work_mode():
+	if is_working:
+		SignalService.restrict_player_movement.emit(false)
+		SignalService.camera_offset.emit(Vector2.ZERO)
+		UI.change_checkout_UI.emit(false, "close")
+		is_working = false
+	else:
+		SignalService.restrict_player_movement.emit(true)
+		SignalService.camera_offset.emit(Vector2(-32*10,-32))
+		UI.change_checkout_UI.emit(true, "Open")
+		is_working = true
+
 func work_on_queue():
 	if shopper_queue.is_empty() or in_work_cooldown:
 		return

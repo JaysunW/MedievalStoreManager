@@ -25,12 +25,12 @@ func Enter():
 	restart_search()
 		
 func restart_search():	
-	var stock_stand_list = Stock.stock_stand_list
+	var stock_stand_list = Stock.get_filled_stands()
 	shopping_dictionary = customer.shopping_dictionary
 	#print_debug("Stand_list: ",stock_stand_list, " Shopping: ", shopping_dictionary)
 	var id_list = shopping_dictionary.keys()
 	
-	if not id_list:
+	if id_list.is_empty():
 		if found_item_list:
 			#print_debug("Found item go to checkout Found_item_list: ", found_item_list)
 			customer.basket_list = found_item_list

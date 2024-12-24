@@ -6,13 +6,13 @@ extends Node2D
 const SPEED = 25000.0
 var last_move_direction = Vector2.DOWN
 
-var can_move : bool = true
+var restrict_move : bool = false
 
 func _ready() -> void:
-	UI.can_player_move.connect(change_moving)
+	SignalService.restrict_player_movement.connect(set_movement)
 
 func _physics_process(_delta):
-	if can_move:
+	if not restrict_move:
 		var direction = Input.get_vector("left", "right", "up", "down").normalized()
 		if direction:
 			last_move_direction = direction
@@ -32,5 +32,5 @@ func _physics_process(_delta):
 			#animation_component.set_animation("default")
 		player.move_and_slide()
 
-func change_moving(input : bool):
-	can_move = input
+func set_movement(input : bool):
+	restrict_move = input

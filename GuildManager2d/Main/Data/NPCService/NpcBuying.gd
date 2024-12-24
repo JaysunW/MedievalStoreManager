@@ -15,6 +15,8 @@ var patience_counter = 0
 var is_waiting_open_checkout = false
 var is_waiting_for_billing = false
 
+var next_shopper = null
+
 func _ready():
 	speed = customer.speed
 	checkout_list = customer.npc_service_reference.get_current_checkouts()
@@ -40,7 +42,8 @@ func search_checkout():
 		make_path()
 		is_waiting_open_checkout = false
 		if navigation_agent.is_target_reachable():
-			current_checkout.reserve_spot()
+			var spot_nr = current_checkout.reserve_spot()
+			var next_shopper = current_checkout.get_shopper(spot_nr)
 			return
 		
 		#print_debug("Couldn't get to checkout, wait until reachable or steal")
@@ -54,6 +57,7 @@ func Exit():
 	is_waiting_for_billing = false
 	is_waiting_open_checkout = false
 	customer.has_been_billed = false
+	next_shopper = null
 
 func Update(_delta):
 	if customer.has_been_billed:

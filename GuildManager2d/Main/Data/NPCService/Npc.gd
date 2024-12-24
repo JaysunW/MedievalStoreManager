@@ -35,11 +35,12 @@ func prepare_customer(reference):
 	animation_component.cloth_color = Color(col[0], col[1], col[2])
 	
 func get_random_shopping_list():
-	shopping_dictionary = {0:4}
+	shopping_dictionary = {7:4}
 #	var item_data = Data.item_data
 #	var shopping_list_length = 3 + Global.rng.randi_range(0,4)
 #	var unlocked_id_list = []
 #	for id in item_data:
+		#change whether the item was unlocked with Global!
 #		if item_data[id]["unlocked"]:
 #			unlocked_id_list.append(id)
 #	for i in range(shopping_list_length):

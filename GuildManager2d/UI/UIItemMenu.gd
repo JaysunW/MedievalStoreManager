@@ -21,6 +21,7 @@ var checkout_list = {}
 
 func _ready():
 	visible = false
+	UI.open_item_menu_UI.connect(open_item_interface)
 	SignalService.new_license_bought.connect(fill_container)
 	fill_container_with_unlocked_item()
 
@@ -129,3 +130,4 @@ func _on_return_button_down():
 	clear_checkout()
 	UI.is_free(true)
 	visible = false
+	SignalService.restrict_player(false, false)
