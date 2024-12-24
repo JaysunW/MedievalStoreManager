@@ -282,7 +282,7 @@ scale = Vector2(0.6875, 0.8125)
 texture = ExtResource("4_ptfvr")
 
 [node name="InteractTimer" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.1
 one_shot = true
 
 [node name="AnimationComponent" parent="." node_paths=PackedStringArray("cloth_animation", "animation_player_list") instance=ExtResource("15_rkxlj")]

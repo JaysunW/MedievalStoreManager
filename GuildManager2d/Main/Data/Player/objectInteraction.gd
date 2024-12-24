@@ -19,6 +19,7 @@ func _ready() -> void:
 	SignalService.restrict_player_interaction.connect(set_interaction)
 	
 func set_interaction(input):
+	print("Changed : ", input )
 	restrict_interact = input
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

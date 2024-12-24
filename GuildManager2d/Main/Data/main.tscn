@@ -589,7 +589,7 @@ one_shot = true
 
 [node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("state_machine")]
 script = ExtResource("38_ufk0a")
-total_customer = 1.0
+total_customer = 10.0
 state_machine = NodePath("StateMachine")
 
 [node name="StateMachine" type="Node2D" parent="Main/TimeService" node_paths=PackedStringArray("initial_state")]
@@ -605,7 +605,7 @@ script = ExtResource("41_2yluw")
 time_service = NodePath("../..")
 
 [node name="DayTimer" type="Timer" parent="Main/TimeService/StateMachine/Day"]
-wait_time = 0.25
+wait_time = 0.1
 
 [node name="Evening" type="Node2D" parent="Main/TimeService/StateMachine" node_paths=PackedStringArray("time_service")]
 script = ExtResource("42_q2tra")

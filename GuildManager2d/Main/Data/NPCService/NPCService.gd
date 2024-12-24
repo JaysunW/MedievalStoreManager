@@ -97,10 +97,10 @@ func _on_spawn_timer_timeout():
 		spawn_timer.start()
 	
 func _on_check_timer_timeout() -> void:
-	print("Customer_dic: ", customer_dictionary.keys())
+	#print("Customer_dic: ", customer_dictionary.keys())
 	if customer_dictionary.is_empty():
 		#print("Store empty")
 		SignalService.all_customer_left.emit()
 	else:
-		print("Store has customer customercount: ", len(customer_dictionary))
+		#print("Store has customer customercount: ", len(customer_dictionary))
 		check_timer.start()

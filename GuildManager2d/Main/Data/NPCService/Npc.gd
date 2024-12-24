@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 @export var animation_component : Node2D
 @export var state_machine : Node2D
-
 @export var id = 0
 
 var npc_service_reference = null
@@ -11,9 +10,10 @@ var shopping_dictionary : Dictionary
 var basket_list : Array
 
 var speed = 12000
-
 var patience = 6
+
 var has_been_billed = false
+var is_waiting_in_queue = false
 
 func get_basket_list():
 	return basket_list
@@ -24,6 +24,8 @@ func bought_basket():
 
 func change_state(new_id):
 	id = new_id
+	has_been_billed = false
+	is_waiting_in_queue = false
 	state_machine.on_child_transition(state_machine.states["idle"], "walking")
 
 func prepare_customer(reference):

@@ -1,9 +1,11 @@
 extends State
 
+@onready var line_2d: Line2D = $"../../Line2D"
 
 @export var customer : CharacterBody2D
 @export var navigation_agent : NavigationAgent2D
 @export var target_position : Vector2
+@export var view_component : Node2D
 
 @onready var wait_timer = $WaitTimer
 
@@ -13,9 +15,8 @@ var speed : int
 var patience_counter = 0
 
 var is_waiting_open_checkout = false
-var is_waiting_for_billing = false
 
-var next_shopper = null
+var spot_nr = 0
 
 func _ready():
 	speed = customer.speed
@@ -33,6 +34,12 @@ func find_open_checkout():
 func Enter():
 	search_checkout()
 
+func Exit():
+	patience_counter = 0 
+	is_waiting_open_checkout = false
+	customer.has_been_billed = false
+	customer.is_waiting_in_queue = false
+	
 func search_checkout():
 	#print("go to checkout")
 	current_checkout = find_open_checkout()
@@ -42,8 +49,8 @@ func search_checkout():
 		make_path()
 		is_waiting_open_checkout = false
 		if navigation_agent.is_target_reachable():
-			var spot_nr = current_checkout.reserve_spot()
-			var next_shopper = current_checkout.get_shopper(spot_nr)
+			spot_nr = current_checkout.reserve_spot(customer)
+			current_checkout.next_shopper.connect(next_spot)
 			return
 		
 		#print_debug("Couldn't get to checkout, wait until reachable or steal")
@@ -51,13 +58,9 @@ func search_checkout():
 		make_path()
 	is_waiting_open_checkout = true
 	wait_timer.start()
-	
-func Exit():
-	patience_counter = 0 
-	is_waiting_for_billing = false
-	is_waiting_open_checkout = false
-	customer.has_been_billed = false
-	next_shopper = null
+
+func next_spot():
+	spot_nr -= 1
 
 func Update(_delta):
 	if customer.has_been_billed:
@@ -67,7 +70,20 @@ func Update(_delta):
 func Physics_process(_delta):	
 	if is_waiting_open_checkout:
 		return
-		
+	
+	if not navigation_agent.is_target_reachable():
+		target_position = self.global_position
+		make_path()
+		is_waiting_open_checkout = true
+		wait_timer.start()
+		spot_nr = 0
+		return
+	
+	if spot_nr > 0:
+		if customer.position.distance_to(target_position) < 16 + 24 * spot_nr:
+			customer.change_animation(Vector2.ZERO)
+			return
+			
 	if not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
 		var dir = (next_position - customer.global_position).normalized()
@@ -78,9 +94,8 @@ func Physics_process(_delta):
 	else:
 		customer.change_animation(Vector2.ZERO)
 	
-	if not is_waiting_for_billing:
-		current_checkout.add_shopper(customer)
-		is_waiting_for_billing = true
+	if not customer.is_waiting_in_queue:
+		customer.is_waiting_in_queue = true
 		
 func move_in_queue(new_position):
 	target_position = new_position
