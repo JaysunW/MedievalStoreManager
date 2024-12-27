@@ -67,7 +67,7 @@ func change_work_mode():
 		is_working = false
 	else:
 		SignalService.restrict_player_movement.emit(true)
-		SignalService.camera_offset.emit(Vector2(-32*10,-32))
+		SignalService.camera_offset.emit(Vector2(-32*8,-32))
 		UI.open_checkout_UI.emit(true)
 		is_working = true
 		##debug

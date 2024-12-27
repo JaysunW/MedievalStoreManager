@@ -6,7 +6,7 @@ id	name	type	store_area	value	market_value	sprite_path	amount	carry_max	max_amou
 4	Wheat Flour	Food	Bakery	5	6	Flour	50	50	100			
 5	Dried Fish	Meat	Bakery	9	11		30	30	60			
 6	Salted Lamb Meat	Meat	Bakery	15	18	MeatLamb	10	10	20			
-7	Bottle of Mead	Drink	Beverages	10	12	Mead	15	15	30			
+7	Bottle of Mead	Drink	Beverages	10	12	Mead	60	15	30			
 8	Spool of Wool	Material	Crafts	7	8	WoolWhite	40	40	80			
 9	Candle Blue	Tool	Crafts	5	6	CandleBlue	60	60	100			
 10	Clay Mug	Tool	Crafts	4	5	MugClay	40	40	60			

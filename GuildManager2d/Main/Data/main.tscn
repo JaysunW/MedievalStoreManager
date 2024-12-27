@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=87 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
@@ -64,8 +64,6 @@
 [ext_resource type="Script" path="res://UI/UIStandInfo.gd" id="63_7o3w4"]
 [ext_resource type="PackedScene" uid="uid://cupya0rlcek0b" path="res://UI/checkout_container.tscn" id="63_wy68g"]
 [ext_resource type="PackedScene" uid="uid://b1a6uqkjanr4" path="res://UI/checkout_animated_sprite.tscn" id="64_7rr4m"]
-[ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Asset/player.png" id="64_i3rw4"]
-[ext_resource type="Script" path="res://UI/checkout_animated_sprite.gd" id="65_m2de5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dfgxd"]
 texture = ExtResource("3_bw1q4")
@@ -324,17 +322,6 @@ size = Vector2(32, 32)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b7b73"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_kr4rp"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("64_i3rw4")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_u7hq3"]
 vertices = PackedVector2Array(819, 781, 819, 973, 813, 925, 813, 895.797, 1901, 925, 1901, 895.797, 2011, 141, 2011, 1811, 1421, 1301, 1421, 1131, 1165, 925, 1165, 973, 755, 1131, 1011, 973, 205, 1811, 755, 1301, 973, 717, 973, 675, 1267, 653, 1267, 785.398, 1107, 785.398, 877, 653, 883, 675, 877, 717, 883, 717, 659, 781, 467, 895.797, 1165, 895.797, 1165, 845, 1325, 845, 1325, 593.398, 877, 593.398, 877, 497.398, 845, 497.398, 845, 465.398, 691, 465.398, 691, 497.398, 659, 497.398, 205, 141, 973, 913.398, 877, 913.398, 877, 781, 941, 781, 941, 737, 877, 737, 877, 721.398, 717, 721.398, 717, 557, 749, 557, 749, 525, 787, 525, 787, 557, 819, 557, 819, 717, 1107, 913.398, 1011, 913.398, 467, 925, 973, 973)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 4, 7), PackedInt32Array(10, 4, 9, 11), PackedInt32Array(11, 9, 12, 13), PackedInt32Array(8, 7, 14, 15), PackedInt32Array(16, 17, 18, 19, 20), PackedInt32Array(21, 18, 17, 22), PackedInt32Array(23, 21, 22, 24), PackedInt32Array(25, 0, 3, 26), PackedInt32Array(5, 27, 28, 29), PackedInt32Array(30, 31, 32), PackedInt32Array(32, 33, 34), PackedInt32Array(35, 36, 37, 38), PackedInt32Array(39, 40, 41, 42), PackedInt32Array(43, 44, 45, 24, 16), PackedInt32Array(46, 47, 48), PackedInt32Array(48, 49, 50, 51), PackedInt32Array(51, 52, 53, 46), PackedInt32Array(43, 16, 20, 54, 55, 42), PackedInt32Array(6, 5, 29, 30), PackedInt32Array(38, 6, 30, 34), PackedInt32Array(56, 2, 1, 12), PackedInt32Array(46, 48, 51), PackedInt32Array(45, 46, 53, 23), PackedInt32Array(45, 23, 24), PackedInt32Array(39, 42, 55), PackedInt32Array(57, 39, 55, 13), PackedInt32Array(57, 13, 12), PackedInt32Array(1, 57, 12), PackedInt32Array(37, 25, 26, 38), PackedInt32Array(56, 12, 15, 14), PackedInt32Array(56, 14, 38, 26), PackedInt32Array(34, 35, 38), PackedInt32Array(34, 30, 32)])
@@ -392,7 +379,7 @@ script = ExtResource("6_xkvah")
 metadata/_edit_lock_ = true
 
 [node name="StoreArea" type="TileMapLayer" parent="Main/WorlMap/TileLayer/StoreRelevantLayer"]
-tile_map_data = PackedByteArray("AAAjABYAAAAAAAAAAAAjABcAAAAAAAAAAAAjABgAAAAAAAAAAAAkABYAAAAAAAAAAAAkABcAAAAAAAAAAAAkABgAAAAAAAAAAAAlABYAAAAAAAAAAAAlABcAAAAAAAAAAAAlABgAAAAAAAAAAAAmABYAAAAAAAAAAAAmABcAAAAAAAAAAAAmABgAAAAAAAAAAAAnABYAAAAAAAAAAAAnABcAAAAAAAAAAAAnABgAAAAAAAAAAAAjABUAAAAAAAAAAAAkABUAAAAAAAAAAAAlABUAAAAAAAAAAAAmABUAAAAAAAAAAAAnABUAAAAAAAAAAAAjABQAAAAAAAAAAAAkABQAAAAAAAAAAAAlABQAAAAAAAAAAAAmABQAAAAAAAAAAAAnABQAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAjABYAAAAAAAAAAAAjABcAAAAAAAAAAAAjABgAAAAAAAAAAAAkABYAAAAAAAAAAAAkABcAAAAAAAAAAAAkABgAAAAAAAAAAAAlABYAAAAAAAAAAAAlABcAAAAAAAAAAAAlABgAAAAAAAAAAAAmABYAAAAAAAAAAAAmABcAAAAAAAAAAAAmABgAAAAAAAAAAAAnABYAAAAAAAAAAAAnABcAAAAAAAAAAAAnABgAAAAAAAAAAAAjABUAAAAAAAAAAAAkABUAAAAAAAAAAAAlABUAAAAAAAAAAAAmABUAAAAAAAAAAAAnABUAAAAAAAAAAAAjABQAAAAAAAAAAAAkABQAAAAAAAAAAAAlABQAAAAAAAAAAAAmABQAAAAAAAAAAAAnABQAAAAAAAAAAAAfABQAAAAAAAAAAAAfABUAAAAAAAAAAAAfABYAAAAAAAAAAAAfABcAAAAAAAAAAAAfABgAAAAAAAAAAAAgABQAAAAAAAAAAAAgABUAAAAAAAAAAAAgABYAAAAAAAAAAAAgABcAAAAAAAAAAAAgABgAAAAAAAAAAAAhABQAAAAAAAAAAAAhABUAAAAAAAAAAAAhABYAAAAAAAAAAAAhABcAAAAAAAAAAAAhABgAAAAAAAAAAAAiABQAAAAAAAAAAAAiABUAAAAAAAAAAAAiABYAAAAAAAAAAAAiABcAAAAAAAAAAAAiABgAAAAAAAAAAAAbABkAAAAAAAAAAAAbABoAAAAAAAAAAAAcABkAAAAAAAAAAAAcABoAAAAAAAAAAAAdABkAAAAAAAAAAAAdABoAAAAAAAAAAAAeABkAAAAAAAAAAAAeABoAAAAAAAAAAAAfABkAAAAAAAAAAAAfABoAAAAAAAAAAAAgABkAAAAAAAAAAAAgABoAAAAAAAAAAAAhABkAAAAAAAAAAAAhABoAAAAAAAAAAAAiABkAAAAAAAAAAAAiABoAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_71arb")
 script = ExtResource("6_3ujva")
 metadata/_edit_lock_ = true
@@ -502,7 +489,7 @@ shape = SubResource("RectangleShape2D_3m47s")
 debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 
 [node name="PackageSpawnPosition" type="Marker2D" parent="Main/WorlMap/ItemInterface"]
-position = Vector2(140, -31)
+position = Vector2(226, -58)
 
 [node name="LicenseInterface" type="StaticBody2D" parent="Main/WorlMap" groups=["Interface", "NavigationBlock"]]
 texture_filter = 1
@@ -584,6 +571,7 @@ build_service = NodePath("..")
 world_map = NodePath("../../WorlMap")
 store_area = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/StoreArea")
 stand_scenes = Array[PackedScene]([ExtResource("6_1nfi5"), ExtResource("7_hso44"), ExtResource("5_ufjdo")])
+debug = true
 debug_marker = NodePath("DebugMarker")
 
 [node name="DebugMarker" type="Marker2D" parent="Main/BuildService/PlaceBuild"]
@@ -1856,10 +1844,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[node name="UICheckout" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("checkout_container_parent")]
+[node name="UICheckout" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("visual_parent", "checkout_container_parent", "visual_position_list", "end_position")]
+visible = false
 script = ExtResource("62_436fy")
 checkout_container = ExtResource("63_wy68g")
+customer_visual = ExtResource("64_7rr4m")
+visual_parent = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer")
 checkout_container_parent = NodePath("PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer")
+visual_position_list = [NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/Place1"), NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/Place2"), NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/Place3"), NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/Place4"), NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/Place5")]
+end_position = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/EndPosition")
 
 [node name="PanelContainer" type="PanelContainer" parent="UI/UICheckout"]
 anchors_preset = 8
@@ -1910,26 +1903,6 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="CheckoutAnimatedSprite" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer" instance=ExtResource("64_7rr4m")]
-script = ExtResource("65_m2de5")
-
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
-modulate = Color(0.784314, 0.784314, 0.784314, 1)
-position = Vector2(520, 461)
-scale = Vector2(6, 6)
-sprite_frames = SubResource("SpriteFrames_kr4rp")
-
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
-modulate = Color(0.784314, 0.784314, 0.784314, 1)
-position = Vector2(435, 450)
-scale = Vector2(8, 8)
-sprite_frames = SubResource("SpriteFrames_kr4rp")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
-position = Vector2(299, 422)
-scale = Vector2(12, 12)
-sprite_frames = SubResource("SpriteFrames_kr4rp")
-
 [node name="Place1" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 position = Vector2(299, 422)
 
@@ -1944,6 +1917,9 @@ position = Vector2(584, 468)
 
 [node name="Place5" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 position = Vector2(700, 468)
+
+[node name="EndPosition" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+position = Vector2(-200, 422)
 
 [node name="PanelContainer2" type="PanelContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

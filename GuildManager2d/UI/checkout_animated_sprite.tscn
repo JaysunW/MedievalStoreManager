@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1a6uqkjanr4"]
+[gd_scene load_steps=4 format=3 uid="uid://b1a6uqkjanr4"]
 
 [ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Asset/player.png" id="1_qwqam"]
+[ext_resource type="Script" path="res://UI/checkout_animated_sprite.gd" id="2_pgrvj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kr4rp"]
 animations = [{
@@ -14,7 +15,8 @@ animations = [{
 }]
 
 [node name="CheckoutAnimatedSprite" type="AnimatedSprite2D"]
-modulate = Color(0.784314, 0.784314, 0.784314, 1)
+modulate = Color(0.470588, 0.470588, 0.470588, 1)
 position = Vector2(584, 468)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_kr4rp")
+script = ExtResource("2_pgrvj")

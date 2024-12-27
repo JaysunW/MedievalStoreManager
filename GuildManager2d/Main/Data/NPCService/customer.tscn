@@ -344,6 +344,7 @@ shape = SubResource("RectangleShape2D_a8757")
 debug_color = Color(0.411765, 1, 0.254902, 0.419608)
 
 [node name="ViewComponent" type="Node2D" parent="." node_paths=PackedStringArray("customer", "view_area_parent")]
+visible = false
 script = ExtResource("14_6ywpm")
 customer = NodePath("..")
 view_area_parent = NodePath("ViewPoint")

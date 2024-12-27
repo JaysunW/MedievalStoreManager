@@ -9,7 +9,8 @@ var npc_service_reference = null
 var shopping_dictionary : Dictionary
 var basket_list : Array
 
-var speed = 12000
+var start_speed = 12000
+var speed = start_speed
 var patience = 6
 
 var has_been_billed = false
@@ -23,6 +24,7 @@ func bought_basket():
 	basket_list = []
 
 func change_state(new_id):
+	speed = start_speed - Global.rng.randi_range(0,400)
 	id = new_id
 	has_been_billed = false
 	is_waiting_in_queue = false
