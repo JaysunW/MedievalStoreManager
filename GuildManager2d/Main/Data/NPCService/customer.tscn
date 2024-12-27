@@ -290,7 +290,7 @@ navigation_agent = NodePath("../NavigationAgent")
 one_shot = true
 
 [node name="InteractTimer" type="Timer" parent="StateMachine/Searching"]
-autostart = true
+one_shot = true
 
 [node name="Buying" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("customer", "navigation_agent", "view_component")]
 script = ExtResource("6_ut8hy")
@@ -343,8 +343,9 @@ position = Vector2(-0.5, -13.5)
 shape = SubResource("RectangleShape2D_a8757")
 debug_color = Color(0.411765, 1, 0.254902, 0.419608)
 
-[node name="ViewComponent" type="Node2D" parent="." node_paths=PackedStringArray("view_area_parent")]
+[node name="ViewComponent" type="Node2D" parent="." node_paths=PackedStringArray("customer", "view_area_parent")]
 script = ExtResource("14_6ywpm")
+customer = NodePath("..")
 view_area_parent = NodePath("ViewPoint")
 
 [node name="ViewPoint" type="Node2D" parent="ViewComponent"]

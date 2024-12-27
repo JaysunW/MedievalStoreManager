@@ -1,4 +1,5 @@
 {
 	"gold" : 6000000,
-	"license" : ["Beverages","Bakery","Weapons","Dairy"]
+	"license" : ["Beverages"],
+	"essential_license" : ["Beverages","Bakery","Weapons","Dairy"]
 }

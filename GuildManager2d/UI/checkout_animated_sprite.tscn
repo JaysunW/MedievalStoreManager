@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1a6uqkjanr4"]
+
+[ext_resource type="Texture2D" uid="uid://cstu1ggguhymx" path="res://Asset/player.png" id="1_qwqam"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kr4rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qwqam")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CheckoutAnimatedSprite" type="AnimatedSprite2D"]
+modulate = Color(0.784314, 0.784314, 0.784314, 1)
+position = Vector2(584, 468)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_kr4rp")

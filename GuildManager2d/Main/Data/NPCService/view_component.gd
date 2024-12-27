@@ -1,5 +1,5 @@
 extends Node2D
-
+@export var customer : CharacterBody2D
 @export var view_area_parent : Node2D
 var view_area_list  : Array[Area2D]
 

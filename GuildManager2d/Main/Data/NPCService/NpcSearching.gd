@@ -40,7 +40,7 @@ func restart_search():
 		return 
 		
 	current_search_id = id_list.pick_random()
-	#print_debug("Current_id: ", current_search_id)
+	#print_debug("Current_id: ", current_search_id, " id_list:" , id_list)
 	if current_search_id in stock_stand_list:
 		var stand_list_with_search_item = stock_stand_list[current_search_id]
 		current_search_stand = stand_list_with_search_item.pick_random()
@@ -54,6 +54,7 @@ func restart_search():
 			think_timer.start()
 			think_timer.wait_time = Global.rng.randf_range(2, 4)
 		else:
+			#print_debug("Target reachable")
 			searching_for_item = false
 	else:
 		shopping_dictionary.erase(current_search_id)
@@ -80,6 +81,7 @@ func Update(_delta):
 		return
 	
 	if current_search_stand.get_content_data()["id"] == current_search_id:
+		
 		in_interact_cooldown = true
 		interact_timer.start()
 		
@@ -87,15 +89,15 @@ func Update(_delta):
 		
 		var stand_content = current_search_stand.get_content_data().duplicate()
 		stand_content["amount"] = 1
-		found_item_list.append(stand_content)
+		add_item_to_found_list(stand_content)
 		current_search_stand.take_from_shelf()
 		shopping_dictionary[current_search_id] -= 1
+		#print_debug("Found item with ID: ", current_search_id, " dic: ", shopping_dictionary)
 		if shopping_dictionary[current_search_id] <= 0:
 			shopping_dictionary.erase(current_search_id)
-			restart_search()
 			searching_for_item = true
-		#print_debug("Found item with ID: ", current_search_id)
-
+			restart_search()
+		
 func Physics_process(_delta):
 	if not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
@@ -105,12 +107,23 @@ func Physics_process(_delta):
 		customer.move_and_slide()
 	else:
 		customer.change_animation(Vector2.ZERO)
+
+func add_item_to_found_list(item):
+	var id = -1
+	for i in range(len(found_item_list)):
+		if found_item_list[i]["id"] == item["id"]:
+			id = i
+			break
+	if id == -1:
+		found_item_list.append(item)
+	else:
+		found_item_list[id]["amount"] += 1
 	
 func make_path():
 	navigation_agent.target_position = target_position
 
 func _on_wait_timer_timeout():
-	Enter()
+	restart_search()
 
 func _on_interaction_timer_timeout():
 	in_interact_cooldown = false

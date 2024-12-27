@@ -45,7 +45,6 @@ func increase_time():
 	show_time()
 	SignalService.try_spawning_customer.emit(get_current_minute(), get_current_hour())
 	if get_current_hour() >= open_time:
-		print("End day")
 		try_closing_store()
 
 func get_current_minute():

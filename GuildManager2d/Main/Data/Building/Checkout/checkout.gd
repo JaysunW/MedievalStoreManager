@@ -11,36 +11,44 @@ var opened_menu = false
 
 var is_working : bool = false
 
-var shopper_queue : Array = []
+var customer_queue : Array = []
 var current_shopping_list : Array = []
 var whole_shopping_amount : int = 0
 
 var in_work_cooldown : bool = false
 
 var checkout_queue_max : int= 7
-signal next_shopper
+var reserved_spots = 0
+
+signal new_customer
+signal next_customer
+signal no_customer
 
 func _ready():
+	SignalService.next_customer.connect(remove_customer)
 	work_progress_bar.visible = false
 	pass
 
 func is_full():
-	return len(shopper_queue) >= checkout_queue_max
+	return reserved_spots >= checkout_queue_max
 
 func get_queue_size():
-	return len(shopper_queue)
+	return len(customer_queue)
 	
 func get_marker():
 	return checkout_marker
 
-func get_shopper_at(number):
-	if number < 0:
-		return null
-	return shopper_queue[number]
+func add_customer(customer):
+	customer_queue.append(customer)
+	new_customer.emit(customer)
+	UI.add_customer_checkout_UI.emit(customer)
+	return len(customer_queue) - 1
 
-func reserve_spot(shopper):
-	shopper_queue.append(shopper)
-	return len(shopper_queue) - 1
+func reserve_spot():
+	reserved_spots += 1
+	if customer_queue.is_empty():
+		return 
+	new_customer.emit(customer_queue.back())
 
 func interact():
 	if UI.get_set_ui_free():
@@ -55,40 +63,46 @@ func change_work_mode():
 	if is_working:
 		SignalService.restrict_player_movement.emit(false)
 		SignalService.camera_offset.emit(Vector2.ZERO)
-		UI.change_checkout_UI.emit(false, "close")
+		UI.open_checkout_UI.emit(false)
 		is_working = false
 	else:
-		
-		print("Shopper_queue: " , len(shopper_queue))
 		SignalService.restrict_player_movement.emit(true)
 		SignalService.camera_offset.emit(Vector2(-32*10,-32))
-		UI.change_checkout_UI.emit(true, "Open")
+		UI.open_checkout_UI.emit(true)
 		is_working = true
-		
 		##debug
-		shopper_queue[0].bought_basket()
-		shopper_queue.remove_at(0)
-		next_shopper.emit()
-
-func work_on_queue():
-	if shopper_queue.is_empty() or in_work_cooldown:
-		return
-	if not shopper_queue.front().is_waiting_in_queue:
-		return 
+		#customer_queue[0]
 		
-	if current_shopping_list.is_empty():
-		current_shopping_list = shopper_queue[0].get_basket_list()
-		set_progress_bar(current_shopping_list)
-	
-	Gold.add_gold(current_shopping_list[0]["value"])
-	work_timer.start()
-	in_work_cooldown = true
-	current_shopping_list.remove_at(0)
-	update_progress_bar(current_shopping_list)
-	if current_shopping_list.is_empty():
-		shopper_queue[0].bought_basket()
-		shopper_queue.remove_at(0)
-		next_shopper.emit()
+
+func remove_customer():
+	var removed_customer = customer_queue.pop_front()
+	if removed_customer:
+		reserved_spots -= 1
+		removed_customer.bought_basket()
+		next_customer.emit()
+	elif reserved_spots != 0:
+		no_customer.emit()
+#
+#func work_on_queue():
+	#if customer_queue.is_empty() or in_work_cooldown:
+		#return
+	#if not customer_queue.front().is_waiting_in_queue:
+		#return 
+		#
+	#if current_shopping_list.is_empty():
+		#current_shopping_list = customer_queue[0].get_basket_list()
+		#set_progress_bar(current_shopping_list)
+	#
+	#Gold.add_gold(current_shopping_list[0]["value"])
+	#work_timer.start()
+	#in_work_cooldown = true
+	#current_shopping_list.pop_front()
+	#update_progress_bar(current_shopping_list)
+	#if current_shopping_list.is_empty():
+		#reserved_spots -= 1
+		#customer_queue[0].bought_basket()
+		#customer_queue.pop_front()
+		#next_customer.emit()
 
 func set_progress_bar(shopping_list):
 	var shopping_size = len(shopping_list)

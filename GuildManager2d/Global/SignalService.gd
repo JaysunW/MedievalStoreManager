@@ -16,6 +16,8 @@ signal new_license_bought
 
 signal camera_offset(Vector2)
 
+signal next_customer
+
 func restrict_player(interaction:bool = true, movement:bool=true):
 	restrict_player_interaction.emit(interaction)
 	restrict_player_movement.emit(movement)
