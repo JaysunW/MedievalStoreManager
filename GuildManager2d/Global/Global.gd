@@ -29,3 +29,29 @@ func random_rotation_offset(orientation):
 	elif orientation == Utils.Orientation.EAST || orientation == Utils.Orientation.WEST:
 		return Vector2(rng.randf_range(-4, 4), rng.randf_range(-16, 17))
 	return Vector2.ZERO
+	
+func set_value_display(value : int, label_list : Array, icon_list : Array):
+	var copper_value = value % 1000
+	if copper_value == 0:
+		label_list[0].visible = false
+		icon_list[0].visible = false
+	else:
+		label_list[0].text = str(copper_value)
+		label_list[0].visible = true
+		icon_list[0].visible = true
+	var silver_value = (value - copper_value) % 1000000
+	if silver_value == 0:
+		label_list[1].visible = false
+		icon_list[1].visible = false
+	else:
+		label_list[1].text = str(silver_value / 1000)
+		label_list[1].visible = true
+		icon_list[1].visible = true
+	var gold_value = (value - copper_value - silver_value) % 1000000000
+	if gold_value == 0:
+		label_list[2].visible = false
+		icon_list[2].visible = false
+	else:
+		label_list[2].text = str(silver_value / 1000000)
+		label_list[2].visible = true
+		icon_list[2].visible = true

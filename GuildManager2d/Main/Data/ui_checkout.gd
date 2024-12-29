@@ -1,9 +1,14 @@
 extends CanvasLayer
 
+@export var value_display : MarginContainer
+
+@export_group("PackedScenes")
 @export var checkout_container : PackedScene
 @export var customer_visual : PackedScene
+@export_group("Parents")
 @export var visual_parent : PanelContainer
 @export var checkout_container_parent : VBoxContainer
+@export_group("Visual Elements")
 @export var visual_position_list : Array[Marker2D]
 @export var end_position : Marker2D
 
@@ -14,11 +19,13 @@ var customer_list = []
 var customer_visual_list = []
 var container_list = []
 
+var total_value = 0
 var total_payment = 0
 var total_change = 0
 
 func _ready() -> void:
 	visible = false
+	value_display.reset()
 	UI.open_checkout_UI.connect(show_UI)
 	UI.add_customer_checkout_UI.connect(add_customer)
 	UI.remove_customer_checkout_UI.connect(remove_customer)
@@ -34,8 +41,7 @@ func add_customer(customer):
 	customer_visual_list.append(customer_icon)
 	sort_customer_visual()
 	if len(customer_list) == 1:
-		show_customer_shopping_list(customer)
-	# generate image
+		setup_info(customer)
 	
 func sort_customer_visual():
 	for i in range(len(customer_visual_list)):
@@ -56,26 +62,36 @@ func sort_customer_visual():
 	
 func add_change(value: int):
 	total_change += value
-	print("Change: ",total_change)
+	value_display.set_current_display(total_change)
 
 func multiply_change(mulitplier: float):
 	total_change = int(total_change * mulitplier)
+	value_display.set_current_display(total_change)
 
 func customer_paid():
 	if not len(customer_list) > 0:
 		return
-	if total_change < total_payment:
+	if total_change < total_payment - total_value:
 		return
-		
 	if Gold.pay(total_change):
+		if total_change > total_payment - total_value:
+			Gold.gold_flash.emit(Color.FIREBRICK)
+		else:
+			Gold.gold_flash.emit(Color.GREEN, 0.4)
 		Gold.add_gold(total_payment)
+		total_change = 0
 		SignalService.next_customer.emit()
 		customer_list.pop_front()
 		remove_customer_visual()
+		value_display.reset()
 		if len(customer_list) > 0:
 			sort_customer_visual()
-			show_customer_shopping_list(customer_list.front())
+			setup_info(customer_list.front())
 
+func setup_info(customer):
+	show_customer_shopping_list(customer)
+	determine_customer_paid()
+	
 func remove_customer_visual():
 	var customer_icon = customer_visual_list.pop_front()
 	customer_icon.last_position()
@@ -83,20 +99,36 @@ func remove_customer_visual():
 	customer_icon.z_index = 6
 	
 func show_customer_shopping_list(customer):
-	total_change = 0
-	total_payment = 0
+	total_value = 0
 	for container in container_list:
 		container.queue_free()
 	container_list.clear()
 	var basket = customer.get_basket_list()
 	for content_data in basket:
-		total_payment += content_data["value"] * content_data["amount"]
+		total_value += content_data["value"] * content_data["amount"]
 		var container = checkout_container.instantiate()
 		checkout_container_parent.add_child(container)
 		container.set_container_info(content_data)
 		container_list.append(container)
-	print("To pay: ", total_payment)
-
+	value_display.set_value_display(total_value)
+	
+func determine_customer_paid():
+	var modulate_list = [10,50,100,500]
+	var modulo_value = modulate_list.pick_random()
+	var rest = total_value % modulo_value
+	if total_value < pow(10, 6):
+		modulo_value += pow(10,3) * Global.rng.randi_range(0,1)
+		rest = total_value % int(modulo_value)
+	else:
+		var rng_value = Global.rng.randi_range(0,2)
+		if rng_value == 1:
+			modulo_value += pow(10,3)
+		elif rng_value == 2:
+			modulo_value += pow(10,6)
+		rest = total_value % int(modulo_value)
+	total_payment = total_value + rest
+	value_display.set_paid_display(total_payment)
+	value_display.set_change_display(total_payment - total_value)
 
 func remove_customer():
 	customer_list.pop_front()

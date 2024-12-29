@@ -13,6 +13,7 @@ class_name TimeService
 func _ready() -> void:
 	SignalService.try_starting_work_day.connect(start_work_day)
 	SignalService.all_customer_left.connect(close_shop)
+	SignalService.end_day.connect(start_new_day)
 	
 func show_time():
 	UI.set_ui_time.emit(get_current_minute(), get_current_hour() + start_time)
@@ -35,6 +36,7 @@ func send_customer_schedule(new_schedule):
 func close_shop():
 	SignalService.ending_work_day.emit()
 	state_machine.on_child_transition(state_machine.states["day"], "evening")
+	current_time = 0
 
 func try_closing_store():
 	state_machine.current_state.wait_till_change()
