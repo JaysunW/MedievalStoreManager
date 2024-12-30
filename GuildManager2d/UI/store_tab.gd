@@ -19,13 +19,13 @@ func new_license_unlocked():
 	fill_container_with_unlocks()
 	
 func fill_container_with_unlocks():
-	var building_data = Data.building_data
-	for id in range(len(building_data)): 
-		if Global.is_license_unlocked([building_data[id]["store_area"]]):
+	var shelving_structure_data = Data.store_structure_data
+	for id in range(len(shelving_structure_data)): 
+		if shelving_structure_data[id]["unlocked"]:
 			var new_container = build_container.instantiate()
 			scroll_parent.add_child(new_container)
 			new_container.get_pressed_signal().connect(chosen_container)
-			new_container.set_container_info(id, building_data[id])
+			new_container.set_container_info(id, shelving_structure_data[id])
 			container_list.append(new_container)
 
 func chosen_container(pressed_container) -> void:

@@ -20,7 +20,7 @@ func Physics_process(_delta):
 		customer.npc_service_reference.npc_left(customer)
 
 func Enter():
-	customer.npc_service_reference.customer_to_npc(customer)
+	customer.npc_service_reference.convert_to_leaving(customer)
 	#TODO: if not possible to leave teleport and try then to leave
 	var leave_point = customer.npc_service_reference.get_leaving_point()
 	target_position = leave_point.position

@@ -1,4 +1,4 @@
 id	name	placeable_type	value	sprite_path	store_area
-0	Shelf	Food,Drink,Material,Craft	300	res://Asset/Building/Shelf/simple_shelf.png	Beverages
-1	Stand	Weapon	250	res://Asset/Building/Stand/simple_stand.png	Weapons
-2	Hanger	Meat,Medicine	200	res://Asset/Building/Hanger/simple_hanger.png	Dairy
+0	Shelf	Food,Drink,Material,Craft	300	res://Asset/Structure/Shelf/simple_shelf.png	Beverages
+1	Stand	Weapon	250	res://Asset/Structure/Stand/simple_stand.png	Weapons
+2	Hanger	Meat,Medicine	200	res://Asset/Structure/Hanger/simple_hanger.png	Dairy

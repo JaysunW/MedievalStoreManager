@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://0euevr2c17v6"]
+
+[ext_resource type="PackedScene" uid="uid://cpj5rtpiq5d5i" path="res://Main/Data/Structure/shelving_class.tscn" id="1_bk26d"]
+[ext_resource type="Script" path="res://Main/Data/Structure/Hanger/hanger_sprite_handler.gd" id="2_noidu"]
+[ext_resource type="Texture2D" uid="uid://042qrs0maqrb" path="res://Asset/Structure/Hanger/hanger_back.png" id="3_books"]
+[ext_resource type="Texture2D" uid="uid://nwck0rcw7xux" path="res://Asset/Structure/Hanger/hanger_front.png" id="4_sg72w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efvdn"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trl60"]
+size = Vector2(21, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtmpl"]
+size = Vector2(30, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lip1s"]
+size = Vector2(19, 20)
+
+[node name="Shelf" instance=ExtResource("1_bk26d")]
+
+[node name="SpriteHandler" parent="." index="0" node_paths=PackedStringArray("shelving_sprite_list", "item_position_marker")]
+script = ExtResource("2_noidu")
+shelving_sprite_list = [NodePath("HangerBack"), NodePath("HangerFront")]
+item_position_marker = NodePath("ItemMarker")
+
+[node name="HangerBack" type="Sprite2D" parent="SpriteHandler" index="1"]
+texture = ExtResource("3_books")
+offset = Vector2(0, -16)
+hframes = 4
+frame = 1
+
+[node name="ItemMarker" type="Marker2D" parent="SpriteHandler" index="2"]
+position = Vector2(0, -19)
+
+[node name="HangerFront" type="Sprite2D" parent="SpriteHandler" index="3"]
+texture = ExtResource("4_sg72w")
+offset = Vector2(0, -16)
+hframes = 4
+frame = 1
+
+[node name="Frontal" parent="InteractionObjectComponent" index="0"]
+shape = SubResource("RectangleShape2D_efvdn")
+
+[node name="Side" parent="InteractionObjectComponent" index="1"]
+position = Vector2(-5.5, -8.5)
+shape = SubResource("RectangleShape2D_trl60")
+
+[node name="OrientationComponent" parent="." index="2" node_paths=PackedStringArray("sprite_handler")]
+sprite_handler = NodePath("../SpriteHandler")
+
+[node name="Frontal" parent="." index="4"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_dtmpl")
+
+[node name="Side" parent="." index="5"]
+position = Vector2(-5.5, -10)
+shape = SubResource("RectangleShape2D_lip1s")

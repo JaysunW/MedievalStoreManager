@@ -1,0 +1,167 @@
+extends StaticBody2D
+
+@onready var work_timer = $WorkTimer
+@onready var flash_timer = $FlashTimer
+@onready var show_progress_timer = $ShowProgressTimer
+@onready var interaction_marker = $InteractionMarker
+
+@export var work_progress_bar : TextureProgressBar
+@export var sprite_handler : Node2D
+@export var orientation_component : Node2D
+@export var interaction_object_component : Area2D
+@export var tile_size = Vector2i(1, 1)
+
+var current_orientation = Utils.Orientation.SOUTH
+
+var opened_menu = false
+
+var is_working : bool = false
+
+var customer_queue : Array = []
+var current_shopping_list : Array = []
+var whole_shopping_amount : int = 0
+
+var in_work_cooldown : bool = false
+
+var checkout_queue_max : int= 7
+var reserved_spots = 0
+
+signal new_customer
+signal next_customer
+signal no_customer_in_queue
+
+var data = {}
+var tile_layer_ref : Node2D
+
+func _ready():
+	#SignalService.add_checkout_to_world_dic
+	SignalService.send_next_customer.connect(remove_customer)
+	work_progress_bar.visible = false
+	pass
+
+func is_full():
+	return reserved_spots >= checkout_queue_max
+
+func get_queue_size():
+	return len(customer_queue)
+	
+func get_marker():
+	return interaction_marker
+
+func add_customer(customer):
+	customer_queue.append(customer)
+	new_customer.emit(customer)
+	UI.add_customer_checkout_UI.emit(customer)
+	return len(customer_queue) - 1
+
+func reserve_spot():
+	reserved_spots += 1
+	if customer_queue.is_empty():
+		return 
+	new_customer.emit(customer_queue.back())
+
+func interact():
+	if UI.get_set_ui_free():
+		change_work_mode()
+		opened_menu = true
+	elif opened_menu:
+		change_work_mode()
+		opened_menu = false
+		UI.is_free(true)
+	
+func change_work_mode():
+	if is_working:
+		SignalService.restrict_player_movement.emit(false)
+		SignalService.camera_offset.emit(Vector2.ZERO)
+		UI.open_checkout_UI.emit(false)
+		is_working = false
+	else:
+		SignalService.restrict_player_movement.emit(true)
+		SignalService.camera_offset.emit(Vector2(-32*8,-32))
+		UI.open_checkout_UI.emit(true)
+		is_working = true
+		##debug
+		#customer_queue[0]
+		
+func remove_customer():
+	var removed_customer = customer_queue.pop_front()
+	if removed_customer:
+		reserved_spots -= 1
+		removed_customer.bought_basket()
+		next_customer.emit()
+	elif reserved_spots != 0:
+		no_customer_in_queue.emit()
+
+#func work_on_queue():
+	#if customer_queue.is_empty() or in_work_cooldown:
+		#return
+	#if not customer_queue.front().is_waiting_in_queue:
+		#return 
+		#
+	#if current_shopping_list.is_empty():
+		#current_shopping_list = customer_queue[0].get_basket_list()
+		#set_progress_bar(current_shopping_list)
+	#
+	#Gold.add_gold(current_shopping_list[0]["value"])
+	#work_timer.start()
+	#in_work_cooldown = true
+	#current_shopping_list.pop_front()
+	#update_progress_bar(current_shopping_list)
+	#if current_shopping_list.is_empty():
+		#reserved_spots -= 1
+		#customer_queue[0].bought_basket()
+		#customer_queue.pop_front()
+		#next_customer.emit()
+
+func set_progress_bar(shopping_list):
+	var shopping_size = len(shopping_list)
+	work_progress_bar.min_value = 0
+	work_progress_bar.max_value = shopping_size
+	work_progress_bar.value = shopping_size
+	work_progress_bar.visible = true
+	show_progress_timer.start()
+
+func update_progress_bar(list):
+	work_progress_bar.value = len(list)
+	work_progress_bar.visible = true
+	show_progress_timer.start()
+	
+func _on_work_timer_timeout():
+	in_work_cooldown = false
+
+func _on_show_progress_timer_timeout():
+	work_progress_bar.visible = false
+
+func prepare_structure(should_prepare=true):
+	sprite_handler.should_prepare_building(should_prepare)
+	for collision in orientation_component.current_collision_list:
+		collision.set_deferred("disabled", not should_prepare)
+	interaction_object_component.set_deferred("monitorable", should_prepare)
+
+func rotate_object(new_orentation):
+	return
+	current_orientation = posmod(current_orientation + new_orentation, 4)
+	orientation_component.change_orientation_state(current_orientation)
+
+func get_space_vector():
+	var space_vector_list = [Vector2i.ZERO]
+	match current_orientation:
+		Utils.Orientation.SOUTH:
+			space_vector_list.append(Vector2i(0, 1))
+		Utils.Orientation.WEST:
+			space_vector_list.append(Vector2i(-1, 0))
+		Utils.Orientation.NORTH:
+			space_vector_list.append(Vector2i(0, -1))
+		Utils.Orientation.EAST:
+			space_vector_list.append(Vector2i(1, 0))
+	return space_vector_list
+
+func get_position_offset():
+	return Vector2.ZERO
+	return orientation_component.position_offset
+	
+func change_color(color, change_alpha=false):
+	sprite_handler.change_color(color, change_alpha)
+	
+func flash_color(color, flash_time = 0.1, change_alpha = false):
+	sprite_handler.flash_color(color, flash_time, change_alpha)

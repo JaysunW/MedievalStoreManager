@@ -1,0 +1,2 @@
+id	name	value	sprite_path	store_area	unlocked
+0	Checkout	300	res://Asset/Checkout.png	1

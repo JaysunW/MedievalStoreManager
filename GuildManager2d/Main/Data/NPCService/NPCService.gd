@@ -45,18 +45,14 @@ func structure_customer_schedule(new_schedule):
 	next_hour_schedule.resize(60)
 	next_hour_schedule.fill(0)
 
-func customer_to_npc(old_customer):
+func convert_to_leaving(old_customer):
 	if old_customer.id == 0:
 		return
 	if old_customer.id in customer_dictionary:
 		customer_dictionary.erase(old_customer.id)
 		leaving_npc_list.append(old_customer)
-		old_customer
 
 func npc_left(leaving_npc):
-	print("npc. ", len(npc_list))
-	print("custom. ", len(customer_dictionary))
-	print("leaving. ", len(leaving_npc_list))
 	var npc_index = leaving_npc_list.find(leaving_npc)
 	if npc_index != -1:
 		leaving_npc_list.remove_at(npc_index)

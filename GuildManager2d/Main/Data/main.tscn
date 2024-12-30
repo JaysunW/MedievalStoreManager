@@ -1,28 +1,25 @@
-[gd_scene load_steps=94 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=91 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
 [ext_resource type="Texture2D" uid="uid://b2j0w50fu1tv3" path="res://Asset/TileSet/tile_set_outside_ground.png" id="3_bw1q4"]
 [ext_resource type="PackedScene" uid="uid://df4ydop0drcb6" path="res://Main/Data/Player/player.tscn" id="3_oikkr"]
 [ext_resource type="Script" path="res://Main/Data/WorlMap.gd" id="5_l1qj5"]
-[ext_resource type="Script" path="res://Main/Data/Building/BuildService.gd" id="5_sdoag"]
-[ext_resource type="PackedScene" uid="uid://0euevr2c17v6" path="res://Main/Data/Building/Hanger/hanger.tscn" id="5_ufjdo"]
-[ext_resource type="PackedScene" uid="uid://fvle76aosgsx" path="res://Main/Data/Building/Shelf/shelf.tscn" id="6_1nfi5"]
+[ext_resource type="Script" path="res://Main/Data/Structure/BuildService.gd" id="5_sdoag"]
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/store_area.gd" id="6_3ujva"]
 [ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/package.tscn" id="6_5qldv"]
 [ext_resource type="Texture2D" uid="uid://lva8aawtlbs4" path="res://Asset/TileSet/tile_set_building.png" id="6_othu0"]
-[ext_resource type="PackedScene" uid="uid://bi4fn4o63lr4e" path="res://Main/Data/Building/checkout.tscn" id="6_t4ys1"]
+[ext_resource type="PackedScene" uid="uid://bi4fn4o63lr4e" path="res://Main/Data/Structure/Scene/checkout.tscn" id="6_t4ys1"]
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/store_ground.gd" id="6_xkvah"]
 [ext_resource type="Texture2D" uid="uid://4r1lwftoheyj" path="res://Asset/TileSet/tile_set_store_ground.png" id="7_5idlx"]
 [ext_resource type="Script" path="res://Main/Data/ItemService/ItemInterface.gd" id="7_7xygn"]
-[ext_resource type="PackedScene" uid="uid://jnldn6ayftnp" path="res://Main/Data/Building/WeaponStand/stand.tscn" id="7_hso44"]
 [ext_resource type="Theme" uid="uid://cyx5vjugx1lim" path="res://Theme/our_theme.tres" id="7_ykg55"]
 [ext_resource type="PackedScene" uid="uid://wi17fl4xuvp" path="res://Component/sprite_component.tscn" id="8_3qdpo"]
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/expansion_area.gd" id="8_qi22n"]
-[ext_resource type="PackedScene" uid="uid://csc1vxhhtes3a" path="res://Theme/BuildObjectContainer.tscn" id="9_2nmlh"]
+[ext_resource type="PackedScene" uid="uid://csc1vxhhtes3a" path="res://UI/BuildObjectContainer.tscn" id="9_2nmlh"]
 [ext_resource type="Texture2D" uid="uid://b5qrumeoc73dc" path="res://Asset/TileSet/tile_set_object.png" id="9_5ispa"]
-[ext_resource type="Script" path="res://Main/Data/Building/Door.gd" id="10_fvpeq"]
-[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/Shelf/shelf.png" id="10_o4rgv"]
+[ext_resource type="Script" path="res://Main/Data/Structure/Door.gd" id="10_fvpeq"]
+[ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Structure/Shelf/shelf.png" id="10_o4rgv"]
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/store_building.gd" id="11_45e46"]
 [ext_resource type="Texture2D" uid="uid://d37crr5faqbhg" path="res://Asset/filled_shelf.png" id="11_m0jyt"]
 [ext_resource type="Texture2D" uid="uid://dphgdg6yv6l1k" path="res://Asset/doors_closed.png" id="11_thsmy"]
@@ -43,12 +40,12 @@
 [ext_resource type="Texture2D" uid="uid://di0q3sninmdyc" path="res://Asset/UI/ui_value_copper.png" id="25_0sma6"]
 [ext_resource type="Texture2D" uid="uid://cxmm8e73vcba4" path="res://Asset/closed_sign.png" id="26_xxuyu"]
 [ext_resource type="Texture2D" uid="uid://b8cnm2sacv6te" path="res://Asset/license_interface.png" id="27_i5r6l"]
-[ext_resource type="Script" path="res://Main/Data/Building/ExpandStore.gd" id="28_28bqr"]
+[ext_resource type="Script" path="res://Main/Data/Structure/ExpandStore.gd" id="28_28bqr"]
 [ext_resource type="Script" path="res://Main/Data/LicenseService/license_interface.gd" id="28_w0ups"]
 [ext_resource type="Script" path="res://Main/Data/EndDayInterface.gd" id="30_2ko48"]
-[ext_resource type="Script" path="res://Main/Data/Building/PlaceBuild.gd" id="30_ne60k"]
+[ext_resource type="Script" path="res://Main/Data/Structure/PlaceBuild.gd" id="30_ne60k"]
 [ext_resource type="Texture2D" uid="uid://ctvqmawkb4q3p" path="res://Asset/Bed.png" id="31_lfcfi"]
-[ext_resource type="Script" path="res://Main/Data/Building/ui_expansion_value.gd" id="34_ps4vx"]
+[ext_resource type="Script" path="res://UI/ui_expansion_value.gd" id="34_ps4vx"]
 [ext_resource type="Texture2D" uid="uid://dmf5862hccy1r" path="res://Asset/UI/object_show_back.png" id="34_ub5vc"]
 [ext_resource type="Script" path="res://Main/Data/TimeService/time_service.gd" id="38_ufk0a"]
 [ext_resource type="Script" path="res://Main/Data/TimeService/morning.gd" id="40_u51lp"]
@@ -621,12 +618,16 @@ script = ExtResource("30_ne60k")
 build_service = NodePath("..")
 world_map = NodePath("../../WorlMap")
 store_area = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/StoreArea")
-stand_scenes = Array[PackedScene]([ExtResource("6_1nfi5"), ExtResource("7_hso44"), ExtResource("5_ufjdo")])
 debug = true
 debug_marker = NodePath("DebugMarker")
+debug_stand_name = "Shelf"
 
 [node name="DebugMarker" type="Marker2D" parent="Main/BuildService/PlaceBuild"]
 position = Vector2(1169, 737)
+
+[node name="WaitTimer" type="Timer" parent="Main/BuildService/PlaceBuild"]
+wait_time = 0.3
+one_shot = true
 
 [node name="ExpandStore" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "store_area", "store_ground", "store_building", "store_upper_building", "store_expansion_area")]
 script = ExtResource("28_28bqr")
@@ -638,7 +639,7 @@ store_upper_building = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/Stor
 store_expansion_area = NodePath("../../WorlMap/TileLayer/StoreRelevantLayer/ExpansionArea")
 
 [node name="WaitTimer" type="Timer" parent="Main/BuildService/ExpandStore"]
-wait_time = 0.1
+wait_time = 0.3
 one_shot = true
 
 [node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("state_machine")]
@@ -1028,6 +1029,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="UIBuildMenu" type="CanvasLayer" parent="UI"]
+visible = false
 script = ExtResource("11_us1ic")
 
 [node name="Panel" type="Panel" parent="UI/UIBuildMenu"]
@@ -2912,6 +2914,7 @@ metadata/_edit_lock_ = true
 [connection signal="body_exited" from="Main/WorlMap/Door" to="Main/WorlMap/Door" method="_on_body_exited"]
 [connection signal="timeout" from="Main/CustomerService/SpawnTimer" to="Main/CustomerService" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="Main/CustomerService/CheckTimer" to="Main/CustomerService" method="_on_check_timer_timeout"]
+[connection signal="timeout" from="Main/BuildService/PlaceBuild/WaitTimer" to="Main/BuildService/PlaceBuild" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="Main/BuildService/ExpandStore/WaitTimer" to="Main/BuildService/ExpandStore" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="Main/TimeService/StateMachine/Day/DayTimer" to="Main/TimeService/StateMachine/Day" method="_on_day_timer_timeout"]
 [connection signal="timeout" from="UI/PlayerUI/UIGold/ColorFlashTimer" to="UI/PlayerUI/UIGold" method="_on_color_flash_timer_timeout"]

@@ -32,7 +32,7 @@ func random_rotation_offset(orientation):
 	
 func set_value_display(value : int, label_list : Array, icon_list : Array):
 	if value < 0:
-		value = 80085 * pow(10,6)
+		value = 80085 * int(pow(10,6))
 	var copper_value = value % int(pow(10,3))
 	if copper_value == 0:
 		label_list[0].visible = false

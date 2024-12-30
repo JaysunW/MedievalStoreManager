@@ -2,7 +2,9 @@ extends Node
 
 var player_data : Dictionary = {}
 var item_data : Dictionary = {}
-var building_data : Dictionary = {}
+var shelving_structure_data : Dictionary = {}
+var store_structure_data : Dictionary = {}
+var decoration_structure_data : Dictionary = {}
 var license_data : Dictionary = {}
 
 var player_data_file_path : String = "res://JSON/player_data.json"
@@ -31,7 +33,7 @@ func distribute_dictionary(dic):
 	if dic:
 		player_data = dic["PLAYER"]
 		item_data = dic["ITEM"]
-		building_data = dic["BUILDING"]
+		shelving_structure_data = dic["BUILDING"]
 		license_data = dic["LICENSE"]
 		
 func load_save():

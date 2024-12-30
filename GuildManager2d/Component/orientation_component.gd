@@ -20,11 +20,11 @@ func add_rotation_objects():
 		if node:
 			collision_node_dictionary[node] = {}
 			collision_start_position[node] = {}
-		for child in node.get_children():
-			if child.is_in_group(orientation_group_string):
-				collision_node_dictionary[node][child.name.to_lower()] = child
-				collision_start_position[node][child.name.to_lower()] = child.position
-				child.disabled = true
+			for child in node.get_children():
+				if child is CollisionShape2D:
+					collision_node_dictionary[node][child.name.to_lower()] = child
+					collision_start_position[node][child.name.to_lower()] = child.position
+					child.disabled = true
 				
 func change_orientation_state(new_orientation):
 	current_orientation = new_orientation

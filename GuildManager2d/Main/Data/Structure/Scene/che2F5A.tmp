@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://bi4fn4o63lr4e"]
+
+[ext_resource type="Script" path="res://Main/Data/Structure/Checkout/checkout.gd" id="1_ie8xw"]
+[ext_resource type="Texture2D" uid="uid://ddda4e46600pt" path="res://Asset/Checkout.png" id="3_i0kwl"]
+[ext_resource type="Script" path="res://Main/Data/Structure/Checkout/checkout_spritehandler.gd" id="3_lp8r7"]
+[ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="6_xaefe"]
+[ext_resource type="Texture2D" uid="uid://bhff6vdh1dp4k" path="res://Asset/UI/stand_fill_under.png" id="7_emm2i"]
+[ext_resource type="Script" path="res://Component/orientation_component.gd" id="8_5i0mw"]
+[ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_d7oje"]
+[ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_dxxwc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_erayf"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_so47g"]
+size = Vector2(64, 32)
+
+[node name="Checkout" type="StaticBody2D" node_paths=PackedStringArray("work_progress_bar", "sprite_handler", "orientation_component", "interaction_object_component")]
+texture_filter = 1
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_ie8xw")
+work_progress_bar = NodePath("FillProgressbar")
+sprite_handler = NodePath("Skin")
+orientation_component = NodePath("OrientationComponent")
+interaction_object_component = NodePath("InteractionObjectComponent")
+
+[node name="Skin" type="Sprite2D" parent="."]
+texture = ExtResource("3_i0kwl")
+offset = Vector2(0, -16)
+script = ExtResource("3_lp8r7")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_erayf")
+
+[node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Interface"] instance=ExtResource("6_xaefe")]
+position = Vector2(0, -16)
+collision_layer = 256
+collision_mask = 0
+monitoring = false
+main_object = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionObjectComponent"]
+shape = SubResource("RectangleShape2D_so47g")
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
+
+[node name="FillProgressbar" type="TextureProgressBar" parent="."]
+texture_filter = 1
+offset_left = -19.0
+offset_top = -44.0
+offset_right = 19.0
+offset_bottom = -33.0
+nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 4
+stretch_margin_right = 4
+stretch_margin_bottom = 4
+texture_under = ExtResource("7_emm2i")
+texture_over = ExtResource("8_d7oje")
+texture_progress = ExtResource("9_dxxwc")
+
+[node name="WorkTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FlashTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ShowProgressTimer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
+[node name="InteractionMarker" type="Marker2D" parent="."]
+position = Vector2(0, 16)
+
+[node name="OrientationComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_handler", "interaction_marker")]
+script = ExtResource("8_5i0mw")
+sprite_handler = NodePath("../Skin")
+interaction_marker = NodePath("../InteractionMarker")
+
+[connection signal="timeout" from="WorkTimer" to="." method="_on_work_timer_timeout"]
+[connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]
