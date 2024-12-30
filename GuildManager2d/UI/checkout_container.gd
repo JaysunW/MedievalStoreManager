@@ -3,12 +3,12 @@ extends TextureRect
 @export var item_icon : TextureRect
 @export var item_amount_label : Label
 
-@export var gold_icon : TextureRect
-@export var gold_value_label : Label 
-@export var silver_icon : TextureRect 
-@export var silver_value_label : Label
 @export var copper_icon : TextureRect 
+@export var silver_icon : TextureRect 
+@export var gold_icon : TextureRect
 @export var copper_value_label : Label
+@export var silver_value_label : Label
+@export var gold_value_label : Label 
 
 var container_data
 var id

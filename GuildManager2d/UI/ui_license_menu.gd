@@ -16,7 +16,7 @@ func check_button(pressed_button):
 			pressed_button.unlock()
 			Data.player_data["license"].append(license_data["name"])
 			update_license_tree()
-			SignalService.new_license_bought.emit(license_data["name"])
+			SignalService.new_license_bought.emit()
 		
 func update_license_tree(first_update = false):
 	var license_data = Data.license_data

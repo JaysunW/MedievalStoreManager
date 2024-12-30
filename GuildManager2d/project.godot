@@ -137,6 +137,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_2="Player"
 2d_physics/layer_4="Npc"
 2d_navigation/layer_4="Customer"
+2d_physics/layer_5="NpcNotWalkable"
 2d_physics/layer_6="Wall"
 2d_physics/layer_7="Stand"
 2d_physics/layer_8="Package"

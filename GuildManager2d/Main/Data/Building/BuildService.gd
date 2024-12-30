@@ -10,6 +10,10 @@ var mouse_grid_offset = Vector2i(16,32)
 var opened_menu = false
 var child_is_active = false
 
+func _ready() -> void:
+	SignalService.chose_expanding_option.connect(enter_expand_menu)
+	SignalService.chose_building_option.connect(enter_building_menu)
+
 func _process(_delta):
 	if Input.is_action_just_pressed("c"):
 		Stock.print_current_stock()		
@@ -34,10 +38,10 @@ func child_exit():
 	child_is_active = false
 	UI.open_build_UI.emit(true)
 
-func _on_ui_build_menu_chose_expanding() -> void:
+func enter_expand_menu() -> void:
 	child_is_active = true
 	expand_menu.Enter()
 
-func _on_ui_build_menu_chose_building_option(stand_data: Variant) -> void:
+func enter_building_menu(stand_data: Variant) -> void:
 	child_is_active = true
 	placing_menu.Enter(stand_data) 

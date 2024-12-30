@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 @export var initial_state : State
 var current_state : State

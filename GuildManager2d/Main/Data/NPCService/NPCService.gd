@@ -5,10 +5,12 @@ extends Node2D
 
 @export var customer : PackedScene
 @export var world_map : Node2D
-
+@export_group("Positions")
 @export var idle_point_list : Array[Marker2D]
+@export var leaving_point_list : Array[Marker2D]
 @export var entrance_point : Marker2D
 
+@export_category("Stats")
 @export var spawn_timer_time = 0.1
 var spawn_timer_offset_min_max = 0.1
 
@@ -16,6 +18,7 @@ var spawn_timer_offset_min_max = 0.1
 
 var npc_list = []
 var customer_dictionary = {}
+var leaving_npc_list = []
 var customer_id_counter = 0
 
 var daily_customer_schedule = []
@@ -42,12 +45,25 @@ func structure_customer_schedule(new_schedule):
 	next_hour_schedule.resize(60)
 	next_hour_schedule.fill(0)
 
-func customer_to_npc(new_npc):
-	if new_npc.id == 0:
+func customer_to_npc(old_customer):
+	if old_customer.id == 0:
 		return
-	if new_npc.id in customer_dictionary:
-		customer_dictionary.erase(new_npc.id)
-		npc_list.append(new_npc)
+	if old_customer.id in customer_dictionary:
+		customer_dictionary.erase(old_customer.id)
+		leaving_npc_list.append(old_customer)
+		old_customer
+
+func npc_left(leaving_npc):
+	print("npc. ", len(npc_list))
+	print("custom. ", len(customer_dictionary))
+	print("leaving. ", len(leaving_npc_list))
+	var npc_index = leaving_npc_list.find(leaving_npc)
+	if npc_index != -1:
+		leaving_npc_list.remove_at(npc_index)
+		leaving_npc.queue_free()
+
+func get_leaving_point():
+	return leaving_point_list.pick_random()
 
 func try_spawning_customer(minute, hour):
 	if last_hour != hour:

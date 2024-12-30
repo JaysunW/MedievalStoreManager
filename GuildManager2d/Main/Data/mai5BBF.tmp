@@ -19,7 +19,7 @@
 [ext_resource type="Theme" uid="uid://cyx5vjugx1lim" path="res://Theme/our_theme.tres" id="7_ykg55"]
 [ext_resource type="PackedScene" uid="uid://wi17fl4xuvp" path="res://Component/sprite_component.tscn" id="8_3qdpo"]
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/expansion_area.gd" id="8_qi22n"]
-[ext_resource type="PackedScene" uid="uid://csc1vxhhtes3a" path="res://Theme/BuildObjectContainer.tscn" id="9_2nmlh"]
+[ext_resource type="PackedScene" uid="uid://csc1vxhhtes3a" path="res://UI/BuildObjectContainer.tscn" id="9_2nmlh"]
 [ext_resource type="Texture2D" uid="uid://b5qrumeoc73dc" path="res://Asset/TileSet/tile_set_object.png" id="9_5ispa"]
 [ext_resource type="Script" path="res://Main/Data/Building/Door.gd" id="10_fvpeq"]
 [ext_resource type="Texture2D" uid="uid://bo2k41sa3r8w5" path="res://Asset/Building/Shelf/shelf.png" id="10_o4rgv"]
@@ -58,18 +58,18 @@
 [ext_resource type="Script" path="res://StateMachine/StateMachine.gd" id="45_2bqcg"]
 [ext_resource type="Script" path="res://UI/ui_license_menu.gd" id="54_68k68"]
 [ext_resource type="PackedScene" uid="uid://ciufelrkb6e2w" path="res://UI/ui_unlock_button.tscn" id="54_vxv3a"]
-[ext_resource type="Script" path="res://UI/shelving_tab.gd" id="58_slnl8"]
-[ext_resource type="Script" path="res://UI/store_tab.gd" id="59_l4ya7"]
+[ext_resource type="Script" path="res://Main/Data/shelving_tab.gd" id="58_slnl8"]
+[ext_resource type="Script" path="res://Main/Data/store_tab.gd" id="59_l4ya7"]
 [ext_resource type="Script" path="res://UI/UIHeldObject.gd" id="59_pvuk1"]
 [ext_resource type="Texture2D" uid="uid://dggtxkxvk3056" path="res://Asset/ShopItem/flask.png" id="60_6vfma"]
-[ext_resource type="Script" path="res://UI/decoration_tab.gd" id="60_ll8h0"]
+[ext_resource type="Script" path="res://Main/Data/decoration_tab.gd" id="60_ll8h0"]
 [ext_resource type="Script" path="res://UI/UIGold.gd" id="61_fw8fx"]
-[ext_resource type="Script" path="res://UI/ui_checkout.gd" id="62_436fy"]
+[ext_resource type="Script" path="res://Main/Data/ui_checkout.gd" id="62_436fy"]
 [ext_resource type="Texture2D" uid="uid://c58uj22u770w1" path="res://Asset/UI/ui_gold_back_side.png" id="62_w7ynh"]
 [ext_resource type="Script" path="res://UI/UIStandInfo.gd" id="63_7o3w4"]
 [ext_resource type="PackedScene" uid="uid://cupya0rlcek0b" path="res://UI/checkout_container.tscn" id="63_wy68g"]
 [ext_resource type="PackedScene" uid="uid://b1a6uqkjanr4" path="res://UI/checkout_animated_sprite.tscn" id="64_7rr4m"]
-[ext_resource type="Script" path="res://UI/checkout_value_display.gd" id="65_vw3st"]
+[ext_resource type="Script" path="res://Main/Data/checkout_value_display.gd" id="65_vw3st"]
 [ext_resource type="Texture2D" uid="uid://de30ayj671tde" path="res://Asset/UI/WhiteLine.png" id="66_ysomk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dfgxd"]
@@ -1027,8 +1027,10 @@ texture = ExtResource("25_0sma6")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="UIBuildMenu" type="CanvasLayer" parent="UI"]
+[node name="UIBuildMenu" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("parent_v_container")]
 script = ExtResource("11_us1ic")
+parent_v_container = NodePath("TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer")
+build_container = ExtResource("9_2nmlh")
 
 [node name="Panel" type="Panel" parent="UI/UIBuildMenu"]
 anchors_preset = 15
@@ -1039,23 +1041,22 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TabMenu" type="TabContainer" parent="UI/UIBuildMenu"]
+[node name="TabMenu" type="TabContainer" parent="UI/UIBuildMenu" node_paths=PackedStringArray("initial_state")]
 offset_left = 578.0
 offset_top = 66.0
 offset_right = 1343.0
 offset_bottom = 897.0
 current_tab = 0
+script = ExtResource("45_2bqcg")
+initial_state = NodePath("Shelving")
 
-[node name="Shelving" type="TabBar" parent="UI/UIBuildMenu/TabMenu" node_paths=PackedStringArray("ui_build_menu", "scroll_parent")]
+[node name="Shelving" type="TabBar" parent="UI/UIBuildMenu/TabMenu"]
 layout_mode = 2
 tab_alignment = 1
 script = ExtResource("58_slnl8")
-ui_build_menu = NodePath("../..")
-scroll_parent = NodePath("Back/Margin/MenuContainer/ScrollContainer/ParentVContainer")
-build_container = ExtResource("9_2nmlh")
 metadata/_tab_index = 0
 
-[node name="Back" type="PanelContainer" parent="UI/UIBuildMenu/TabMenu/Shelving"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/UIBuildMenu/TabMenu/Shelving"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -1067,149 +1068,63 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("7_ykg55")
 
-[node name="Margin" type="MarginContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/Back"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="MenuContainer" type="VBoxContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin"]
+[node name="ParentVContainer" type="VBoxContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="MenuName" type="Label" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer"]
+[node name="MenuName" type="Label" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer"]
 layout_mode = 2
 text = "Build Menu"
 horizontal_alignment = 1
 
-[node name="HeaderContainer" type="MarginContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer"]
+[node name="HeaderContainer" type="MarginContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer/HeaderContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer/HeaderContainer"]
 layout_mode = 2
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Spacer2" type="Control" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
+[node name="Spacer2" type="Control" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer/HeaderContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 16.0
 
-[node name="Name" type="Label" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
+[node name="Name" type="Label" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer/HeaderContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_ykg55")
 theme_override_font_sizes/font_size = 40
 text = "Name:"
 vertical_alignment = 1
 
-[node name="Spacer3" type="Control" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
+[node name="Spacer3" type="Control" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer/HeaderContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Cost" type="Label" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
+[node name="Cost" type="Label" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer/HeaderContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("7_ykg55")
 theme_override_font_sizes/font_size = 40
 text = "Cost:"
 vertical_alignment = 1
 
-[node name="Spacer4" type="Control" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
+[node name="Spacer4" type="Control" parent="UI/UIBuildMenu/TabMenu/Shelving/PanelContainer/MarginContainer/ParentVContainer/HeaderContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 9.0
-
-[node name="ParentVContainer" type="VBoxContainer" parent="UI/UIBuildMenu/TabMenu/Shelving/Back/Margin/MenuContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Store" type="TabBar" parent="UI/UIBuildMenu/TabMenu" node_paths=PackedStringArray("ui_build_menu", "scroll_parent")]
+[node name="Store" type="TabBar" parent="UI/UIBuildMenu/TabMenu"]
 visible = false
 layout_mode = 2
 tab_alignment = 1
 script = ExtResource("59_l4ya7")
-ui_build_menu = NodePath("../..")
-scroll_parent = NodePath("Back/Margin/MenuContainer/ScrollContainer/ParentVContainer")
-build_container = ExtResource("9_2nmlh")
 metadata/_tab_index = 1
-
-[node name="Back" type="PanelContainer" parent="UI/UIBuildMenu/TabMenu/Store"]
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("7_ykg55")
-
-[node name="Margin" type="MarginContainer" parent="UI/UIBuildMenu/TabMenu/Store/Back"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="MenuContainer" type="VBoxContainer" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin"]
-layout_mode = 2
-
-[node name="MenuName" type="Label" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer"]
-layout_mode = 2
-text = "Build Menu"
-horizontal_alignment = 1
-
-[node name="HeaderContainer" type="MarginContainer" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer/HeaderContainer"]
-layout_mode = 2
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Spacer2" type="Control" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 16.0
-
-[node name="Name" type="Label" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("7_ykg55")
-theme_override_font_sizes/font_size = 40
-text = "Name:"
-vertical_alignment = 1
-
-[node name="Spacer3" type="Control" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Cost" type="Label" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("7_ykg55")
-theme_override_font_sizes/font_size = 40
-text = "Cost:"
-vertical_alignment = 1
-
-[node name="Spacer4" type="Control" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer/HeaderContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 9.0
-
-[node name="ParentVContainer" type="VBoxContainer" parent="UI/UIBuildMenu/TabMenu/Store/Back/Margin/MenuContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="Decoration" type="TabBar" parent="UI/UIBuildMenu/TabMenu"]
 visible = false
@@ -1297,15 +1212,9 @@ theme_override_font_sizes/font_size = 64
 text = "Expand"
 horizontal_alignment = 1
 
-[node name="UIItemMenu" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("copper_value_label", "silver_value_label", "gold_value_label", "copper_icon", "silver_icon", "gold_icon")]
+[node name="UIItemMenu" type="CanvasLayer" parent="UI"]
 visible = false
 script = ExtResource("16_08pc5")
-copper_value_label = NodePath("ItemCheckout/VBoxContainer/ValueGrid/CopperValueLabel")
-silver_value_label = NodePath("ItemCheckout/VBoxContainer/ValueGrid/SilverValueLabel")
-gold_value_label = NodePath("ItemCheckout/VBoxContainer/ValueGrid/CopperValueLabel")
-copper_icon = NodePath("ItemCheckout/VBoxContainer/ValueGrid/GoldIcon")
-silver_icon = NodePath("ItemCheckout/VBoxContainer/ValueGrid/SilverIcon")
-gold_icon = NodePath("ItemCheckout/VBoxContainer/ValueGrid/CopperIcon")
 item_container = ExtResource("14_oy5h6")
 item_checkout_container = ExtResource("21_ncbhu")
 
@@ -2916,6 +2825,8 @@ metadata/_edit_lock_ = true
 [connection signal="timeout" from="Main/TimeService/StateMachine/Day/DayTimer" to="Main/TimeService/StateMachine/Day" method="_on_day_timer_timeout"]
 [connection signal="timeout" from="UI/PlayerUI/UIGold/ColorFlashTimer" to="UI/PlayerUI/UIGold" method="_on_color_flash_timer_timeout"]
 [connection signal="timeout" from="UI/PlayerUI/UIHeldObject/FlashTimer" to="UI/PlayerUI/UIHeldObject" method="_on_flash_timer_timeout"]
+[connection signal="chose_building_option" from="UI/UIBuildMenu" to="Main/BuildService" method="_on_ui_build_menu_chose_building_option"]
+[connection signal="chose_expanding" from="UI/UIBuildMenu" to="Main/BuildService" method="_on_ui_build_menu_chose_expanding"]
 [connection signal="button_down" from="UI/UIBuildMenu/ExpandStoreContainer/MarginContainer/ParentVContainer/MarginContainer/HeaderContainer/ExpandButton" to="UI/UIBuildMenu" method="_on_expand_button_button_down"]
 [connection signal="spawn_bought_items" from="UI/UIItemMenu" to="Main/WorlMap/ItemInterface" method="_on_ui_item_menu_spawn_bought_items"]
 [connection signal="button_down" from="UI/UIItemMenu/ItemStore/MarginContainer/VBoxContainer/HBoxContainer/Buy" to="UI/UIItemMenu" method="_on_buy_button_down"]

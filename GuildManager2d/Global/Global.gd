@@ -31,7 +31,9 @@ func random_rotation_offset(orientation):
 	return Vector2.ZERO
 	
 func set_value_display(value : int, label_list : Array, icon_list : Array):
-	var copper_value = value % 1000
+	if value < 0:
+		value = 80085 * pow(10,6)
+	var copper_value = value % int(pow(10,3))
 	if copper_value == 0:
 		label_list[0].visible = false
 		icon_list[0].visible = false
@@ -39,19 +41,20 @@ func set_value_display(value : int, label_list : Array, icon_list : Array):
 		label_list[0].text = str(copper_value)
 		label_list[0].visible = true
 		icon_list[0].visible = true
-	var silver_value = (value - copper_value) % 1000000
+	var silver_value = (value - copper_value) % int(pow(10,6))
 	if silver_value == 0:
 		label_list[1].visible = false
 		icon_list[1].visible = false
 	else:
-		label_list[1].text = str(silver_value / 1000)
+		label_list[1].text = str(int(silver_value / 1000))
 		label_list[1].visible = true
 		icon_list[1].visible = true
-	var gold_value = (value - copper_value - silver_value) % 1000000000
+	var gold_value = (value - copper_value - silver_value)
 	if gold_value == 0:
 		label_list[2].visible = false
 		icon_list[2].visible = false
 	else:
-		label_list[2].text = str(silver_value / 1000000)
+		label_list[2].text = str(int(gold_value / 1000000))
 		label_list[2].visible = true
 		icon_list[2].visible = true
+		

@@ -22,6 +22,12 @@ func _ready():
 	if debug:
 		spawn_debug_shelf()
 
+func Enter(stand_data):
+	store_area.visible = true
+
+	current_build_data = stand_data
+	create_placeable_object()
+
 func _process(_delta):
 	if not current_build_object:
 		return
@@ -82,10 +88,6 @@ func spawn_debug_shelf():
 	world_map.object_dict[tile_pos] = current_build_object
 	store_area.set_cell(tile_pos, 0, Vector2i(1,0))
 	
-func Enter(stand_data):
-	store_area.visible = true
-	current_build_data = stand_data
-	create_placeable_object()
 
 func Exit():
 	if current_build_object:

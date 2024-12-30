@@ -22,10 +22,10 @@ var reserved_spots = 0
 
 signal new_customer
 signal next_customer
-signal no_customer
+signal no_customer_in_queue
 
 func _ready():
-	SignalService.next_customer.connect(remove_customer)
+	SignalService.send_next_customer.connect(remove_customer)
 	work_progress_bar.visible = false
 	pass
 
@@ -81,7 +81,7 @@ func remove_customer():
 		removed_customer.bought_basket()
 		next_customer.emit()
 	elif reserved_spots != 0:
-		no_customer.emit()
+		no_customer_in_queue.emit()
 #
 #func work_on_queue():
 	#if customer_queue.is_empty() or in_work_cooldown:

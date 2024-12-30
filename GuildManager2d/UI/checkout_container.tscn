@@ -8,17 +8,17 @@
 [ext_resource type="Texture2D" uid="uid://bwkmwhg7gn8yi" path="res://Asset/UI/ui_value_silver.png" id="5_1077b"]
 [ext_resource type="Texture2D" uid="uid://di0q3sninmdyc" path="res://Asset/UI/ui_value_copper.png" id="6_cxopk"]
 
-[node name="CheckoutContainer" type="TextureRect" node_paths=PackedStringArray("item_icon", "item_amount_label", "gold_icon", "gold_value_label", "silver_icon", "silver_value_label", "copper_icon", "copper_value_label")]
+[node name="CheckoutContainer" type="TextureRect" node_paths=PackedStringArray("item_icon", "item_amount_label", "copper_icon", "silver_icon", "gold_icon", "copper_value_label", "silver_value_label", "gold_value_label")]
 texture = ExtResource("1_jrtot")
 script = ExtResource("2_83j1f")
 item_icon = NodePath("HBoxContainer/MarginContainer/ItemIcon")
 item_amount_label = NodePath("HBoxContainer/ItemAmount")
-gold_icon = NodePath("HBoxContainer/ValueDisplay/VBoxContainer/GoldIcon")
-gold_value_label = NodePath("HBoxContainer/ValueDisplay/MarginContainer/VBoxContainer2/GoldValueLabel")
-silver_icon = NodePath("HBoxContainer/ValueDisplay/VBoxContainer/SilverIcon")
-silver_value_label = NodePath("HBoxContainer/ValueDisplay/MarginContainer/VBoxContainer2/SilverValueLabel")
 copper_icon = NodePath("HBoxContainer/ValueDisplay/VBoxContainer/CopperIcon")
+silver_icon = NodePath("HBoxContainer/ValueDisplay/VBoxContainer/SilverIcon")
+gold_icon = NodePath("HBoxContainer/ValueDisplay/VBoxContainer/GoldIcon")
 copper_value_label = NodePath("HBoxContainer/ValueDisplay/MarginContainer/VBoxContainer2/CopperValueLabel")
+silver_value_label = NodePath("HBoxContainer/ValueDisplay/MarginContainer/VBoxContainer2/SilverValueLabel")
+gold_value_label = NodePath("HBoxContainer/ValueDisplay/MarginContainer/VBoxContainer2/GoldValueLabel")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

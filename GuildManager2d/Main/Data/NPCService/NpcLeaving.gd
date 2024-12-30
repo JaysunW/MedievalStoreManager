@@ -4,22 +4,11 @@ extends State
 @export var navigation_agent : NavigationAgent2D
 @export var target_position : Vector2
 
-var entrance_point : Marker2D
-
 var speed : int
 
 func _ready():
 	speed = customer.speed
-	entrance_point = customer.npc_service_reference.entrance_point
 
-func Enter():
-	customer.get_random_shopping_list()
-	target_position = entrance_point.global_position
-	make_path()
-
-func Update(_delta):
-	pass
-		
 func Physics_process(_delta):
 	if not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
@@ -28,7 +17,14 @@ func Physics_process(_delta):
 		customer.velocity = dir * speed * _delta
 		customer.move_and_slide()
 	else:
-		Change_state("searching")
+		customer.npc_service_reference.npc_left(customer)
 
+func Enter():
+	customer.npc_service_reference.customer_to_npc(customer)
+	#TODO: if not possible to leave teleport and try then to leave
+	var leave_point = customer.npc_service_reference.get_leaving_point()
+	target_position = leave_point.position
+	make_path()
+	
 func make_path():
 	navigation_agent.target_position = target_position

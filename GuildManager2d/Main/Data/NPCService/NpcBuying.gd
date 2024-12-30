@@ -5,15 +5,14 @@ extends State
 @export var customer : CharacterBody2D
 @export var navigation_agent : NavigationAgent2D
 @export var target_position : Vector2
-@export var view_component : Node2D
 
 @onready var wait_timer = $WaitTimer
 
 var checkout_list : Array
 var current_checkout : StaticBody2D
-var speed : int
 var patience_counter = 0
 var queue_distance = 24
+var speed : int
 
 var is_waiting_open_checkout = false
 
@@ -53,7 +52,7 @@ func search_checkout():
 		if navigation_agent.is_target_reachable():
 			current_checkout.new_customer.connect(set_next_customer)
 			current_checkout.next_customer.connect(next_spot)
-			current_checkout.no_customer.connect(remove_next_customer)
+			current_checkout.no_customer_in_queue.connect(remove_next_customer)
 			current_checkout.reserve_spot()
 			return
 		#print_debug("Couldn't get to checkout, wait until reachable or steal")
@@ -74,7 +73,7 @@ func next_spot():
 func Update(_delta):
 	if customer.has_been_billed:
 		#print_debug("Paid for items and is leaving")
-		Change_state("idle")
+		Change_state("leaving")
 		
 func Physics_process(_delta):	
 	if is_waiting_open_checkout :
@@ -97,8 +96,7 @@ func Physics_process(_delta):
 		if distance_vec < queue_distance:
 			customer.change_animation(Vector2.ZERO)
 			if not customer.is_waiting_in_queue:
-				if current_checkout.new_customer.is_connected(set_next_customer):
-					current_checkout.new_customer.disconnect(set_next_customer)
+				disconnect_checkout_signals()
 				spot_nr = current_checkout.add_customer(customer)
 				customer.is_waiting_in_queue = true
 			return
@@ -111,7 +109,6 @@ func Physics_process(_delta):
 		else:
 			customer.change_animation(Vector2.ZERO)
 		return 
-	
 	if target_position != current_checkout.position:
 		target_position = current_checkout.position		
 		make_path()
@@ -126,11 +123,20 @@ func Physics_process(_delta):
 		customer.change_animation(Vector2.ZERO)
 
 	if not customer.is_waiting_in_queue:
-		if current_checkout.new_customer.is_connected(set_next_customer):
-			current_checkout.new_customer.disconnect(set_next_customer)
+		disconnect_checkout_signals()
 		spot_nr = current_checkout.add_customer(customer)
 		customer.is_waiting_in_queue = true
-
+		
+func disconnect_checkout_signals():
+	if not current_checkout:
+		return
+	if current_checkout.new_customer.is_connected(set_next_customer):
+		current_checkout.new_customer.disconnect(set_next_customer)
+	if current_checkout.next_customer.is_connected(set_next_customer):
+		current_checkout.next_customer.disconnect(set_next_customer)
+	if current_checkout.no_customer_in_queue.is_connected(set_next_customer):
+		current_checkout.no_customer_in_queue.disconnect(set_next_customer)
+	
 func make_path():
 	navigation_agent.target_position = target_position
 
@@ -141,4 +147,4 @@ func _on_wait_timer_timeout():
 		search_checkout()
 	else: 
 		#print_debug("Customer was impatient and left without paying")
-		Change_state("idle")
+		Change_state("leaving")

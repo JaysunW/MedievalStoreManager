@@ -66,6 +66,7 @@ func add_change(value: int):
 
 func multiply_change(mulitplier: float):
 	total_change = int(total_change * mulitplier)
+	print("total_Change: ", total_change)
 	value_display.set_current_display(total_change)
 
 func customer_paid():
@@ -80,13 +81,17 @@ func customer_paid():
 			Gold.gold_flash.emit(Color.GREEN, 0.4)
 		Gold.add_gold(total_payment)
 		total_change = 0
-		SignalService.next_customer.emit()
+		SignalService.send_next_customer.emit()
 		customer_list.pop_front()
 		remove_customer_visual()
 		value_display.reset()
 		if len(customer_list) > 0:
 			sort_customer_visual()
 			setup_info(customer_list.front())
+		else:
+			for container in container_list:
+				container.queue_free()
+			container_list.clear()
 
 func setup_info(customer):
 	show_customer_shopping_list(customer)
@@ -115,18 +120,25 @@ func show_customer_shopping_list(customer):
 func determine_customer_paid():
 	var modulate_list = [10,50,100,500]
 	var modulo_value = modulate_list.pick_random()
+	print("Modulo_value: ", modulo_value)
 	var rest = total_value % modulo_value
-	if total_value < pow(10, 6):
-		modulo_value += pow(10,3) * Global.rng.randi_range(0,1)
-		rest = total_value % int(modulo_value)
-	else:
-		var rng_value = Global.rng.randi_range(0,2)
-		if rng_value == 1:
-			modulo_value += pow(10,3)
-		elif rng_value == 2:
-			modulo_value += pow(10,6)
-		rest = total_value % int(modulo_value)
-	total_payment = total_value + rest
+	#if total_value > pow(10, 3) and total_value < pow(10, 6):
+		#var save_list = []
+		#for value in modulate_list:
+			#save_list.append(value * pow(10, 3))
+		#modulate_list += save_list
+		#modulo_value = modulate_list.pick_random()
+		#rest = total_value % int(modulo_value)
+	#else:
+		#var save_list = []
+		#for value in modulate_list:
+			#save_list.append(value * pow(10, 3))
+			#save_list.append(value * pow(10, 6))
+		#modulate_list += save_list
+		#modulo_value = modulate_list.pick_random()
+		#rest = total_value % int(modulo_value)
+	print("Rest: ", rest)
+	total_payment = total_value + modulo_value - rest
 	value_display.set_paid_display(total_payment)
 	value_display.set_change_display(total_payment - total_value)
 
