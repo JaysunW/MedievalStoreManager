@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyfmmnkubb1fo"
-path="res://.godot/imported/filled_shelf.png-4445dfbce55cb72582ceb0a3a96365b9.ctex"
+uid="uid://ddda4e46600pt"
+path="res://.godot/imported/checkout.png-4e2447be9010ce7f4151ee8868ed905b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/Structure/filled_shelf.png"
-dest_files=["res://.godot/imported/filled_shelf.png-4445dfbce55cb72582ceb0a3a96365b9.ctex"]
+source_file="res://Asset/Structure/Checkout/checkout.png"
+dest_files=["res://.godot/imported/checkout.png-4e2447be9010ce7f4151ee8868ed905b.ctex"]
 
 [params]
 

@@ -6,10 +6,15 @@ class_name StructureClass
 @export var interaction_object_component : Area2D
 @export var needs_front_space = false
 @export var size_list : Array[Vector2i]
+@export var keep_collision_left = false
 
+var size_offset = Vector2i.ZERO
 var structure_data = {}
 
 var current_orientation = Utils.Orientation.SOUTH
+
+func _ready() -> void:
+	size_offset = get_size_offset_position()
 
 func prepare_structure(should_prepare=true):
 	if not sprite_handler:
@@ -23,7 +28,8 @@ func rotate_object(new_orentation):
 	if not orientation_component:
 		return
 	current_orientation = posmod(current_orientation + new_orentation, 4)
-	orientation_component.change_orientation_state(current_orientation)
+	orientation_component.change_orientation_state(current_orientation, keep_collision_left)
+	size_list = orientation_component.get_oriented_size_list(size_list)
 
 func get_size_list():
 	return size_list
@@ -49,10 +55,21 @@ func get_space_list():
 	return size_list + output_list
 
 func get_position_offset():
-	if not orientation_component:
-		return Vector2.ZERO
-	return orientation_component.position_offset
+	var size_offset = size_offset
+	return Vector2i.ZERO + size_offset
 	
+func get_size_offset_position():
+	var x_dif = 0
+	var y_dif = 0
+	for pos in size_list:
+		if pos.x > x_dif:
+			x_dif = pos.x
+		if pos.y > y_dif:
+			y_dif = pos.y
+	x_dif = x_dif / 2.0
+	y_dif = y_dif / 2.0
+	return Vector2i(32 * x_dif, 32 * y_dif)
+		
 func change_color(color, change_alpha=false):
 	if not sprite_handler:
 		return

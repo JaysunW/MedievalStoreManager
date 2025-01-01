@@ -12,6 +12,7 @@ signal chose_expanding_option
 signal try_starting_work_day
 signal starting_work_day
 signal ending_work_day
+signal try_ending_day
 signal end_day
 
 signal send_customer_schedule(Array)
@@ -27,6 +28,8 @@ signal camera_offset(Vector2)
 signal send_next_customer
 
 signal add_to_world
+signal add_checkout
+signal remove_checkout
 
 func restrict_player(interaction:bool = true, movement:bool=true):
 	restrict_player_interaction.emit(interaction)

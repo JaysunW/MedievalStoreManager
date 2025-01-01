@@ -27,10 +27,10 @@ signal no_customer_in_queue
 var data = {}
 
 func _ready():
+	super()
 	#SignalService.add_checkout_to_world_dic
 	SignalService.send_next_customer.connect(remove_customer)
 	work_progress_bar.visible = false
-	pass
 
 func is_full():
 	return reserved_spots >= checkout_queue_max
@@ -130,3 +130,8 @@ func change_color(color, change_alpha=false):
 	
 func flash_color(color, flash_time = 0.1, change_alpha = false):
 	sprite_handler.flash_color(color, flash_time, change_alpha)
+	
+func get_position_offset():
+	var pos = super()
+	return pos + Vector2i(0, -16)
+	

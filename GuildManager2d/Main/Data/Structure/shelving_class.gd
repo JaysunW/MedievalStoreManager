@@ -4,7 +4,13 @@ extends StructureClass
 
 var data = {}
 var content_data = {}
-	
+
+func get_position_offset():
+	var size_offset = get_size_offset_position()
+	if not orientation_component:
+		return Vector2.ZERO + size_offset
+	return orientation_component.position_offset + size_offset + Vector2i(0, -16)
+
 func get_npc_interaction_position():
 	return interaction_marker.global_position + Global.random_rotation_offset(orientation_component.current_orientation)
 

@@ -1,10 +1,10 @@
-[gd_scene load_steps=91 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=92 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
 [ext_resource type="Texture2D" uid="uid://b2j0w50fu1tv3" path="res://Asset/TileSet/tile_set_outside_ground.png" id="3_bw1q4"]
 [ext_resource type="PackedScene" uid="uid://df4ydop0drcb6" path="res://Main/Data/Player/player.tscn" id="3_oikkr"]
-[ext_resource type="Script" path="res://Main/Data/WorlMap.gd" id="5_l1qj5"]
+[ext_resource type="Script" path="res://Main/Data/WorldMap.gd" id="5_l1qj5"]
 [ext_resource type="Script" path="res://Main/Data/Structure/BuildService.gd" id="5_sdoag"]
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/store_area.gd" id="6_3ujva"]
 [ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/package.tscn" id="6_5qldv"]
@@ -52,6 +52,7 @@
 [ext_resource type="Script" path="res://Main/Data/TimeService/day.gd" id="41_2yluw"]
 [ext_resource type="Script" path="res://Main/Data/TimeService/evening.gd" id="42_q2tra"]
 [ext_resource type="Script" path="res://UI/ui_time.gd" id="44_0ffnh"]
+[ext_resource type="Script" path="res://Main/Data/start_day_button.gd" id="44_w780m"]
 [ext_resource type="Script" path="res://StateMachine/StateMachine.gd" id="45_2bqcg"]
 [ext_resource type="Script" path="res://UI/ui_license_menu.gd" id="54_68k68"]
 [ext_resource type="PackedScene" uid="uid://ciufelrkb6e2w" path="res://UI/ui_unlock_button.tscn" id="54_vxv3a"]
@@ -731,6 +732,30 @@ horizontal_alignment = 1
 [node name="Space3" type="Control" parent="UI/PlayerUI/UITime/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="PanelContainer2" type="PanelContainer" parent="UI/PlayerUI/UITime"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_top = 114.0
+offset_right = -64.0
+offset_bottom = 173.0
+grow_horizontal = 0
+theme = ExtResource("7_ykg55")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PlayerUI/UITime/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Button" type="Button" parent="UI/PlayerUI/UITime/PanelContainer2/MarginContainer"]
+layout_mode = 2
+text = "Start Day
+"
+script = ExtResource("44_w780m")
 
 [node name="UIGold" type="CanvasLayer" parent="UI/PlayerUI" node_paths=PackedStringArray("gold_label", "silver_label", "copper_label", "color_flash_timer")]
 layer = 0
@@ -2917,6 +2942,7 @@ metadata/_edit_lock_ = true
 [connection signal="timeout" from="Main/BuildService/PlaceBuild/WaitTimer" to="Main/BuildService/PlaceBuild" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="Main/BuildService/ExpandStore/WaitTimer" to="Main/BuildService/ExpandStore" method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="Main/TimeService/StateMachine/Day/DayTimer" to="Main/TimeService/StateMachine/Day" method="_on_day_timer_timeout"]
+[connection signal="button_down" from="UI/PlayerUI/UITime/PanelContainer2/MarginContainer/Button" to="UI/PlayerUI/UITime/PanelContainer2/MarginContainer/Button" method="_on_button_down"]
 [connection signal="timeout" from="UI/PlayerUI/UIGold/ColorFlashTimer" to="UI/PlayerUI/UIGold" method="_on_color_flash_timer_timeout"]
 [connection signal="timeout" from="UI/PlayerUI/UIHeldObject/FlashTimer" to="UI/PlayerUI/UIHeldObject" method="_on_flash_timer_timeout"]
 [connection signal="button_down" from="UI/UIBuildMenu/ExpandStoreContainer/MarginContainer/ParentVContainer/MarginContainer/HeaderContainer/ExpandButton" to="UI/UIBuildMenu" method="_on_expand_button_button_down"]

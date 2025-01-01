@@ -1,19 +1,26 @@
-[gd_scene load_steps=11 format=3 uid="uid://bi4fn4o63lr4e"]
+[gd_scene load_steps=14 format=3 uid="uid://bi4fn4o63lr4e"]
 
 [ext_resource type="Script" path="res://Main/Data/Structure/Checkout/checkout.gd" id="1_ie8xw"]
-[ext_resource type="Texture2D" uid="uid://ddda4e46600pt" path="res://Asset/Checkout.png" id="3_i0kwl"]
+[ext_resource type="Texture2D" uid="uid://ddda4e46600pt" path="res://Asset/Structure/Checkout/checkout.png" id="3_i0kwl"]
 [ext_resource type="Script" path="res://Main/Data/Structure/Checkout/checkout_spritehandler.gd" id="3_lp8r7"]
 [ext_resource type="PackedScene" uid="uid://dp1xpv3nykfmd" path="res://Component/interactable_object_component.tscn" id="6_xaefe"]
 [ext_resource type="Texture2D" uid="uid://bhff6vdh1dp4k" path="res://Asset/UI/stand_fill_under.png" id="7_emm2i"]
 [ext_resource type="Script" path="res://Component/orientation_component.gd" id="8_5i0mw"]
 [ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_d7oje"]
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_dxxwc"]
+[ext_resource type="Texture2D" uid="uid://dx3dgt6ub6k0t" path="res://Asset/32x32white.png" id="9_i15ub"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erayf"]
-size = Vector2(64, 16)
+size = Vector2(64, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_73btw"]
+size = Vector2(23, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_so47g"]
-size = Vector2(64, 32)
+size = Vector2(64, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ia2p"]
+size = Vector2(25, 59)
 
 [node name="Checkout" type="StaticBody2D" node_paths=PackedStringArray("work_progress_bar", "sprite_handler", "orientation_component", "interaction_object_component")]
 texture_filter = 1
@@ -25,18 +32,30 @@ sprite_handler = NodePath("Skin")
 orientation_component = NodePath("OrientationComponent")
 interaction_object_component = NodePath("InteractionObjectComponent")
 needs_front_space = true
-size_list = [Vector2i(0, 0), Vector2i(1, 0)]
+size_list = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
+keep_collision_left = true
+
+[node name="Frontal" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_erayf")
+
+[node name="Side" type="CollisionShape2D" parent="."]
+position = Vector2(-19.5, -23)
+shape = SubResource("RectangleShape2D_73btw")
+
+[node name="OrientationComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_handler", "interaction_marker", "rotation_node_list")]
+script = ExtResource("8_5i0mw")
+sprite_handler = NodePath("../Skin")
+interaction_marker = NodePath("../InteractionMarker")
+rotation_node_list = [NodePath(".."), NodePath("../InteractionObjectComponent")]
 
 [node name="Skin" type="Sprite2D" parent="."]
 texture = ExtResource("3_i0kwl")
-offset = Vector2(0, -16)
+offset = Vector2(0, -32)
+hframes = 4
 script = ExtResource("3_lp8r7")
 
 [node name="ChangeColorTimer" type="Timer" parent="Skin"]
-
-[node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_erayf")
 
 [node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Interface"] instance=ExtResource("6_xaefe")]
 position = Vector2(0, -16)
@@ -45,8 +64,14 @@ collision_mask = 0
 monitoring = false
 main_object = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionObjectComponent"]
+[node name="Frontal" type="CollisionShape2D" parent="InteractionObjectComponent"]
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_so47g")
+debug_color = Color(0.27451, 1, 0.501961, 0.419608)
+
+[node name="Side" type="CollisionShape2D" parent="InteractionObjectComponent"]
+position = Vector2(-19.5, -13.5)
+shape = SubResource("RectangleShape2D_4ia2p")
 debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 
 [node name="FillProgressbar" type="TextureProgressBar" parent="."]
@@ -77,10 +102,9 @@ one_shot = true
 [node name="InteractionMarker" type="Marker2D" parent="."]
 position = Vector2(0, 16)
 
-[node name="OrientationComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite_handler", "interaction_marker")]
-script = ExtResource("8_5i0mw")
-sprite_handler = NodePath("../Skin")
-interaction_marker = NodePath("../InteractionMarker")
+[node name="Sprite2D" type="Sprite2D" parent="InteractionMarker"]
+scale = Vector2(0.1875, 0.1875)
+texture = ExtResource("9_i15ub")
 
 [connection signal="timeout" from="WorkTimer" to="." method="_on_work_timer_timeout"]
 [connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]

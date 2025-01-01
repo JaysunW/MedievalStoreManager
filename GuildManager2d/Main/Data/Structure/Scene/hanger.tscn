@@ -21,6 +21,7 @@ size = Vector2(19, 20)
 sprite_handler = NodePath("SpriteHandler")
 orientation_component = NodePath("OrientationComponent")
 interaction_object_component = NodePath("InteractionObjectComponent")
+size_list = Array[Vector2i]([Vector2i(0, 0)])
 
 [node name="SpriteHandler" parent="." index="0" node_paths=PackedStringArray("shelving_sprite_list", "item_position_marker")]
 script = ExtResource("2_noidu")

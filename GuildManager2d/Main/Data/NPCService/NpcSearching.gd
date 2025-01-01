@@ -36,7 +36,7 @@ func restart_search():
 			customer.basket_list = found_item_list
 			Change_state("buying")
 		else:
-			Change_state("idle")
+			Change_state("leaving")
 		return 
 		
 	current_search_id = id_list.pick_random()
