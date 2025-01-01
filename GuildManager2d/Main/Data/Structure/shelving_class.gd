@@ -1,44 +1,12 @@
-extends StaticBody2D
-
-@onready var interaction_object_component = $InteractionObjectComponent
-@onready var orientation_component: Node2D = $OrientationComponent
-@onready var sprite_handler: Node2D = $SpriteHandler
-
+extends StructureClass
 @export var package_scene : PackedScene
 @export var interaction_marker : Marker2D
-@export var tile_size = Vector2i(1, 1)
 
 var data = {}
 var content_data = {}
-
-var tile_layer_ref : Node2D
-var need_space = true
-var current_orientation = Utils.Orientation.SOUTH
-
-func prepare_structure(should_prepare=true):
-	sprite_handler.should_prepare_building(should_prepare)
-	for collision in orientation_component.current_collision_list:
-		collision.set_deferred("disabled", not should_prepare)
-	interaction_object_component.set_deferred("monitorable", should_prepare)
-
-func get_space_vector():
-	var space_vector_list = [Vector2i.ZERO]
-	match current_orientation:
-		Utils.Orientation.SOUTH:
-			space_vector_list.append(Vector2i(0, 1))
-		Utils.Orientation.WEST:
-			space_vector_list.append(Vector2i(-1, 0))
-		Utils.Orientation.NORTH:
-			space_vector_list.append(Vector2i(0, -1))
-		Utils.Orientation.EAST:
-			space_vector_list.append(Vector2i(1, 0))
-	return space_vector_list
 	
 func get_npc_interaction_position():
 	return interaction_marker.global_position + Global.random_rotation_offset(orientation_component.current_orientation)
-
-func get_position_offset():
-	return orientation_component.position_offset
 
 func get_content_data():
 	content_data["value"] = Data.item_data[content_data["id"]]["value"]
@@ -88,7 +56,7 @@ func get_content_instance():
 	var content = package_scene.instantiate()
 	content.data = get_content_data().duplicate()
 	content.position = global_position
-	tile_layer_ref.add_child(content)
+	SignalService.add_to_world.emit(content)
 	return content
 
 func empty_content():

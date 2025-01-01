@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends StructureClass
 
 @onready var work_timer = $WorkTimer
 @onready var flash_timer = $FlashTimer
@@ -6,12 +6,6 @@ extends StaticBody2D
 @onready var interaction_marker = $InteractionMarker
 
 @export var work_progress_bar : TextureProgressBar
-@export var sprite_handler : Node2D
-@export var orientation_component : Node2D
-@export var interaction_object_component : Area2D
-@export var tile_size = Vector2i(1, 1)
-
-var current_orientation = Utils.Orientation.SOUTH
 
 var opened_menu = false
 
@@ -31,7 +25,6 @@ signal next_customer
 signal no_customer_in_queue
 
 var data = {}
-var tile_layer_ref : Node2D
 
 func _ready():
 	#SignalService.add_checkout_to_world_dic
@@ -131,34 +124,6 @@ func _on_work_timer_timeout():
 
 func _on_show_progress_timer_timeout():
 	work_progress_bar.visible = false
-
-func prepare_structure(should_prepare=true):
-	sprite_handler.should_prepare_building(should_prepare)
-	for collision in orientation_component.current_collision_list:
-		collision.set_deferred("disabled", not should_prepare)
-	interaction_object_component.set_deferred("monitorable", should_prepare)
-
-func rotate_object(new_orentation):
-	return
-	current_orientation = posmod(current_orientation + new_orentation, 4)
-	orientation_component.change_orientation_state(current_orientation)
-
-func get_space_vector():
-	var space_vector_list = [Vector2i.ZERO]
-	match current_orientation:
-		Utils.Orientation.SOUTH:
-			space_vector_list.append(Vector2i(0, 1))
-		Utils.Orientation.WEST:
-			space_vector_list.append(Vector2i(-1, 0))
-		Utils.Orientation.NORTH:
-			space_vector_list.append(Vector2i(0, -1))
-		Utils.Orientation.EAST:
-			space_vector_list.append(Vector2i(1, 0))
-	return space_vector_list
-
-func get_position_offset():
-	return Vector2.ZERO
-	return orientation_component.position_offset
 	
 func change_color(color, change_alpha=false):
 	sprite_handler.change_color(color, change_alpha)

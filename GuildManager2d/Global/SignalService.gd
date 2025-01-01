@@ -26,6 +26,8 @@ signal camera_offset(Vector2)
 
 signal send_next_customer
 
+signal add_to_world
+
 func restrict_player(interaction:bool = true, movement:bool=true):
 	restrict_player_interaction.emit(interaction)
 	restrict_player_movement.emit(movement)

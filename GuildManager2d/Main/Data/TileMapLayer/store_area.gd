@@ -4,7 +4,7 @@ var last_building_dicitonary : Dictionary
 var build_area_atlas = Vector2i(0,0)
 var obstructed_area_atlas = Vector2i(1,0)
 var buildable_area_atlas = Vector2i(2,0)
-var building_space_area_atlas = Vector2i(3,0)
+var structure_space_area_atlas = Vector2i(3,0)
 
 func _ready() -> void:
 	visible = false
@@ -14,9 +14,9 @@ func is_in_shop_area(mouse_tile_pos):
 	return atlas_coords != Vector2i(-1,-1)
 
 func is_buildable_area(mouse_tile_pos, building):
-	var space_vector_list = building.get_space_vector()
+	var space_vector_list = building.get_space_list()
 	for space_vector in space_vector_list:
-		var tile_position = mouse_tile_pos + space_vector
+		var tile_position = mouse_tile_pos + Vector2i(space_vector)
 		var tile_data = get_cell_tile_data(tile_position)
 		var is_free = tile_data and tile_data.get_custom_data("is_building_area")
 		if tile_position != mouse_tile_pos:
@@ -42,7 +42,7 @@ func show_building_area(mouse_tile_pos, building):
 		building.change_color(Color.WHITE)
 		change_atlas = buildable_area_atlas
 	
-	var space_vector_list = building.get_space_vector()
+	var space_vector_list = building.get_space_list()
 	for space_vector in space_vector_list:
 		var tile_position = mouse_tile_pos + space_vector
 		if is_in_shop_area(tile_position):
@@ -54,10 +54,11 @@ func set_build_area(mouse_tile_pos):
 
 func place_object_at(mouse_tile_pos, building):
 	last_building_dicitonary = {}
-	var space_vector_list = building.get_space_vector()
+	var space_vector_list = building.get_space_list()
+	var obstructed_area = building.get_size_list()
 	for space_vector in space_vector_list:
 		var tile_position = mouse_tile_pos + space_vector
-		if tile_position != mouse_tile_pos:
-			set_cell(tile_position, 0, building_space_area_atlas)
-		else:
+		if space_vector in obstructed_area:
 			set_cell(tile_position, 0, obstructed_area_atlas)
+		else:
+			set_cell(tile_position, 0, structure_space_area_atlas)

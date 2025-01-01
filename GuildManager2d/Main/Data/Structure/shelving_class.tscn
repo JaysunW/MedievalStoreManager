@@ -38,7 +38,6 @@ debug_color = Color(0.27451, 1, 0.501961, 0.419608)
 script = ExtResource("4_r0u74")
 interaction_marker = NodePath("../InteractionMarker")
 rotation_node_list = [NodePath(".."), NodePath("../InteractionObjectComponent")]
-orientation_group_string = "orientation_collision"
 
 [node name="InteractionMarker" type="Marker2D" parent="."]
 position = Vector2(0, 16)

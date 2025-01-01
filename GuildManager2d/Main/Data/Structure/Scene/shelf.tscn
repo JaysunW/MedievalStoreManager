@@ -18,7 +18,11 @@ size = Vector2(32, 11)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y01nl"]
 size = Vector2(16, 23)
 
-[node name="Shelf" instance=ExtResource("1_q38e0")]
+[node name="Shelf" node_paths=PackedStringArray("sprite_handler", "orientation_component", "interaction_object_component") instance=ExtResource("1_q38e0")]
+sprite_handler = NodePath("SpriteHandler")
+orientation_component = NodePath("OrientationComponent")
+interaction_object_component = NodePath("InteractionObjectComponent")
+needs_front_space = true
 
 [node name="SpriteHandler" parent="." index="0" node_paths=PackedStringArray("shelf_sprite_list", "marker_list")]
 script = ExtResource("2_5hcp5")

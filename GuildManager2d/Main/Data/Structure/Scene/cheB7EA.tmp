@@ -24,8 +24,8 @@ work_progress_bar = NodePath("FillProgressbar")
 sprite_handler = NodePath("Skin")
 orientation_component = NodePath("OrientationComponent")
 interaction_object_component = NodePath("InteractionObjectComponent")
+tile_size = Vector2i(2, 1)
 needs_front_space = true
-size_list = [Vector2i(0, 0), Vector2i(1, 0)]
 
 [node name="Skin" type="Sprite2D" parent="."]
 texture = ExtResource("3_i0kwl")

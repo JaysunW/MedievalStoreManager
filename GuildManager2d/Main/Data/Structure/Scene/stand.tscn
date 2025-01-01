@@ -16,7 +16,11 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_4v3qw"]
 radius = 8.0
 
-[node name="Shelf" instance=ExtResource("1_0v7nn")]
+[node name="Stand" node_paths=PackedStringArray("sprite_handler", "orientation_component", "interaction_object_component") instance=ExtResource("1_0v7nn")]
+sprite_handler = NodePath("SpriteHandler")
+orientation_component = NodePath("OrientationComponent")
+interaction_object_component = NodePath("InteractionObjectComponent")
+needs_front_space = true
 
 [node name="SpriteHandler" parent="." index="0" node_paths=PackedStringArray("shelving_sprite", "item_position_marker")]
 script = ExtResource("2_ote6w")

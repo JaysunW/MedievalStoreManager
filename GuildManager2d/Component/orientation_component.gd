@@ -3,7 +3,6 @@ extends Node2D
 @export var sprite_handler : Node2D
 @export var interaction_marker : Marker2D
 @export var rotation_node_list : Array[Node2D]
-@export var orientation_group_string : String
 
 var position_offset = Vector2.ZERO
 var collision_node_dictionary = {}

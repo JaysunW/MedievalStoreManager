@@ -11,7 +11,7 @@ extends Node2D
 @export var debug_marker : Marker2D
 @export var debug_stand_name : String
 
-var mouse_grid_offset = Vector2i(16,32)
+var mouse_grid_offset = Vector2i(16,48)
 var is_build_menu_open = false
 
 var current_build_data = {}
@@ -84,11 +84,10 @@ func create_placeable_object():
 	current_build_object = build_resource.instantiate()
 	var mouse_pos = get_global_mouse_position()
 	var tile_mouse_pos : Vector2i = store_area.local_to_map(mouse_pos)
-	current_build_object.position = tile_mouse_pos * 32 + mouse_grid_offset
-	world_map.add_child(current_build_object)
+	current_build_object.position = tile_mouse_pos * 32 + mouse_grid_offset + Vector2i(current_build_object.get_position_offset())
 	current_build_object.prepare_structure(false)
+	SignalService.add_to_world.emit(current_build_object)
 	current_build_object.data = current_build_data
-	current_build_object.tile_layer_ref = world_map
 	
 func spawn_debug_shelf():
 	var build_resource = Loader.load_structure_resource(debug_stand_name)
@@ -104,7 +103,6 @@ func spawn_debug_shelf():
 	for id in structure_data:
 		if structure_data[id]["name"] == debug_stand_name:
 			debug_stand.data = structure_data[id]
-	debug_stand.tile_layer_ref = world_map
 	debug_stand.prepare_structure(true)
 	world_map.object_dict[tile_pos] = current_build_object
 	store_area.set_cell(tile_pos, 0, Vector2i(1,0))

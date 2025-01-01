@@ -120,7 +120,6 @@ func show_customer_shopping_list(customer):
 func determine_customer_paid():
 	var modulate_list = [10,50,100,500]
 	var modulo_value = modulate_list.pick_random()
-	print("Modulo_value: ", modulo_value)
 	var rest = total_value % modulo_value
 	#if total_value > pow(10, 3) and total_value < pow(10, 6):
 		#var save_list = []
@@ -137,7 +136,6 @@ func determine_customer_paid():
 		#modulate_list += save_list
 		#modulo_value = modulate_list.pick_random()
 		#rest = total_value % int(modulo_value)
-	print("Rest: ", rest)
 	total_payment = total_value + modulo_value - rest
 	value_display.set_paid_display(total_payment)
 	value_display.set_change_display(total_payment - total_value)

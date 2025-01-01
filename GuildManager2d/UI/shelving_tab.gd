@@ -22,7 +22,6 @@ func fill_container_with_unlocks():
 	var shelving_structure_data = Data.shelving_structure_data
 	for id in range(len(shelving_structure_data)): 
 		if Global.is_license_unlocked([shelving_structure_data[id]["store_area"]]):
-			print("Added: ", shelving_structure_data[id]["name"])
 			var new_container = build_container.instantiate()
 			scroll_parent.add_child(new_container)
 			new_container.get_pressed_signal().connect(chosen_container)
