@@ -6,14 +6,17 @@ class_name StructureClass
 @export var interaction_object_component : Area2D
 @export var needs_front_space = false
 @export var size_list : Array[Vector2i]
+@export var main_pos : Vector2i
 @export var keep_collision_left = false
 
+var building_shader = null
 var size_offset = Vector2i.ZERO
 var structure_data = {}
 
 var current_orientation = Utils.Orientation.SOUTH
 
 func _ready() -> void:
+	building_shader = Loader.load_shader("res://Shader/build_shader.gdshader")
 	size_offset = get_size_offset_position()
 
 func prepare_structure(should_prepare=true):
@@ -55,7 +58,6 @@ func get_space_list():
 	return size_list + output_list
 
 func get_position_offset():
-	var size_offset = size_offset
 	return Vector2i.ZERO + size_offset
 	
 func get_size_offset_position():
@@ -79,3 +81,8 @@ func flash_color(color, flash_time = 0.1, change_alpha = false):
 	if not sprite_handler:
 		return
 	sprite_handler.flash_color(color, flash_time, change_alpha)
+	
+func remove_object():
+	for vec in size_list:
+		SignalService.remove_structure.emit(main_pos + vec)
+	queue_free()

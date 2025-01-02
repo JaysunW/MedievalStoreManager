@@ -38,6 +38,7 @@ func should_prepare_building(should_prepare):
 		change_color(Color(1,1,1,1))
 		for sprite in shelf_sprite_list:
 			sprite.z_index = 0
+			sprite.material = null
 		match current_orientation:
 			Utils.Orientation.EAST:
 				for marker in marker_list:
@@ -46,9 +47,10 @@ func should_prepare_building(should_prepare):
 				for marker in marker_list:
 					marker.position = marker_start_position[marker] + Vector2(6, -10)
 	else:
-		change_color(Color(1,1,1,0.6))
 		for sprite in shelf_sprite_list:
 			sprite.z_index = 2
+			sprite.material = ShaderMaterial.new()
+			sprite.material.shader = get_parent().building_shader
 		
 func rotate_sprite(next_frame):
 	current_orientation = next_frame

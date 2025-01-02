@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var change_color_timer = $ChangeColorTimer
 
-@export var shelving_sprite_list : Array[Sprite2D]
+@export var shelving_sprite : Sprite2D
 @export var item_position_marker : Marker2D
 @export var max_item_show_amount : int= 10
 @export var limit_show_amount : bool = false 
@@ -20,11 +20,10 @@ func _ready() -> void:
 
 func change_color(color, change_alpha=false):
 	if not is_flashing_color:
-		for sprite in shelving_sprite_list:
-			if change_alpha:
-				sprite.modulate = color
-			else:
-				sprite.modulate = Color(color.r,color.g,color.b, sprite.modulate.a)
+		if change_alpha:
+			shelving_sprite.modulate = color
+		else:
+			shelving_sprite.modulate = Color(color.r,color.g,color.b, shelving_sprite.modulate.a)
 
 func flash_color(color, flash_time = 0.1, change_alpha = false):
 	if not is_flashing_color:
@@ -35,29 +34,28 @@ func flash_color(color, flash_time = 0.1, change_alpha = false):
 func should_prepare_building(should_prepare):
 	if should_prepare:
 		change_color(Color(1,1,1,1))
-		for sprite in shelving_sprite_list:
-			sprite.z_index = 0
+		shelving_sprite.z_index = 0
+		shelving_sprite.material = null
 		match current_orientation:
 			Utils.Orientation.EAST:
-				item_position_marker.position = marker_start_position + Vector2(-6, -10)
+				item_position_marker.position = marker_start_position + Vector2(-6, -6)
 			Utils.Orientation.WEST:
-				item_position_marker.position = marker_start_position + Vector2(6, -10)
+				item_position_marker.position = marker_start_position + Vector2(6, -6)
 	else:
 		change_color(Color(1,1,1,0.6))
-		for sprite in shelving_sprite_list:
-			sprite.z_index = 2
+		shelving_sprite.z_index = 2
+		shelving_sprite.material = ShaderMaterial.new()
+		shelving_sprite.material.shader = get_parent().building_shader
 		
 func rotate_sprite(next_frame):
 	current_orientation = next_frame
-	for sprite in shelving_sprite_list:
-		if next_frame < sprite.hframes:
-			sprite.frame = next_frame
-		else: 
-			print_debug("next frame is not small enough")
+	if next_frame < shelving_sprite.hframes:
+		shelving_sprite.frame = next_frame
+	else: 
+		print_debug("next frame is not small enough")
 
 func offset_sprite(offset_vector):
-	for sprite in shelving_sprite_list:
-		sprite.position = offset_vector
+	shelving_sprite.position = offset_vector
 	
 func prepare_filling_building(input_content_data):
 	var max_value = input_content_data["max_amount"]
@@ -82,7 +80,6 @@ func prepare_filling_building(input_content_data):
 func show_filling_building(input_content_data):
 	var max_value = input_content_data["max_amount"]
 	var value = input_content_data["amount"]
-	
 	if limit_show_amount and max_value > max_item_show_amount:
 		value = max(1, int(remap(value, 0, max_value, 0, max_item_show_amount)))
 		max_value = max_item_show_amount
@@ -103,9 +100,6 @@ func create_shelf_filling(shelf_amount, placement_vector, sprite_path):
 		if current_orientation == Utils.Orientation.WEST:
 			random_offset = random_offset * -1
 		sprite.texture = Loader.shop_item_texture(sprite_path, true)
-		if placement_vector.x == 0:
-			random_offset *= int(remap(i, 0, shelf_amount-1, -5, 5))
-
 		sprite.position = start_position + placement_vector * int(remap(i, 0, shelf_amount-1, 0, start_offset * 2)) - random_offset
 		output_list.append(sprite)
 	return output_list

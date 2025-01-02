@@ -8,7 +8,6 @@ extends State
 
 @onready var wait_timer = $WaitTimer
 
-var checkout_list : Array
 var current_checkout : StaticBody2D
 var patience_counter = 0
 var queue_distance = 24
@@ -21,16 +20,23 @@ var spot_nr = INF
 
 func _ready():
 	speed = customer.speed
-	checkout_list = customer.npc_service_reference.get_current_checkouts()
 
 func find_open_checkout():
-	var output_checkout = null
+	var checkout_list = customer.npc_service_reference.get_current_checkouts()
+	var output_list = []
 	var min_checkout_queue = INF
 	for checkout in checkout_list:
-		if not checkout.is_full() and checkout.get_queue_size() < min_checkout_queue:
-			output_checkout = checkout
-			min_checkout_queue = checkout.get_queue_size()
-	return output_checkout
+		if checkout:
+			var reserved_spots = checkout.reserved_spots
+			if not checkout.is_full() and reserved_spots <= min_checkout_queue:
+				if min_checkout_queue == reserved_spots:
+					output_list.append(checkout)
+					min_checkout_queue = reserved_spots
+				else:
+					output_list.clear()
+					output_list.append(checkout)
+					min_checkout_queue = reserved_spots
+	return output_list.pick_random()
 
 func Enter():
 	search_checkout()

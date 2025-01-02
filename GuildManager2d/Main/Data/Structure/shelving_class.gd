@@ -6,7 +6,7 @@ var data = {}
 var content_data = {}
 
 func get_position_offset():
-	var size_offset = get_size_offset_position()
+	size_offset = get_size_offset_position()
 	if not orientation_component:
 		return Vector2.ZERO + size_offset
 	return orientation_component.position_offset + size_offset + Vector2i(0, -16)
@@ -60,7 +60,7 @@ func take_from_shelf():
 	
 func get_content_instance():
 	var content = package_scene.instantiate()
-	content.data = get_content_data().duplicate()
+	content.set_content(get_content_data().duplicate())
 	content.position = global_position
 	SignalService.add_to_world.emit(content)
 	return content

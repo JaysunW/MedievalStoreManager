@@ -54,8 +54,8 @@ func set_build_area(mouse_tile_pos):
 
 func place_object_at(mouse_tile_pos, building):
 	last_building_dicitonary = {}
-	var space_vector_list = building.get_space_list()
 	var obstructed_area = building.get_size_list()
+	var space_vector_list = building.get_space_list()
 	for space_vector in space_vector_list:
 		var tile_position = mouse_tile_pos + space_vector
 		if space_vector in obstructed_area:

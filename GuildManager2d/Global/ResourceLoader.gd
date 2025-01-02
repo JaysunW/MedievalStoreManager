@@ -1,6 +1,6 @@
 extends Node
 
-func texture(path):
+func load_texture(path):
 	if FileAccess.file_exists(path):
 		return load(path)
 	else:
@@ -23,6 +23,12 @@ func load_structure_resource(string : String):
 	var path = "res://Main/Data/Structure/Scene/"
 	path = path + string
 
+	if FileAccess.file_exists(path):
+		return load(path)
+	else:
+		return null
+		
+func load_shader(path : String):
 	if FileAccess.file_exists(path):
 		return load(path)
 	else:

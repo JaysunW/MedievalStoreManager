@@ -14,6 +14,7 @@ func _ready():
 	UI.open_stand_info_UI.connect(set_stand_info)
 	
 func set_stand_info(stand):
+	SignalService.restrict_player()
 	var stand_data : Dictionary = stand.data
 	var item_id : int = stand.get_content_data()["id"]
 	current_item_id = item_id
@@ -72,6 +73,7 @@ func _on_ten_more_button_down():
 
 func close_info():
 	visible = false
+	SignalService.restrict_player(false, false)
 
 func _on_close_button_down():
 	close_info()

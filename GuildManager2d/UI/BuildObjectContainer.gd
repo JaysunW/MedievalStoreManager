@@ -18,7 +18,7 @@ var id
 func set_container_info(input_id, data):
 	id = input_id
 	container_data = data
-	icon.texture = Loader.texture(data["sprite_path"])
+	icon.texture = Loader.load_texture(data["sprite_path"])
 	set_value(data["value"])
 	name_label.text = data["name"]
 	visible = true

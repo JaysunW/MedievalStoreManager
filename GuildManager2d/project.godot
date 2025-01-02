@@ -45,6 +45,11 @@ window/size/window_height_override=720
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[global_group]
+
+NavigationBlock=""
+Interface=""
+
 [input]
 
 left_mouse={

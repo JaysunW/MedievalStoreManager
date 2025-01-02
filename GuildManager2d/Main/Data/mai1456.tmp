@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://c7naugsspfwbi"]
+[gd_scene load_steps=92 format=4 uid="uid://c7naugsspfwbi"]
 
 [ext_resource type="Script" path="res://Main/Data/Player/PlayerCamera.gd" id="1_nll25"]
 [ext_resource type="Texture2D" uid="uid://bx21bs4db0j0q" path="res://Asset/build_tile_map.png" id="3_6qn2p"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/store_area.gd" id="6_3ujva"]
 [ext_resource type="PackedScene" uid="uid://ciyfid66c5ied" path="res://Main/Data/package.tscn" id="6_5qldv"]
 [ext_resource type="Texture2D" uid="uid://lva8aawtlbs4" path="res://Asset/TileSet/tile_set_building.png" id="6_othu0"]
+[ext_resource type="PackedScene" uid="uid://bi4fn4o63lr4e" path="res://Main/Data/Structure/Scene/checkout.tscn" id="6_t4ys1"]
 [ext_resource type="Script" path="res://Main/Data/TileMapLayer/store_ground.gd" id="6_xkvah"]
 [ext_resource type="Texture2D" uid="uid://4r1lwftoheyj" path="res://Asset/TileSet/tile_set_store_ground.png" id="7_5idlx"]
 [ext_resource type="Script" path="res://Main/Data/ItemService/ItemInterface.gd" id="7_7xygn"]
@@ -46,8 +47,6 @@
 [ext_resource type="Texture2D" uid="uid://ctvqmawkb4q3p" path="res://Asset/Bed.png" id="31_lfcfi"]
 [ext_resource type="Script" path="res://UI/ui_expansion_value.gd" id="34_ps4vx"]
 [ext_resource type="Texture2D" uid="uid://dmf5862hccy1r" path="res://Asset/UI/object_show_back.png" id="34_ub5vc"]
-[ext_resource type="Script" path="res://Main/Data/remove_structure.gd" id="36_030ap"]
-[ext_resource type="Script" path="res://Main/Data/move_structure.gd" id="36_hbdd8"]
 [ext_resource type="Script" path="res://Main/Data/TimeService/time_service.gd" id="38_ufk0a"]
 [ext_resource type="Script" path="res://Main/Data/TimeService/morning.gd" id="40_u51lp"]
 [ext_resource type="Script" path="res://Main/Data/TimeService/day.gd" id="41_2yluw"]
@@ -63,8 +62,13 @@
 [ext_resource type="Texture2D" uid="uid://dggtxkxvk3056" path="res://Asset/ShopItem/flask.png" id="60_6vfma"]
 [ext_resource type="Script" path="res://UI/decoration_tab.gd" id="60_ll8h0"]
 [ext_resource type="Script" path="res://UI/UIGold.gd" id="61_fw8fx"]
+[ext_resource type="Script" path="res://UI/ui_checkout.gd" id="62_436fy"]
 [ext_resource type="Texture2D" uid="uid://c58uj22u770w1" path="res://Asset/UI/ui_gold_back_side.png" id="62_w7ynh"]
 [ext_resource type="Script" path="res://UI/UIStandInfo.gd" id="63_7o3w4"]
+[ext_resource type="PackedScene" uid="uid://cupya0rlcek0b" path="res://UI/checkout_container.tscn" id="63_wy68g"]
+[ext_resource type="PackedScene" uid="uid://b1a6uqkjanr4" path="res://UI/checkout_animated_sprite.tscn" id="64_7rr4m"]
+[ext_resource type="Script" path="res://UI/checkout_value_display.gd" id="65_vw3st"]
+[ext_resource type="Texture2D" uid="uid://de30ayj671tde" path="res://Asset/UI/WhiteLine.png" id="66_ysomk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dfgxd"]
 texture = ExtResource("3_bw1q4")
@@ -345,7 +349,7 @@ texture_filter = 1
 
 [node name="PlayerCamera" type="Camera2D" parent="Main" node_paths=PackedStringArray("player")]
 position = Vector2(962, 848)
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 position_smoothing_speed = 4.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
@@ -422,6 +426,9 @@ tile_map_data = PackedByteArray("AAAlABwAAAAAAAAAAAAmABwAAAAAAAAAAAAnABwAAAAAAAA
 tile_set = SubResource("TileSet_2tx3j")
 metadata/_edit_lock_ = true
 
+[node name="Checkout" parent="Main/WorldMap" instance=ExtResource("6_t4ys1")]
+position = Vector2(928, 697)
+
 [node name="Player" parent="Main/WorldMap" instance=ExtResource("3_oikkr")]
 position = Vector2(979, 844)
 
@@ -462,12 +469,13 @@ main_object = NodePath("..")
 position = Vector2(0.5, -9.5)
 shape = SubResource("RectangleShape2D_hbc3p")
 
-[node name="ItemInterface" type="StaticBody2D" parent="Main/WorldMap" groups=["NavigationBlock"]]
+[node name="ItemInterface" type="StaticBody2D" parent="Main/WorldMap" node_paths=PackedStringArray("world_map") groups=["NavigationBlock"]]
 texture_filter = 1
 position = Vector2(880, 768)
 collision_layer = 64
 collision_mask = 64
 script = ExtResource("7_7xygn")
+world_map = NodePath("..")
 package_scene = ExtResource("6_5qldv")
 
 [node name="SpriteComponent" parent="Main/WorldMap/ItemInterface" instance=ExtResource("8_3qdpo")]
@@ -598,14 +606,12 @@ position = Vector2(172, 1089)
 [node name="LeavePoint2" type="Marker2D" parent="Main/CustomerService/LeavePoints"]
 position = Vector2(2046, 1089)
 
-[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("navigation_region", "placing_menu", "expand_menu", "remove_menu", "move_menu")]
+[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("navigation_region", "placing_menu", "expand_menu")]
 z_index = 10
 script = ExtResource("5_sdoag")
 navigation_region = NodePath("../../NavigationRegion2D")
 placing_menu = NodePath("PlaceBuild")
 expand_menu = NodePath("ExpandStore")
-remove_menu = NodePath("RemoveStructure")
-move_menu = NodePath("MoveStructure")
 
 [node name="PlaceBuild" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "world_map", "store_area", "debug_stand_marker", "debug_store_marker")]
 script = ExtResource("30_ne60k")
@@ -622,7 +628,7 @@ debug_store_name = "Checkout"
 position = Vector2(1169, 737)
 
 [node name="DebugStoreMarker" type="Marker2D" parent="Main/BuildService/PlaceBuild"]
-position = Vector2(919, 680)
+position = Vector2(1169, 737)
 
 [node name="WaitTimer" type="Timer" parent="Main/BuildService/PlaceBuild"]
 wait_time = 0.3
@@ -640,12 +646,6 @@ store_expansion_area = NodePath("../../WorldMap/TileLayer/StoreRelevantLayer/Exp
 [node name="WaitTimer" type="Timer" parent="Main/BuildService/ExpandStore"]
 wait_time = 0.3
 one_shot = true
-
-[node name="MoveStructure" type="Node2D" parent="Main/BuildService"]
-script = ExtResource("36_hbdd8")
-
-[node name="RemoveStructure" type="Node2D" parent="Main/BuildService"]
-script = ExtResource("36_030ap")
 
 [node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("state_machine")]
 script = ExtResource("38_ufk0a")
@@ -1058,13 +1058,23 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="UIBuildMenu" type="CanvasLayer" parent="UI"]
+visible = false
 script = ExtResource("11_us1ic")
 
+[node name="Panel" type="Panel" parent="UI/UIBuildMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="TabMenu" type="TabContainer" parent="UI/UIBuildMenu"]
-offset_left = 1280.0
-offset_top = 40.0
-offset_right = 1904.0
-offset_bottom = 1012.0
+offset_left = 578.0
+offset_top = 66.0
+offset_right = 1343.0
+offset_bottom = 897.0
 current_tab = 0
 
 [node name="Shelving" type="TabBar" parent="UI/UIBuildMenu/TabMenu" node_paths=PackedStringArray("ui_build_menu", "scroll_parent")]
@@ -1240,11 +1250,10 @@ script = ExtResource("60_ll8h0")
 metadata/_tab_index = 2
 
 [node name="EditContainer" type="PanelContainer" parent="UI/UIBuildMenu"]
-visible = false
-offset_left = 1392.0
-offset_top = 874.0
-offset_right = 1904.0
-offset_bottom = 993.0
+offset_left = 578.0
+offset_top = 896.0
+offset_right = 1343.0
+offset_bottom = 1015.0
 theme = ExtResource("7_ykg55")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/UIBuildMenu/EditContainer"]
@@ -1268,33 +1277,6 @@ text = "Edit Store"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MoveContainer" type="PanelContainer" parent="UI/UIBuildMenu"]
-offset_left = 64.0
-offset_top = 664.0
-offset_right = 356.0
-offset_bottom = 759.0
-theme = ExtResource("7_ykg55")
-
-[node name="Move" type="Button" parent="UI/UIBuildMenu/MoveContainer"]
-layout_mode = 2
-theme = ExtResource("7_ykg55")
-theme_override_font_sizes/font_size = 24
-text = "MOVE"
-
-[node name="RemoveContainer" type="PanelContainer" parent="UI/UIBuildMenu"]
-offset_left = 64.0
-offset_top = 791.0
-offset_right = 356.0
-offset_bottom = 886.0
-theme = ExtResource("7_ykg55")
-
-[node name="Remove" type="Button" parent="UI/UIBuildMenu/RemoveContainer"]
-layout_mode = 2
-theme = ExtResource("7_ykg55")
-theme_override_font_sizes/font_size = 24
-text = "REMOVE
-"
-
 [node name="ExpandStoreContainer" type="PanelContainer" parent="UI/UIBuildMenu"]
 texture_filter = 1
 anchors_preset = 8
@@ -1302,10 +1284,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -896.0
-offset_top = 379.0
-offset_right = -528.0
-offset_bottom = 485.0
+offset_left = 450.0
+offset_top = -92.0
+offset_right = 894.0
+offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -1339,9 +1321,12 @@ size_flags_vertical = 3
 [node name="ExpandButton" type="Button" parent="UI/UIBuildMenu/ExpandStoreContainer/MarginContainer/ParentVContainer/MarginContainer/HeaderContainer"]
 layout_mode = 2
 theme = ExtResource("7_ykg55")
-theme_override_font_sizes/font_size = 32
-text = "Expand
-"
+
+[node name="Label" type="Label" parent="UI/UIBuildMenu/ExpandStoreContainer/MarginContainer/ParentVContainer/MarginContainer/HeaderContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Expand"
+horizontal_alignment = 1
 
 [node name="UIItemMenu" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("copper_value_label", "silver_value_label", "gold_value_label", "copper_icon", "silver_icon", "gold_icon")]
 visible = false
@@ -2084,6 +2069,870 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
+[node name="UICheckout" type="CanvasLayer" parent="UI" node_paths=PackedStringArray("value_display", "visual_parent", "checkout_container_parent", "visual_position_list", "end_position")]
+visible = false
+script = ExtResource("62_436fy")
+value_display = NodePath("PanelContainer/HBoxContainer/LeftSide/ValueDisplay")
+checkout_container = ExtResource("63_wy68g")
+customer_visual = ExtResource("64_7rr4m")
+visual_parent = NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual")
+checkout_container_parent = NodePath("PanelContainer/HBoxContainer/LeftSide/ScrollContainer/VBoxContainer")
+visual_position_list = [NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place1"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place2"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place3"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place4"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place5")]
+end_position = NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/EndPosition")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/UICheckout"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -714.0
+offset_top = -426.0
+offset_right = 227.0
+offset_bottom = 479.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_ykg55")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UICheckout/PanelContainer"]
+layout_mode = 2
+
+[node name="LeftSide" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ValueDisplay" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide" node_paths=PackedStringArray("paid_copper_value_label", "paid_silver_value_label", "paid_gold_value_label", "paid_copper_icon", "paid_silver_icon", "paid_gold_icon", "value_copper_value_label", "value_silver_value_label", "value_gold_value_label", "value_copper_icon", "value_silver_icon", "value_gold_icon", "change_copper_value_label", "change_silver_value_label", "change_gold_value_label", "change_copper_icon", "change_silver_icon", "change_gold_icon", "current_copper_value_label", "current_silver_value_label", "current_gold_value_label", "current_copper_icon", "current_silver_icon", "current_gold_icon")]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("65_vw3st")
+paid_copper_value_label = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/Value/CopperValueLabel")
+paid_silver_value_label = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/Value/SilverValueLabel")
+paid_gold_value_label = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/Value/GoldValueLabel")
+paid_copper_icon = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+paid_silver_icon = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+paid_gold_icon = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+value_copper_value_label = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/Value/CopperValueLabel")
+value_silver_value_label = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/Value/SilverValueLabel")
+value_gold_value_label = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/Value/GoldValueLabel")
+value_copper_icon = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+value_silver_icon = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+value_gold_icon = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+change_copper_value_label = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/Value/CopperValueLabel")
+change_silver_value_label = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/Value/SilverValueLabel")
+change_gold_value_label = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/Value/GoldValueLabel")
+change_copper_icon = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+change_silver_icon = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+change_gold_icon = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+current_copper_value_label = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value/CopperValueLabel")
+current_silver_value_label = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value/SilverValueLabel")
+current_gold_value_label = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value/GoldValueLabel")
+current_copper_icon = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+current_silver_icon = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+current_gold_icon = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay"]
+layout_mode = 2
+
+[node name="PaidDisplay" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Paid:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("23_eejlt")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("24_7giq3")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="ProductValueDisplay" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Product 
+Value:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "1000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("23_eejlt")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("24_7giq3")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="LineTexture" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+texture = ExtResource("66_ysomk")
+
+[node name="ChangeDisplay" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Change:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "1000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("23_eejlt")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("24_7giq3")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="CurrentChangeDisplay" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Current
+Change:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "1000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("23_eejlt")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("24_7giq3")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="GiveChange" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Give Change
+"
+
+[node name="RightSide" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="CustomerVisual" type="PanelContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="VisualPositions" type="Node2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual"]
+
+[node name="Place1" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(299, 422)
+
+[node name="Place2" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(435, 450)
+
+[node name="Place3" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(520, 461)
+
+[node name="Place4" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(584, 468)
+
+[node name="Place5" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(700, 468)
+
+[node name="EndPosition" type="Marker2D" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(-200, 422)
+
+[node name="GiveChange" type="PanelContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 10.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Copper1" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copper2" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copper3" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "1
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Copper4" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "50"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Copper5" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 16
+text = "100
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Copper6" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("25_0sma6")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 16
+text = "5
+0
+0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Gold1" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold2" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold3" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HalfChange" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/HalfChange"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Half"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Copper1" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper2" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper3" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper4" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper5" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper6" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold1" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold2" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold3" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DoubleChange" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/DoubleChange"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Double
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="DeleteChange" type="Button" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/DeleteChange"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Delete"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
 z_index = 5
@@ -2100,8 +2949,6 @@ metadata/_edit_lock_ = true
 [connection signal="button_down" from="UI/PlayerUI/UITime/PanelContainer2/MarginContainer/Button" to="UI/PlayerUI/UITime/PanelContainer2/MarginContainer/Button" method="_on_button_down"]
 [connection signal="timeout" from="UI/PlayerUI/UIGold/ColorFlashTimer" to="UI/PlayerUI/UIGold" method="_on_color_flash_timer_timeout"]
 [connection signal="timeout" from="UI/PlayerUI/UIHeldObject/FlashTimer" to="UI/PlayerUI/UIHeldObject" method="_on_flash_timer_timeout"]
-[connection signal="button_down" from="UI/UIBuildMenu/MoveContainer/Move" to="UI/UIBuildMenu" method="_on_move_button_down"]
-[connection signal="button_down" from="UI/UIBuildMenu/RemoveContainer/Remove" to="UI/UIBuildMenu" method="_on_remove_button_down"]
 [connection signal="button_down" from="UI/UIBuildMenu/ExpandStoreContainer/MarginContainer/ParentVContainer/MarginContainer/HeaderContainer/ExpandButton" to="UI/UIBuildMenu" method="_on_expand_button_button_down"]
 [connection signal="spawn_bought_items" from="UI/UIItemMenu" to="Main/WorldMap/ItemInterface" method="_on_ui_item_menu_spawn_bought_items"]
 [connection signal="button_down" from="UI/UIItemMenu/ItemStore/MarginContainer/VBoxContainer/HBoxContainer/Buy" to="UI/UIItemMenu" method="_on_buy_button_down"]
@@ -2113,3 +2960,25 @@ metadata/_edit_lock_ = true
 [connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/OneMore" to="UI/UIStandInfo" method="_on_one_more_button_down"]
 [connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/ButtonLayer/TenMore" to="UI/UIStandInfo" method="_on_ten_more_button_down"]
 [connection signal="button_down" from="UI/UIStandInfo/InfoContainer/MarginContainer/VBoxContainer/CloseLayer/Close" to="UI/UIStandInfo" method="_on_close_button_down"]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/LeftSide/GiveChange" to="UI/UICheckout" method="customer_paid"]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1" to="UI/UICheckout" method="add_change" binds= [1]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2" to="UI/UICheckout" method="add_change" binds= [5]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3" to="UI/UICheckout" method="add_change" binds= [10]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4" to="UI/UICheckout" method="add_change" binds= [50]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5" to="UI/UICheckout" method="add_change" binds= [100]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6" to="UI/UICheckout" method="add_change" binds= [500]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Gold1" to="UI/UICheckout" method="add_change" binds= [1000000]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Gold2" to="UI/UICheckout" method="add_change" binds= [5000000]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Gold3" to="UI/UICheckout" method="add_change" binds= [10000000]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/HalfChange" to="UI/UICheckout" method="multiply_change" binds= [0.5]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper1" to="UI/UICheckout" method="add_change" binds= [1]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper2" to="UI/UICheckout" method="add_change" binds= [5]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper3" to="UI/UICheckout" method="add_change" binds= [10]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper4" to="UI/UICheckout" method="add_change" binds= [50]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper5" to="UI/UICheckout" method="add_change" binds= [100]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper6" to="UI/UICheckout" method="add_change" binds= [500]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Gold1" to="UI/UICheckout" method="add_change" binds= [1000000]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Gold2" to="UI/UICheckout" method="add_change" binds= [5000000]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Gold3" to="UI/UICheckout" method="add_change" binds= [10000000]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/DoubleChange" to="UI/UICheckout" method="multiply_change" binds= [2.0]]
+[connection signal="button_down" from="UI/UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/DeleteChange" to="UI/UICheckout" method="multiply_change" binds= [0.0]]

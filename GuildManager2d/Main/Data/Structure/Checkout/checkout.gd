@@ -5,6 +5,7 @@ extends StructureClass
 @onready var show_progress_timer = $ShowProgressTimer
 @onready var interaction_marker = $InteractionMarker
 
+@export var checkout_ui : CanvasLayer
 @export var work_progress_bar : TextureProgressBar
 
 var opened_menu = false
@@ -28,8 +29,7 @@ var data = {}
 
 func _ready():
 	super()
-	#SignalService.add_checkout_to_world_dic
-	SignalService.send_next_customer.connect(remove_customer)
+	SignalService.add_checkout.emit(self)
 	work_progress_bar.visible = false
 
 func is_full():
@@ -44,7 +44,7 @@ func get_marker():
 func add_customer(customer):
 	customer_queue.append(customer)
 	new_customer.emit(customer)
-	UI.add_customer_checkout_UI.emit(customer)
+	checkout_ui.add_customer(customer)
 	return len(customer_queue) - 1
 
 func reserve_spot():
@@ -66,15 +66,13 @@ func change_work_mode():
 	if is_working:
 		SignalService.restrict_player_movement.emit(false)
 		SignalService.camera_offset.emit(Vector2.ZERO)
-		UI.open_checkout_UI.emit(false)
+		checkout_ui.show_UI(false)
 		is_working = false
 	else:
 		SignalService.restrict_player_movement.emit(true)
 		SignalService.camera_offset.emit(Vector2(-32*8,-32))
-		UI.open_checkout_UI.emit(true)
+		checkout_ui.show_UI(true)
 		is_working = true
-		##debug
-		#customer_queue[0]
 		
 func remove_customer():
 	var removed_customer = customer_queue.pop_front()
@@ -82,7 +80,7 @@ func remove_customer():
 		reserved_spots -= 1
 		removed_customer.bought_basket()
 		next_customer.emit()
-	elif reserved_spots != 0:
+	if customer_queue.is_empty() and reserved_spots != 0:
 		no_customer_in_queue.emit()
 
 #func work_on_queue():
@@ -135,3 +133,6 @@ func get_position_offset():
 	var pos = super()
 	return pos + Vector2i(0, -16)
 	
+func remove_object():
+	SignalService.remove_checkout.emit(self)
+	super()

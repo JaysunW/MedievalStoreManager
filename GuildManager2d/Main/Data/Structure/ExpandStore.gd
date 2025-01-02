@@ -28,7 +28,7 @@ func Exit():
 	UI.open_expansion_UI.emit(0, false)
 	build_service.child_exit()
 
-func _process(_delta: float) -> void:
+func Process(_delta: float) -> void:
 	if not is_expanding_store:
 		return
 	

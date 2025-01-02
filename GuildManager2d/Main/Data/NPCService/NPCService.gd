@@ -92,7 +92,7 @@ func spawn_npc(new_position = null):
 	else:
 		new_npc.global_position = new_position
 	new_npc.prepare_customer(self)
-	world_map.add_child(new_npc)
+	world_map.add_to_world(new_npc)
 	npc_list.append(new_npc)
 
 func start_checking_for_customer_left():

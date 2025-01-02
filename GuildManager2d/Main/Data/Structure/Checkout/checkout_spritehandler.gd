@@ -17,9 +17,12 @@ func should_prepare_building(should_prepare):
 	if should_prepare:
 		change_color(Color(1,1,1,1))
 		z_index = 0
+		material = null
 	else:
 		change_color(Color(1,1,1,0.6))
 		z_index = 2
+		material = ShaderMaterial.new()
+		material.shader = get_parent().building_shader
 
 func change_color(color, change_alpha=false):
 	if not is_flashing_color:

@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+@export var checkout : StaticBody2D
 @export var value_display : MarginContainer
 
 @export_group("PackedScenes")
@@ -26,9 +27,6 @@ var total_change = 0
 func _ready() -> void:
 	visible = false
 	value_display.reset()
-	UI.open_checkout_UI.connect(show_UI)
-	UI.add_customer_checkout_UI.connect(add_customer)
-	UI.remove_customer_checkout_UI.connect(remove_customer)
 	
 func show_UI(input : bool):
 	visible = input
@@ -81,7 +79,7 @@ func customer_paid():
 			Gold.gold_flash.emit(Color.GREEN, 0.4)
 		Gold.add_gold(total_payment)
 		total_change = 0
-		SignalService.send_next_customer.emit()
+		checkout.remove_customer()
 		customer_list.pop_front()
 		remove_customer_visual()
 		value_display.reset()

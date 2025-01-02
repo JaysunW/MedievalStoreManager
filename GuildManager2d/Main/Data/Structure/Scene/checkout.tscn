@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bi4fn4o63lr4e"]
+[gd_scene load_steps=23 format=3 uid="uid://bi4fn4o63lr4e"]
 
 [ext_resource type="Script" path="res://Main/Data/Structure/Checkout/checkout.gd" id="1_ie8xw"]
 [ext_resource type="Texture2D" uid="uid://ddda4e46600pt" path="res://Asset/Structure/Checkout/checkout.png" id="3_i0kwl"]
@@ -9,6 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://bcli2ewbjqy2p" path="res://Asset/UI/stand_fill_over.png" id="8_d7oje"]
 [ext_resource type="Texture2D" uid="uid://ddojiert353um" path="res://Asset/UI/stand_fill_progress.png" id="9_dxxwc"]
 [ext_resource type="Texture2D" uid="uid://dx3dgt6ub6k0t" path="res://Asset/32x32white.png" id="9_i15ub"]
+[ext_resource type="Script" path="res://UI/ui_checkout.gd" id="10_ymig6"]
+[ext_resource type="PackedScene" uid="uid://cupya0rlcek0b" path="res://UI/checkout_container.tscn" id="11_0bxno"]
+[ext_resource type="PackedScene" uid="uid://b1a6uqkjanr4" path="res://UI/checkout_animated_sprite.tscn" id="12_n0syv"]
+[ext_resource type="Theme" uid="uid://cyx5vjugx1lim" path="res://Theme/our_theme.tres" id="13_rv22j"]
+[ext_resource type="Script" path="res://UI/checkout_value_display.gd" id="14_c0pme"]
+[ext_resource type="Texture2D" uid="uid://df160aemdaqim" path="res://Asset/UI/ui_value_gold.png" id="15_7d2ui"]
+[ext_resource type="Texture2D" uid="uid://bwkmwhg7gn8yi" path="res://Asset/UI/ui_value_silver.png" id="16_rhmgh"]
+[ext_resource type="Texture2D" uid="uid://di0q3sninmdyc" path="res://Asset/UI/ui_value_copper.png" id="17_sx0fq"]
+[ext_resource type="Texture2D" uid="uid://de30ayj671tde" path="res://Asset/UI/WhiteLine.png" id="18_1s0ml"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erayf"]
 size = Vector2(64, 14)
@@ -22,11 +31,12 @@ size = Vector2(64, 27)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ia2p"]
 size = Vector2(25, 59)
 
-[node name="Checkout" type="StaticBody2D" node_paths=PackedStringArray("work_progress_bar", "sprite_handler", "orientation_component", "interaction_object_component")]
+[node name="Checkout" type="StaticBody2D" node_paths=PackedStringArray("checkout_ui", "work_progress_bar", "sprite_handler", "orientation_component", "interaction_object_component") groups=["NavigationBlock"]]
 texture_filter = 1
 collision_layer = 64
 collision_mask = 0
 script = ExtResource("1_ie8xw")
+checkout_ui = NodePath("UICheckout")
 work_progress_bar = NodePath("FillProgressbar")
 sprite_handler = NodePath("Skin")
 orientation_component = NodePath("OrientationComponent")
@@ -36,10 +46,12 @@ size_list = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
 keep_collision_left = true
 
 [node name="Frontal" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_erayf")
 
 [node name="Side" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-19.5, -23)
 shape = SubResource("RectangleShape2D_73btw")
 
@@ -58,6 +70,7 @@ script = ExtResource("3_lp8r7")
 [node name="ChangeColorTimer" type="Timer" parent="Skin"]
 
 [node name="InteractionObjectComponent" parent="." node_paths=PackedStringArray("main_object") groups=["Interface"] instance=ExtResource("6_xaefe")]
+visible = false
 position = Vector2(0, -16)
 collision_layer = 256
 collision_mask = 0
@@ -106,5 +119,892 @@ position = Vector2(0, 16)
 scale = Vector2(0.1875, 0.1875)
 texture = ExtResource("9_i15ub")
 
+[node name="UICheckout" type="CanvasLayer" parent="." node_paths=PackedStringArray("checkout", "value_display", "visual_parent", "checkout_container_parent", "visual_position_list", "end_position")]
+visible = false
+script = ExtResource("10_ymig6")
+checkout = NodePath("..")
+value_display = NodePath("PanelContainer/HBoxContainer/LeftSide/ValueDisplay")
+checkout_container = ExtResource("11_0bxno")
+customer_visual = ExtResource("12_n0syv")
+visual_parent = NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual")
+checkout_container_parent = NodePath("PanelContainer/HBoxContainer/LeftSide/ScrollContainer/VBoxContainer")
+visual_position_list = [NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place1"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place2"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place3"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place4"), NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/Place5")]
+end_position = NodePath("PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions/EndPosition")
+
+[node name="PanelContainer" type="PanelContainer" parent="UICheckout"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -714.0
+offset_top = -426.0
+offset_right = 227.0
+offset_bottom = 479.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("13_rv22j")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICheckout/PanelContainer"]
+layout_mode = 2
+
+[node name="LeftSide" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ValueDisplay" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide" node_paths=PackedStringArray("paid_copper_value_label", "paid_silver_value_label", "paid_gold_value_label", "paid_copper_icon", "paid_silver_icon", "paid_gold_icon", "value_copper_value_label", "value_silver_value_label", "value_gold_value_label", "value_copper_icon", "value_silver_icon", "value_gold_icon", "change_copper_value_label", "change_silver_value_label", "change_gold_value_label", "change_copper_icon", "change_silver_icon", "change_gold_icon", "current_copper_value_label", "current_silver_value_label", "current_gold_value_label", "current_copper_icon", "current_silver_icon", "current_gold_icon")]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("14_c0pme")
+paid_copper_value_label = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/Value/CopperValueLabel")
+paid_silver_value_label = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/Value/SilverValueLabel")
+paid_gold_value_label = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/Value/GoldValueLabel")
+paid_copper_icon = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+paid_silver_icon = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+paid_gold_icon = NodePath("VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+value_copper_value_label = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/Value/CopperValueLabel")
+value_silver_value_label = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/Value/SilverValueLabel")
+value_gold_value_label = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/Value/GoldValueLabel")
+value_copper_icon = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+value_silver_icon = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+value_gold_icon = NodePath("VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+change_copper_value_label = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/Value/CopperValueLabel")
+change_silver_value_label = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/Value/SilverValueLabel")
+change_gold_value_label = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/Value/GoldValueLabel")
+change_copper_icon = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+change_silver_icon = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+change_gold_icon = NodePath("VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+current_copper_value_label = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value/CopperValueLabel")
+current_silver_value_label = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value/SilverValueLabel")
+current_gold_value_label = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value/GoldValueLabel")
+current_copper_icon = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons/CopperIcon")
+current_silver_icon = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons/SilverIcon")
+current_gold_icon = NodePath("VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons/GoldIcon")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay"]
+layout_mode = 2
+
+[node name="PaidDisplay" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Paid:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("15_7d2ui")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("16_rhmgh")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/PaidDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="ProductValueDisplay" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Product 
+Value:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "1000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("15_7d2ui")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("16_rhmgh")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ProductValueDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="LineTexture" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+texture = ExtResource("18_1s0ml")
+
+[node name="ChangeDisplay" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Change:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "1000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("15_7d2ui")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("16_rhmgh")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/ChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="CurrentChangeDisplay" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+theme_override_font_sizes/font_size = 16
+text = "Current
+Change:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="GoldValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "1000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SilverValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CopperValueLabel" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/Value"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.156863, 0.196078, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Icons" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("15_7d2ui")
+stretch_mode = 5
+
+[node name="SilverIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("16_rhmgh")
+stretch_mode = 5
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide/ValueDisplay/VBoxContainer/CurrentChangeDisplay/HBoxContainer/MarginContainer/Icons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="GiveChange" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Give Change
+"
+
+[node name="RightSide" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="CustomerVisual" type="PanelContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="VisualPositions" type="Node2D" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual"]
+
+[node name="Place1" type="Marker2D" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(299, 422)
+
+[node name="Place2" type="Marker2D" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(435, 450)
+
+[node name="Place3" type="Marker2D" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(520, 461)
+
+[node name="Place4" type="Marker2D" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(584, 468)
+
+[node name="Place5" type="Marker2D" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(700, 468)
+
+[node name="EndPosition" type="Marker2D" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/CustomerVisual/VisualPositions"]
+position = Vector2(-200, 422)
+
+[node name="GiveChange" type="PanelContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 10.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Copper1" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copper2" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copper3" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "1
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Copper4" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "50"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Copper5" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5/VBoxContainer2/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 16
+text = "100
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Copper6" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+
+[node name="CopperIcon" type="TextureRect" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("17_sx0fq")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6/VBoxContainer2/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 16
+text = "5
+0
+0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Gold1" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold2" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold3" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HalfChange" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/HalfChange"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Half"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Copper1" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper2" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper3" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper4" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper5" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Copper6" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold1" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold2" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold3" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DoubleChange" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/DoubleChange"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Double
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="DeleteChange" type="Button" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/DeleteChange"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Delete"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
 [connection signal="timeout" from="WorkTimer" to="." method="_on_work_timer_timeout"]
 [connection signal="timeout" from="ShowProgressTimer" to="." method="_on_show_progress_timer_timeout"]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/LeftSide/GiveChange" to="UICheckout" method="customer_paid"]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper1" to="UICheckout" method="add_change" binds= [1]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper2" to="UICheckout" method="add_change" binds= [5]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper3" to="UICheckout" method="add_change" binds= [10]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper4" to="UICheckout" method="add_change" binds= [50]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper5" to="UICheckout" method="add_change" binds= [100]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Copper6" to="UICheckout" method="add_change" binds= [500]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Gold1" to="UICheckout" method="add_change" binds= [1000000]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Gold2" to="UICheckout" method="add_change" binds= [5000000]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/Gold3" to="UICheckout" method="add_change" binds= [10000000]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer/HalfChange" to="UICheckout" method="multiply_change" binds= [0.5]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper1" to="UICheckout" method="add_change" binds= [1]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper2" to="UICheckout" method="add_change" binds= [5]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper3" to="UICheckout" method="add_change" binds= [10]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper4" to="UICheckout" method="add_change" binds= [50]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper5" to="UICheckout" method="add_change" binds= [100]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Copper6" to="UICheckout" method="add_change" binds= [500]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Gold1" to="UICheckout" method="add_change" binds= [1000000]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Gold2" to="UICheckout" method="add_change" binds= [5000000]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/Gold3" to="UICheckout" method="add_change" binds= [10000000]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/VBoxContainer/HBoxContainer2/DoubleChange" to="UICheckout" method="multiply_change" binds= [2.0]]
+[connection signal="button_down" from="UICheckout/PanelContainer/HBoxContainer/RightSide/GiveChange/HBoxContainer/DeleteChange" to="UICheckout" method="multiply_change" binds= [0.0]]
