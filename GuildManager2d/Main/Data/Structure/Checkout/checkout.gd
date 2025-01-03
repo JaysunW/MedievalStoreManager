@@ -133,6 +133,7 @@ func get_position_offset():
 	var pos = super()
 	return pos + Vector2i(0, -16)
 	
-func remove_object():
-	SignalService.remove_checkout.emit(self)
-	super()
+func remove_object(in_world = true):
+	if in_world:
+		SignalService.remove_checkout.emit(self)
+	super(in_world)

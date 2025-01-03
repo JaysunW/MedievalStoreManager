@@ -8,10 +8,10 @@ extends Node2D
 
 var last_move_direction = Vector2.ZERO
 var object_distance = Vector2(20,20)
-var held_object_offset = Vector2(0,0)
+var held_package_offset = Vector2(0,0)
 
 var is_holding_object = false
-var held_object = null
+var held_package = null
 
 var restrict_interact = false
 
@@ -26,9 +26,9 @@ func _process(_delta):
 	last_move_direction = move_component.last_move_direction.normalized()
 	interaction_component.look_at(to_global(last_move_direction))
 	if is_holding_object:
-		var target_position = global_position + object_distance * last_move_direction + held_object_offset
-		var dif_vec = target_position - held_object.position
-		held_object.position += dif_vec.normalized() * dif_vec.length() * 20 * _delta
+		var target_position = global_position + object_distance * last_move_direction + held_package_offset
+		var dif_vec = target_position - held_package.position
+		held_package.position += dif_vec.normalized() * dif_vec.length() * 20 * _delta
 	
 	if restrict_interact:
 		return
@@ -42,7 +42,7 @@ func _process(_delta):
 			work_checkout()
 	else:
 		if Input.is_action_just_pressed("e"):
-			held_object_and_interact()
+			held_package_and_interact()
 
 func interact_with_object():
 	var objects = interaction_component.get_interactable_object()
@@ -96,21 +96,21 @@ func take_from_shelf():
 		if filled_shelf_list.is_empty():
 			return
 		var stand = find_nearest_object(filled_shelf_list)
-		if not held_object:
-			var new_object = stand.get_content_instance()
-			new_object.data["amount"] = 1
-			hold_object(new_object)
+		if not held_package:
+			var package = stand.get_content_instance()
+			package.package_data["amount"] = 1
+			hold_object(package)
 			interact_timer.start()
 			stand.take_from_shelf()
-		elif held_object.data["id"] == stand.get_content_data()["id"] and held_object.data["amount"] < held_object.data["carry_max"]:
+		elif held_package.package_data["id"] == stand.get_content_data()["id"] and held_package.package_data["amount"] < held_package.package_data["carry_max"]:
 			stand.take_from_shelf()
-			held_object.data["amount"] += 1
-			UI.picked_up_package.emit(held_object.data, true)
+			held_package.package_data["amount"] += 1
+			UI.picked_up_package.emit(held_package.package_data, true)
 			interact_timer.start()
 		else:
 			UI.flash_held_object.emit(Color.FIREBRICK)
 			
-func held_object_and_interact():
+func held_package_and_interact():
 	var objects = interaction_component.get_interactable_object()
 	var found_stand_list = []
 	for object in objects:
@@ -124,30 +124,30 @@ func held_object_and_interact():
 func fill_shelf(found_stand_list):
 	if interact_timer.is_stopped():
 		var stand = find_nearest_object(found_stand_list)
-		var filled_stand = stand.fill_shelf(held_object,)
+		var filled_stand = stand.fill_shelf(held_package,)
 		if filled_stand:
 			interact_timer.start()
-			held_object.data["amount"] -= 1
-			if held_object.data["amount"] <= 0:
+			held_package.package_data["amount"] -= 1
+			if held_package.package_data["amount"] <= 0:
 				drop_object(false)
 			else:
-				UI.picked_up_package.emit(held_object.data, true)
+				UI.picked_up_package.emit(held_package.package_data, true)
 				
 func hold_object(object):
 	is_holding_object = true
-	held_object = object
-	UI.picked_up_package.emit(held_object.data, true)
+	held_package = object
+	UI.picked_up_package.emit(held_package.package_data, true)
 	object.change_hold_mode(true)
 
 func drop_object(is_not_stored=true):
 	is_holding_object = false
-	held_object.position = global_position + object_distance * last_move_direction + Vector2(0,8)
-	held_object.change_hold_mode(false)
+	held_package.position = global_position + object_distance * last_move_direction + Vector2(0,8)
+	held_package.change_hold_mode(false)
 	UI.picked_up_package.emit({}, false)
 	if is_not_stored:
-		held_object = null
+		held_package = null
 	else:
-		held_object.queue_free()
+		held_package.queue_free()
 		
 func find_nearest_object(object_list):
 	var smallest_distance = 100
@@ -162,6 +162,6 @@ func find_nearest_object(object_list):
 func _on_fill_shelf_timer_timeout():
 	if Input.is_action_pressed("e"):
 		if is_holding_object:
-			held_object_and_interact()
+			held_package_and_interact()
 	if Input.is_action_pressed("q"):
 		take_from_shelf()

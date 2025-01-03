@@ -3,10 +3,10 @@ extends StaticBody2D
 @onready var skin: Sprite2D = $Skin
 @export var content_icon: Sprite2D
 
-@export var data = {}
+@export var package_data = {}
 
 func set_content(input_data):
-	data = input_data
+	package_data = input_data
 	content_icon.texture = Loader.shop_item_texture(input_data["sprite_path"], true)
 
 func change_z_index(value):

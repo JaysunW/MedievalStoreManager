@@ -17,14 +17,14 @@ func set_ui(data, held = true):
 	if not held:
 		dropped_object()
 		return
-	set_held_object_data(data)
+	set_held_package_data(data)
 	
 func dropped_object():
 	item_icon.texture = null
 	item_amount.text = ""
 	visible = false
 
-func set_held_object_data(data):
+func set_held_package_data(data):
 	visible = true
 	item_icon.texture = Loader.shop_item_texture(data["sprite_path"])
 	item_current_amount.text = str(data["amount"])

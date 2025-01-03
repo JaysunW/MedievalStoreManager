@@ -15,7 +15,7 @@ func _ready():
 	
 func set_stand_info(stand):
 	SignalService.restrict_player()
-	var stand_data : Dictionary = stand.data
+	var stand_data : Dictionary = stand.structure_data
 	var item_id : int = stand.get_content_data()["id"]
 	current_item_id = item_id
 	build_name_label.text = stand_data["name"]

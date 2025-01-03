@@ -556,7 +556,7 @@ world_map = NodePath("../WorldMap")
 idle_point_list = [NodePath("SpawnPoints/SpawnPoint1"), NodePath("SpawnPoints/SpawnPoint2"), NodePath("SpawnPoints/SpawnPoint3"), NodePath("SpawnPoints/SpawnPoint4")]
 leaving_point_list = [NodePath("LeavePoints/LeavePoint1"), NodePath("LeavePoints/LeavePoint2")]
 entrance_point = NodePath("StorePoints/EntrancePoint")
-maximum_npc = 0
+maximum_npc = 20
 
 [node name="SpawnTimer" type="Timer" parent="Main/CustomerService"]
 one_shot = true
@@ -598,19 +598,19 @@ position = Vector2(172, 1089)
 [node name="LeavePoint2" type="Marker2D" parent="Main/CustomerService/LeavePoints"]
 position = Vector2(2046, 1089)
 
-[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("navigation_region", "placing_menu", "expand_menu", "remove_menu", "move_menu")]
+[node name="BuildService" type="Node2D" parent="Main" node_paths=PackedStringArray("world_map", "navigation_region", "placing_menu", "expand_menu", "remove_menu", "move_menu")]
 z_index = 10
 script = ExtResource("5_sdoag")
+world_map = NodePath("../WorldMap")
 navigation_region = NodePath("../../NavigationRegion2D")
 placing_menu = NodePath("PlaceBuild")
 expand_menu = NodePath("ExpandStore")
 remove_menu = NodePath("RemoveStructure")
 move_menu = NodePath("MoveStructure")
 
-[node name="PlaceBuild" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "world_map", "store_area", "debug_stand_marker", "debug_store_marker")]
+[node name="PlaceBuild" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "store_area", "debug_stand_marker", "debug_store_marker")]
 script = ExtResource("30_ne60k")
 build_service = NodePath("..")
-world_map = NodePath("../../WorldMap")
 store_area = NodePath("../../WorldMap/TileLayer/StoreRelevantLayer/StoreArea")
 debug = true
 debug_stand_marker = NodePath("DebugStandMarker")
@@ -641,15 +641,18 @@ store_expansion_area = NodePath("../../WorldMap/TileLayer/StoreRelevantLayer/Exp
 wait_time = 0.3
 one_shot = true
 
-[node name="MoveStructure" type="Node2D" parent="Main/BuildService"]
+[node name="MoveStructure" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "store_area")]
 script = ExtResource("36_hbdd8")
+build_service = NodePath("..")
+store_area = NodePath("../../WorldMap/TileLayer/StoreRelevantLayer/StoreArea")
 
-[node name="RemoveStructure" type="Node2D" parent="Main/BuildService"]
+[node name="RemoveStructure" type="Node2D" parent="Main/BuildService" node_paths=PackedStringArray("build_service", "store_area")]
 script = ExtResource("36_030ap")
+build_service = NodePath("..")
+store_area = NodePath("../../WorldMap/TileLayer/StoreRelevantLayer/StoreArea")
 
 [node name="TimeService" type="Node2D" parent="Main" node_paths=PackedStringArray("state_machine")]
 script = ExtResource("38_ufk0a")
-total_customer = 5.0
 state_machine = NodePath("StateMachine")
 
 [node name="StateMachine" type="Node2D" parent="Main/TimeService" node_paths=PackedStringArray("initial_state")]

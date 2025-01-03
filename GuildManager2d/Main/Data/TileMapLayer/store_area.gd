@@ -7,7 +7,8 @@ var buildable_area_atlas = Vector2i(2,0)
 var structure_space_area_atlas = Vector2i(3,0)
 
 func _ready() -> void:
-	visible = false
+	#visible = false
+	pass
 
 func is_in_shop_area(mouse_tile_pos):
 	var atlas_coords = get_cell_atlas_coords(mouse_tile_pos)
@@ -24,6 +25,11 @@ func is_buildable_area(mouse_tile_pos, building):
 		if not is_free:
 			return false
 	return true
+
+func reset_area():
+	for last_building_position in last_building_dicitonary:
+		set_cell(last_building_position, 0, last_building_dicitonary[last_building_position])
+	last_building_dicitonary = {}
 
 func show_building_area(mouse_tile_pos, building):
 	for last_building_position in last_building_dicitonary:

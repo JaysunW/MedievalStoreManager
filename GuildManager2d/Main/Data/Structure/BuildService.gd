@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var world_map : Node2D
 @export var navigation_region : NavigationRegion2D
 
 @export_group("Children")
@@ -8,7 +9,7 @@ extends Node2D
 @export var remove_menu : Node2D
 @export var move_menu : Node2D
 
-var mouse_grid_offset = Vector2i(16,32)
+var mouse_grid_offset = Vector2i(16,48)
 var opened_menu = false
 var active_child = null
 
@@ -37,7 +38,8 @@ func _process(_delta):
 		
 	
 func update_navigation_region():
-	navigation_region.call_deferred("bake_navigation_polygon")	
+	if not navigation_region.is_baking():
+		navigation_region.call_deferred("bake_navigation_polygon")
 
 func child_exit():
 	active_child = null

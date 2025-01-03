@@ -2,7 +2,6 @@ extends StructureClass
 @export var package_scene : PackedScene
 @export var interaction_marker : Marker2D
 
-var data = {}
 var content_data = {}
 
 func get_position_offset():
@@ -28,7 +27,7 @@ func rotate_object(new_orentation):
 	orientation_component.change_orientation_state(current_orientation)
 
 func fill_shelf(content):
-	var input_data = content.data.duplicate()
+	var input_data = content.package_data.duplicate()
 	if content_data.is_empty():
 		content_data = input_data
 		content_data["amount"] = 1

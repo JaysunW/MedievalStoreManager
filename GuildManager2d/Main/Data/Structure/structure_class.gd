@@ -19,6 +19,9 @@ func _ready() -> void:
 	building_shader = Loader.load_shader("res://Shader/build_shader.gdshader")
 	size_offset = get_size_offset_position()
 
+func set_stand_info(tile_pos):
+	main_pos = tile_pos
+
 func prepare_structure(should_prepare=true):
 	if not sprite_handler:
 		return
@@ -82,7 +85,12 @@ func flash_color(color, flash_time = 0.1, change_alpha = false):
 		return
 	sprite_handler.flash_color(color, flash_time, change_alpha)
 	
-func remove_object():
-	for vec in size_list:
-		SignalService.remove_structure.emit(main_pos + vec)
+func sell():
+	Gold.add_gold(structure_data["value"])
+	remove_object()
+	
+func remove_object(in_world = true):
+	if in_world:
+		for vec in size_list:
+			SignalService.remove_structure.emit(main_pos + vec)
 	queue_free()
